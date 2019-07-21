@@ -32,10 +32,6 @@ export class ExtraChargeComponent implements OnInit, OnDestroy {
         title: 'Rate',
         type: 'string',
       },
-      extraChargeStatus: {
-        title: 'Status',
-        type: 'string',
-      },
       status: {
         title: 'Status',
         type: 'custom',
@@ -110,7 +106,7 @@ export class ExtraChargeComponent implements OnInit, OnDestroy {
   }
 
   toFormAdd() {
-    this.router.navigate(['pages/extra-charge']);
+    this.router.navigate(['pages/add-extra-charge']);
   }
 
 }

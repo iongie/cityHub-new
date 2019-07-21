@@ -32,7 +32,7 @@ export const customCurrencyMaskConfig = {
     ThemeModule,
     Ng2SmartTableModule,
     // UnderConstractionModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
   ],
 })
 export class DetailModule { }

@@ -8,6 +8,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { UserRoleService } from '../../../services/user-role/user-role.service';
 
 @Component({
   selector: 'ngx-header',
@@ -23,7 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
   userCityHub: any[];
-
+  forRole: any;
   private subs = new Subject();
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -31,6 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private analyticsService: AnalyticsService,
               private layoutService: LayoutService,
               private authServ: AuthService,
+              private userRoleServ: UserRoleService,
               private router: Router,
               @Inject(NB_WINDOW) private window,
               private nbMenuService: NbMenuService) {
@@ -41,6 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe((users: any) => this.user = users.nick);
     this.detailAccount();
     this.action();
+    this.detailUserRole();
   }
 
   ngOnDestroy() {
@@ -64,19 +67,47 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   detailAccount() {
-      const data = {
-        token: localStorage.getItem('p_l1oxt'),
+    const data = {
+      token: localStorage.getItem('p_l1oxt'),
+    };
+    this.authServ.detailAfterLogin(data).pipe(takeUntil(this.subs)).subscribe(res => {
+      this.userCityHub = [{
+        name : res[0].full_name,
+        email: res[0].email,
+        privilageId : res[0].privilege_id,
+        privilageName : res[0].privilege_name,
+        userId: res[0].user_id,
+        username: res[0].username,
+      }];
+
+      this.forRole = {
+        name : res[0].full_name,
+        email: res[0].email,
+        privilageId : res[0].privilege_id,
+        privilageName : res[0].privilege_name,
+        userId: res[0].user_id,
+        username: res[0].username,
       };
-      this.authServ.detailAfterLogin(data).pipe(takeUntil(this.subs)).subscribe(res => {
-        this.userCityHub = [{
-          name : res[0].full_name,
-          email: res[0].email,
-          privilageId : res[0].privilege_id,
-          privilageName : res[0].privilege_name,
-          userId: res[0].user_id,
-          username: res[0].username,
-        }];
+
+      console.log(this.forRole);
+    });
+  }
+
+  detailUserRole() {
+    const data = {
+      token: localStorage.getItem('p_l1oxt'),
+    };
+    this.authServ.detailAfterLogin(data).pipe(takeUntil(this.subs)).subscribe(res => {
+      this.forRole = {
+        id : res[0].privilege_id,
+      };
+
+      console.log(this.forRole);
+
+      this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
+        console.log(resUserRole);
       });
+    });
   }
 
   logout() {

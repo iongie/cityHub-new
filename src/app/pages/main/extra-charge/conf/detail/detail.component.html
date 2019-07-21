@@ -1,3 +1,83 @@
-<p>
-  detail works!
-</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Extra charge Management</div>
+      <!-- <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+      </div> -->
+    </div>
+  </nb-card-header>
+
+  <nb-card-body **ngFor="let extraCharge of extraCharge">
+    <form #ngForm="ngForm" (submit)="addExtraCharge()" ngNativeValidate>
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Category</label>
+        <select
+         nbInput
+         fullWidth
+         class="form-control"
+         [(ngModel)]="extraCharge.extraChargeCategoryId"
+         id="extraChargeCategoryId"
+         name="extraChargeCategoryId"
+         required
+         #extraChargeCategoryId="ngModel">
+          <option
+          *ngFor="let extarChangeCategory of extarChangeCategory"
+          value="{{floor.extraChargeCategoryId}}">{{floor.extraChargeCategoryName}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Extra charge name</label>
+        <input
+         type="text"
+         nbInput
+         fullWidth
+         class="form-control"
+         [(ngModel)]="extraCharge.extraChargeName"
+         id="extraChargeName"
+         name="extraChargeName"
+         required
+         #extraChargeName="ngModel"
+         placeholder="Extra charge name">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Rate</label>
+        <input
+         type="text"
+         nbInput
+         fullWidth
+         currencyMask
+         class="form-control"
+         [(ngModel)]="extraCharge.extraChargeRate"
+         id="extraChargeRate"
+         name="extraChargeRate"
+         required
+         #extraChargeRate="ngModel"
+         placeholder="Rate">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Description</label>
+        <textarea
+         nbInput
+         fullWidth
+         class="form-control"
+         [(ngModel)]="extraCharge.extraChargeDescription"
+         id="extraChargeDescription"
+         name="extraChargeDescription"
+         required
+         #extraChargeDescription="ngModel"
+         placeholder="Extra charge Description"></textarea>
+      </div>
+
+      <div class="buttons">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-warning" [routerLink]="['/pages/extra-charge']" routerLinkActive="router-link-active" >Cancel</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

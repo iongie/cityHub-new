@@ -73,7 +73,6 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       map(({item}) => item),
     ).subscribe(item => {
       if (item.data.id === this.renderValue && item.title === 'View') {
-        console.log('v', item.data.id );
         this.router.navigate(['/pages/view-extra-charge', this.renderValue]);
       }else if (item.data.id === this.renderValue && item.title === 'Change Status') {
         console.log('cs', this.renderValue);
@@ -82,29 +81,19 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
         };
         if (item.data.status === 'active') {
           this.extraChargeServ.inactiveAuth(data).pipe(takeUntil(this.subs)).subscribe(() => {
-            const title = 'User';
-            const content = 'User has been inactived';
+            const title = 'Extra charge';
+            const content = 'Extra charge has been inactived';
             setTimeout(() => {
               this.notifServ.showInfoTypeToast(title, content);
             }, 2000);
-            setTimeout(() => {
-              // this.router.navigateByUrl('/pages/user', {skipLocationChange: true}).then(() =>
-              // this.router.navigate(['pages/user']));
-              this.message = 'inactive';
-            }, 1000);
           });
         } else if (item.data.status === 'inactive') {
           this.extraChargeServ.activeAuth(data).pipe(takeUntil(this.subs)).subscribe(() => {
-            const title = 'User';
-            const content = 'User has been actived';
+            const title = 'Extra charge';
+            const content = 'Extra charge has been actived';
             setTimeout(() => {
               this.notifServ.showInfoTypeToast(title, content);
             }, 2000);
-            setTimeout(() => {
-              // this.router.navigateByUrl('/pages/user', {skipLocationChange: true}).then(() =>
-              // this.router.navigate(['pages/user']));
-              this.message = 'active';
-            }, 1000);
           });
         }
       }
