@@ -1,0 +1,51 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Tax Management</div>
+      <!-- <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+      </div> -->
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <form #ngForm="ngForm" (submit)="addTax()" ngNativeValidate>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Tax Name</label>
+        <input
+         type="text"
+         nbInput
+         fullWidth
+         class="form-control"
+         [(ngModel)]="tax.taxName"
+         id="taxName"
+         name="taxName"
+         required
+         #taxName="ngModel"
+         placeholder="Name">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Tax Rate</label>
+        <input
+         type="text"
+         nbInput
+         fullWidth
+         class="form-control"
+         [(ngModel)]="tax.taxRate"
+         id="username"
+         name="username"
+         required
+         #username="ngModel"
+         placeholder="fullname">
+      </div>
+
+      <div class="buttons">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-warning" [routerLink]="['/pages/tax']" routerLinkActive="router-link-active" >Cancel</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,114 @@
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { ExtraChargeService } from '../../../../../services/extra-charge/extra-charge.service';
+import { NotificationService } from '../../../../../services/notification/notification.service';
+import { NbMenuService } from '@nebular/theme';
+import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { ViewCell } from 'ng2-smart-table';
+import { takeUntil, filter, map } from 'rxjs/operators';
+
+@Component({
+  selector: 'ngx-link-detail',
+  templateUrl: './link-detail.component.html',
+  styleUrls: ['./link-detail.component.scss'],
+})
+export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
+  renderValue: any;
+
+  @Input() value: any;
+  @Input() rowData: any;
+  private subs: Subject<void> = new Subject();
+
+  @Output() private status = new EventEmitter<any>();
+  items = [
+    { title: '',
+      data: {
+        id: '',
+        status: '',
+      },
+    },
+    { title: '',
+      data: {
+        id: '',
+        status: '',
+      },
+    },
+  ];
+  data: any[];
+  message = 'Hola Mundo!';
+  constructor(
+    private nbMenuService: NbMenuService,
+    private extraChargeServ: ExtraChargeService,
+    private notifServ: NotificationService,
+    private router: Router,
+  ) { }
+
+  ngOnInit() {
+    console.log('rowData', this.rowData);
+    this.renderValue = this.value.extraChargeId;
+    this.action();
+    this.data = this.items.map((y) => {
+      const xyz = {
+        title: '',
+        data: {
+          id: this.value.extraChargeId,
+          status: this.value.extraChargeStatus,
+        },
+      };
+      return xyz;
+    });
+    this.data[0].title = 'View';
+    this.data[1].title = 'Change Status';
+  }
+
+  ngOnDestroy() {
+    this.subs.next();
+    this.subs.complete();
+  }
+
+  action() {
+    this.nbMenuService.onItemClick().pipe(
+      takeUntil(this.subs),
+      filter(({ tag }) => tag === 'extra-charge'),
+      map(({item}) => item),
+    ).subscribe(item => {
+      if (item.data.id === this.renderValue && item.title === 'View') {
+        console.log('v', item.data.id );
+        this.router.navigate(['/pages/view-extra-charge', this.renderValue]);
+      }else if (item.data.id === this.renderValue && item.title === 'Change Status') {
+        console.log('cs', this.renderValue);
+        const data = {
+          id: this.renderValue,
+        };
+        if (item.data.status === 'active') {
+          this.extraChargeServ.inactiveAuth(data).pipe(takeUntil(this.subs)).subscribe(() => {
+            const title = 'User';
+            const content = 'User has been inactived';
+            setTimeout(() => {
+              this.notifServ.showInfoTypeToast(title, content);
+            }, 2000);
+            setTimeout(() => {
+              // this.router.navigateByUrl('/pages/user', {skipLocationChange: true}).then(() =>
+              // this.router.navigate(['pages/user']));
+              this.message = 'inactive';
+            }, 1000);
+          });
+        } else if (item.data.status === 'inactive') {
+          this.extraChargeServ.activeAuth(data).pipe(takeUntil(this.subs)).subscribe(() => {
+            const title = 'User';
+            const content = 'User has been actived';
+            setTimeout(() => {
+              this.notifServ.showInfoTypeToast(title, content);
+            }, 2000);
+            setTimeout(() => {
+              // this.router.navigateByUrl('/pages/user', {skipLocationChange: true}).then(() =>
+              // this.router.navigate(['pages/user']));
+              this.message = 'active';
+            }, 1000);
+          });
+        }
+      }
+    });
+  }
+
+}

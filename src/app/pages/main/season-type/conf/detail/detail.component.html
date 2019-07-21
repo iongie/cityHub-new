@@ -1,0 +1,51 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">User Management</div>
+      <!-- <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+      </div> -->
+    </div>
+  </nb-card-header>
+
+  <nb-card-body *ngFor="let seasonType of seasonType">
+    <form #ngForm="ngForm" (submit)="updateSeasonType()" ngNativeValidate>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Name</label>
+        <input
+         type="text"
+         nbInput
+         fullWidth
+         class="form-control"
+         [(ngModel)]="seasonType.seasonTypeName"
+         id="seasonTypeName"
+         name="seasonTypeName"
+         required
+         #seasonTypeName="ngModel"
+         placeholder="name">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Description</label>
+        <input
+         type="text"
+         nbInput
+         fullWidth
+         class="form-control"
+         [(ngModel)]="seasonType.seasonTypeDesc"
+         id="seasonTypeDesc"
+         name="seasonTypeDesc"
+         required
+         #seasonTypeDesc="ngModel"
+         placeholder="Description">
+      </div>
+
+      <div class="buttons">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-warning" [routerLink]="['/pages/season-type']" routerLinkActive="router-link-active" >Cancel</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

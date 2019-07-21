@@ -1,0 +1,83 @@
+<nb-card>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-auto mr-auto">User Management</div>
+        <!-- <div class="col-auto">
+          <button type="submit" class="btn btn-primary">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </div> -->
+      </div>
+    </nb-card-header>
+
+    <nb-card-body>
+      <form #ngForm="ngForm" (submit)="addUser()" ngNativeValidate>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Full Name</label>
+          <input
+           type="text"
+           nbInput
+           fullWidth
+           class="form-control"
+           [(ngModel)]="user.fullName"
+           id="fullname"
+           name="fullname"
+           required
+           #fullname="ngModel"
+           placeholder="email">
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Username</label>
+          <input
+           type="text"
+           nbInput
+           fullWidth
+           class="form-control"
+           [(ngModel)]="user.username"
+           id="username"
+           name="username"
+           required
+           #username="ngModel"
+           placeholder="fullname">
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Email address</label>
+          <input
+           type="email"
+           nbInput
+           fullWidth
+           class="form-control"
+           [(ngModel)]="user.email"
+           id="email"
+           name="email"
+           required
+           #email="ngModel"
+           placeholder="name@example.com">
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Privilege select</label>
+          <select
+           nbInput
+           fullWidth
+           class="form-control"
+           [(ngModel)]="user.privilegeId"
+           id="privilegeId"
+           name="privilegeId"
+           required
+           #privilegeId="ngModel">
+            <option
+            *ngFor="let privilege of privilege"
+            value="{{privilege.privilegeId}}">{{privilege.privilegeName}}</option>
+          </select>
+        </div>
+
+        <div class="buttons">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-warning" [routerLink]="['/pages/user']" routerLinkActive="router-link-active" >Cancel</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>

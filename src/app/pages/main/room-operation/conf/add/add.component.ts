@@ -1,0 +1,128 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { RoomTypeService } from '../../../../../services/room-type/room-type.service';
+import { NotificationService } from '../../../../../services/notification/notification.service';
+import { FloorService } from '../../../../../services/floor/floor.service';
+import { RoomOperationService } from '../../../../../services/room-operation/room-operation.service';
+import { RoomStatusService } from '../../../../../services/room-status/room-status.service';
+import { takeUntil } from 'rxjs/operators';
+import { AuthService } from '../../../../../services/auth/auth.service';
+
+@Component({
+  selector: 'ngx-add',
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.scss'],
+})
+export class AddComponent implements OnInit, OnDestroy {
+  roomOperation = {
+    roomName: '',
+    roomTypeId: '',
+    floorId: '',
+    roomStatusId: '',
+    createdBy: '',
+  };
+  floor: any[];
+  status: any[];
+  roomType: any[];
+  userCityHub: any;
+  private subs: Subject<void> = new Subject();
+  constructor(
+    public roomTypeServ: RoomTypeService,
+    public floorServ: FloorService,
+    public roomOperationServ: RoomOperationService,
+    public roomStatusServ: RoomStatusService,
+    public authServ: AuthService,
+    public notifServ: NotificationService,
+    public router: Router,
+  ) { }
+
+  ngOnInit() {
+    this.getFloor();
+    this.getRoomStatus();
+    this.getRoomType();
+  }
+
+  ngOnDestroy() {
+    this.subs.next();
+    this.subs.complete();
+  }
+
+  getFloor() {
+    this.floorServ.get().pipe(takeUntil(this.subs)).subscribe(resFloor => {
+      this.floor =  resFloor.map((y) => {
+        const z = {
+          floorName: y.floor_name,
+          floorStatus: y.floor_db_status,
+          floorId: y.floor_id,
+        };
+        return z;
+      });
+    });
+  }
+
+  getRoomType() {
+    this.roomTypeServ.get().pipe(takeUntil(this.subs)).subscribe(resRoomType => {
+      this.roomType = resRoomType.map((forResRoomType) => {
+        const DataForResRoomType = {
+          roomTypeId: forResRoomType.room_type_id,
+          roomTypeName: forResRoomType.room_type_name,
+          baseAdult: forResRoomType.base_adult,
+          baseChild: forResRoomType.base_child,
+          maxAdult: forResRoomType.max_adult,
+          maxChild: forResRoomType.max_child,
+          roomDesc: forResRoomType.room_description,
+          baseRate: forResRoomType.base_rate,
+          increaseRate: forResRoomType.increase_rate,
+        };
+        return DataForResRoomType;
+      });
+    });
+  }
+
+  getRoomStatus() {
+    this.roomStatusServ.get().pipe(takeUntil(this.subs)).subscribe(ressRoomStatus => {
+      this.status = ressRoomStatus.map((forRoomStatus) => {
+        const dataForRoomStatus = {
+          roomStatusId: forRoomStatus.room_status_id,
+          roomStatusName: forRoomStatus.room_status_name,
+        };
+        return dataForRoomStatus;
+      });
+    });
+  }
+
+  detailAccount() {
+    const data = {
+      token: localStorage.getItem('p_l1oxt'),
+    };
+    this.authServ.detailAfterLogin(data).pipe(takeUntil(this.subs)).subscribe(res => {
+      this.userCityHub = {
+        name : res[0].full_name,
+      };
+      console.log(res);
+    });
+  }
+
+  addRoomOperation() {
+    const data = {
+      roomName: this.roomOperation.roomName,
+      roomTypeId: this.roomOperation.roomTypeId,
+      floorId: this.roomOperation.floorId,
+      roomStatusId: this.roomOperation.roomStatusId,
+      createdBy: this.userCityHub.username,
+    };
+    console.log(data);
+    // this.roomOperationServ.add(data).pipe(takeUntil(this.subs)).subscribe(() => {
+    //   const title = 'Room operation';
+    //   const content = 'Data has been save';
+    //   this.notifServ.showSuccessTypeToast(title, content);
+    //   // this.router.navigate(['pages/room-operation']);
+    // }, err => {
+    //   const title = 'Room operation';
+    //   const content = 'Error';
+    //   this.notifServ.showInfoTypeToast(title, content);
+    // });
+  }
+
+}

@@ -1,0 +1,9 @@
+<nb-card>
+  <nb-card-header>
+    Privilege
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="privilege" (createConfirm)="onCreateConfirm($event)" (deleteConfirm)="onDeleteConfirm($event)" (editConfirm)="onUpdateConfirm($event)"></ng2-smart-table>
+  </nb-card-body>
+</nb-card>

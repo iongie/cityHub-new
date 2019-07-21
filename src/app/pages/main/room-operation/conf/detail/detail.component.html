@@ -1,0 +1,87 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Room Operation Management</div>
+      <!-- <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+      </div> -->
+    </div>
+  </nb-card-header>
+
+  <nb-card-body *ngFor="let roomOperation of roomOperation">
+    <form #ngForm="ngForm" (submit)="addRoomType()" ngNativeValidate>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Room name</label>
+        <input
+         type="text"
+         nbInput
+         fullWidth
+         class="form-control"
+         [(ngModel)]="roomOperation.roomName"
+         id="roomName"
+         name="roomName"
+         required
+         #roomName="ngModel"
+         placeholder="Room name">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Floor</label>
+        <select
+         nbInput
+         fullWidth
+         class="form-control"
+         [(ngModel)]="roomOperation.floorId"
+         id="floorId"
+         name="floorId"
+         required
+         #floorId="ngModel">
+          <option
+          *ngFor="let floor of floor"
+          value="{{floor.floorId}}">{{floor.floorName}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Room status</label>
+        <select
+         nbInput
+         fullWidth
+         class="form-control"
+         [(ngModel)]="roomOperation.roomStatusId"
+         id="roomStatusId"
+         name="roomStatusId"
+         required
+         #roomStatusId="ngModel">
+          <option
+          *ngFor="let status of status"
+          value="{{status.roomStatusId}}">{{status.roomStatusName}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Room type</label>
+        <select
+         nbInput
+         fullWidth
+         class="form-control"
+         [(ngModel)]="roomOperation.roomTypeId"
+         id="roomTypeId"
+         name="roomTypeId"
+         required
+         #roomTypeId="ngModel">
+          <option
+          *ngFor="let roomType of roomType"
+          value="{{roomType.roomTypeId}}">{{roomType.roomTypeName}}</option>
+        </select>
+      </div>
+
+      <div class="buttons">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-warning" [routerLink]="['/pages/room-operation']" routerLinkActive="router-link-active" >Cancel</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,147 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Room type management</div>
+      <!-- <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+      </div> -->
+    </div>
+  </nb-card-header>
+
+  <nb-card-body *ngFor="let roomType of roomType">
+    <form #ngForm="ngForm" (submit)="updateRoomType()" ngNativeValidate>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Full Name</label>
+        <input
+         type="text"
+         nbInput
+         fullWidth
+         class="form-control"
+         [(ngModel)]="roomType.roomTypeName"
+         id="roomTypeName"
+         name="roomTypeName"
+         required
+         #roomTypeName="ngModel"
+         placeholder="Room type name">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Base adult</label>
+        <input
+         type="number"
+         nbInput
+         fullWidth
+         min="1"
+         class="form-control"
+         [(ngModel)]="roomType.baseAdult"
+         id="baseAdult"
+         name="baseAdult"
+         required
+         #baseAdult="ngModel"
+         placeholder="Base adult">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Base child</label>
+        <input
+         type="number"
+         nbInput
+         fullWidth
+         min="1"
+         class="form-control"
+         [(ngModel)]="roomType.basechild"
+         id="basechild"
+         name="basechild"
+         required
+         #basechild="ngModel"
+         placeholder="Base child">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Max adult</label>
+        <input
+         type="number"
+         nbInput
+         fullWidth
+         min="1"
+         class="form-control"
+         [(ngModel)]="roomType.maxAdult"
+         id="maxAdult"
+         name="maxAdult"
+         required
+         #maxAdult="ngModel"
+         placeholder="Max adult">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Max child</label>
+        <input
+         type="number"
+         nbInput
+         fullWidth
+         min="1"
+         class="form-control"
+         [(ngModel)]="roomType.maxchild"
+         id="maxchild"
+         name="maxchild"
+         required
+         #basechild="ngModel"
+         placeholder="Max child">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Base rate</label>
+        <input
+         type="text"
+         nbInput
+         fullWidth
+         currencyMask 
+         class="form-control"
+         [(ngModel)]="roomType.baseRate"
+         id="baseRate"
+         name="baseRate"
+         required
+         #baseRate="ngModel"
+         placeholder="Base rate">
+      </div>
+      
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Increase rate</label>
+        <input
+         type="text"
+         nbInput
+         fullWidth
+         currencyMask 
+         class="form-control"
+         [(ngModel)]="roomType.increaseRate"
+         id="increaseRate"
+         name="increaseRate"
+         required
+         #increaseRate="ngModel"
+         placeholder="Increase rate">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Room description</label>
+        <textarea
+         nbInput
+         fullWidth
+         class="form-control"
+         [(ngModel)]="roomType.roomDesc"
+         id="roomDesc"
+         name="roomDesc"
+         required
+         #baseAdult="ngModel"
+         placeholder="Base adult">
+         </textarea>
+      </div>
+
+      <div class="buttons">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-warning" [routerLink]="['/pages/user']" routerLinkActive="router-link-active" >Cancel</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
