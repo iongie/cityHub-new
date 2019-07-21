@@ -105,7 +105,7 @@ export class RoomOperationComponent implements OnInit, OnDestroy {
                 createdBy: forResRoom.created_by,
                 updatedBy: forResRoom.updated_by,
                 detail: {
-                  roomId: forResRoom.room_type_id,
+                  roomId: forResRoom.room_id,
                 },
                 status: {
                   roomDbStatus: forResRoom.room_db_status,

@@ -41,6 +41,7 @@ export class AddComponent implements OnInit, OnDestroy {
     this.getFloor();
     this.getRoomStatus();
     this.getRoomType();
+    this.detailAccount();
   }
 
   ngOnDestroy() {
@@ -100,7 +101,7 @@ export class AddComponent implements OnInit, OnDestroy {
       this.userCityHub = {
         name : res[0].full_name,
       };
-      console.log(res);
+      console.log(this.userCityHub);
     });
   }
 
@@ -112,17 +113,16 @@ export class AddComponent implements OnInit, OnDestroy {
       roomStatusId: this.roomOperation.roomStatusId,
       createdBy: this.userCityHub.username,
     };
-    console.log(data);
-    // this.roomOperationServ.add(data).pipe(takeUntil(this.subs)).subscribe(() => {
-    //   const title = 'Room operation';
-    //   const content = 'Data has been save';
-    //   this.notifServ.showSuccessTypeToast(title, content);
-    //   // this.router.navigate(['pages/room-operation']);
-    // }, err => {
-    //   const title = 'Room operation';
-    //   const content = 'Error';
-    //   this.notifServ.showInfoTypeToast(title, content);
-    // });
+    this.roomOperationServ.add(data).pipe(takeUntil(this.subs)).subscribe(() => {
+      const title = 'Room operation';
+      const content = 'Data has been save';
+      this.notifServ.showSuccessTypeToast(title, content);
+      this.router.navigate(['pages/room-operation']);
+    }, err => {
+      const title = 'Room operation';
+      const content = 'Error';
+      this.notifServ.showInfoTypeToast(title, content);
+    });
   }
 
 }

@@ -37,6 +37,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.getFloor();
     this.getRoomStatus();
     this.getRoomType();
+    this.detailAccount();
   }
 
   ngOnDestroy() {
@@ -97,7 +98,7 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.userCityHub = {
         name : res[0].full_name,
       };
-      console.log(res);
+      console.log(this.userCityHub);
     });
   }
 
@@ -132,11 +133,12 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.activeRoute.params.subscribe(params => {
       const data = {
         roomId: params.id,
-        roomName: this.roomOperation.roomName,
-        roomTypeId: this.roomOperation.roomTypeId,
-        floorId: this.roomOperation.floorId,
-        roomStatusId: this.roomOperation.roomStatusId,
+        roomName: this.roomOperation[0].roomName,
+        roomTypeId: this.roomOperation[0].roomTypeId,
+        floorId: this.roomOperation[0].floorId,
+        roomStatusId: this.roomOperation[0].roomStatusId,
         updateBy: this.userCityHub.username,
+        createBy: this.userCityHub.username,
       };
       this.roomOperationServ.update(data).pipe(takeUntil(this.subs)).subscribe(() => {
         const title = 'Room Operation';
