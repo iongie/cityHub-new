@@ -135,7 +135,7 @@ export class UserComponent implements OnInit, OnDestroy {
           };
           return DataForFilter;
         });
-
+        console.log('filter for module user', 'lfofofofo');
         console.log('filter for module user', this.dataFilter);
       });
     });
