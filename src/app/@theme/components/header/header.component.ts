@@ -105,7 +105,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
       console.log(this.forRole);
 
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
-        console.log(resUserRole);
+        const moduleName = resUserRole.map((forResUserRole) => {
+          const dataModuleName = {
+            moduleName : forResUserRole.module_name,
+          };
+          return dataModuleName;
+        });
+        console.log('all', resUserRole);
+        console.log('moduleName', moduleName);
       });
     });
   }

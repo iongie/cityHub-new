@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'ngx-detail',
   templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.scss']
+  styleUrls: ['./detail.component.scss'],
 })
 export class DetailComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
