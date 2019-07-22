@@ -53,7 +53,7 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       };
       return xyz;
     });
-    this.data[0].title = 'View';
+    this.data[0].title = 'VIEW';
     this.data[0].icon = 'fa fa-search-plus';
     this.data[1].title = 'DELETE';
     this.data[1].icon = 'fa fa-trash';
