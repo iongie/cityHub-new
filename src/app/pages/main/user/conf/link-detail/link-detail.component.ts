@@ -22,20 +22,12 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       data: {
         id: '',
         status: '',
-        roleCreate: '',
-        roleRead: '',
-        roleUpdate: '',
-        roleDelete: '',
       },
     },
     { title: '',
       data: {
         id: '',
         status: '',
-        roleCreate: '',
-        roleRead: '',
-        roleUpdate: '',
-        roleDelete: '',
       },
     },
   ];
@@ -49,27 +41,34 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   ngOnInit() {
     this.renderValue = this.value.userId;
     this.action();
+    this.viewOption();
+  }
+
+  ngOnDestroy() {
+    this.subs.next();
+    this.subs.complete();
+  }
+
+  viewOption() {
     this.data = this.items.map((y) => {
       const xyz = {
         title: '',
         data: {
           id: this.value.userId,
           status: this.value.userStatus,
-          roleCreate: this.value.userRoleCreate,
-          roleRead: this.value.userRoleRead,
-          roleUpdate: this.value.userRoleUpdate,
-          roleDelete: this.value.userRoleDelete,
         },
       };
       return xyz;
     });
     this.data[0].title = 'View';
     this.data[1].title = 'Change Status';
-  }
-
-  ngOnDestroy() {
-    this.subs.next();
-    this.subs.complete();
+    if (this.value.userRoleUpdate === 'allowed') {
+      this.items;
+    }else if (this.value.userRoleUpdate === 'not allowed') {
+      this.items.filter((y) =>{
+        return y.title === 'View';
+      });
+    }
   }
 
   action() {
