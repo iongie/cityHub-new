@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NotificationService } from '../../../../../services/notification/notification.service';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from '../../../../../services/auth/auth.service';
+import { UserRoleService } from '../../../../../services/user-role/user-role.service';
 
 @Component({
   selector: 'ngx-add',
@@ -18,16 +19,20 @@ export class AddComponent implements OnInit, OnDestroy {
   };
   privilege: any;
   userCityHub: any;
+  forRole: any;
+  show: any;
   private subs: Subject<void> = new Subject();
   constructor(
     public taxServ: TaxService,
     public router: Router,
     public notifServ: NotificationService,
     public authServ: AuthService,
+    public userRoleServ: UserRoleService,
   ) { }
 
   ngOnInit() {
     this.getPrivilege();
+    this.detailUserRole();
   }
 
   ngOnDestroy() {
@@ -79,6 +84,41 @@ export class AddComponent implements OnInit, OnDestroy {
     console.log(this.tax);
   }
 
+  detailUserRole() {
+    const data = {
+      token: localStorage.getItem('p_l1oxt'),
+    };
+    this.authServ.detailAfterLogin(data).pipe(takeUntil(this.subs)).subscribe(res => {
+      this.forRole = {
+        id : res[0].privilege_id,
+      };
 
+      console.log(this.forRole);
+
+      this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
+        const filter = resUserRole.filter((forResUserRole) => {
+          return forResUserRole.module_name === 'tax_module';
+        });
+
+        if (filter[0].create_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].create_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].read_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].read_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].update_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].update_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].delete_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].delete_permision === 'not allowed') {
+          this.show = false;
+        }
+      });
+    });
+  }
 
 }
