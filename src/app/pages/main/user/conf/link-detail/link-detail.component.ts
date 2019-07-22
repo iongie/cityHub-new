@@ -14,7 +14,6 @@ import { Subject } from 'rxjs';
 })
 export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   renderValue: any;
-
   @Input() value: any;
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
@@ -23,17 +22,23 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       data: {
         id: '',
         status: '',
+        roleCreate: '',
+        roleRead: '',
+        roleUpdate: '',
+        roleDelete: '',
       },
     },
     { title: '',
       data: {
         id: '',
         status: '',
+        roleCreate: '',
+        roleRead: '',
+        roleUpdate: '',
+        roleDelete: '',
       },
     },
   ];
-
-  tes: any[];
   data: any[];
   constructor(
     private nbMenuService: NbMenuService,
@@ -50,16 +55,16 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
         data: {
           id: this.value.userId,
           status: this.value.userStatus,
+          roleCreate: this.value.userRoleCreate,
+          roleRead: this.value.userRoleRead,
+          roleUpdate: this.value.userRoleUpdate,
+          roleDelete: this.value.userRoleDelete,
         },
       };
       return xyz;
     });
     this.data[0].title = 'View';
     this.data[1].title = 'Change Status';
-    // console.log('value', this.value.userId);
-    // console.log('items', this.items);
-    // console.log('data', this.data);
-    // console.log('rowData', this.rowData);
   }
 
   ngOnDestroy() {
@@ -74,10 +79,8 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       map(({item}) => item),
     ).subscribe(item => {
       if (item.data.id === this.renderValue && item.title === 'View') {
-        console.log('v', item.data.id );
         this.router.navigate(['/pages/view-user', this.renderValue]);
       }else if (item.data.id === this.renderValue && item.title === 'Change Status') {
-        console.log('cs', this.renderValue);
         const data = {
           id: this.renderValue,
         };
@@ -88,10 +91,6 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
             setTimeout(() => {
               this.notifServ.showInfoTypeToast(title, content);
             }, 2000);
-            setTimeout(() => {
-              // this.router.navigateByUrl('/pages/user', {skipLocationChange: true}).then(() =>
-              // this.router.navigate(['pages/user']));
-            }, 1000);
           });
         } else if (item.data.status === 'inactive') {
           this.authServ.activeAuth(data).pipe(takeUntil(this.subs)).subscribe(() => {
@@ -100,10 +99,6 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
             setTimeout(() => {
               this.notifServ.showInfoTypeToast(title, content);
             }, 2000);
-            setTimeout(() => {
-              // this.router.navigateByUrl('/pages/user', {skipLocationChange: true}).then(() =>
-              // this.router.navigate(['pages/user']));
-            }, 1000);
           });
         }
       }
