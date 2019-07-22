@@ -18,6 +18,7 @@
         type="text"
         nbInput
         fullWidth
+        [disabled]="show === false"
         class="form-control"
         [(ngModel)]="season.name"
         id="name"
@@ -33,6 +34,7 @@
         nbInput
         fullWidth
         class="form-control"
+        [disabled]="show === false"
         [(ngModel)]="season.typeId"
         id="typeId"
         name="typeId"
@@ -49,6 +51,7 @@
         <textarea
         nbInput
         fullWidth
+        [disabled]="show === false"
         class="form-control"
         [(ngModel)]="season.desc"
         id="desc"
@@ -68,6 +71,7 @@
           class="form-control"
           id="fromDate"
           name="fromDate"
+          [disabled]="show === false"
           required
           #fromDate="ngModel"
           placeholder="From Date">
@@ -85,6 +89,7 @@
           id="toDate"
           name="toDate"
           required
+          [disabled]="show === false"
           #toDate="ngModel"
           placeholder="From Date">
           <nb-datepicker
@@ -104,6 +109,7 @@
           id="startDate"
           name="startDate"
           required
+          [disabled]="show === false"
           #startDate="ngModel"
           placeholder="Start Date">
           <nb-datepicker
@@ -114,6 +120,7 @@
         <div class="form-group col-md-6">
           <label for="inputPassword4">End Date</label>
           <input
+          [disabled]="show === false"
           [nbDatepicker]="endDate"
           [(ngModel)]="season.endDate"
           class="form-control"
@@ -130,7 +137,7 @@
       </div>
 
       <div class="buttons">
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary" *ngIf="show">Update</button>
         <button type="button" class="btn btn-warning" [routerLink]="['/pages/season']" routerLinkActive="router-link-active" >Cancel</button>
       </div>
     </form>

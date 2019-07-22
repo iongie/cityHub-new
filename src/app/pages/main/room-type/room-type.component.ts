@@ -7,6 +7,8 @@ import { RoomTypeService } from '../../../services/room-type/room-type.service';
 import { NotificationService } from '../../../services/notification/notification.service';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
+import { UserRoleService } from '../../../services/user-role/user-role.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'ngx-room-type',
@@ -16,6 +18,8 @@ import { takeUntil } from 'rxjs/operators';
 export class RoomTypeComponent implements OnInit, OnDestroy {
   roomType: LocalDataSource;
   private subs: Subject<void> = new Subject();
+  forRole: any;
+  show: any;
   settings = {
     actions: false,
     columns: {
@@ -63,6 +67,8 @@ export class RoomTypeComponent implements OnInit, OnDestroy {
     public roomTypeServ: RoomTypeService,
     public notifServ: NotificationService,
     public router: Router,
+    public userRoleServ: UserRoleService,
+    public authServ: AuthService,
   ) { }
 
   ngOnInit() {
@@ -76,27 +82,66 @@ export class RoomTypeComponent implements OnInit, OnDestroy {
   }
 
   getRoomType() {
-    this.roomTypeServ.get().pipe(takeUntil(this.subs)).subscribe(resRoomType => {
-      const data = resRoomType.map((forResRoomType) => {
-        const DataForResRoomType = {
-          roomTypeId: forResRoomType.room_type_id,
-          roomTypeName: forResRoomType.room_type_name,
-          baseAdult: forResRoomType.base_adult,
-          baseChild: forResRoomType.base_child,
-          maxAdult: forResRoomType.max_adult,
-          maxChild: forResRoomType.max_child,
-          roomDesc: forResRoomType.room_description,
-          baseRate: forResRoomType.base_rate,
-          increaseRate: forResRoomType.increase_rate,
-          detail: {
-            roomTypeId: forResRoomType.room_type_id,
-          },
-        };
-        return DataForResRoomType;
-      });
-      this.roomType = new LocalDataSource (data);
-    }, err => {
+    const token = {
+      token: localStorage.getItem('p_l1oxt'),
+    };
+    this.authServ.detailAfterLogin(token).pipe(takeUntil(this.subs)).subscribe(res => {
+      this.forRole = {
+        id : res[0].privilege_id,
+      };
 
+      console.log(this.forRole);
+
+      this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
+        const filter = resUserRole.filter((forResUserRole) => {
+          return forResUserRole.module_name === 'room_type_module';
+        });
+
+        if (filter[0].create_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].create_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].read_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].read_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].update_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].update_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].delete_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].delete_permision === 'not allowed') {
+          this.show = false;
+        }
+
+        this.roomTypeServ.get().pipe(takeUntil(this.subs)).subscribe(resRoomType => {
+          const data = resRoomType.map((forResRoomType) => {
+            const DataForResRoomType = {
+              roomTypeId: forResRoomType.room_type_id,
+              roomTypeName: forResRoomType.room_type_name,
+              baseAdult: forResRoomType.base_adult,
+              baseChild: forResRoomType.base_child,
+              maxAdult: forResRoomType.max_adult,
+              maxChild: forResRoomType.max_child,
+              roomDesc: forResRoomType.room_description,
+              baseRate: forResRoomType.base_rate,
+              increaseRate: forResRoomType.increase_rate,
+              detail: {
+                roomTypeId: forResRoomType.room_type_id,
+                roomTypeRoleCreate: filter[0].create_permision,
+                roomTypeRoleRead: filter[0].read_permision,
+                roomTypeRoleUpdate: filter[0].update_permision,
+                roomTypeRoleDelete: filter[0].delete_permision,
+              },
+            };
+            return DataForResRoomType;
+          });
+          this.roomType = new LocalDataSource (data);
+        }, err => {
+
+        });
+      });
     });
   }
 
@@ -109,5 +154,4 @@ export class RoomTypeComponent implements OnInit, OnDestroy {
   toFormAdd() {
     this.router.navigate(['pages/add-room-type']);
   }
-
 }

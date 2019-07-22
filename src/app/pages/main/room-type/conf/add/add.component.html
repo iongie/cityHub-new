@@ -18,6 +18,7 @@
          type="text"
          nbInput
          fullWidth
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="roomType.roomTypeName"
          id="roomTypeName"
@@ -33,7 +34,8 @@
          type="number"
          nbInput
          fullWidth
-         min="1"
+         [disabled]="show === false"
+         min="0"
          class="form-control"
          [(ngModel)]="roomType.baseAdult"
          id="baseAdult"
@@ -49,7 +51,8 @@
          type="number"
          nbInput
          fullWidth
-         min="1"
+         [disabled]="show === false"
+         min="0"
          class="form-control"
          [(ngModel)]="roomType.basechild"
          id="basechild"
@@ -65,7 +68,8 @@
          type="number"
          nbInput
          fullWidth
-         min="1"
+         [disabled]="show === false"
+         min="0"
          class="form-control"
          [(ngModel)]="roomType.maxAdult"
          id="maxAdult"
@@ -81,7 +85,8 @@
          type="number"
          nbInput
          fullWidth
-         min="1"
+         [disabled]="show === false"
+         min="0"
          class="form-control"
          [(ngModel)]="roomType.maxchild"
          id="maxchild"
@@ -97,7 +102,8 @@
          type="text"
          nbInput
          fullWidth
-         currencyMask 
+         currencyMask
+         [disabled]="show === false" 
          class="form-control"
          [(ngModel)]="roomType.baseRate"
          id="baseRate"
@@ -114,6 +120,7 @@
          nbInput
          fullWidth
          currencyMask 
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="roomType.increaseRate"
          id="increaseRate"
@@ -128,6 +135,7 @@
         <textarea
          nbInput
          fullWidth
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="roomType.roomDesc"
          id="roomDesc"
@@ -139,7 +147,7 @@
       </div>
 
       <div class="buttons">
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn btn-primary" *ngIf="show">Add</button>
         <button type="button" class="btn btn-warning" [routerLink]="['/pages/room-type']" routerLinkActive="router-link-active" >Cancel</button>
       </div>
     </form>

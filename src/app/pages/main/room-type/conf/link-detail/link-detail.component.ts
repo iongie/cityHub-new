@@ -10,7 +10,7 @@ import { takeUntil, filter, map } from 'rxjs/operators';
 @Component({
   selector: 'ngx-link-detail',
   templateUrl: './link-detail.component.html',
-  styleUrls: ['./link-detail.component.scss']
+  styleUrls: ['./link-detail.component.scss'],
 })
 export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   renderValue: any;
@@ -19,13 +19,15 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
   items = [
-    { title: '',
+    { title: 'VIEW',
+      icon: 'fa fa-search-plus',
       data: {
         id: '',
         status: '',
       },
     },
-    { title: '',
+    { title: 'DELETE',
+      icon: 'fa fa-trash',
       data: {
         id: '',
         status: '',
@@ -44,24 +46,32 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
     console.log('rowData', this.rowData);
     this.renderValue = this.value.roomTypeId;
     this.action();
-    this.data = this.items.map((y) => {
+    this.viewOption();
+  }
+
+  ngOnDestroy() {
+    this.subs.next();
+    this.subs.complete();
+  }
+
+  viewOption() {
+    const dataMap = this.items.map((y) => {
       const xyz = {
-        title: '',
+        title: y.title,
+        icon: y.icon,
         data: {
           id: this.value.roomTypeId,
         },
       };
       return xyz;
     });
-    this.data[0].title = 'VIEW';
-    this.data[0].icon = 'fa fa-search-plus';
-    this.data[1].title = 'DELETE';
-    this.data[1].icon = 'fa fa-trash';
-  }
-
-  ngOnDestroy() {
-    this.subs.next();
-    this.subs.complete();
+    if (this.value.roomTypeRoleUpdate === 'allowed') {
+      this.data = dataMap;
+    }else if (this.value.roomTypeRoleUpdate === 'not allowed') {
+      this.data = dataMap.filter((fil) => {
+        return fil.title === 'VIEW';
+      });
+    }
   }
 
   action() {
@@ -70,9 +80,9 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       filter(({ tag }) => tag === 'room-type'),
       map(({item}) => item),
     ).subscribe(item => {
-      if (item.data.id === this.renderValue && item.title === 'View') {
+      if (item.data.id === this.renderValue && item.title === 'VIEW') {
         this.router.navigate(['/pages/view-room-type', this.renderValue]);
-      }else if (item.data.id === this.renderValue && item.title === 'Delete') {
+      }else if (item.data.id === this.renderValue && item.title === 'DELETE') {
         const data = {
           id: this.renderValue,
         };

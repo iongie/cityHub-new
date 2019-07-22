@@ -18,6 +18,7 @@
           type="text"
           nbInput
           fullWidth
+          [disabled]="show === false"
           class="form-control"
           [(ngModel)]="season.name"
           id="name"
@@ -32,6 +33,7 @@
           <select
           nbInput
           fullWidth
+          [disabled]="show === false"
           class="form-control"
           [(ngModel)]="season.typeId"
           id="typeId"
@@ -49,6 +51,7 @@
           <textarea
           nbInput
           fullWidth
+          [disabled]="show === false"
           class="form-control"
           [(ngModel)]="season.desc"
           id="desc"
@@ -69,6 +72,7 @@
             id="fromDate"
             name="fromDate"
             required
+            [disabled]="show === false"
             #fromDate="ngModel"
             placeholder="From Date">
             <nb-datepicker
@@ -85,6 +89,7 @@
             id="toDate"
             name="toDate"
             required
+            [disabled]="show === false"
             #toDate="ngModel"
             placeholder="From Date">
             <nb-datepicker
@@ -104,6 +109,7 @@
             id="startDate"
             name="startDate"
             required
+            [disabled]="show === false"
             #startDate="ngModel"
             placeholder="Start Date">
             <nb-datepicker
@@ -120,6 +126,7 @@
             id="endDate"
             name="endDate"
             required
+            [disabled]="show === false"
             #endDate="ngModel"
             placeholder="End Date">
             <nb-datepicker
@@ -130,7 +137,7 @@
         </div>
 
         <div class="buttons">
-          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="submit" class="btn btn-primary" *ngIf="show">Save</button>
           <button type="button" class="btn btn-warning" [routerLink]="['/pages/season']" routerLinkActive="router-link-active" >Cancel</button>
         </div>
       </nb-card-body>
