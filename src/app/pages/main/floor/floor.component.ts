@@ -6,6 +6,8 @@ import { NotificationService } from '../../../services/notification/notification
 import { takeUntil } from 'rxjs/operators';
 import { LinkDetailComponent } from './conf/link-detail/link-detail.component';
 import { Router } from '@angular/router';
+import { UserRoleService } from '../../../services/user-role/user-role.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'ngx-floor',
@@ -15,6 +17,8 @@ import { Router } from '@angular/router';
 export class FloorComponent implements OnInit, OnDestroy {
   floor: LocalDataSource;
   private subs: Subject<void> = new Subject();
+  forRole: any;
+  show: any;
   settings = {
     actions: false,
     columns: {
@@ -38,6 +42,8 @@ export class FloorComponent implements OnInit, OnDestroy {
     public floorServ: FloorService,
     public notifServ: NotificationService,
     public router: Router,
+    public userRoleServ: UserRoleService,
+    public authServ: AuthService,
   ) { }
 
   ngOnInit() {
@@ -50,20 +56,59 @@ export class FloorComponent implements OnInit, OnDestroy {
   }
 
   getFloor() {
-    this.floorServ.get().pipe(takeUntil(this.subs)).subscribe(floor => {
-      const data =  floor.map((y) => {
-        const z = {
-          floorName: y.floor_name,
-          floorStatus: y.floor_db_status,
-          floorId: y.floor_id,
-          detail: {
-            floorId: y.floor_id,
-            floorStatus: y.floor_db_status,
-          },
-        };
-        return z;
+    const token = {
+      token: localStorage.getItem('p_l1oxt'),
+    };
+    this.authServ.detailAfterLogin(token).pipe(takeUntil(this.subs)).subscribe(res => {
+      this.forRole = {
+        id : res[0].privilege_id,
+      };
+
+      console.log(this.forRole);
+
+      this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
+        const filter = resUserRole.filter((forResUserRole) => {
+          return forResUserRole.module_name === 'floor_module';
+        });
+
+        if (filter[0].create_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].create_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].read_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].read_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].update_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].update_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].delete_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].delete_permision === 'not allowed') {
+          this.show = false;
+        }
+
+        this.floorServ.get().pipe(takeUntil(this.subs)).subscribe(floor => {
+          const data =  floor.map((y) => {
+            const z = {
+              floorName: y.floor_name,
+              floorStatus: y.floor_db_status,
+              floorId: y.floor_id,
+              detail: {
+                floorId: y.floor_id,
+                floorStatus: y.floor_db_status,
+                floorRoleCreate: filter[0].create_permision,
+                floorRoleRead: filter[0].read_permision,
+                floorRoleUpdate: filter[0].update_permision,
+                floorRoleDelete: filter[0].delete_permision,
+              },
+            };
+            return z;
+          });
+          this.floor = new LocalDataSource (data);
+        });
       });
-      this.floor = new LocalDataSource (data);
     });
   }
 

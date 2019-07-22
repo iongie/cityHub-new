@@ -19,18 +19,12 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
   items = [
-    { title: '',
+    { title: 'View',
       data: {
         id: '',
         status: '',
       },
     },
-    // { title: '',
-    //   data: {
-    //     id: '',
-    //     status: '',
-    //   },
-    // },
   ];
   data: any[];
   constructor(
@@ -43,9 +37,18 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   ngOnInit() {
     this.renderValue = this.value.taxId;
     this.action();
-    this.data = this.items.map((y) => {
+    this.viewOption();
+  }
+
+  ngOnDestroy() {
+    this.subs.next();
+    this.subs.complete();
+  }
+
+  viewOption() {
+    const dataMap = this.items.map((y) => {
       const xyz = {
-        title: '',
+        title: y.title,
         data: {
           id: this.value.taxId,
           status: this.value.taxStatus,
@@ -53,15 +56,13 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       };
       return xyz;
     });
-    this.data[0].title = 'View';
-    // this.data[1].title = 'Change Status';
-    console.log(this.value);
-    console.log(this.renderValue);
-  }
-
-  ngOnDestroy() {
-    this.subs.next();
-    this.subs.complete();
+    if (this.value.taxeRoleUpdate === 'allowed') {
+      this.data = dataMap;
+    }else if (this.value.taxRoleUpdate === 'not allowed') {
+      this.data = dataMap.filter((fil) => {
+        return fil.title === 'View';
+      });
+    }
   }
 
   action() {

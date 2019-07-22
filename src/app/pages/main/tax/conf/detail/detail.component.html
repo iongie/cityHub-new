@@ -1,7 +1,7 @@
 <nb-card>
   <nb-card-header>
     <div class="row">
-      <div class="col-auto mr-auto">User Management</div>
+      <div class="col-auto mr-auto">Tax Management</div>
       <!-- <div class="col-auto">
         <button type="submit" class="btn btn-primary">
           <i class="fa fa-plus" aria-hidden="true"></i>
@@ -18,6 +18,7 @@
          type="text"
          nbInput
          fullWidth
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="tax.taxName"
          id="taxName"
@@ -33,6 +34,7 @@
          type="text"
          nbInput
          fullWidth
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="tax.taxRate"
          id="username"
@@ -43,7 +45,7 @@
       </div>
 
       <div class="buttons">
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary" *ngIf="show">Update</button>
         <button type="button" class="btn btn-warning" [routerLink]="['/pages/tax']" routerLinkActive="router-link-active" >Cancel</button>
       </div>
     </form>
