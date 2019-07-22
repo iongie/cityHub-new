@@ -19,13 +19,15 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
   items = [
-    { title: '',
+    { title: 'View',
+      icon: 'fa fa-search-plus',
       data: {
         id: '',
         status: '',
       },
     },
-    { title: '',
+    { title: 'Change Status',
+      icon: 'fa fa-trash',
       data: {
         id: '',
         status: '',
@@ -41,25 +43,34 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   ) { }
 
   ngOnInit() {
-    console.log('rowData', this.rowData);
     this.renderValue = this.value.roomId;
     this.action();
-    this.data = this.items.map((y) => {
+    this.viewOption();
+  }
+
+  ngOnDestroy() {
+    this.subs.next();
+    this.subs.complete();
+  }
+
+  viewOption() {
+    const dataMap = this.items.map((y) => {
       const xyz = {
-        title: '',
+        title: y.title,
+        icon: y.icon,
         data: {
           id: this.value.roomId,
         },
       };
       return xyz;
     });
-    this.data[0].title = 'View';
-    this.data[1].title = 'Change Status';
-  }
-
-  ngOnDestroy() {
-    this.subs.next();
-    this.subs.complete();
+    if (this.value.roomRoleUpdate === 'allowed') {
+      this.data = dataMap;
+    }else if (this.value.roomRoleUpdate === 'not allowed') {
+      this.data = dataMap.filter((fil) => {
+        return fil.title === 'View';
+      });
+    }
   }
 
   action() {

@@ -19,12 +19,14 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   private subs: Subject<void> = new Subject();
   items = [
     { title: 'View',
+      icon: 'fa fa-search-plus',
       data: {
         id: '',
         status: '',
       },
     },
     { title: 'Change Status',
+      icon: 'fa fa-trash',
       data: {
         id: '',
         status: '',
@@ -53,6 +55,7 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
     const dataMap = this.items.map((y) => {
       const xyz = {
         title: y.title,
+        icon: y.icon,
         data: {
           id: this.value.userId,
           status: this.value.userStatus,

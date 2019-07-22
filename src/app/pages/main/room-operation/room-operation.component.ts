@@ -10,6 +10,8 @@ import { LinkDetailComponent } from './conf/link-detail/link-detail.component';
 import { StatusComponent } from './conf/status/status.component';
 import { takeUntil } from 'rxjs/operators';
 import { RoomStatusService } from '../../../services/room-status/room-status.service';
+import { AuthService } from '../../../services/auth/auth.service';
+import { UserRoleService } from '../../../services/user-role/user-role.service';
 
 @Component({
   selector: 'ngx-room-operation',
@@ -19,6 +21,8 @@ import { RoomStatusService } from '../../../services/room-status/room-status.ser
 export class RoomOperationComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
   roomOperation: LocalDataSource;
+  forRole: any;
+  show: any;
   settings = {
     actions: false,
     columns: {
@@ -63,6 +67,8 @@ export class RoomOperationComponent implements OnInit, OnDestroy {
     public roomStatus: RoomStatusService,
     public notifServ: NotificationService,
     public router: Router,
+    public userRoleServ: UserRoleService,
+    public authServ: AuthService,
   ) { }
 
   ngOnInit() {
@@ -76,49 +82,88 @@ export class RoomOperationComponent implements OnInit, OnDestroy {
   }
 
   getRoom() {
-    this.roomOperationServ.get().pipe(takeUntil(this.subs)).subscribe(resRoomOperation => {
-      this.floorServ.get().pipe(takeUntil(this.subs)).subscribe(resFloor => {
-        this.roomTypeServ.get().pipe(takeUntil(this.subs)).subscribe(resRoomType => {
-          this.roomStatus.get().pipe(takeUntil(this.subs)).subscribe(resRoomStatus => {
-            const data = resRoomOperation.map((forResRoom) => {
-              const filterResFloor = resFloor.filter((abc) => {
-                return abc.floor_id === forResRoom.floor_id && abc.floor_db_status === 'active';
+    const token = {
+      token: localStorage.getItem('p_l1oxt'),
+    };
+    this.authServ.detailAfterLogin(token).pipe(takeUntil(this.subs)).subscribe(res => {
+      this.forRole = {
+        id : res[0].privilege_id,
+      };
+
+      console.log(this.forRole);
+
+      this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
+        const filter = resUserRole.filter((forResUserRole) => {
+          return forResUserRole.module_name === 'room_type_module';
+        });
+
+        if (filter[0].create_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].create_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].read_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].read_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].update_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].update_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].delete_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].delete_permision === 'not allowed') {
+          this.show = false;
+        }
+
+        this.roomOperationServ.get().pipe(takeUntil(this.subs)).subscribe(resRoomOperation => {
+          this.floorServ.get().pipe(takeUntil(this.subs)).subscribe(resFloor => {
+            this.roomTypeServ.get().pipe(takeUntil(this.subs)).subscribe(resRoomType => {
+              this.roomStatus.get().pipe(takeUntil(this.subs)).subscribe(resRoomStatus => {
+                const data = resRoomOperation.map((forResRoom) => {
+                  const filterResFloor = resFloor.filter((abc) => {
+                    return abc.floor_id === forResRoom.floor_id && abc.floor_db_status === 'active';
+                  });
+                  const filterResRoomType = resRoomType.filter((def) => {
+                    return def.room_type_id === forResRoom.room_type_id;
+                  });
+                  const filterResRoomStatus = resRoomStatus.filter((ghi) => {
+                    return ghi.room_status_id === forResRoom.room_status_id;
+                  });
+                  const DataForResRoomType = {
+                    roomId: forResRoom.room_id,
+                    roomName: forResRoom.room_name,
+                    roomtypeId: forResRoom.room_type_id,
+                    roomTypeName: filterResRoomType[0].room_type_name,
+                    floorId: forResRoom.floor_id,
+                    floorName: filterResFloor[0].floor_name,
+                    roomStatusId: forResRoom.room_status_id,
+                    roomStatusName: filterResRoomStatus[0].room_status_name,
+                    roomDbStatus: forResRoom.room_db_status,
+                    createdAt: forResRoom.created_at,
+                    updatedAt: forResRoom.updated_at,
+                    createdBy: forResRoom.created_by,
+                    updatedBy: forResRoom.updated_by,
+                    detail: {
+                      roomId: forResRoom.room_id,
+                      roomRoleCreate: filter[0].create_permision,
+                      roomRoleRead: filter[0].read_permision,
+                      roomRoleUpdate: filter[0].update_permision,
+                      roomRoleDelete: filter[0].delete_permision,
+                    },
+                    status: {
+                      roomDbStatus: forResRoom.room_db_status,
+                    },
+                  };
+                  return DataForResRoomType;
+                });
+                this.roomOperation = new LocalDataSource (data);
               });
-              const filterResRoomType = resRoomType.filter((def) => {
-                return def.room_type_id === forResRoom.room_type_id;
-              });
-              const filterResRoomStatus = resRoomStatus.filter((ghi) => {
-                return ghi.room_status_id === forResRoom.room_status_id;
-              });
-              const DataForResRoomType = {
-                roomId: forResRoom.room_id,
-                roomName: forResRoom.room_name,
-                roomtypeId: forResRoom.room_type_id,
-                roomTypeName: filterResRoomType[0].room_type_name,
-                floorId: forResRoom.floor_id,
-                floorName: filterResFloor[0].floor_name,
-                roomStatusId: forResRoom.room_status_id,
-                roomStatusName: filterResRoomStatus[0].room_status_name,
-                roomDbStatus: forResRoom.room_db_status,
-                createdAt: forResRoom.created_at,
-                updatedAt: forResRoom.updated_at,
-                createdBy: forResRoom.created_by,
-                updatedBy: forResRoom.updated_by,
-                detail: {
-                  roomId: forResRoom.room_id,
-                },
-                status: {
-                  roomDbStatus: forResRoom.room_db_status,
-                },
-              };
-              return DataForResRoomType;
             });
-            this.roomOperation = new LocalDataSource (data);
           });
+        }, err => {
+
         });
       });
-    }, err => {
-
     });
   }
 

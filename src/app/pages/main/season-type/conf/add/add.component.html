@@ -18,6 +18,7 @@
          type="text"
          nbInput
          fullWidth
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="seasonType.seasonTypeName"
          id="seasonTypeName"
@@ -33,6 +34,7 @@
          type="text"
          nbInput
          fullWidth
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="seasonType.seasonTypeDesc"
          id="seasonTypeDesc"
@@ -43,7 +45,7 @@
       </div>
 
       <div class="buttons">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary" *ngIf="show">Save</button>
         <button type="button" class="btn btn-warning" [routerLink]="['/pages/season-type']" routerLinkActive="router-link-active" >Cancel</button>
       </div>
     </form>

@@ -8,6 +8,7 @@ import { RoomOperationService } from '../../../../../services/room-operation/roo
 import { RoomStatusService } from '../../../../../services/room-status/room-status.service';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from '../../../../../services/auth/auth.service';
+import { UserRoleService } from '../../../../../services/user-role/user-role.service';
 
 @Component({
   selector: 'ngx-add',
@@ -26,6 +27,8 @@ export class AddComponent implements OnInit, OnDestroy {
   status: any[];
   roomType: any[];
   userCityHub: any;
+  forRole: any;
+  show: any;
   private subs: Subject<void> = new Subject();
   constructor(
     public roomTypeServ: RoomTypeService,
@@ -35,6 +38,7 @@ export class AddComponent implements OnInit, OnDestroy {
     public authServ: AuthService,
     public notifServ: NotificationService,
     public router: Router,
+    public userRoleServ: UserRoleService,
   ) { }
 
   ngOnInit() {
@@ -42,6 +46,7 @@ export class AddComponent implements OnInit, OnDestroy {
     this.getRoomStatus();
     this.getRoomType();
     this.detailAccount();
+    this.detailUserRole();
   }
 
   ngOnDestroy() {
@@ -122,6 +127,43 @@ export class AddComponent implements OnInit, OnDestroy {
       const title = 'Room operation';
       const content = 'Error';
       this.notifServ.showInfoTypeToast(title, content);
+    });
+  }
+
+  detailUserRole() {
+    const data = {
+      token: localStorage.getItem('p_l1oxt'),
+    };
+    this.authServ.detailAfterLogin(data).pipe(takeUntil(this.subs)).subscribe(res => {
+      this.forRole = {
+        id : res[0].privilege_id,
+      };
+
+      console.log(this.forRole);
+
+      this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
+        const filter = resUserRole.filter((forResUserRole) => {
+          return forResUserRole.module_name === 'room_module';
+        });
+
+        if (filter[0].create_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].create_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].read_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].read_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].update_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].update_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].delete_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].delete_permision === 'not allowed') {
+          this.show = false;
+        }
+      });
     });
   }
 
