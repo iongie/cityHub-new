@@ -18,16 +18,14 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   @Input() value: any;
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
-
-  @Output() private status = new EventEmitter<any>();
   items = [
-    { title: '',
+    { title: 'View',
       data: {
         id: '',
         status: '',
       },
     },
-    { title: '',
+    { title: 'Change Status',
       data: {
         id: '',
         status: '',
@@ -35,7 +33,6 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
     },
   ];
   data: any[];
-  message = 'Hola Mundo!';
   constructor(
     private nbMenuService: NbMenuService,
     private extraChargeServ: ExtraChargeService,
@@ -44,12 +41,20 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   ) { }
 
   ngOnInit() {
-    console.log('rowData', this.rowData);
     this.renderValue = this.value.extraChargeId;
     this.action();
-    this.data = this.items.map((y) => {
+    this.viewOption();
+  }
+
+  ngOnDestroy() {
+    this.subs.next();
+    this.subs.complete();
+  }
+
+  viewOption() {
+    const dataMap = this.items.map((y) => {
       const xyz = {
-        title: '',
+        title: y.title,
         data: {
           id: this.value.extraChargeId,
           status: this.value.extraChargeStatus,
@@ -57,13 +62,13 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       };
       return xyz;
     });
-    this.data[0].title = 'View';
-    this.data[1].title = 'Change Status';
-  }
-
-  ngOnDestroy() {
-    this.subs.next();
-    this.subs.complete();
+    if (this.value.extraChargeRoleUpdate === 'allowed') {
+      this.data = dataMap;
+    }else if (this.value.extraChargeRoleUpdate === 'not allowed') {
+      this.data = dataMap.filter((fil) => {
+        return fil.title === 'View';
+      });
+    }
   }
 
   action() {

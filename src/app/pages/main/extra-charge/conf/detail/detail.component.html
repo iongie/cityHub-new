@@ -10,13 +10,14 @@
     </div>
   </nb-card-header>
 
-  <nb-card-body **ngFor="let extraCharge of extraCharge">
+  <nb-card-body *ngFor="let extraCharge of extraCharge">
     <form #ngForm="ngForm" (submit)="addExtraCharge()" ngNativeValidate>
       <div class="form-group">
         <label for="exampleFormControlSelect1">Category</label>
         <select
          nbInput
          fullWidth
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="extraCharge.extraChargeCategoryId"
          id="extraChargeCategoryId"
@@ -24,8 +25,8 @@
          required
          #extraChargeCategoryId="ngModel">
           <option
-          *ngFor="let extarChangeCategory of extarChangeCategory"
-          value="{{floor.extraChargeCategoryId}}">{{floor.extraChargeCategoryName}}</option>
+          *ngFor="let extraChargeCategory of extraChargeCategory"
+          value="{{extraChargeCategory.extraChargeCategoryId}}">{{extraChargeCategory.extraChargeCategoryName}}</option>
         </select>
       </div>
 
@@ -35,6 +36,7 @@
          type="text"
          nbInput
          fullWidth
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="extraCharge.extraChargeName"
          id="extraChargeName"
@@ -50,6 +52,7 @@
          type="text"
          nbInput
          fullWidth
+         [disabled]="show === false"
          currencyMask
          class="form-control"
          [(ngModel)]="extraCharge.extraChargeRate"
@@ -65,6 +68,7 @@
         <textarea
          nbInput
          fullWidth
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="extraCharge.extraChargeDescription"
          id="extraChargeDescription"
@@ -75,7 +79,7 @@
       </div>
 
       <div class="buttons">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary" *ngIf="show">Save</button>
         <button type="button" class="btn btn-warning" [routerLink]="['/pages/extra-charge']" routerLinkActive="router-link-active" >Cancel</button>
       </div>
     </form>

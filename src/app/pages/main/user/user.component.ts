@@ -118,24 +118,6 @@ export class UserComponent implements OnInit, OnDestroy {
           console.log(data);
           this.user = new LocalDataSource (data);
         });
-
-        // this.dataFilter = filter.map((forFilter) => {
-        //   const DataForFilter = {
-        //     createPermission: forFilter.create_permision,
-        //     readPermission: forFilter.read_permision,
-        //     updatePermission: forFilter.update_permision,
-        //     deletePermission: forFilter.delete_permision,
-        //     moduleDescription: forFilter.module_description,
-        //     moduleId: forFilter.module_id,
-        //     moduleName: forFilter.module_name,
-        //     privilegeDescription: forFilter.privilege_description,
-        //     privilegeId: forFilter.privilege_id,
-        //     privilegeName: forFilter.privilege_name,
-        //     userRoleId: forFilter.user_role_id,
-        //   };
-        //   return DataForFilter;
-        // });
-        // console.log('filter for module user', this.dataFilter);
       });
     });
   }

@@ -52,8 +52,8 @@ export class ExtraChargeService implements OnDestroy {
     );
   }
 
-  getById(seasonTypeId: any): Observable<any> {
-    return this.http.get<any>(this.url + '/extra-charge/show/' + seasonTypeId.id, httpOptions).pipe(
+  getById(roomOperationId: any): Observable<any> {
+    return this.http.get<any>(this.url + '/extra-charge/show/' + roomOperationId.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
