@@ -18,13 +18,13 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
   items = [
-    { title: '',
+    { title: 'View',
       data: {
         id: '',
         status: '',
       },
     },
-    { title: '',
+    { title: 'Change Status',
       data: {
         id: '',
         status: '',
@@ -50,9 +50,9 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   }
 
   viewOption() {
-    this.data = this.items.map((y) => {
+    const dataMap = this.items.map((y) => {
       const xyz = {
-        title: '',
+        title: y.title,
         data: {
           id: this.value.userId,
           status: this.value.userStatus,
@@ -60,14 +60,14 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       };
       return xyz;
     });
-    this.data[0].title = 'View';
-    this.data[1].title = 'Change Status';
     if (this.value.userRoleUpdate === 'allowed') {
-      this.items;
+      this.data = dataMap;
+      console.log('allowed', this.data);
     }else if (this.value.userRoleUpdate === 'not allowed') {
-      this.items.filter((y) =>{
-        return y.title === 'View';
+      this.data = dataMap.filter((fil) => {
+        return fil.title === 'View';
       });
+      console.log('not allowed', this.data);
     }
   }
 
