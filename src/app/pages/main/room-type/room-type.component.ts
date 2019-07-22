@@ -52,7 +52,7 @@ export class RoomTypeComponent implements OnInit, OnDestroy {
         type: 'string',
       },
       detail: {
-        title: 'Detail',
+        title: '',
         type: 'custom',
         renderComponent: LinkDetailComponent,
         filter: false,
