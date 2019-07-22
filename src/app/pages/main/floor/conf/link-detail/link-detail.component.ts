@@ -19,13 +19,13 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
   items = [
-    { title: '',
+    { title: 'View',
       data: {
         id: '',
         status: '',
       },
     },
-    { title: '',
+    { title: 'Change Status',
       data: {
         id: '',
         status: '',
@@ -43,9 +43,18 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   ngOnInit() {
     this.renderValue = this.value.floorId;
     this.action();
-    this.data = this.items.map((y) => {
+    this.viewOption();
+  }
+
+  ngOnDestroy() {
+    this.subs.next();
+    this.subs.complete();
+  }
+
+  viewOption() {
+    const dataMap = this.items.map((y) => {
       const xyz = {
-        title: '',
+        title: y.title,
         data: {
           id: this.value.floorId,
           status: this.value.floorStatus,
@@ -53,17 +62,13 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       };
       return xyz;
     });
-    this.data[0].title = 'View';
-    this.data[1].title = 'Change Status';
-    // console.log('value', this.value.userId);
-    // console.log('items', this.items);
-    // console.log('data', this.data);
-    // console.log('rowData', this.rowData);
-  }
-
-  ngOnDestroy() {
-    this.subs.next();
-    this.subs.complete();
+    if (this.value.floorRoleUpdate === 'allowed') {
+      this.data = dataMap;
+    }else if (this.value.floorRoleUpdate === 'not allowed') {
+      this.data = dataMap.filter((fil) => {
+        return fil.title === 'View';
+      });
+    }
   }
 
   action() {
