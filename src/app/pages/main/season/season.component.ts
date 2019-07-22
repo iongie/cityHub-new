@@ -7,6 +7,8 @@ import { takeUntil } from 'rxjs/operators';
 import { SeasonService } from '../../../services/season/season.service';
 import { SeasonTypeService } from '../../../services/season-type/season-type.service';
 import { LinkDetailComponent } from './conf/link-detail/link-detail.component';
+import { UserRoleService } from '../../../services/user-role/user-role.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'ngx-season',
@@ -16,6 +18,8 @@ import { LinkDetailComponent } from './conf/link-detail/link-detail.component';
 export class SeasonComponent implements OnInit, OnDestroy {
   season: LocalDataSource;
   private subs: Subject<void> = new Subject();
+  forRole: any;
+  show: any;
   settings = {
     actions: false,
     columns: {
@@ -44,6 +48,8 @@ export class SeasonComponent implements OnInit, OnDestroy {
     public seasonTypeServ: SeasonTypeService,
     public notifServ: NotificationService,
     public router: Router,
+    public userRoleServ: UserRoleService,
+    public authServ: AuthService,
   ) { }
 
   ngOnInit() {
@@ -56,44 +62,87 @@ export class SeasonComponent implements OnInit, OnDestroy {
   }
 
   getSeasonType() {
-    this.seasonServ.get().pipe(takeUntil(this.subs)).subscribe(season => {
-      this.seasonTypeServ.get().pipe(takeUntil(this.subs)).subscribe(seasonType2 => {
-        console.log('seasonType2', seasonType2);
-        const dataSeasonTypeId = season.map((y) => {
-          const xyz = seasonType2.filter((z) => {
-            return z.season_type_id === y.season_type_id;
-          });
-          const sdf =  {
-            seasonCreatedAt: y.created_at,
-            seasonCreatedBy: y.created_by,
-            seasonEndDate: y.end_date,
-            seasonFromDate: y.from_date,
-            seasonDesc: y.season_description,
-            seasonId: y.season_id,
-            seasonName: y.season_name,
-            seasonStatus: y.season_status,
-            seasonTypeId: y.season_type_id,
-            seasonTypeDesc: xyz[0].season_type_description,
-            seasonTypeName: xyz[0].season_type_name,
-            seasonStartDate: y.start_date,
-            seasonToDate: y.to_date,
-            seasonupdateAt: y.updated_at,
-            seasonUpdateBy: y.updated_by,
-            detail: {
-              seasonId: y.season_id,
-              seasonStatus: y.season_status,
-            },
-          };
-          return sdf;
-        });
-        this.season = new LocalDataSource (dataSeasonTypeId);
-        console.log('dataSeasonTypeId', dataSeasonTypeId);
-      });
-    });
+    
   }
 
   toFormAdd() {
     this.router.navigate(['/pages/add-season']);
+  }
+
+  tes() {
+    const token = {
+      token: localStorage.getItem('p_l1oxt'),
+    };
+    this.authServ.detailAfterLogin(token).pipe(takeUntil(this.subs)).subscribe(res => {
+      this.forRole = {
+        id : res[0].privilege_id,
+      };
+
+      console.log(this.forRole);
+
+      this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
+        const filter = resUserRole.filter((forResUserRole) => {
+          return forResUserRole.module_name === 'extra_charge_module';
+        });
+
+        if (filter[0].create_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].create_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].read_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].read_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].update_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].update_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].delete_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].delete_permision === 'not allowed') {
+          this.show = false;
+        }
+
+        this.seasonServ.get().pipe(takeUntil(this.subs)).subscribe(season => {
+          this.seasonTypeServ.get().pipe(takeUntil(this.subs)).subscribe(seasonType2 => {
+            console.log('seasonType2', seasonType2);
+            const dataSeasonTypeId = season.map((y) => {
+              const xyz = seasonType2.filter((z) => {
+                return z.season_type_id === y.season_type_id;
+              });
+              const sdf =  {
+                seasonCreatedAt: y.created_at,
+                seasonCreatedBy: y.created_by,
+                seasonEndDate: y.end_date,
+                seasonFromDate: y.from_date,
+                seasonDesc: y.season_description,
+                seasonId: y.season_id,
+                seasonName: y.season_name,
+                seasonStatus: y.season_status,
+                seasonTypeId: y.season_type_id,
+                seasonTypeDesc: xyz[0].season_type_description,
+                seasonTypeName: xyz[0].season_type_name,
+                seasonStartDate: y.start_date,
+                seasonToDate: y.to_date,
+                seasonupdateAt: y.updated_at,
+                seasonUpdateBy: y.updated_by,
+                detail: {
+                  seasonId: y.season_id,
+                  seasonStatus: y.season_status,
+                  seasonRoleCreate: filter[0].create_permision,
+                  seasonRoleRead: filter[0].read_permision,
+                  seasonRoleUpdate: filter[0].update_permision,
+                  seasonRoleDelete: filter[0].delete_permision,
+                },
+              };
+              return sdf;
+            });
+            this.season = new LocalDataSource (dataSeasonTypeId);
+            console.log('dataSeasonTypeId', dataSeasonTypeId);
+          });
+        });
+      });
+    });
   }
 
 }
