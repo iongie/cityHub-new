@@ -17,6 +17,7 @@
         <select
          nbInput
          fullWidth
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="extraCharge.extraChargeCategoryId"
          id="extraChargeCategoryId"
@@ -35,6 +36,7 @@
          type="text"
          nbInput
          fullWidth
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="extraCharge.extraChargeName"
          id="extraChargeName"
@@ -51,6 +53,7 @@
          nbInput
          fullWidth
          currencyMask
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="extraCharge.extraChargeRate"
          id="extraChargeRate"
@@ -65,6 +68,7 @@
         <textarea
          nbInput
          fullWidth
+         [disabled]="show === false"
          class="form-control"
          [(ngModel)]="extraCharge.extraChargeDescription"
          id="extraChargeDescription"
@@ -75,7 +79,7 @@
       </div>
 
       <div class="buttons">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary" *ngIf="show">Save</button>
         <button type="button" class="btn btn-warning" [routerLink]="['/pages/extra-charge']" routerLinkActive="router-link-active" >Cancel</button>
       </div>
     </form>

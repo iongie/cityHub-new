@@ -6,6 +6,7 @@ import { ExtraChargeService } from '../../../../../services/extra-charge/extra-c
 import { NotificationService } from '../../../../../services/notification/notification.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserRoleService } from '../../../../../services/user-role/user-role.service';
 
 @Component({
   selector: 'ngx-detail',
@@ -14,9 +15,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DetailComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
-  extarChangeCategory: any;
+  extraChargeCategory: any;
   userCityHub: any;
   extraCharge: any;
+  forRole: any;
+  show: any;
   constructor(
     public router: Router,
     private activeRoute: ActivatedRoute,
@@ -24,11 +27,14 @@ export class DetailComponent implements OnInit, OnDestroy {
     private notifServ: NotificationService,
     public extraChargeServ: ExtraChargeService,
     public extraChargeCategoryServ: ExtraChargeCategoryService,
+    public userRoleServ: UserRoleService,
   ) { }
 
   ngOnInit() {
+    this.getExtraChargeCategory();
     this.viewById();
     this.detailAccount();
+    this.detailUserRole();
   }
 
   ngOnDestroy() {
@@ -38,7 +44,7 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   getExtraChargeCategory() {
     this.extraChargeCategoryServ.get().pipe(takeUntil(this.subs)).subscribe(resExtraChargeCategory => {
-      this.extarChangeCategory = resExtraChargeCategory.map((forResExtraChargeCategory) => {
+      this.extraChargeCategory = resExtraChargeCategory.map((forResExtraChargeCategory) => {
         const dataForRoomStatus = {
           extraChargeCategoryId: forResExtraChargeCategory.extra_charge_category_id,
           extraChargeCategoryName: forResExtraChargeCategory.extra_charge_category_name,
@@ -65,7 +71,7 @@ export class DetailComponent implements OnInit, OnDestroy {
       const roomOperationId = {
         id: params.id,
       };
-      this.extarChangeCategory.getById(roomOperationId).pipe(takeUntil(this.subs)).subscribe(resById => {
+      this.extraChargeServ.getById(roomOperationId).pipe(takeUntil(this.subs)).subscribe(resById => {
         const data = resById.map((y) => {
           const xyz = {
             extraChargeName: y.extra_charge_name,
@@ -105,6 +111,43 @@ export class DetailComponent implements OnInit, OnDestroy {
         const title = 'Extra charge';
         const content = 'Error';
         this.notifServ.showInfoTypeToast(title, content);
+      });
+    });
+  }
+
+  detailUserRole() {
+    const data = {
+      token: localStorage.getItem('p_l1oxt'),
+    };
+    this.authServ.detailAfterLogin(data).pipe(takeUntil(this.subs)).subscribe(res => {
+      this.forRole = {
+        id : res[0].privilege_id,
+      };
+
+      console.log(this.forRole);
+
+      this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
+        const filter = resUserRole.filter((forResUserRole) => {
+          return forResUserRole.module_name === 'extra_charge_module';
+        });
+
+        if (filter[0].create_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].create_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].read_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].read_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].update_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].update_permision === 'not allowed') {
+          this.show = false;
+        }else if (filter[0].delete_permision === 'allowed') {
+          this.show = true;
+        }else if (filter[0].delete_permision === 'not allowed') {
+          this.show = false;
+        }
       });
     });
   }
