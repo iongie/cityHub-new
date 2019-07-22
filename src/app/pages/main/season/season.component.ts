@@ -62,14 +62,6 @@ export class SeasonComponent implements OnInit, OnDestroy {
   }
 
   getSeasonType() {
-    
-  }
-
-  toFormAdd() {
-    this.router.navigate(['/pages/add-season']);
-  }
-
-  tes() {
     const token = {
       token: localStorage.getItem('p_l1oxt'),
     };
@@ -143,6 +135,10 @@ export class SeasonComponent implements OnInit, OnDestroy {
         });
       });
     });
+  }
+
+  toFormAdd() {
+    this.router.navigate(['/pages/add-season']);
   }
 
 }
