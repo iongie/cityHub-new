@@ -48,6 +48,7 @@ export class FloorComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getFloor();
+    this.refreshFloor();
   }
 
   ngOnDestroy() {
@@ -161,6 +162,12 @@ export class FloorComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.getFloor();
       }, 1000);
+    });
+  }
+
+  refreshFloor() {
+    this.floorServ.refresh.subscribe(() => {
+      this.getFloor();
     });
   }
 
