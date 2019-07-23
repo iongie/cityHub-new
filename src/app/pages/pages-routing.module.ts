@@ -25,6 +25,17 @@ const routes: Routes = [{
     path: 'extra-charge-category',
     loadChildren: './main/extra-charge-category/extra-charge-category.module#ExtraChargeCategoryModule',
   }, {
+    path: 'add-extra-charge-category',
+    loadChildren: './main/extra-charge-category/conf/add/add.module#AddModule',
+  }, {
+    path: 'view-extra-charge-category',
+    children: [
+      {
+        path: ':id',
+        loadChildren: './main/extra-charge-category/conf/detail/detail.module#DetailModule',
+      },
+    ],
+  },  {
     path: 'extra-charge',
     loadChildren: './main/extra-charge/extra-charge.module#ExtraChargeModule',
   }, {

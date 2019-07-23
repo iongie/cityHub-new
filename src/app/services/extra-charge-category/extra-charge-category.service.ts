@@ -41,8 +41,8 @@ export class ExtraChargeCategoryService {
     );
   }
 
-  getById(seasonTypeId: any): Observable<any> {
-    return this.http.get<any>(this.url + '/extra-charge-category/show/' + seasonTypeId.id, httpOptions).pipe(
+  getById(extraChargeCategoryId: any): Observable<any> {
+    return this.http.get<any>(this.url + '/extra-charge-category/show/' + extraChargeCategoryId.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
