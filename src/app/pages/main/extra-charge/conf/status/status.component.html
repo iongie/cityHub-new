@@ -1,1 +1,7 @@
-{{renderValue}}
+<div *ngIf="renderValue == 'inactive'">
+    <nb-progress-bar [value]="inactive" status="warning">Inactive</nb-progress-bar>
+</div>
+
+<div *ngIf="renderValue == 'active'">
+    <nb-progress-bar [value]="active" status="primary">Active</nb-progress-bar>
+</div>
