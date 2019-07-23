@@ -67,6 +67,9 @@ export class RoomOperationService implements OnDestroy {
   delete(data: any): Observable<any> {
     return this.http.get<any>(this.url + '/room/remove/' + data.id, data).pipe(
       catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
     );
   }
 

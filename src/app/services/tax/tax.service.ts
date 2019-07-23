@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, throwError, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -9,11 +9,18 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root',
 })
-export class TaxService {
+export class TaxService implements OnDestroy {
   private url = environment.baseUrl;
+  private subs: Subject<void> = new Subject();
+  private _refresh = new Subject();
   constructor(
     public http: HttpClient,
   ) { }
+
+  ngOnDestroy() {
+    this.subs.next();
+    this.subs.complete();
+  }
 
   // --------------------------for Handle Error----------------
   handleError(error) {
@@ -27,6 +34,10 @@ export class TaxService {
     }
     // window.alert(errorMessage);
     return throwError(errorMessage);
+  }
+
+  get refresh() {
+    return this._refresh;
   }
 
   get(): Observable<any[]> {

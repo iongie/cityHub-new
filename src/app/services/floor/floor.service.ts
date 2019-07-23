@@ -1,19 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { throwError, Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { throwError, Observable, Subject } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 @Injectable({
   providedIn: 'root',
 })
-export class FloorService {
+export class FloorService implements OnDestroy {
   private url = environment.baseUrl;
+  private subs: Subject<void> = new Subject();
+  private _refresh = new Subject();
   constructor(
     public http: HttpClient,
   ) { }
+
+  ngOnDestroy() {
+    this.subs.next();
+    this.subs.complete();
+  }
 
   // --------------------------for Handle Error----------------
   handleError(error) {
@@ -27,6 +34,10 @@ export class FloorService {
     }
     // window.alert(errorMessage);
     return throwError(errorMessage);
+  }
+
+  get refresh() {
+    return this._refresh;
   }
 
   get(): Observable<any[]> {
@@ -56,18 +67,27 @@ export class FloorService {
   delete(data: any): Observable<any> {
     return this.http.get<any>(this.url + '/floor/remove/' + data.id, data).pipe(
       catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
     );
   }
 
   inactiveFloor(data: any): Observable<any> {
     return this.http.get<any>(this.url + '/floor/remove/' + data.id).pipe(
       catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
     );
   }
 
   activeFloor(data: any): Observable<any> {
     return this.http.get<any>(this.url + '/floor/return/' + data.id).pipe(
       catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
     );
   }
 }
