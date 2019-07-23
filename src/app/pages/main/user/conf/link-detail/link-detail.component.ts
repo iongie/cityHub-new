@@ -23,6 +23,7 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       data: {
         id: '',
         status: '',
+        reset: '',
       },
     },
     { title: 'Change Status',
@@ -30,6 +31,15 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       data: {
         id: '',
         status: '',
+        reset: '',
+      },
+    },
+    { title: 'Reset login',
+      icon: 'fa fa-undo',
+      data: {
+        id: '',
+        status: '',
+        reset: '',
       },
     },
   ];
@@ -59,6 +69,7 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
         data: {
           id: this.value.userId,
           status: this.value.userStatus,
+          reset: this.value.userUsername,
         },
       };
       return xyz;
@@ -103,6 +114,18 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
             }, 2000);
           });
         }
+      }else if (item.data.id === this.renderValue && item.title === 'Reset login') {
+        const data = {
+          id: item.data.reset,
+        };
+
+        this.authServ.reset(data).pipe(takeUntil(this.subs)).subscribe(() => {
+          const title = 'User';
+          const content = 'User has been reset';
+          setTimeout(() => {
+            this.notifServ.showInfoTypeToast(title, content);
+          }, 2000);
+        });
       }
     });
   }
