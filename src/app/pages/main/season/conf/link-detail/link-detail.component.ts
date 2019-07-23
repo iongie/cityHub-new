@@ -95,10 +95,6 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
             setTimeout(() => {
               this.notifServ.showInfoTypeToast(title, content);
             }, 2000);
-            setTimeout(() => {
-              // this.router.navigateByUrl('/pages/user', {skipLocationChange: true}).then(() =>
-              // this.router.navigate(['pages/user']));
-            }, 1000);
           });
         } else if (item.data.status === 'inactive') {
           this.seasonServ.activeAuth(data).pipe(takeUntil(this.subs)).subscribe(() => {
@@ -107,10 +103,6 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
             setTimeout(() => {
               this.notifServ.showInfoTypeToast(title, content);
             }, 2000);
-            setTimeout(() => {
-              // this.router.navigateByUrl('/pages/user', {skipLocationChange: true}).then(() =>
-              // this.router.navigate(['pages/user']));
-            }, 1000);
           });
         }
       }

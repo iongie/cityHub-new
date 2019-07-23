@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { catchError } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { Observable, throwError, Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -10,13 +10,19 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
   private url = environment.baseUrl;
+  private subs: Subject<void> = new Subject();
+  private _refresh = new Subject();
   constructor(
     public http: HttpClient,
     public router: Router,
   ) { }
 
+  ngOnDestroy() {
+    this.subs.next();
+    this.subs.complete();
+  }
 
   // --------------------------for Handle Error----------------
   handleError(error) {
@@ -30,6 +36,10 @@ export class AuthService {
     }
     // window.alert(errorMessage);
     return throwError(errorMessage);
+  }
+
+  get refresh() {
+    return this._refresh;
   }
 
   register(user: any): Observable<any> {
@@ -47,6 +57,15 @@ export class AuthService {
   login(user: any): Observable<any> {
     return this.http.post<any>(this.url + '/user/login', user, httpOptions).pipe(
       catchError(this.handleError),
+    );
+  }
+
+  reset(user: any): Observable<any> {
+    return this.http.post<any>(this.url + '/user/login/reset', user, httpOptions).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
     );
   }
 
@@ -75,12 +94,18 @@ export class AuthService {
   inactiveAuth(data: any): Observable<any> {
     return this.http.get<any>(this.url + '/user/remove/' + data.id).pipe(
       catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
     );
   }
 
   activeAuth(data: any): Observable<any> {
     return this.http.get<any>(this.url + '/user/activation/' + data.id).pipe(
       catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
     );
   }
 

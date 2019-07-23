@@ -53,7 +53,8 @@ export class SeasonComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.getSeasonType();
+    this.getSeason();
+    this.refreshSeason();
   }
 
   ngOnDestroy() {
@@ -61,7 +62,7 @@ export class SeasonComponent implements OnInit, OnDestroy {
     this.subs.complete();
   }
 
-  getSeasonType() {
+  getSeason() {
     const token = {
       token: localStorage.getItem('p_l1oxt'),
     };
@@ -134,6 +135,12 @@ export class SeasonComponent implements OnInit, OnDestroy {
           });
         });
       });
+    });
+  }
+
+  refreshSeason() {
+    this.authServ.refresh.subscribe(() => {
+      this.getSeason();
     });
   }
 

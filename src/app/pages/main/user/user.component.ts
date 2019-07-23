@@ -26,6 +26,10 @@ export class UserComponent implements OnInit, OnDestroy {
         title: 'Full Name',
         type: 'string',
       },
+      username: {
+        title: 'Username',
+        type: 'string',
+      },
       email: {
         title: 'Email',
         type: 'string',
@@ -51,6 +55,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getUser();
+    this.refreshAuth();
   }
 
   ngOnDestroy() {
@@ -107,6 +112,7 @@ export class UserComponent implements OnInit, OnDestroy {
               detail: {
                 userId: y.user_id,
                 userStatus: y.user_status,
+                userUsername: y.username,
                 userRoleCreate: filter[0].create_permision,
                 userRoleRead: filter[0].read_permision,
                 userRoleUpdate: filter[0].update_permision,
@@ -119,6 +125,12 @@ export class UserComponent implements OnInit, OnDestroy {
           this.user = new LocalDataSource (data);
         });
       });
+    });
+  }
+
+  refreshAuth() {
+    this.authServ.refresh.subscribe(() => {
+      this.getUser();
     });
   }
 

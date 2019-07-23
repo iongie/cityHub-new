@@ -9,7 +9,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root',
 })
-export class RoomOperationService implements OnDestroy  {
+export class RoomOperationService implements OnDestroy {
   private url = environment.baseUrl;
   private subs: Subject<void> = new Subject();
   private _refresh = new Subject();
