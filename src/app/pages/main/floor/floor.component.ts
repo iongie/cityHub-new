@@ -8,6 +8,8 @@ import { LinkDetailComponent } from './conf/link-detail/link-detail.component';
 import { Router } from '@angular/router';
 import { UserRoleService } from '../../../services/user-role/user-role.service';
 import { AuthService } from '../../../services/auth/auth.service';
+import { StatusComponent } from './conf/status/status.component';
+
 
 @Component({
   selector: 'ngx-floor',
@@ -26,15 +28,17 @@ export class FloorComponent implements OnInit, OnDestroy {
         title: 'Name',
         type: 'string',
       },
-      floorStatus: {
+      status: {
         title: 'Status',
-        editable: false,
-        type: 'string',
+        type: 'custom',
+        renderComponent: StatusComponent,
+        filter: false,
       },
       detail: {
-        title: 'Detail',
+        title: 'Actions',
         type: 'custom',
         renderComponent: LinkDetailComponent,
+        filter: false,
       },
     },
   };
@@ -96,6 +100,9 @@ export class FloorComponent implements OnInit, OnDestroy {
               floorName: y.floor_name,
               floorStatus: y.floor_db_status,
               floorId: y.floor_id,
+              status: {
+               floorStatus: y.floor_db_status,
+              },
               detail: {
                 floorId: y.floor_id,
                 floorStatus: y.floor_db_status,

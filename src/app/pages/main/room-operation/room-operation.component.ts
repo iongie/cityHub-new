@@ -53,7 +53,7 @@ export class RoomOperationComponent implements OnInit, OnDestroy {
         filter: false,
       },
       detail: {
-        title: 'Detail',
+        title: 'Actions',
         type: 'custom',
         renderComponent: LinkDetailComponent,
         filter: false,

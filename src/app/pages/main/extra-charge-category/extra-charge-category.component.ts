@@ -27,7 +27,7 @@ export class ExtraChargeCategoryComponent implements OnInit, OnDestroy {
         type: 'string',
       },
       detail: {
-        title: 'Detail',
+        title: 'Actions',
         type: 'custom',
         renderComponent: LinkDetailComponent,
         filter: false,

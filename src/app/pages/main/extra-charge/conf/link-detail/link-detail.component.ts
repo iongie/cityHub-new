@@ -19,15 +19,15 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
   items = [
-    { title: 'View',
+    { title: ' View',
       icon: 'fa fa-search-plus',
       data: {
         id: '',
         status: '',
       },
     },
-    { title: 'Change Status',
-      icon: 'fa fa-trash',
+    { title: ' Change Status',
+      icon: 'fas fa-exchange-alt',
       data: {
         id: '',
         status: '',
