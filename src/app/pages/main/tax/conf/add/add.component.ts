@@ -50,7 +50,6 @@ export class AddComponent implements OnInit, OnDestroy {
         return xyz;
       });
       this.privilege = data;
-      console.log(data);
     });
   }
 
@@ -62,7 +61,6 @@ export class AddComponent implements OnInit, OnDestroy {
       this.userCityHub = {
         name : res[0].full_name,
       };
-      console.log(res);
     });
   }
 
@@ -81,7 +79,6 @@ export class AddComponent implements OnInit, OnDestroy {
       const content = 'Error';
       this.notifServ.showInfoTypeToast(title, content);
     });
-    console.log(this.tax);
   }
 
   detailUserRole() {
@@ -92,9 +89,6 @@ export class AddComponent implements OnInit, OnDestroy {
       this.forRole = {
         id : res[0].privilege_id,
       };
-
-      console.log(this.forRole);
-
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {
           return forResUserRole.module_name === 'tax_module';

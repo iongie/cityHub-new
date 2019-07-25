@@ -5,9 +5,10 @@ import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { LinkDetailComponent } from './conf/link-detail/link-detail.component';
 import { UserRoleService } from '../../../services/user-role/user-role.service';
 import { AuthService } from '../../../services/auth/auth.service';
+import { StatusComponent } from './conf/status/status.component';
+import { LinkDetailComponent } from './conf/link-detail/link-detail.component';
 
 @Component({
   selector: 'ngx-tax',
@@ -30,9 +31,11 @@ export class TaxComponent implements OnInit, OnDestroy {
         title: 'Rate',
         type: 'string',
       },
-      taxStatus: {
+      status: {
         title: 'Status',
-        type: 'string',
+        type: 'custom',
+        renderComponent: StatusComponent,
+        filter: false,
       },
       detail: {
         title: 'Actions',
@@ -52,6 +55,7 @@ export class TaxComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getTax();
+    this.refreshExtraCharge();
   }
 
   ngOnDestroy() {
@@ -67,12 +71,9 @@ export class TaxComponent implements OnInit, OnDestroy {
       this.forRole = {
         id : res[0].privilege_id,
       };
-
-      console.log(this.forRole);
-
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {
-          return forResUserRole.module_name === 'extra_charge_module';
+          return forResUserRole.module_name === 'tax_module';
         });
 
         if (filter[0].create_permision === 'allowed') {
@@ -104,6 +105,9 @@ export class TaxComponent implements OnInit, OnDestroy {
               updateBy: y.update_by,
               createBy: y.create_by,
               createAt: y.create_at,
+              status: {
+                taxStatus: y.tax_status,
+              },
               detail: {
                 taxId: y.tax_id,
                 taxStatus: y.tax_status,
@@ -115,10 +119,15 @@ export class TaxComponent implements OnInit, OnDestroy {
             };
             return abc;
           });
-          console.log(data);
           this.tax = new LocalDataSource (data);
         });
       });
+    });
+  }
+
+  refreshExtraCharge() {
+    this.taxServ.refresh.subscribe(() => {
+      this.getTax();
     });
   }
 

@@ -48,6 +48,7 @@ export class SeasonTypeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getSeasonType();
+    this.refreshSeasonType();
   }
 
   ngOnDestroy() {
@@ -109,6 +110,12 @@ export class SeasonTypeComponent implements OnInit, OnDestroy {
           this.seasonType = new LocalDataSource (data);
         });
       });
+    });
+  }
+
+  refreshSeasonType() {
+    this.seasonTypeServ.refresh.subscribe(() => {
+      this.getSeasonType();
     });
   }
 

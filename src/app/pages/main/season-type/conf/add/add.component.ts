@@ -38,7 +38,6 @@ export class AddComponent implements OnInit, OnDestroy {
   }
 
   addSeasonType() {
-    console.log(this.seasonType);
     const data = {
       seasonTypeName: this.seasonType.seasonTypeName,
       seasonTypeDescription: this.seasonType.seasonTypeDesc,
@@ -63,9 +62,6 @@ export class AddComponent implements OnInit, OnDestroy {
       this.forRole = {
         id : res[0].privilege_id,
       };
-
-      console.log(this.forRole);
-
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {
           return forResUserRole.module_name === 'season_type_module';

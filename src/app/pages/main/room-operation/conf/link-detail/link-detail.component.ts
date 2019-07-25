@@ -27,7 +27,7 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       },
     },
     { title: 'Change Status',
-      icon: 'fa fa-trash',
+      icon: 'fas fa-exchange-alt',
       data: {
         id: '',
         status: '',
