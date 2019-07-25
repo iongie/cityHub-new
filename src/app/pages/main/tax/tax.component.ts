@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { LinkDetailComponent } from './conf/link-detail/link-detail.component';
 import { UserRoleService } from '../../../services/user-role/user-role.service';
 import { AuthService } from '../../../services/auth/auth.service';
+import { StatusComponent } from './conf/status/status.component';
 
 @Component({
   selector: 'ngx-tax',
@@ -30,9 +31,11 @@ export class TaxComponent implements OnInit, OnDestroy {
         title: 'Rate',
         type: 'string',
       },
-      taxStatus: {
+      status: {
         title: 'Status',
-        type: 'string',
+        type: 'custom',
+        renderComponent: StatusComponent,
+        filter: false,
       },
       detail: {
         title: 'Actions',
@@ -52,6 +55,7 @@ export class TaxComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getTax();
+    this.refreshExtraCharge();
   }
 
   ngOnDestroy() {
@@ -104,6 +108,9 @@ export class TaxComponent implements OnInit, OnDestroy {
               updateBy: y.update_by,
               createBy: y.create_by,
               createAt: y.create_at,
+              status: {
+                taxStatus: y.tax_status,
+              },
               detail: {
                 taxId: y.tax_id,
                 taxStatus: y.tax_status,
@@ -119,6 +126,12 @@ export class TaxComponent implements OnInit, OnDestroy {
           this.tax = new LocalDataSource (data);
         });
       });
+    });
+  }
+
+  refreshExtraCharge() {
+    this.taxServ.refresh.subscribe(() => {
+      this.getTax();
     });
   }
 
