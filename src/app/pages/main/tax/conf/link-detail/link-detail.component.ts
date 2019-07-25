@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
 import { Subject } from 'rxjs';
+import { ViewCell } from 'ng2-smart-table';
 import { NbMenuService } from '@nebular/theme';
 import { TaxService } from '../../../../../services/tax/tax.service';
 import { NotificationService } from '../../../../../services/notification/notification.service';
@@ -19,11 +19,18 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
   items = [
-    {
-      title: 'View',
+    { title: ' View',
       icon: 'fa fa-search-plus',
       data: {
         id: '',
+        status: '',
+      },
+    },
+    { title: ' Delete',
+      icon: 'fa fa-trash',
+      data: {
+        id: '',
+        status: '',
       },
     },
   ];
@@ -72,9 +79,25 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       filter(({ tag }) => tag === 'tax'),
       map(({item}) => item),
     ).subscribe(item => {
-      console.log(item);
       if (item.data.id === this.renderValue && item.title === 'View') {
         this.router.navigate(['/pages/view-tax', this.renderValue]);
+      }else if (item.data.id === this.renderValue && item.title === 'Delete') {
+        const data = {
+          id: this.renderValue,
+        };
+        this.taxServ.delete(data).pipe(takeUntil(this.subs)).subscribe(res => {
+          const title = 'Tax';
+          const content = 'Tax has been deleted';
+          setTimeout(() => {
+            this.notifServ.showInfoTypeToast(title, content);
+          }, 2000);
+        }, err => {
+          const title = 'Tax';
+          const content = 'Error Data';
+          setTimeout(() => {
+            this.notifServ.showInfoTypeToast(title, content);
+          }, 2000);
+        });
       }
     });
   }

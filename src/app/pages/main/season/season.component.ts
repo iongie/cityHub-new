@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Subject } from 'rxjs';
 import { NotificationService } from '../../../services/notification/notification.service';
@@ -33,7 +33,7 @@ export class SeasonComponent implements OnInit, OnDestroy {
         type: 'string',
       },
       status: {
-        title: 'Actions',
+        title: 'Status',
         type: 'custom',
         renderComponent: StatusComponent,
         filter: false,
@@ -78,7 +78,7 @@ export class SeasonComponent implements OnInit, OnDestroy {
 
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {
-          return forResUserRole.module_name === 'extra_charge_module';
+          return forResUserRole.module_name === 'season_module';
         });
 
         if (filter[0].create_permision === 'allowed') {
@@ -100,12 +100,11 @@ export class SeasonComponent implements OnInit, OnDestroy {
         }
 
         this.seasonServ.get().pipe(takeUntil(this.subs)).subscribe(season => {
-          this.seasonTypeServ.get().pipe(takeUntil(this.subs)).subscribe(seasonType2 => {
-            console.log('seasonType2', seasonType2);
-            console.log('season', season);
+          this.seasonTypeServ.get().pipe(takeUntil(this.subs)).subscribe(seasonType => {
+            console.log('seasonType', seasonType);
             const dataSeasonTypeId = season.map((y) => {
-              const xyz = seasonType2.filter((z) => {
-                return y.season_type_id === z.season_type_id;
+              const xyz = seasonType.filter((z) => {
+                return z.season_type_id === y.season_type_id;
               });
               console.log('xyz', xyz);
               const sdf =  {
@@ -116,10 +115,10 @@ export class SeasonComponent implements OnInit, OnDestroy {
                 seasonDesc: y.season_description,
                 seasonId: y.season_id,
                 seasonName: y.season_name,
-                seasonStatus: y.season_status,
                 seasonTypeId: y.season_type_id,
-                seasonTypeDesc: xyz[0].season_type_description,
-                seasonTypeName: xyz[0].season_type_name,
+                seasonStatus: y.season_status,
+                // seasonTypeName: xyz[0].season_type_name,
+                // seasonTypeDesc: xyz[0].season_type_description,
                 seasonStartDate: y.start_date,
                 seasonToDate: y.to_date,
                 seasonupdateAt: y.updated_at,

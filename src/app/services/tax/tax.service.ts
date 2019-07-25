@@ -1,8 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable, throwError, Subject } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { throwError, Observable, Subject } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
@@ -66,18 +66,6 @@ export class TaxService implements OnDestroy {
 
   delete(data: any): Observable<any> {
     return this.http.get<any>(this.url + '/tax/remove/' + data.id, data).pipe(
-      catchError(this.handleError),
-    );
-  }
-
-  inactiveAuth(data: any): Observable<any> {
-    return this.http.get<any>(this.url + '/tax/remove/' + data.id).pipe(
-      catchError(this.handleError),
-    );
-  }
-
-  activeAuth(data: any): Observable<any> {
-    return this.http.get<any>(this.url + '/tax/activation/' + data.id).pipe(
       catchError(this.handleError),
     );
   }

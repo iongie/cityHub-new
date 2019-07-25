@@ -1,6 +1,10 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
+import { Router } from '@angular/router';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ViewCell } from 'ng2-smart-table';
+import { NbMenuService } from '@nebular/theme';
+import { SeasonService } from '../../../../../services/season/season.service';
+import { NotificationService } from '../../../../../services/notification/notification.service';
 
 @Component({
   selector: 'ngx-status',
@@ -13,7 +17,13 @@ export class StatusComponent implements OnInit, OnDestroy, ViewCell {
   @Input() value: any;
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
-  constructor() { }
+  data: any[];
+  constructor(
+    private nbMenuService: NbMenuService,
+    private seasonServ: SeasonService,
+    private notifServ: NotificationService,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
     this.renderValue = this.value.seasonStatus;
@@ -23,4 +33,6 @@ export class StatusComponent implements OnInit, OnDestroy, ViewCell {
     this.subs.next();
     this.subs.complete();
   }
+
+
 }
