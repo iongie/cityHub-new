@@ -71,9 +71,6 @@ export class UserComponent implements OnInit, OnDestroy {
       this.forRole = {
         id : res[0].privilege_id,
       };
-
-      console.log(this.forRole);
-
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {
           return forResUserRole.module_name === 'user_module';
@@ -121,7 +118,6 @@ export class UserComponent implements OnInit, OnDestroy {
             };
             return abc;
           });
-          console.log(data);
           this.user = new LocalDataSource (data);
         });
       });

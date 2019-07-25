@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { throwError, Observable, Subject } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
@@ -67,6 +67,9 @@ export class SeasonTypeService implements OnDestroy {
   delete(data: any): Observable<any> {
     return this.http.get<any>(this.url + '/season-type/remove/' + data.id, data).pipe(
       catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
     );
   }
 }

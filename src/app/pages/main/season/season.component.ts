@@ -139,7 +139,7 @@ export class SeasonComponent implements OnInit, OnDestroy {
   }
 
   refreshSeason() {
-    this.authServ.refresh.subscribe(() => {
+    this.seasonServ.refresh.subscribe(() => {
       this.getSeason();
     });
   }

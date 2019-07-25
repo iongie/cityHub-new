@@ -44,7 +44,6 @@ export class DetailComponent implements OnInit, OnDestroy {
         id: params.id,
       };
       this.taxServ.getById(taxId).pipe(takeUntil(this.subs)).subscribe(resById => {
-        console.log(resById);
         const data = resById.map((y) => {
           const xyz = {
             taxName: y.tax_name,
@@ -65,12 +64,10 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.userCityHub = {
         name : res[0].full_name,
       };
-      console.log(res);
     });
   }
 
   updateUser() {
-    console.log('data uodate', this.tax);
     this.activeRoute.params.subscribe(params => {
       const data = {
         userId: params.id,
@@ -98,9 +95,6 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.forRole = {
         id : res[0].privilege_id,
       };
-
-      console.log(this.forRole);
-
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {
           return forResUserRole.module_name === 'tax_module';

@@ -68,6 +68,7 @@ export class DetailComponent implements OnInit, OnDestroy {
         const title = 'Season type';
         const content = 'Data has been updated';
         this.notifServ.showSuccessTypeToast(title, content);
+        this.router.navigate(['pages/season-type']);
       }, err => {
         const title = 'User';
         const content = 'Error Data';

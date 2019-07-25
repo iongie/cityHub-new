@@ -18,12 +18,7 @@ export class StatusComponent implements OnInit, OnDestroy, ViewCell {
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
   data: any[];
-  constructor(
-    private nbMenuService: NbMenuService,
-    private taxServ: TaxService,
-    private notifServ: NotificationService,
-    private router: Router,
-  ) { }
+  constructor() { }
 
   ngOnInit() {
     this.renderValue = this.value.taxStatus;

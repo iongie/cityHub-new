@@ -19,11 +19,11 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
   items = [
-    { title: 'View',
+    {
+      title: 'View',
       icon: 'fa fa-search-plus',
       data: {
         id: '',
-        status: '',
       },
     },
   ];
@@ -53,12 +53,11 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
         icon: y.icon,
         data: {
           id: this.value.taxId,
-          status: this.value.taxStatus,
         },
       };
       return xyz;
     });
-    if (this.value.taxeRoleUpdate === 'allowed') {
+    if (this.value.taxRoleUpdate === 'allowed') {
       this.data = dataMap;
     }else if (this.value.taxRoleUpdate === 'not allowed') {
       this.data = dataMap.filter((fil) => {
@@ -75,40 +74,8 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
     ).subscribe(item => {
       console.log(item);
       if (item.data.id === this.renderValue && item.title === 'View') {
-        console.log('v', item.data.id );
         this.router.navigate(['/pages/view-tax', this.renderValue]);
       }
-      // else if (item.data.id === this.renderValue && item.title === 'Change Status') {
-      //   console.log('cs', this.renderValue);
-      //   const data = {
-      //     id: this.renderValue,
-      //   };
-      //   if (item.data.status === 'active') {
-      //     this.taxServ.inactiveAuth(data).pipe(takeUntil(this.subs)).subscribe(() => {
-      //       const title = 'User';
-      //       const content = 'User has been inactived';
-      //       setTimeout(() => {
-      //         this.notifServ.showInfoTypeToast(title, content);
-      //       }, 2000);
-      //       setTimeout(() => {
-      //         // this.router.navigateByUrl('/pages/user', {skipLocationChange: true}).then(() =>
-      //         // this.router.navigate(['pages/user']));
-      //       }, 1000);
-      //     });
-      //   } else if (item.data.status === 'inactive') {
-      //     this.taxServ.activeAuth(data).pipe(takeUntil(this.subs)).subscribe(() => {
-      //       const title = 'User';
-      //       const content = 'User has been actived';
-      //       setTimeout(() => {
-      //         this.notifServ.showInfoTypeToast(title, content);
-      //       }, 2000);
-      //       setTimeout(() => {
-      //         // this.router.navigateByUrl('/pages/user', {skipLocationChange: true}).then(() =>
-      //         // this.router.navigate(['pages/user']));
-      //       }, 1000);
-      //     });
-      //   }
-      // }
     });
   }
 
