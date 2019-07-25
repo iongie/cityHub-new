@@ -9,6 +9,7 @@ import { SeasonTypeService } from '../../../services/season-type/season-type.ser
 import { LinkDetailComponent } from './conf/link-detail/link-detail.component';
 import { UserRoleService } from '../../../services/user-role/user-role.service';
 import { AuthService } from '../../../services/auth/auth.service';
+import { StatusComponent } from './conf/status/status.component';
 
 @Component({
   selector: 'ngx-season',
@@ -31,9 +32,11 @@ export class SeasonComponent implements OnInit, OnDestroy {
         title: 'Type',
         type: 'string',
       },
-      seasonStatus: {
-        title: 'Status',
-        type: 'string',
+      status: {
+        title: 'Actions',
+        type: 'custom',
+        renderComponent: StatusComponent,
+        filter: false,
       },
       detail: {
         title: 'Actions',
@@ -99,10 +102,12 @@ export class SeasonComponent implements OnInit, OnDestroy {
         this.seasonServ.get().pipe(takeUntil(this.subs)).subscribe(season => {
           this.seasonTypeServ.get().pipe(takeUntil(this.subs)).subscribe(seasonType2 => {
             console.log('seasonType2', seasonType2);
+            console.log('season', season);
             const dataSeasonTypeId = season.map((y) => {
               const xyz = seasonType2.filter((z) => {
-                return z.season_type_id === y.season_type_id;
+                return y.season_type_id === z.season_type_id;
               });
+              console.log('xyz', xyz);
               const sdf =  {
                 seasonCreatedAt: y.created_at,
                 seasonCreatedBy: y.created_by,
@@ -119,6 +124,9 @@ export class SeasonComponent implements OnInit, OnDestroy {
                 seasonToDate: y.to_date,
                 seasonupdateAt: y.updated_at,
                 seasonUpdateBy: y.updated_by,
+                status: {
+                  seasonStatus: y.season_status,
+                },
                 detail: {
                   seasonId: y.season_id,
                   seasonStatus: y.season_status,
