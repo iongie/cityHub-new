@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { ViewCell } from 'ng2-smart-table';
 import { Subject } from 'rxjs';
+import { ViewCell } from 'ng2-smart-table';
 import { NbMenuService } from '@nebular/theme';
 import { TaxService } from '../../../../../services/tax/tax.service';
 import { NotificationService } from '../../../../../services/notification/notification.service';
@@ -19,8 +19,15 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
   items = [
-    { title: 'View',
+    { title: ' View',
       icon: 'fa fa-search-plus',
+      data: {
+        id: '',
+        status: '',
+      },
+    },
+    { title: ' Delete',
+      icon: 'fa fa-trash',
       data: {
         id: '',
         status: '',
@@ -53,12 +60,11 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
         icon: y.icon,
         data: {
           id: this.value.taxId,
-          status: this.value.taxStatus,
         },
       };
       return xyz;
     });
-    if (this.value.taxeRoleUpdate === 'allowed') {
+    if (this.value.taxRoleUpdate === 'allowed') {
       this.data = dataMap;
     }else if (this.value.taxRoleUpdate === 'not allowed') {
       this.data = dataMap.filter((fil) => {
@@ -73,42 +79,26 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       filter(({ tag }) => tag === 'tax'),
       map(({item}) => item),
     ).subscribe(item => {
-      console.log(item);
       if (item.data.id === this.renderValue && item.title === 'View') {
-        console.log('v', item.data.id );
         this.router.navigate(['/pages/view-tax', this.renderValue]);
+      }else if (item.data.id === this.renderValue && item.title === 'Delete') {
+        const data = {
+          id: this.renderValue,
+        };
+        this.taxServ.delete(data).pipe(takeUntil(this.subs)).subscribe(res => {
+          const title = 'Tax';
+          const content = 'Tax has been deleted';
+          setTimeout(() => {
+            this.notifServ.showInfoTypeToast(title, content);
+          }, 2000);
+        }, err => {
+          const title = 'Tax';
+          const content = 'Error Data';
+          setTimeout(() => {
+            this.notifServ.showInfoTypeToast(title, content);
+          }, 2000);
+        });
       }
-      // else if (item.data.id === this.renderValue && item.title === 'Change Status') {
-      //   console.log('cs', this.renderValue);
-      //   const data = {
-      //     id: this.renderValue,
-      //   };
-      //   if (item.data.status === 'active') {
-      //     this.taxServ.inactiveAuth(data).pipe(takeUntil(this.subs)).subscribe(() => {
-      //       const title = 'User';
-      //       const content = 'User has been inactived';
-      //       setTimeout(() => {
-      //         this.notifServ.showInfoTypeToast(title, content);
-      //       }, 2000);
-      //       setTimeout(() => {
-      //         // this.router.navigateByUrl('/pages/user', {skipLocationChange: true}).then(() =>
-      //         // this.router.navigate(['pages/user']));
-      //       }, 1000);
-      //     });
-      //   } else if (item.data.status === 'inactive') {
-      //     this.taxServ.activeAuth(data).pipe(takeUntil(this.subs)).subscribe(() => {
-      //       const title = 'User';
-      //       const content = 'User has been actived';
-      //       setTimeout(() => {
-      //         this.notifServ.showInfoTypeToast(title, content);
-      //       }, 2000);
-      //       setTimeout(() => {
-      //         // this.router.navigateByUrl('/pages/user', {skipLocationChange: true}).then(() =>
-      //         // this.router.navigate(['pages/user']));
-      //       }, 1000);
-      //     });
-      //   }
-      // }
     });
   }
 
