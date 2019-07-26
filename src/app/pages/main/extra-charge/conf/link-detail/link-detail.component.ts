@@ -19,14 +19,14 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
   items = [
-    { title: ' View',
+    { title: 'View',
       icon: 'fa fa-search-plus',
       data: {
         id: '',
         status: '',
       },
     },
-    { title: ' Change Status',
+    { title: 'Change Status',
       icon: 'fas fa-exchange-alt',
       data: {
         id: '',
@@ -44,6 +44,7 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
 
   ngOnInit() {
     this.renderValue = this.value.extraChargeId;
+    console.log( this.renderValue);
     this.action();
     this.viewOption();
   }
