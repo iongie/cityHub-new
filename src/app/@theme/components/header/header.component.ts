@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Inject, OnDestroy } from '@angular/core';
 
-import { NbMenuService, NbSidebarService, NB_WINDOW } from '@nebular/theme';
+import { NbMenuService, NbSidebarService, NB_WINDOW, NbDialogService } from '@nebular/theme';
 import { UserData } from '../../../@core/data/users';
 import { AnalyticsService } from '../../../@core/utils';
 import { LayoutService } from '../../../@core/utils';
@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { UserRoleService } from '../../../services/user-role/user-role.service';
+import { ChangePasswordComponent } from '../../../pages/main/change-password/change-password.component';
 
 @Component({
   selector: 'ngx-header',
@@ -21,7 +22,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   user: any;
 
-  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
+  userMenu = [
+    {
+      title: 'Profile',
+    },
+    {
+      title: 'Change Password',
+    },
+    {
+      title: 'Log out',
+    },
+  ];
 
   userCityHub: any[];
   forRole: any;
@@ -137,6 +148,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.logout();
       }else if (title === 'Profile') {
         this.router.navigate(['pages/profile']);
+      }else if (title === 'Change Password') {
+        this.router.navigate(['pages/change-password']);
       }
     });
   }

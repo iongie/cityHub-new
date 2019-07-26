@@ -43,8 +43,8 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
   ) { }
 
   ngOnInit() {
-    console.log('rowData', this.rowData);
     this.renderValue = this.value.roomTypeId;
+    console.log(this.renderValue);
     this.action();
     this.viewOption();
   }
@@ -65,11 +65,12 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       };
       return xyz;
     });
+    this.data = dataMap;
     if (this.value.roomTypeRoleUpdate === 'allowed') {
       this.data = dataMap;
     }else if (this.value.roomTypeRoleUpdate === 'not allowed') {
       this.data = dataMap.filter((fil) => {
-        return fil.title === 'VIEW';
+        return fil.title === 'View';
       });
     }
   }
@@ -80,9 +81,9 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       filter(({ tag }) => tag === 'room-type'),
       map(({item}) => item),
     ).subscribe(item => {
-      if (item.data.id === this.renderValue && item.title === 'VIEW') {
+      if (item.data.id === this.renderValue && item.title === 'View') {
         this.router.navigate(['/pages/view-room-type', this.renderValue]);
-      }else if (item.data.id === this.renderValue && item.title === 'DELETE') {
+      }else if (item.data.id === this.renderValue && item.title === 'Delete') {
         const data = {
           id: this.renderValue,
         };

@@ -21,6 +21,9 @@ const routes: Routes = [{
     path: 'dashboard',
     loadChildren: './main/dashboard/dashboard.module#DashboardModule',
   }, {
+    path: 'change-password',
+    loadChildren: './main/change-password/change-password.module#ChangePasswordModule',
+  }, {
     path: 'extra-charge-category',
     loadChildren: './main/extra-charge-category/extra-charge-category.module#ExtraChargeCategoryModule',
   }, {
