@@ -18,7 +18,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ThemeModule,
     Ng2SmartTableModule,
-    UnderConstractionModule,
+    // UnderConstractionModule,
   ],
 })
 export class RoomTariffModule { }
