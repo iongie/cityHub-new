@@ -49,11 +49,23 @@ export class RoomTypeComponent implements OnInit, OnDestroy {
       },
       baseRate: {
         title: 'Base rate',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return value = Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            currencyDisplay: 'code' }).format(value);
+        },
       },
       increaseRate: {
         title: 'Increase rate',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return value = Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            currencyDisplay: 'code' }).format(value);
+        },
       },
       detail: {
         title: 'Actions',

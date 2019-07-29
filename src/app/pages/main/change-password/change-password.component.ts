@@ -7,22 +7,21 @@ import { NbDialogRef } from '@nebular/theme';
   styleUrls: ['./change-password.component.scss'],
 })
 export class ChangePasswordComponent implements OnInit {
-  changePassword = {
-    oldPassword: '',
-    newPassword: '',
-  };
+
   settingTogglePassword = [
     {
       title: 'oldPassword',
       password: 'password',
       icon : 'fa fa-eye-slash',
       showPassword: false,
+      oldPassword: '',
     },
     {
       title: 'newPassword',
       password: 'password',
       icon : 'fa fa-eye-slash',
       showPassword: false,
+      newPassword: '',
     },
   ];
   constructor(
@@ -35,28 +34,21 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   togglePassword() {
-    if (this.settingTogglePassword[0].showPassword) {
-      this.settingTogglePassword[0].showPassword = false;
-      this.settingTogglePassword[1].showPassword = false;
-      this.settingTogglePassword[0].password = 'password';
-      this.settingTogglePassword[1].password = 'password';
-      this.settingTogglePassword[0].icon = 'fa fa-eye-slash' ;
-      this.settingTogglePassword[1].icon = 'fa fa-eye-slash' ;
-    }else if (this.settingTogglePassword[1].showPassword) {
-      this.settingTogglePassword[0].showPassword = false;
-      this.settingTogglePassword[1].showPassword = false;
-      this.settingTogglePassword[0].password = 'password';
-      this.settingTogglePassword[1].password = 'password';
-      this.settingTogglePassword[0].icon = 'fa fa-eye-slash' ;
-      this.settingTogglePassword[1].icon = 'fa fa-eye-slash' ;
-    } else {
-      this.settingTogglePassword[0].showPassword = true;
-      this.settingTogglePassword[1].showPassword = true;
-      this.settingTogglePassword[0].password = 'password';
-      this.settingTogglePassword[1].password = 'password';
-      this.settingTogglePassword[0].icon = 'fa fa-eye' ;
-      this.settingTogglePassword[1].icon = 'fa fa-eye' ;
-    }
+    this.settingTogglePassword.map((data) => {
+      if (data.showPassword && data.oldPassword) {
+        data.showPassword = false;
+        data.password = 'password';
+        data.icon = 'fa fa-eye-slash';
+      } else if (data.showPassword && data.newPassword) {
+        data.showPassword = false;
+        data.password = 'password';
+        data.icon = 'fa fa-eye-slash';
+      } else {
+        data.showPassword = true;
+        data.password = 'text';
+        data.icon = 'fa fa-eye';
+      }
+    });
   }
 
 

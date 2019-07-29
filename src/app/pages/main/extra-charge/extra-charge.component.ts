@@ -34,7 +34,13 @@ export class ExtraChargeComponent implements OnInit, OnDestroy {
       },
       extraChargeRate: {
         title: 'Rate',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return value = Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            currencyDisplay: 'code' }).format(value);
+        },
       },
       status: {
         title: 'Status',
