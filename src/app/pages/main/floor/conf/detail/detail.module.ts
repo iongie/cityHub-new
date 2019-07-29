@@ -5,6 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { ThemeModule } from '../../../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { UnderConstractionModule } from '../../../under-constraction/under-constraction.module';
+import { FormsModule } from '@angular/forms';
+import { NbInputModule } from '@nebular/theme';
 const routes: Routes = [
   {
     path: '',
@@ -15,8 +17,10 @@ const routes: Routes = [
   declarations: [DetailComponent],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(routes),
     ThemeModule,
+    NbInputModule,
     Ng2SmartTableModule,
     // UnderConstractionModule,
   ],

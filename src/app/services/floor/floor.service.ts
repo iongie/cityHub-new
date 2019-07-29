@@ -59,7 +59,7 @@ export class FloorService implements OnDestroy {
   }
 
   update(data: any): Observable<any> {
-    return this.http.post(this.url + '/floor/edit/' + data.id, data, httpOptions).pipe(
+    return this.http.post(this.url + '/floor/edit', data, httpOptions).pipe(
       catchError(this.handleError),
     );
   }

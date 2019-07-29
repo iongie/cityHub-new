@@ -179,7 +179,7 @@ export class FloorComponent implements OnInit, OnDestroy {
   }
 
   toFormAdd() {
-    this.router.navigate(['/pages/add-user']);
+    this.router.navigate(['/pages/add-floor']);
   }
 
 }

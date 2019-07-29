@@ -1,3 +1,38 @@
-<p>
-  add works!
-</p>
+<nb-card>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-auto mr-auto">Floor Management</div>
+        <!-- <div class="col-auto">
+          <button type="submit" class="btn btn-primary">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        </div> -->
+      </div>
+    </nb-card-header>
+  
+    <nb-card-body>
+      <form #ngForm="ngForm" (submit)="addFloor()" ngNativeValidate>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Floor name</label>
+          <input
+           type="text"
+           nbInput
+           fullWidth
+           [disabled]="show === false"
+           class="form-control"
+           [(ngModel)]="floor.floorName"
+           id="floorName"
+           name="floorName"
+           required
+           #floorName="ngModel"
+           placeholder="Floor name">
+        </div>
+  
+        <div class="buttons">
+          <button type="submit" class="btn btn-primary" *ngIf="show">Save</button>
+          <button type="button" class="btn btn-warning" [routerLink]="['/pages/floor']" routerLinkActive="router-link-active" >Cancel</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+  
