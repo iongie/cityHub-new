@@ -1,0 +1,18 @@
+<form #ngForm="ngForm" ngNativeValidate>
+  <div class="form-group" *ngFor="let roomTariffSeason of roomTariffSeason">
+    <select
+    nbInput
+    fullWidth
+    [disabled]="show === false"
+    class="form-control"
+    [(ngModel)]="roomTariffSeason.seasonId"
+    id="seasonId"
+    name="seasonId"
+    required
+    #seasonId="ngModel">
+      <option
+      *ngFor="let season of season"
+      value="{{season.seasonId}}">{{season.seasonName}}</option>
+    </select>
+  </div>
+</form>

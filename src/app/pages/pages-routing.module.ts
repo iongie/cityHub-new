@@ -83,6 +83,9 @@ const routes: Routes = [{
     path: 'room-tariff',
     loadChildren: './main/room-tariff/room-tariff.module#RoomTariffModule',
   }, {
+    path: 'update-room-tariff',
+    loadChildren: './main/room-tariff/update/update.module#UpdateModule',
+  }, {
     path: 'room-type',
     loadChildren: './main/room-type/room-type.module#RoomTypeModule',
   }, {

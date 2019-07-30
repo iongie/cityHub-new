@@ -1,25 +1,28 @@
+import { WeekendTariffComponent } from './conf/weekend-tariff/weekend-tariff.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { Subject } from 'rxjs';
-import { RoomTypeService } from '../../../services/room-type/room-type.service';
-import { FloorService } from '../../../services/floor/floor.service';
-import { RoomOperationService } from '../../../services/room-operation/room-operation.service';
-import { RoomStatusService } from '../../../services/room-status/room-status.service';
-import { NotificationService } from '../../../services/notification/notification.service';
+import { takeUntil } from 'rxjs/operators';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { UserRoleService } from '../../../../services/user-role/user-role.service';
 import { Router } from '@angular/router';
-import { UserRoleService } from '../../../services/user-role/user-role.service';
-import { AuthService } from '../../../services/auth/auth.service';
-import { RoomTariffService } from '../../../services/room-tariff/room-tariff.service';
-import { SeasonService } from '../../../services/season/season.service';
-import { TaxService } from '../../../services/tax/tax.service';
-import { takeUntil, map, filter } from 'rxjs/operators';
+import { NotificationService } from '../../../../services/notification/notification.service';
+import { RoomStatusService } from '../../../../services/room-status/room-status.service';
+import { RoomOperationService } from '../../../../services/room-operation/room-operation.service';
+import { TaxService } from '../../../../services/tax/tax.service';
+import { SeasonService } from '../../../../services/season/season.service';
+import { RoomTariffService } from '../../../../services/room-tariff/room-tariff.service';
+import { FloorService } from '../../../../services/floor/floor.service';
+import { RoomTypeService } from '../../../../services/room-type/room-type.service';
+import { Subject } from 'rxjs';
+import { SeasonComponent } from './conf/season/season.component';
+import { WeekdayTariffComponent } from './conf/weekday-tariff/weekday-tariff.component';
 
 @Component({
-  selector: 'ngx-room-tariff',
-  templateUrl: './room-tariff.component.html',
-  styleUrls: ['./room-tariff.component.scss'],
+  selector: 'ngx-update',
+  templateUrl: './update.component.html',
+  styleUrls: ['./update.component.scss'],
 })
-export class RoomTariffComponent implements OnInit, OnDestroy {
+export class UpdateComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
   roomTariff: LocalDataSource;
   roomType: any;
@@ -64,17 +67,13 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
       },
       weekdayTariff: {
         title: 'Tariff',
-        type: 'html',
-        valuePrepareFunction: (value) => {
-          return value = Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            currencyDisplay: 'code' }).format(value);
-        },
+        type: 'custom',
+        renderComponent: WeekdayTariffComponent,
       },
-      seasonName: {
+      seasonId: {
         title: 'Season',
-        type: 'string',
+        type: 'custom',
+        renderComponent: SeasonComponent,
       },
     },
   };
@@ -108,17 +107,13 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
       },
       weekendTariff: {
         title: 'Tariff',
-        type: 'html',
-        valuePrepareFunction: (value) => {
-          return value = Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            currencyDisplay: 'code' }).format(value);
-        },
+        type: 'custom',
+        renderComponent: WeekendTariffComponent,
       },
-      seasonName: {
+      seasonId: {
         title: 'Season',
-        type: 'string',
+        type: 'custom',
+        renderComponent: SeasonComponent,
       },
     },
   };
@@ -395,7 +390,4 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
     });
   }
 
-  toUpdate() {
-    this.router.navigate(['pages/update-room-tariff']);
-  }
 }
