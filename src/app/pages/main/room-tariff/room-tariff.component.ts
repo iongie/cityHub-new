@@ -309,10 +309,18 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
     }
     this.roomTariffServ.get().pipe(takeUntil(this.subs)).subscribe(resRoomTariff => {
       const resCurrentTariff = resRoomTariff['current_tariff'].filter((filterResCurrentTarrif) => {
-        if (event === '') {
+        if (event === '' && this.filterRoomTariff.seasonId === '') {
+          console.log('all null - filterByRoomType');
           return filterResCurrentTarrif.room_type_id ;
+        } else if (this.filterRoomTariff.seasonId === '') {
+          console.log('this.filterRoomTariff.roomTypeId null -filterByRoomType');
+          return filterResCurrentTarrif.room_type_id === JSON.parse(this.eventRoomType);
+        } else if (event === '') {
+          console.log('event null -filterByRoomType');
+          return filterResCurrentTarrif.season_id === JSON.parse(this.filterRoomTariff.seasonId);
         } else {
-          return filterResCurrentTarrif.room_type_id === JSON.parse(event);
+          console.log('all not null -filterByRoomType');
+          return filterResCurrentTarrif.room_type_id === JSON.parse(this.eventRoomType) && filterResCurrentTarrif.season_id === JSON.parse(this.filterRoomTariff.seasonId);
         }
       });
       const currentTariff = resCurrentTariff.map((forResCurrentTarrif) => {
@@ -356,6 +364,7 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
   }
 
   filterBySeason(event) {
+    console.log(this.filterRoomTariff.roomTypeId);
     if (event === '') {
       console.log('null');
     } else {
@@ -364,10 +373,18 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
     }
     this.roomTariffServ.get().pipe(takeUntil(this.subs)).subscribe(resRoomTariff => {
       const resCurrentTariff = resRoomTariff['current_tariff'].filter((filterResCurrentTarrif) => {
-        if (event === '') {
-          return filterResCurrentTarrif.season_id ;
-        } else {
+        if ( event === '' && this.filterRoomTariff.roomTypeId === '' ) {
+          console.log('all null - filterBySeason');
+          return filterResCurrentTarrif.room_type_id ;
+        } else if ( this.filterRoomTariff.roomTypeId === '' ) {
+          console.log('this.filterRoomTariff.roomTypeId null -filterBySeason');
           return filterResCurrentTarrif.season_id === JSON.parse(event);
+        } else if (event === '') {
+          console.log('event null -filterBySeason');
+          return filterResCurrentTarrif.room_type_id === JSON.parse(this.filterRoomTariff.roomTypeId);
+        } else {
+          console.log('all not null -filterBySeason');
+          return filterResCurrentTarrif.season_id === JSON.parse(event) && filterResCurrentTarrif.room_type_id === JSON.parse(this.filterRoomTariff.roomTypeId);
         }
       });
       const currentTariff = resCurrentTariff.map((forResCurrentTarrif) => {

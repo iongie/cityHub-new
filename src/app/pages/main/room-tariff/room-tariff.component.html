@@ -64,29 +64,7 @@
           </nb-tab>
           <nb-tab [tabTitle]="weekEndTariff">
             <div class="form-filter">
-              <div class="form-row align-items-center">
-                <div class="col-auto">
-                  <label class="mr-sm-2" for="roomTypeId">Room type</label>
-                  <select
-                  nbInput
-                  fullWidth
-                  [disabled]="show === false"
-                  [(ngModel)]="filterRoomTariff.roomTypeId"
-                  (ngModelChange)="filterByRoomType($event)"
-                  id="roomTypeId"
-                  name="roomTypeId"
-                  required
-                  #roomTypeId="ngModel"
-                  class="custom-select mr-sm-2">
-                    <option value="">ALL</option>
-                    <option
-                    *ngFor="let roomType of roomType"
-                    value="{{roomType.roomTypeId}}">
-                    {{roomType.roomTypeName}}
-                    </option>
-                  </select>
-                </div>
-              </div>
+              
             </div>
               
             <div class="table">

@@ -62,16 +62,16 @@ export class DetailComponent implements OnInit, OnDestroy {
         floorName: this.floor[0].floorName,
       };
       console.log(data);
-      // this.floorServ.update(data).pipe(takeUntil(this.subs)).subscribe(() => {
-      //   const title = 'Floor';
-      //   const content = 'Data has been update';
-      //   this.notifServ.showSuccessTypeToast(title, content);
-      //   this.router.navigate(['pages/floor']);
-      // }, err => {
-      //   const title = 'Floor';
-      //   const content = 'Error';
-      //   this.notifServ.showInfoTypeToast(title, content);
-      // });
+      this.floorServ.update(data).pipe(takeUntil(this.subs)).subscribe(() => {
+        const title = 'Floor';
+        const content = 'Data has been update';
+        this.notifServ.showSuccessTypeToast(title, content);
+        this.router.navigate(['pages/floor']);
+      }, err => {
+        const title = 'Floor';
+        const content = 'Error';
+        this.notifServ.showInfoTypeToast(title, content);
+      });
     });
   }
 
