@@ -36,7 +36,27 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
   weekEndTariff = 'Weekends Rate';
   tes: any;
   settingsWeekdays = {
-    actions: false,
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+    },
+    add: {
+      addButtonContent: '<i class="nb-plus"></i>',
+      createButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true,
+    },
+    edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true,
+    },
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,
+    },
     columns: {
       roomTypeName: {
         title: 'Room Type',
@@ -72,15 +92,40 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
             currencyDisplay: 'code' }).format(value);
         },
       },
-      seasonName: {
+      seasonId: {
         title: 'Season',
-        type: 'string',
+        editor: {
+          type: 'list',
+          config: {
+            list : this.getSeason(),
+          },
+        },
       },
     },
   };
 
   settingsWeekends = {
-    actions: false,
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+    },
+    add: {
+      addButtonContent: '<i class="nb-plus"></i>',
+      createButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true,
+    },
+    edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true,
+    },
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,
+    },
     columns: {
       roomTypeName: {
         title: 'Room Type',
@@ -118,7 +163,12 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
       },
       seasonName: {
         title: 'Season',
-        type: 'string',
+        editor: {
+          type: 'list',
+          config: {
+            list : this.getSeason(),
+          },
+        },
       },
     },
   };
@@ -138,6 +188,7 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getRoomTariff();
+    this.getSeason();
     this.refreshRoom();
     this.getRoomType();
     this.filterRoomTariff.roomTypeId = '';
@@ -179,8 +230,18 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
 
         if (filter[0].create_permision === 'allowed') {
           this.show = true;
+          this.settingsWeekdays.actions.add = true;
+          this.settingsWeekdays = Object.assign({}, this.settingsWeekdays);
+
+          this.settingsWeekends.actions.add = true;
+          this.settingsWeekends = Object.assign({}, this.settingsWeekends);
         }else if (filter[0].create_permision === 'not allowed') {
           this.show = false;
+          this.settingsWeekdays.actions.add = false;
+          this.settingsWeekdays = Object.assign({}, this.settingsWeekdays);
+
+          this.settingsWeekends.actions.add = false;
+          this.settingsWeekends = Object.assign({}, this.settingsWeekends);
         }else if (filter[0].read_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].read_permision === 'not allowed') {
@@ -265,6 +326,26 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
           console.log('data', data);
         });
       });
+    });
+  }
+
+  getSeason() {
+    this.seasonServ.get().pipe(takeUntil(this.subs)).subscribe(season => {
+
+      const data = season;
+      this.season = data.map(function(y){
+        const abc = {
+          value: y.season_id,
+          title: y.season_name,
+        };
+        return abc;
+      });
+      console.log('this.settingsWeekdays.columns.seasonId', this.settingsWeekdays.columns);
+      this.settingsWeekdays.columns.seasonId.editor.config.list = this.season;
+      this.settingsWeekdays = Object.assign({}, this.settingsWeekdays);
+
+      this.settingsWeekends.columns.seasonName.editor.config.list = this.season;
+      this.settingsWeekends = Object.assign({}, this.settingsWeekends);
     });
   }
 

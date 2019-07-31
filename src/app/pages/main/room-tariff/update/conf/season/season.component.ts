@@ -6,13 +6,14 @@ import { UserRoleService } from '../../../../../../services/user-role/user-role.
 import { AuthService } from '../../../../../../services/auth/auth.service';
 import { SeasonService } from '../../../../../../services/season/season.service';
 import { takeUntil } from 'rxjs/operators';
+import { ViewCell } from 'ng2-smart-table';
 
 @Component({
   selector: 'ngx-season',
   templateUrl: './season.component.html',
   styleUrls: ['./season.component.scss'],
 })
-export class SeasonComponent implements OnInit, OnDestroy {
+export class SeasonComponent implements OnInit, OnDestroy, ViewCell {
   renderValue: any;
   season: any;
   roomTariffSeason = [{

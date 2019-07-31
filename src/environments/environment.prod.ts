@@ -5,4 +5,5 @@
  */
 export const environment = {
   production: true,
+  baseUrl: 'https://hotel.project-on.net/api',
 };
