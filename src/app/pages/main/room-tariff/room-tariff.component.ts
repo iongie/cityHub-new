@@ -13,6 +13,7 @@ import { RoomTariffService } from '../../../services/room-tariff/room-tariff.ser
 import { SeasonService } from '../../../services/season/season.service';
 import { TaxService } from '../../../services/tax/tax.service';
 import { takeUntil, map, filter } from 'rxjs/operators';
+import { DataSource } from 'ng2-smart-table/lib/data-source/data-source';
 
 @Component({
   selector: 'ngx-room-tariff',
@@ -26,6 +27,7 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
   season: any;
   eventSeason: any;
   eventRoomType: any;
+  loadData: any[];
   filterRoomTariff = {
     roomTypeId: '',
     seasonId: '',
@@ -61,6 +63,7 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
       roomTypeName: {
         title: 'Room Type',
         type: 'string',
+        editable: false,
       },
       baseRate: {
         title: 'Base Rate',
@@ -71,6 +74,7 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
             currency: 'IDR',
             currencyDisplay: 'code' }).format(value);
         },
+        editable: false,
       },
       increaseRate: {
         title: 'Increase Rate',
@@ -81,6 +85,7 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
             currency: 'IDR',
             currencyDisplay: 'code' }).format(value);
         },
+        editable: false,
       },
       weekdayTariff: {
         title: 'Tariff',
@@ -161,7 +166,7 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
             currencyDisplay: 'code' }).format(value);
         },
       },
-      seasonName: {
+      seasonId: {
         title: 'Season',
         editor: {
           type: 'list',
@@ -228,33 +233,51 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
           return forResUserRole.module_name === 'room_tariff_module';
         });
 
-        if (filter[0].create_permision === 'allowed') {
-          this.show = true;
-          this.settingsWeekdays.actions.add = true;
-          this.settingsWeekdays = Object.assign({}, this.settingsWeekdays);
+        console.log('filter', filter);
 
-          this.settingsWeekends.actions.add = true;
-          this.settingsWeekends = Object.assign({}, this.settingsWeekends);
-        }else if (filter[0].create_permision === 'not allowed') {
-          this.show = false;
-          this.settingsWeekdays.actions.add = false;
-          this.settingsWeekdays = Object.assign({}, this.settingsWeekdays);
+        filter.map((r) => {
+          if (r.create_permision === 'allowed') {
+            this.show = true;
+            console.log('create - allowed');
+          }else if (r.create_permision === 'not allowed') {
+            this.show = false;
+            console.log('create - not allowed');
+          }
 
-          this.settingsWeekends.actions.add = false;
-          this.settingsWeekends = Object.assign({}, this.settingsWeekends);
-        }else if (filter[0].read_permision === 'allowed') {
-          this.show = true;
-        }else if (filter[0].read_permision === 'not allowed') {
-          this.show = false;
-        }else if (filter[0].update_permision === 'allowed') {
-          this.show = true;
-        }else if (filter[0].update_permision === 'not allowed') {
-          this.show = false;
-        }else if (filter[0].delete_permision === 'allowed') {
-          this.show = true;
-        }else if (filter[0].delete_permision === 'not allowed') {
-          this.show = false;
-        }
+          if (r.read_permision === 'allowed') {
+            this.show = true;
+            console.log('read - allowed');
+            this.settingsWeekdays.actions.edit = true;
+            this.settingsWeekdays = Object.assign({}, this.settingsWeekdays);
+
+            this.settingsWeekends.actions.edit = true;
+            this.settingsWeekends = Object.assign({}, this.settingsWeekends);
+          }else if (r.read_permision === 'not allowed') {
+            this.show = false;
+            console.log('read - not allowed');
+            this.settingsWeekdays.actions.edit = false;
+            this.settingsWeekdays = Object.assign({}, this.settingsWeekdays);
+
+            this.settingsWeekends.actions.edit = false;
+            this.settingsWeekends = Object.assign({}, this.settingsWeekends);
+          }
+
+          if (r.update_permision === 'allowed') {
+            this.show = true;
+            console.log('update - allowed');
+          }else if (r.update_permision === 'not allowed') {
+            this.show = false;
+            console.log('update - not allowed');
+          }
+
+          if (r.delete_permision === 'allowed') {
+            this.show = true;
+            console.log('delete - allowed');
+          }else if (r.delete_permision === 'not allowed') {
+            this.show = false;
+            console.log('delete - not allowed');
+          }
+        });
 
         this.roomTariffServ.get().pipe(takeUntil(this.subs)).subscribe(resRoomTariff => {
           const resCurrentTariff = resRoomTariff['current_tariff'];
@@ -344,7 +367,7 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
       this.settingsWeekdays.columns.seasonId.editor.config.list = this.season;
       this.settingsWeekdays = Object.assign({}, this.settingsWeekdays);
 
-      this.settingsWeekends.columns.seasonName.editor.config.list = this.season;
+      this.settingsWeekends.columns.seasonId.editor.config.list = this.season;
       this.settingsWeekends = Object.assign({}, this.settingsWeekends);
     });
   }
@@ -477,6 +500,59 @@ export class RoomTariffComponent implements OnInit, OnDestroy {
   }
 
   toUpdate() {
-    this.router.navigate(['pages/update-room-tariff']);
+    this.roomTariff.getAll().then(dataRoomTariff => {
+      const roomTypeId = dataRoomTariff.map((y) => {
+        return y.roomTypeId;
+      });
+      const seasonId = dataRoomTariff.map((y) => {
+        return y.seasonId;
+      });
+      const weekdayTariff = dataRoomTariff.map((y) => {
+        return y.weekdayTariff;
+      });
+      const weekendTariff = dataRoomTariff.map((y) => {
+        return y.weekendTariff;
+      });
+      const taxId = dataRoomTariff.map((y) => {
+        return y.taxId;
+      });
+
+      const data = {
+        'roomTypeId': roomTypeId,
+        'seasonId': seasonId,
+        'weekendTariff': weekendTariff,
+        'weekdayTariff': weekdayTariff,
+        'taxId': taxId,
+      };
+      this.roomTariffServ.update(data).pipe(takeUntil(this.subs)).subscribe(() => {
+        const title = 'Room tariff';
+        const content = 'Data has been update';
+        this.notifServ.showSuccessTypeToast(title, content);
+      }, err => {
+        const title = 'Room tariff';
+        const content = 'Error';
+        this.notifServ.showInfoTypeToast(title, content);
+      });
+
+      console.log('data update roomTariff', data);
+    });
+  }
+
+  onUpdateWeekdays(event) {
+    const data = {
+      seasonId : event.newData.seasonId,
+      weekdayTariff : event.newData.weekdayTariff,
+    };
+    event.confirm.resolve(event.newData);
+    console.log('onUpdateWeekdays', data);
+    console.log('this.roomTariff', this.roomTariff);
+  }
+
+  onUpdateWeekends(event) {
+    const data = {
+      seasonId : event.newData.seasonId,
+      weekendTariff : event.newData.weekendTariff,
+    };
+    event.confirm.resolve(event.newData);
   }
 }
