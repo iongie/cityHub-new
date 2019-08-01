@@ -162,6 +162,9 @@ const routes: Routes = [{
       },
     ],
   }, {
+    path: 'user-role',
+    loadChildren: './main/role/role.module#RoleModule',
+  }, {
     path: 'privilege',
     loadChildren: './main/privilege/privilege.module#PrivilegeModule',
   },  {

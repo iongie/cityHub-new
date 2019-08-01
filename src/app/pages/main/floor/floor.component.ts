@@ -80,15 +80,15 @@ export class FloorComponent implements OnInit, OnDestroy {
           this.show = true;
         }else if (filter[0].create_permision === 'not allowed') {
           this.show = false;
-        }else if (filter[0].read_permision === 'allowed') {
+        }if (filter[0].read_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].read_permision === 'not allowed') {
           this.show = false;
-        }else if (filter[0].update_permision === 'allowed') {
+        }if (filter[0].update_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].update_permision === 'not allowed') {
           this.show = false;
-        }else if (filter[0].delete_permision === 'allowed') {
+        }if (filter[0].delete_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].delete_permision === 'not allowed') {
           this.show = false;
