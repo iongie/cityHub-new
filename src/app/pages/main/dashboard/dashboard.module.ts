@@ -4,7 +4,6 @@ import { DashboardComponent } from './dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { NbThemeService } from '@nebular/theme';
 
 const routes: Routes = [
   {
@@ -22,13 +21,9 @@ const routes: Routes = [
   ],
 })
 
-export class DashboardModule { 
-  currentTheme: string;
-  themeSubscription: any;
+export class DashboardModule {
 
-  constructor(private themeService: NbThemeService) {
-    this.themeSubscription = this.themeService.getJsTheme().subscribe(theme => {
-      this.currentTheme = theme.name;
-    });
-  }
+  
+  constructor() {}
+  
 }
