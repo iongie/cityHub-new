@@ -4,6 +4,8 @@ import { DashboardComponent } from './dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { RoomListComponent } from './room-list/room-list.component';
+import { RoomStatusComponent } from './room-status/room-status.component';
 
 const routes: Routes = [
   {
@@ -12,7 +14,10 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [
+    DashboardComponent,
+    RoomListComponent,
+    RoomStatusComponent, ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
