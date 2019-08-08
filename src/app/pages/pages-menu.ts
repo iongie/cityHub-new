@@ -39,6 +39,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'fa fa-cogs',
     children: [
       {
+        title: 'Property information',
+        link: '/pages/property-information',
+      },
+      {
         title: 'Extra charge category',
         link: '/pages/extra-charge-category',
       },

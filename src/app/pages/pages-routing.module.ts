@@ -166,6 +166,9 @@ const routes: Routes = [{
       path: 'privilege',
       loadChildren: './main/privilege/privilege.module#PrivilegeModule',
     }, {
+      path: 'property-information',
+      loadChildren: './main/property-information/property-information.module#PropertyInformationModule',
+    }, {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',

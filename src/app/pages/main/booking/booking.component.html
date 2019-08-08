@@ -1,3 +1,52 @@
-<p>
-  booking works!
-</p>
+<div class="steppers-container row">
+  <div class="col-md-12 col-lg-12 col-xxxl-12">
+    <nb-card>
+      <nb-card-body>
+        <nb-stepper #stepper>
+          <nb-step [stepControl]="firstForm" label="First step">
+            <form (ngSubmit)="onFirstSubmit()" class="step-container">
+              <div class="form-group">
+                <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  [disabled]="show === false"
+                  class="form-control"
+                  [(ngModel)]="model"
+                  [ngbTypeahead]="search" 
+                  (ngModelChange)="doSomething($event)"
+                  [resultTemplate]="rt"
+                  [inputFormatter]="formatter"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  required
+                  #phoneNumber="ngModel"
+                  placeholder="Guest">
+              </div>
+
+              <ng-template #rt let-r="result" let-t="term">
+                <ngb-highlight [result]="r.guestName" [term]="t"></ngb-highlight>
+              </ng-template>
+
+              <pre>Model: {{ model | json }}</pre>
+              <button nbButton nbStepperNext>next</button>
+            </form>
+          </nb-step>
+          <nb-step [stepControl]="secondForm" label="Second step">
+            <form (ngSubmit)="onSecondSubmit()" class="step-container">
+              
+              <button nbButton nbStepperPrevious>prev</button>
+              <button nbButton nbStepperNext>next</button>
+            </form>
+          </nb-step>
+          <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">
+            <div class="step-container">
+              <h3>Wizard completed!</h3>
+              <button nbButton (click)="stepper.reset()">Try again</button>
+            </div>
+          </nb-step>
+        </nb-stepper>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

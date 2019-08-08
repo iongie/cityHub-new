@@ -1,15 +1,15 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { throwError, Observable, Subject } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { throwError, Subject, Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class UserRoleService implements OnDestroy {
+export class GuestService {
   private url = environment.baseUrl;
   private subs: Subject<void> = new Subject();
   private _refresh = new Subject();
@@ -40,27 +40,42 @@ export class UserRoleService implements OnDestroy {
     return this._refresh;
   }
 
-  getByPrivilegeId(privilegeId: any): Observable<any> {
-    return this.http.get<any>(this.url + '/user-role/' + privilegeId.id, httpOptions).pipe(
+  get(): Observable<any[]> {
+    return this.http.get<any[]>(this.url + '/guest', httpOptions).pipe(
       catchError(this.handleError),
     );
   }
 
-  getById(userRole: any): Observable<any> {
-    return this.http.get<any>(this.url + '/user-role/show/' + userRole.id, httpOptions).pipe(
+  add(data: any): Observable<any> {
+    return this.http.post<any>(this.url + '/guest/add', data, httpOptions).pipe(
       catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
     );
   }
 
-  get(): Observable<any> {
-    return this.http.get<any>(this.url + '/user-role/show/all', httpOptions).pipe(
+  getById(guest: any): Observable<any> {
+    return this.http.get<any>(this.url + '/guest/show/' + guest.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
 
   update(data: any): Observable<any> {
-    return this.http.post(this.url + '/user-role/edit', data, httpOptions).pipe(
+    return this.http.post(this.url + '/guest/edit', data, httpOptions).pipe(
       catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
+    );
+  }
+
+  delete(data: any): Observable<any> {
+    return this.http.get<any>(this.url + '/guest/remove/' + data.id, data).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
     );
   }
 }
