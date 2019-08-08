@@ -1,52 +1,193 @@
-<div class="steppers-container row">
-  <div class="col-md-12 col-lg-12 col-xxxl-12">
-    <nb-card>
-      <nb-card-body>
-        <nb-stepper #stepper>
-          <nb-step [stepControl]="firstForm" label="First step">
-            <form (ngSubmit)="onFirstSubmit()" class="step-container">
-              <div class="form-group">
-                <input
-                  type="text"
-                  nbInput
-                  fullWidth
-                  [disabled]="show === false"
-                  class="form-control"
-                  [(ngModel)]="model"
-                  [ngbTypeahead]="search" 
-                  (ngModelChange)="doSomething($event)"
-                  [resultTemplate]="rt"
-                  [inputFormatter]="formatter"
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  required
-                  #phoneNumber="ngModel"
-                  placeholder="Guest">
-              </div>
+<nb-card>
+  <nb-card-body>
+    <nb-stepper #stepper >
+      <nb-step [stepControl]="firstForm" label="First step">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">
+              <i class="fa" [ngClass]="{ 'fa-cog fa-spin': loadingClients, 'fa-search': !loadingClients }" aria-hidden="true"></i>
+            </span>
+          </div>
+          <input
+            type="text"
+            fullWidth
+            [disabled]="show === false"
+            class="form-control"
+            [(ngModel)]="modelGuest"
+            [ngbTypeahead]="searchGuest" 
+            (ngModelChange)="onChangeGuest($event)"
+            [resultTemplate]="guest"
+            [inputFormatter]="formatterGuest"
+            placeholder="Guest">
+        </div>
 
-              <ng-template #rt let-r="result" let-t="term">
-                <ngb-highlight [result]="r.guestName" [term]="t"></ngb-highlight>
-              </ng-template>
-
-              <pre>Model: {{ model | json }}</pre>
-              <button nbButton nbStepperNext>next</button>
-            </form>
-          </nb-step>
-          <nb-step [stepControl]="secondForm" label="Second step">
-            <form (ngSubmit)="onSecondSubmit()" class="step-container">
-              
-              <button nbButton nbStepperPrevious>prev</button>
-              <button nbButton nbStepperNext>next</button>
-            </form>
-          </nb-step>
-          <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">
-            <div class="step-container">
-              <h3>Wizard completed!</h3>
-              <button nbButton (click)="stepper.reset()">Try again</button>
+        <ng-template #guest let-r="result" let-t="term">
+          <div class="media p-1">
+            <div class="d-flex justify-content-center align-content-center align-items-center">
+              <i class="fa fa-user-circle fa-2x mr-3" aria-hidden="true"></i>
             </div>
-          </nb-step>
-        </nb-stepper>
-      </nb-card-body>
-    </nb-card>
-  </div>
-</div>
+            <div class="media-body">
+              <h5 class="mt-1">{{r.guestName}}</h5>
+            </div>
+          </div>
+        </ng-template>
+
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">
+                <i class="fa" [ngClass]="{ 'fa-cog fa-spin': loadingClients, 'fa-search': !loadingClients }" aria-hidden="true"></i>
+              </span>
+            </div>
+            <input
+              type="text"
+              fullWidth
+              [disabled]="show === false"
+              class="form-control"
+              [(ngModel)]="modelBusinessSource"
+              [ngbTypeahead]="searchBusinessSource" 
+              (ngModelChange)="onChangeBusinessSource($event)"
+              [resultTemplate]="businessSource"
+              [inputFormatter]="formatterBusinessSource"
+              placeholder="Business Source">
+          </div>
+
+          <ng-template #businessSource let-r="result" let-t="term">
+            <div class="media p-1">
+              <div class="d-flex justify-content-center align-content-center align-items-center">
+                <i class="fa fa-user-circle fa-2x mr-3" aria-hidden="true"></i>
+              </div>
+              <div class="media-body">
+                <h5 class="mt-1">{{r.businnessSourceName}}</h5>
+              </div>
+            </div>
+          </ng-template>
+
+        <form (ngSubmit)="onFirstSubmit()" class="step-container">
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Name</label>
+            <input
+            type="text"
+            nbInput
+            fullWidth
+            [disabled]="show === false"
+            class="form-control"
+            [(ngModel)]="bookingStepOne.guestName"
+            id="guestName"
+            name="guestName"
+            required
+            #guestName="ngModel"
+            placeholder="Guest name">
+          </div>
+  
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Country</label>
+            <select
+            nbInput
+            fullWidth
+            [disabled]="show === false"
+            class="form-control"
+            [(ngModel)]="bookingStepOne.countryId"
+            id="typeId"
+            name="typeId"
+            required
+            #typeId="ngModel">
+              <option
+              *ngFor="let country of country"
+              value="{{country.countryId}}">{{country.countryName}}</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Address</label>
+            <textarea
+            nbInput
+            fullWidth
+            [disabled]="show === false"
+            class="form-control"
+            [(ngModel)]="bookingStepOne.address"
+            id="address"
+            name="address"
+            required
+            #address="ngModel"
+            placeholder="Description">
+            </textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Source</label>
+            <input
+            type="text"
+            nbInput
+            fullWidth
+            [disabled]="show === false"
+            class="form-control"
+            [(ngModel)]="bookingStepOne.sourceName"
+            id="sourceName"
+            name="sourceName"
+            required
+            #sourceName="ngModel"
+            placeholder="Busineess source">
+          </div>
+  
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">Arrival Date</label>
+              <input
+              [nbDatepicker]="fromDate"
+              [(ngModel)]="bookingStepOne.arrivalDate"
+              class="form-control"
+              id="arrivalDate"
+              name="arrivalDate"
+              required
+              [disabled]="show === false"
+              #arrivalDate="ngModel"
+              placeholder="From Date">
+              <nb-datepicker
+                #fromDate
+                format="MMM d, y">
+              </nb-datepicker>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="exampleFormControlInput1">Duration</label>
+              <input
+              type="number"
+              min = 0
+              nbInput
+              fullWidth
+              [disabled]="show === false"
+              class="form-control"
+              [(ngModel)]="bookingStepOne.duration"
+              id="duration"
+              name="duration"
+              required
+              #duration="ngModel"
+              placeholder="Duration">
+            </div>
+          </div>
+
+          <div class="buttons">
+            <button nbButton nbStepperNext (click)="saveStepOne()">next</button>
+          </div>
+        </form>
+      </nb-step>
+
+
+      <nb-step [stepControl]="secondForm" label="Second step">
+        <form (ngSubmit)="onSecondSubmit()" class="step-container">
+          
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext>next</button>
+        </form>
+      </nb-step>
+      <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">
+        <div class="step-container">
+          <h3>Wizard completed!</h3>
+          <button nbButton (click)="stepper.reset()">Try again</button>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>
+
