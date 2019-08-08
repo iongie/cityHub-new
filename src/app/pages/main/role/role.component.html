@@ -1,3 +1,63 @@
-<p>
-  role works!
-</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Role Management</div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div class="form-filter">
+      <div class="form-row align-items-center">
+        <div class="col-auto">
+          <label class="mr-sm-2" for="roomTypeId">Room type</label>
+          <select
+          nbInput
+          fullWidth
+          [(ngModel)]="filterRoleUser.privilegeRoleUser"
+          (ngModelChange)="filterByPrivilege($event)"
+          id="privilegeRoleUser"
+          name="privilegeRoleUser"
+          required
+          #privilegeRoleUser="ngModel"
+          class="custom-select mr-sm-2">
+            <option value="">ALL</option>
+            <option
+            *ngFor="let privilege of privilege"
+            value="{{privilege.privilegeId}}">
+            {{privilege.privilegeName}}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-auto">
+          <label class="mr-sm-2" for="roomTypeId">Module</label>
+          <select
+          nbInput
+          fullWidth
+          [(ngModel)]="filterRoleUser.moduleRoleUser"
+          (ngModelChange)="filterByModule($event)"
+          id="moduleRoleUser"
+          name="moduleRoleUser"
+          required
+          #privilegeRoleUser="ngModel"
+          class="custom-select mr-sm-2">
+            <option value="">ALL</option>
+            <option
+            *ngFor="let module of module"
+            value="{{module.moduleId}}">
+            {{module.moduleName}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <ng2-smart-table [settings]="settings"  [source]="roleUser" (editConfirm)="onUpdate($event)"></ng2-smart-table>
+  </nb-card-body>
+
+</nb-card>
+
+
+
+
+
+

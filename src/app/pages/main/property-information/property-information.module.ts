@@ -1,19 +1,18 @@
-import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BookingComponent } from './booking.component';
+import { PropertyInformationComponent } from './property-information.component';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { UnderConstractionModule } from '../under-constraction/under-constraction.module';
-import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    component: BookingComponent,
+    component: PropertyInformationComponent,
   },
 ];
 @NgModule({
-  declarations: [BookingComponent],
+  declarations: [PropertyInformationComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -21,6 +20,6 @@ const routes: Routes = [
     ThemeModule,
     Ng2SmartTableModule,
     // UnderConstractionModule,
-  ],
+  ]
 })
-export class BookingModule { }
+export class PropertyInformationModule { }
