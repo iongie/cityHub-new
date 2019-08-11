@@ -9,6 +9,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil, map, debounceTime } from 'rxjs/operators';
 import { CountryService } from '../../../services/country/country.service';
+import { DatePipe } from '@angular/common';
+import { BookingService } from '../../../services/booking/booking.service';
 
 @Component({
   selector: 'ngx-booking',
@@ -18,12 +20,13 @@ import { CountryService } from '../../../services/country/country.service';
 export class BookingComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
   businessSource: any;
+  show: any;
   guest: any;
   country: any;
   userCityHub: any;
   bookingStepOne = {
     arrivalDate: '',
-    duration: '',
+    duration: 0,
     guestId: '',
     guestName: '',
     address: '',
@@ -36,11 +39,14 @@ export class BookingComponent implements OnInit, OnDestroy {
     sourceDesc: '',
     createdBy: '',
   }
+  booking: any;
+  roomListBooking: any;
 
   modelGuest: any;
   modelBusinessSource: any;
 
   constructor(
+    public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
     public guestServ: GuestService,
     public notificationServ: NotificationService,
@@ -49,6 +55,7 @@ export class BookingComponent implements OnInit, OnDestroy {
     public roomTypeServ: RoomTypeService,
     public roomOperationServ: RoomOperationService,
     public countryServ: CountryService,
+    public datepipe: DatePipe,
   ) { }
 
   ngOnInit() {
@@ -56,6 +63,14 @@ export class BookingComponent implements OnInit, OnDestroy {
     this.getBusinessSource();
     this.getCountry();
     this.detailAccount();
+    this.roomListBooking = [
+      {
+        available: '',
+        roomTypeId: '',
+        roomTypeName: '',
+        check: false,
+      },
+    ];
   }
 
   ngOnDestroy() {
@@ -69,9 +84,9 @@ export class BookingComponent implements OnInit, OnDestroy {
     };
     this.authServ.detailAfterLogin(data).pipe(takeUntil(this.subs)).subscribe(res => {
       this.userCityHub = {
-        name : res[0].full_name,
+        name : res[0].username,
       };
-      console.log(res);
+      console.log('userCityHub', this.userCityHub);
     });
   }
 
@@ -116,7 +131,9 @@ export class BookingComponent implements OnInit, OnDestroy {
         };
         return xyz;
       })
-    })
+      
+    console.log(resCountry);
+    });
   }
 
   searchGuest = (textGuest: Observable<string>) =>
@@ -141,7 +158,7 @@ export class BookingComponent implements OnInit, OnDestroy {
     if(event === '') {
       this.bookingStepOne = {
         arrivalDate: '',
-        duration: '',
+        duration: 0,
         guestId: '',
         guestName: '',
         address: '',
@@ -157,7 +174,7 @@ export class BookingComponent implements OnInit, OnDestroy {
     } else {
       this.bookingStepOne = {
         arrivalDate: '',
-        duration: '',
+        duration: 0,
         guestId: event.guestId,
         guestName: event.guestName,
         address: event.address,
@@ -179,7 +196,7 @@ export class BookingComponent implements OnInit, OnDestroy {
     if(event === '') {
       this.bookingStepOne = {
         arrivalDate: '',
-        duration: '',
+        duration: 0,
         guestId: '',
         guestName: '',
         address: '',
@@ -195,7 +212,7 @@ export class BookingComponent implements OnInit, OnDestroy {
     } else {
       this.bookingStepOne = {
         arrivalDate: '',
-        duration: '',
+        duration: 0,
         guestId: this.bookingStepOne.guestId,
         guestName: this.bookingStepOne.guestName,
         address: this.bookingStepOne.address,
@@ -215,12 +232,86 @@ export class BookingComponent implements OnInit, OnDestroy {
 
   saveStepOne() {
     const data = {
-      arrivalDate: '',
-      duration: '',
+      arrivalDate:  this.datepipe.transform( this.bookingStepOne.arrivalDate, 'yyyy-MM-dd'),
+      duration: this.bookingStepOne.duration,
       guestId: this.bookingStepOne.guestId,
       sourceId: this.bookingStepOne.sourceId,
-      createBy: this.userCityHub.username,
+      createdBy: this.userCityHub.name,
     };
+    this.bookingServ.addStepOne(data).pipe(takeUntil(this.subs)).subscribe(resBookingStepOne => {
+      this.booking = {
+        bookingId: resBookingStepOne.booking_id,
+        bookingNumber: resBookingStepOne.booking_number,
+        departureDate: resBookingStepOne.departure_date,
+        arrivalDate: resBookingStepOne.arrival_date,
+        duration: resBookingStepOne.duration,
+        room: resBookingStepOne.room,
+      };
+      const dataRoomBooking = this.booking.room;
+      this.roomListBooking = dataRoomBooking.map((y) => {
+        const datax = {
+          available: y.available,
+          roomTypeId: y.room_type_id,
+          roomTypeName: y.room_type_name,
+          check: false,
+        }
+        return datax;
+      });
+      console.log('result booking', resBookingStepOne);
+      console.log('booking', this.booking);
+      console.log('room list booking', this.roomListBooking);
+    });
+  }
+
+  resetStepOne() {
+    const booking = {
+        id: this.booking.bookingId,
+    }
+    this.bookingServ.resetStepOne(booking).pipe(takeUntil(this.subs)).subscribe(() => {
+      console.log('successs');
+    });
+  }
+
+  onChangeRoomType(event){
+    console.log('onChangeRoomType', event);
+  }
+
+  checkRoomListBooking(event) {
+    this.roomListBooking.map((y) => {
+      const yui = {
+        available: y.available,
+        roomTypeId: y.roomTypeId,
+        roomTypeName: y.roomTypeName,
+        check: event.checked,
+      }
+      return yui;
+    });
+  }
+
+  saveStepTwo() {
+    const filterRoomListBooking = this.roomListBooking.filter((y)=> {
+      return y.check === true;
+    });
+
+    const roomTypeId = filterRoomListBooking.map((x) => {
+      return JSON.stringify(x.roomTypeId);
+    });
+
+    const numberOfRoom = filterRoomListBooking.map((x) => {
+      return x.available;
+    });
+
+    const dataStepTwo = {
+      roomTypeId,
+      numberOfRoom
+    };
+
+    const booking = {
+      id: this.booking.bookingId,
+    };
+    this.bookingServ.addStepTwo(booking, dataStepTwo).pipe(takeUntil(this.subs)).subscribe(resStepTwo => {
+      console.log(resStepTwo);
+    })
   }
 
 }
