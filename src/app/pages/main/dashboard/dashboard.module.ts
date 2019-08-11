@@ -6,6 +6,7 @@ import { ThemeModule } from '../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { RoomListComponent } from './room-list/room-list.component';
 import { RoomStatusComponent } from './room-status/room-status.component';
+import { ShortcutComponent } from './shortcut/shortcut.component';
 
 const routes: Routes = [
   {
@@ -17,12 +18,14 @@ const routes: Routes = [
   declarations: [
     DashboardComponent,
     RoomListComponent,
-    RoomStatusComponent, ],
+    RoomStatusComponent,
+    ShortcutComponent, ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     ThemeModule,
     Ng2SmartTableModule,
+
   ],
 })
 
