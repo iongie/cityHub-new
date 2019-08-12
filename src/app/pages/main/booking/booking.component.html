@@ -1,4 +1,14 @@
 <nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Booking Management</div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-primary" (click)="toListBooking()">
+          <i class="fa fa-th-list" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
   <nb-card-body>
     <nb-stepper #stepper >
       <nb-step [stepControl]="firstForm" label="First step">
@@ -153,7 +163,7 @@
               <label for="exampleFormControlInput1">Duration</label>
               <input
               type="number"
-              min = 0
+              min = 1
               nbInput
               fullWidth
               [disabled]="show === false"
@@ -197,8 +207,9 @@
               name="roomTypeName{{i}}"
               placeholder="Guest">
             <input
-            type="text"
+            type="number"
             fullWidth
+            [max]="roomListBooking.available"
             [disabled]="show === false"
             [(ngModel)]="roomListBooking.available"
             id="available{{i}}"
