@@ -4,7 +4,7 @@
 
 @include nb-install-component() {
   ngx-room-selector {
-    width: 70%;
+    width: auto;
     border-right: 2px solid nb-theme(separator);
     background: url('../../../../assets/images/square_pattern.svg') repeat;
     background-size: 75px;
