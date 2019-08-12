@@ -3,7 +3,11 @@
      [class.right]="position === 'inverse'">
   <div class="logo-containter">
     <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
-    <div class="logo" (click)="goToHome()">CityHub-<span>Admin</span></div>
+    <div class="logo" (click)="goToHome()">
+      <i class="fa fa-circle fa-xs" [ngClass]="connectionStatus ? 'text-success' : 'text-danger' "></i>
+      CityHub-
+      <span>Admin</span>
+    </div>
   </div>
   <!-- <ngx-theme-switcher></ngx-theme-switcher> -->
 </div>

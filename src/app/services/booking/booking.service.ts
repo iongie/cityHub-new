@@ -1,16 +1,15 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { catchError, tap } from 'rxjs/operators';
+import { throwError, Subject, Observable } from 'rxjs';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { throwError, Observable, Subject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { ErrorHandler } from '@angular/router/src/router';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class FloorService implements OnDestroy {
+export class BookingService implements OnDestroy {
   private url = environment.baseUrl;
   private subs: Subject<void> = new Subject();
   private _refresh = new Subject();
@@ -32,6 +31,9 @@ export class FloorService implements OnDestroy {
          if(!navigator.onLine) {
            console.error('Browser Offline')
          } else {
+           if(error.status === 500){
+             console.error('error 500');
+           }
            console.error('Http Error');
          }
        } else {
@@ -46,32 +48,14 @@ export class FloorService implements OnDestroy {
     return this._refresh;
   }
 
-  get(): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/floor/all', httpOptions).pipe(
+  get(menu: any): Observable<any[]> {
+    return this.http.get<any[]>(this.url + '/booking/'+menu.name, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
 
-  add(data: any): Observable<any> {
-    return this.http.post<any>(this.url + '/floor/add', data, httpOptions).pipe(
-      catchError(this.handleError),
-    );
-  }
-
-  getById(userId: any): Observable<any> {
-    return this.http.get<any>(this.url + '/floor/show/' + userId.id, httpOptions).pipe(
-      catchError(this.handleError),
-    );
-  }
-
-  update(data: any): Observable<any> {
-    return this.http.post(this.url + '/floor/edit', data, httpOptions).pipe(
-      catchError(this.handleError),
-    );
-  }
-
-  delete(data: any): Observable<any> {
-    return this.http.get<any>(this.url + '/floor/remove/' + data.id, data).pipe(
+  addStepOne(data: any): Observable<any> {
+    return this.http.post<any>(this.url + '/booking/add', data, httpOptions).pipe(
       catchError(this.handleError),
       tap(() => {
         this._refresh.next();
@@ -79,8 +63,14 @@ export class FloorService implements OnDestroy {
     );
   }
 
-  inactiveFloor(data: any): Observable<any> {
-    return this.http.get<any>(this.url + '/floor/remove/' + data.id).pipe(
+  resetStepOne(booking: any): Observable<any> {
+    return this.http.get<any>(this.url + '/booking/reset/' + booking.id, httpOptions).pipe(
+      catchError(this.handleError),
+    );
+  }
+
+  addStepTwo(booking: any, dataStepTwo: any): Observable<any> {
+    return this.http.post<any>(this.url + '/booking/select-room/'+booking.id, dataStepTwo, httpOptions).pipe(
       catchError(this.handleError),
       tap(() => {
         this._refresh.next();
@@ -88,12 +78,12 @@ export class FloorService implements OnDestroy {
     );
   }
 
-  activeFloor(data: any): Observable<any> {
-    return this.http.get<any>(this.url + '/floor/return/' + data.id).pipe(
+
+  getById(booking: any): Observable<any> {
+    return this.http.get<any>(this.url + '/booking/show/' + booking.id, httpOptions).pipe(
       catchError(this.handleError),
-      tap(() => {
-        this._refresh.next();
-      }),
     );
   }
+
+  
 }

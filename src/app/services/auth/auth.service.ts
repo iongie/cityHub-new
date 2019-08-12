@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, throwError, Subject } from 'rxjs';
@@ -25,17 +25,22 @@ export class AuthService implements OnDestroy {
   }
 
   // --------------------------for Handle Error----------------
-  handleError(error) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // server-side error
-      errorMessage = `Error Code from server-side: ${error.status}\nMessage: ${error.message}`;
+  handleError(error: Error | HttpErrorResponse) {
+    if(!navigator.onLine){
+        console.error('Browser Offline')
+    }  else {
+       if (error instanceof HttpErrorResponse) {
+         if(!navigator.onLine) {
+           console.error('Browser Offline')
+         } else {
+           console.error('Http Error');
+         }
+       } else {
+         console.error('Client Error');
+       }
+       console.error(error);
     }
-    // window.alert(errorMessage);
-    return throwError(errorMessage);
+    return throwError(error); 
   }
 
   get refresh() {

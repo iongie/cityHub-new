@@ -63,7 +63,7 @@
             </div>
           </ng-template>
 
-        <form (ngSubmit)="onFirstSubmit()" class="step-container">
+        <form class="step-container">
           <div class="form-group">
             <label for="exampleFormControlInput1">Name</label>
             <input
@@ -176,15 +176,45 @@
 
       <nb-step [stepControl]="secondForm" label="Second step">
         <form (ngSubmit)="onSecondSubmit()" class="step-container">
-          
-          <button nbButton nbStepperPrevious>prev</button>
-          <button nbButton nbStepperNext>next</button>
+          <div class="input-group mb-3" *ngFor="let roomListBooking of roomListBooking; let i=index">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <input 
+                type="checkbox"
+                [(ngModel)]="roomListBooking.check"
+                id="check{{i}}"
+                name="check{{i}}"
+                (ngModelChange)="checkRoomListBooking($event)">
+              </div>
+            </div>
+            <input
+              type="text"
+              fullWidth
+              disabled
+              [(ngModel)]="roomListBooking.roomTypeName"
+              class="form-control"
+              id="roomTypeName{{i}}"
+              name="roomTypeName{{i}}"
+              placeholder="Guest">
+            <input
+            type="text"
+            fullWidth
+            [disabled]="show === false"
+            [(ngModel)]="roomListBooking.available"
+            id="available{{i}}"
+            name="available{{i}}"
+            class="form-control"
+            placeholder="Guest">
+          </div>
+
+          <button nbButton nbStepperPrevious (click)="resetStepOne()">prev</button>
+          <button nbButton nbStepperNext (click)="saveStepTwo()">next</button>
         </form>
       </nb-step>
       <nb-step [stepControl]="thirdForm" [hidden]="true" label="Third step">
         <div class="step-container">
-          <h3>Wizard completed!</h3>
-          <button nbButton (click)="stepper.reset()">Try again</button>
+          <h3>completed!</h3>
+          <!-- <button nbButton (click)="stepper.reset()">Try again</button> -->
         </div>
       </nb-step>
     </nb-stepper>

@@ -7,7 +7,7 @@ import { LayoutService } from '../../../@core/utils';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { filter, map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Observable, Subscription, fromEvent } from 'rxjs';
 import { UserRoleService } from '../../../services/user-role/user-role.service';
 import { ChangePasswordComponent } from '../../../pages/main/change-password/change-password.component';
 
@@ -37,6 +37,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userCityHub: any[];
   forRole: any;
   private subs = new Subject();
+  
+  onlineEvent: Observable<Event>;
+  offlineEvent: Observable<Event>;
+  subscriptions: Subscription[] = [];
+  connectionStatus= true;
+  connectionStatusMessage: any;
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private userService: UserData,
@@ -55,11 +61,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.detailAccount();
     this.action();
     this.detailUserRole();
+    this.statusConnection();
   }
 
   ngOnDestroy() {
     this.subs.next();
     this.subs.complete();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   toggleSidebar(): boolean {
@@ -75,6 +83,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   startSearch() {
     this.analyticsService.trackEvent('startSearch');
+  }
+
+  statusConnection() {
+    this.onlineEvent = fromEvent(window, 'online');
+    this.offlineEvent = fromEvent(window, 'offline');
+    this.subscriptions.push(this.onlineEvent.subscribe(e => {
+      this.connectionStatusMessage = 'online';
+      this.connectionStatus = true;
+      console.log('Online...');
+    }));
+
+    this.subscriptions.push(this.offlineEvent.subscribe(e => {
+      this.connectionStatusMessage = 'offline';
+      this.connectionStatus = false;
+      console.log('Offline...');
+    }));
   }
 
   detailAccount() {

@@ -6,6 +6,8 @@ import { ThemeModule } from '../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { UnderConstractionModule } from '../under-constraction/under-constraction.module';
 import { RouterModule, Routes } from '@angular/router';
+import { NbMomentDateModule } from '@nebular/moment';
+import { NbCheckboxModule } from '@nebular/theme';
 const routes: Routes = [
   {
     path: '',
@@ -20,6 +22,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ThemeModule,
     Ng2SmartTableModule,
+    NbMomentDateModule,
+    NbCheckboxModule,
     // UnderConstractionModule,
   ],
 })
