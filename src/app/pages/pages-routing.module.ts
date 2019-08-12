@@ -142,9 +142,14 @@ const routes: Routes = [{
       }, ],
     },
     {
+      path: 'rooms',
+      loadChildren: './main/rooms/rooms.module#RoomsModule',
+    },
+    {
       path: 'booking',
       loadChildren: './main/booking/booking.module#BookingModule',
-    }, {
+    },
+     {
       path: 'miscellaneous-sales',
       loadChildren: './main/miscellaneous-sales/miscellaneous-sales.module#MiscellaneousSalesModule',
     }, {
