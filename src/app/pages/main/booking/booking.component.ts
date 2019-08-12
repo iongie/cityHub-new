@@ -11,6 +11,7 @@ import { takeUntil, map, debounceTime } from 'rxjs/operators';
 import { CountryService } from '../../../services/country/country.service';
 import { DatePipe } from '@angular/common';
 import { BookingService } from '../../../services/booking/booking.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-booking',
@@ -56,6 +57,7 @@ export class BookingComponent implements OnInit, OnDestroy {
     public roomOperationServ: RoomOperationService,
     public countryServ: CountryService,
     public datepipe: DatePipe,
+    public router: Router,
   ) { }
 
   ngOnInit() {
@@ -312,6 +314,10 @@ export class BookingComponent implements OnInit, OnDestroy {
     this.bookingServ.addStepTwo(booking, dataStepTwo).pipe(takeUntil(this.subs)).subscribe(resStepTwo => {
       console.log(resStepTwo);
     })
+  }
+
+  toListBooking(){
+    this.router.navigate(['pages/booking-management']);
   }
 
 }

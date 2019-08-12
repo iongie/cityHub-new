@@ -140,16 +140,21 @@ const routes: Routes = [{
         path: ':id',
         loadChildren: './main/tax/conf/detail/detail.module#DetailModule',
       }, ],
-    },
-    {
-      path: 'rooms',
-      loadChildren: './main/rooms/rooms.module#RoomsModule',
-    },
-    {
+    }, {
       path: 'booking',
       loadChildren: './main/booking/booking.module#BookingModule',
-    },
-     {
+    }, {
+      path: 'booking-charge',
+      children: [
+        {
+          path: ':id',
+          loadChildren: './main/booking/charge/charge.module#ChargeModule',
+        },
+      ],
+    }, {
+      path: 'booking-management',
+      loadChildren: './main/booking/booking-list/booking-list.module#BookingListModule',
+    }, {
       path: 'miscellaneous-sales',
       loadChildren: './main/miscellaneous-sales/miscellaneous-sales.module#MiscellaneousSalesModule',
     }, {
