@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { imageLinks } from '../../../extra-components/chat/bot-replies';
-import { TestBed } from '@angular/core/testing';
 
 @Component({
   selector: 'ngx-room-list',

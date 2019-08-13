@@ -141,9 +141,14 @@ const routes: Routes = [{
         loadChildren: './main/tax/conf/detail/detail.module#DetailModule',
       }, ],
     }, {
+      path: 'rooms',
+      loadChildren: './main/rooms/rooms.module#RoomsModule',
+    },
+     {
       path: 'booking',
       loadChildren: './main/booking/booking.module#BookingModule',
-    }, {
+    },
+     {
       path: 'booking-charge',
       children: [
         {

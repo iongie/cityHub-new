@@ -5,7 +5,8 @@ import { ThemeModule } from '../../../@theme/theme.module';
 
 import { RoomsComponent } from './rooms.component';
 import { RoomSelectorComponent } from './room-selector/room-selector.component';
-import { PlayerComponent } from './player/player.component';
+import { RoomSelector2Component } from './room-selector2/room-selector2.component';
+import { RoomSelector3Component } from './room-selector3/room-selector3.component';
 const routes: Routes = [
   {
     path: '',
@@ -14,7 +15,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [RoomsComponent, RoomSelectorComponent, PlayerComponent],
+  declarations: [RoomsComponent, RoomSelectorComponent, RoomSelector2Component, RoomSelector3Component],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

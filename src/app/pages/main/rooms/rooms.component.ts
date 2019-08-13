@@ -1,5 +1,5 @@
-import { Component, HostBinding, OnDestroy } from '@angular/core';
-import { NbThemeService, NbMediaBreakpoint, NbMediaBreakpointsService } from '@nebular/theme';
+import { Component, OnDestroy } from '@angular/core';
+import { NbThemeService} from '@nebular/theme';
 
 @Component({
   selector: 'ngx-rooms',
@@ -8,44 +8,16 @@ import { NbThemeService, NbMediaBreakpoint, NbMediaBreakpointsService } from '@n
 })
 export class RoomsComponent implements OnDestroy {
 
-  @HostBinding('class.expanded')
-  private expanded: boolean;
   private selected: number;
-
-  breakpoint: NbMediaBreakpoint;
-  breakpoints: any;
   themeSubscription: any;
 
-  constructor(private themeService: NbThemeService,
-              private breakpointService: NbMediaBreakpointsService) {
-
-    this.breakpoints = this.breakpointService.getBreakpointsMap();
+  constructor(private themeService: NbThemeService) 
+  {
     this.themeSubscription = this.themeService.onMediaQueryChange()
-      .subscribe(([oldValue, newValue]) => {
-        this.breakpoint = newValue;
-      });
   }
-
-  select(roomNumber) {
-    if (this.isSelected(roomNumber)) {
-      this.expand();
-    } else {
-      this.collapse();
-    }
-
+  select(roomNumber) 
+  {
     this.selected = roomNumber;
-  }
-
-  expand() {
-    this.expanded = true;
-  }
-
-  collapse() {
-    this.expanded = false;
-  }
-
-  isCollapsed() {
-    return !this.expanded;
   }
 
   private isSelected(roomNumber): boolean {
@@ -53,6 +25,6 @@ export class RoomsComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.themeSubscription.unsubscribe();
+    this.themeSubscription.subscribe();
   }
 }
