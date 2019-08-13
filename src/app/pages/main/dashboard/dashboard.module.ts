@@ -5,7 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { RoomStatusComponent } from './room-status/room-status.component';
-import { ShortcutComponent } from './shortcut/shortcut.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { RoomListComponent } from './rooms/room-list/room-list.component';
 import { PlayerComponent } from './rooms/player/player.component';
@@ -20,7 +19,6 @@ const routes: Routes = [
   declarations: [
     DashboardComponent,
     RoomStatusComponent,
-    ShortcutComponent,
     RoomsComponent,
     RoomListComponent,
     PlayerComponent,],
