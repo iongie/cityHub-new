@@ -78,10 +78,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Tax',
         link: '/pages/tax',
       },
-      {
-        title: 'Rooms',
-        link: '/pages/rooms',
-      },
     ],
   }, {
     title: 'Sales Operational',
