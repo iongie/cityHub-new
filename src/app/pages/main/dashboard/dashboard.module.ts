@@ -9,6 +9,9 @@ import { RoomListComponent } from './rooms/room-list/room-list.component';
 import { ShortcutComponent } from './shortcut/shortcut.component';
 import { RoomStatusComponent } from './rooms/room-status/room-status.component';
 import { RoomMapsComponent } from './rooms/room-maps/room-maps.component';
+import { RoomSelectorComponent } from './rooms/room-maps/room-selector/room-selector.component';
+import { RoomSelector2Component } from './rooms/room-maps/room-selector2/room-selector2.component';
+import { RoomSelector3Component } from './rooms/room-maps/room-selector3/room-selector3.component';
 
 
 const routes: Routes = [
@@ -24,6 +27,10 @@ const routes: Routes = [
     RoomListComponent,
     ShortcutComponent,
     RoomStatusComponent,
+    RoomSelectorComponent,
+    RoomSelector2Component,
+    RoomSelector3Component,
+
     RoomMapsComponent,],
   imports: [
     CommonModule,

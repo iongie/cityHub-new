@@ -1,0 +1,24 @@
+
+.buttons-row {
+    margin: -0.5rem;
+  }
+  
+  button {
+    margin: 0.5rem;
+  }
+  
+  .action-icon {
+    margin-right: 0.5rem;
+    margin-left: 0.5rem
+  }
+  
+  .actions-card {
+    height: 8rem;
+  }
+  span {
+      font-family: nb-theme(font-secondary);
+      font-weight: nb-theme(font-weight-bold);
+      color: nb-theme(color-fg-heading);
+      text-transform: uppercase;
+      padding: 0.5rem;
+    }

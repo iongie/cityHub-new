@@ -1,15 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { NbThemeService} from '@nebular/theme';
 
 @Component({
   selector: 'ngx-room-maps',
+  styleUrls: ['./room-maps.component.scss'],
   templateUrl: './room-maps.component.html',
-  styleUrls: ['./room-maps.component.scss']
 })
-export class RoomMapsComponent implements OnInit {
+export class RoomMapsComponent implements OnDestroy {
 
-  constructor() { }
+  private selected: number;
+  themeSubscription: any;
 
-  ngOnInit() {
+  constructor(private themeService: NbThemeService) 
+  {
+    this.themeSubscription = this.themeService.onMediaQueryChange()
+  }
+  select(roomNumber) 
+  {
+    this.selected = roomNumber;
   }
 
+  private isSelected(roomNumber): boolean {
+    return this.selected === roomNumber;
+  }
+
+  ngOnDestroy() {
+    this.themeSubscription.subscribe();
+  }
 }

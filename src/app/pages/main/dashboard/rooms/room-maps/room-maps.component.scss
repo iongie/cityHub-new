@@ -1,0 +1,76 @@
+@import '../../../../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  nb-card{
+    height: 96%;
+    padding: 0;
+  }
+  ngx-room-selector {
+    width: auto;
+    background: url('/assets/images/square_pattern.svg') repeat;
+    background-size: 75px;
+  }
+  ngx-room-selector2 {
+    width: auto;
+    background: url('/assets/images/square_pattern.svg') repeat;
+    background-size: 75px;
+  }
+  ngx-room-selector3 {
+    width: auto;
+    background: url('/assets/images/square_pattern.svg') repeat;
+    background-size: 75px;
+  }
+
+  ngx-room-selector {
+    /deep/ .room-selector {
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      flex: 1;
+      margin: 0 auto;
+      width: 90%;
+      max-width: 650px;
+      padding-bottom: 1rem;
+      padding-top: 2rem;
+    }
+  }
+  ngx-room-selector2 {
+    /deep/ .room-selector {
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      flex: 1;
+      margin: 0 auto;
+      width: 90%;
+      max-width: 650px;
+      padding-bottom: 1rem;
+      padding-top: 2rem;
+    }
+  }
+  ngx-room-selector3 {
+    /deep/ .room-selector {
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      flex: 1;
+      margin: 0 auto;
+      width: 90%;
+      max-width: 650px;
+      padding-bottom: 1rem;
+      padding-top: 2rem;
+    }
+  }
+}
+
+nb-tabset {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+:host ::ng-deep ngx-tab1, :host ::ng-deep ngx-tab2 {
+  display: block;
+  padding: 1rem 2rem;
+}
