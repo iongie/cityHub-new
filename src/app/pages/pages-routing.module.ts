@@ -163,10 +163,10 @@ const routes: Routes = [{
       loadChildren: './main/booking/booking.module#BookingModule',
     },
     {
-      path: 'booking-charge',
+      path: 'booking-detail',
       children: [{
         path: ':id',
-        loadChildren: './main/booking/charge/charge.module#ChargeModule',
+        loadChildren: './main/booking/booking-detail/booking-detail.module#BookingDetailModule',
       }, ],
     },
     {
