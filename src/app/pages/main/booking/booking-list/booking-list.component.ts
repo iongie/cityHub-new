@@ -40,7 +40,7 @@ export class BookingListComponent implements OnInit, OnDestroy {
         title: 'Guest name',
         type: 'string',
       },
-      bookingBusinessSourcName: {
+      bookingBusinessSourceName: {
         title: 'Business Source name',
         type: 'string',
       },
@@ -139,7 +139,7 @@ export class BookingListComponent implements OnInit, OnDestroy {
                   bookingGuestName: filterGuest[0].guest_name,
                   bookingStatusId: y.booking_status_id,
                   bookingBusinessSourceId: y.business_source_id,
-                  bookingBusinessSourcName: filterBusinessSource[0].business_source_name,
+                  bookingBusinessSourceName: filterBusinessSource[0].business_source_name,
                   bookingNumber: y.booking_number,
                   bookingArrivalDate: this.datepipe.transform(y.arrival_date, 'MMMM d, y'),
                   bookingDuration: y.duration,

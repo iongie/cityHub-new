@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChargeComponent } from './charge.component';
+import { BookingDetailComponent } from './booking-detail.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ThemeModule } from '../../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbMomentDateModule } from '@nebular/moment';
 import { NbCheckboxModule, NbDialogModule } from '@nebular/theme';
-import { UnderConstractionModule } from '../../under-constraction/under-constraction.module';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { UnderConstractionModule } from '../../under-constraction/under-constraction.module';
 const routes: Routes = [
   {
     path: '',
-    component: ChargeComponent,
+    component: BookingDetailComponent,
   },
 ];
 
@@ -28,7 +28,7 @@ export const customCurrencyMaskConfig = {
   nullable: true,
 };
 @NgModule({
-  declarations: [ChargeComponent],
+  declarations: [BookingDetailComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -39,7 +39,7 @@ export const customCurrencyMaskConfig = {
     NbCheckboxModule,
     NbDialogModule.forChild(),
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    // UnderConstractionModule,
+    //UnderConstractionModule,
   ]
 })
-export class ChargeModule { }
+export class BookingDetailModule { }

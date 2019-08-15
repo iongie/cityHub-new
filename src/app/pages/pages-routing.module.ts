@@ -28,6 +28,10 @@ const routes: Routes = [{
     // component: DashboardComponent,
     // },
     {
+      path: 'modal-overlays',
+      loadChildren: './modal-overlays/modal-overlays.module#ModalOverlaysModule',
+    },
+    {
       path: 'ui-features',
       loadChildren: './ui-features/ui-features.module#UiFeaturesModule',
     }, {
@@ -149,11 +153,11 @@ const routes: Routes = [{
       loadChildren: './main/booking/booking.module#BookingModule',
     },
      {
-      path: 'booking-charge',
+      path: 'booking-detail',
       children: [
         {
           path: ':id',
-          loadChildren: './main/booking/charge/charge.module#ChargeModule',
+          loadChildren: './main/booking/booking-detail/booking-detail.module#BookingDetailModule',
         },
       ],
     }, {

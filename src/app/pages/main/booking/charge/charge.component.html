@@ -1,36 +1,23 @@
-<nb-card>
+<nb-card >
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Detail Booking Number: {{bookingNumber}}</div>
+    </div>
+  </nb-card-header>
+
   <nb-card-body>
-    <nb-tabset>
-      <nb-tab tabTitle="General information">
-        Tab content 1
-      </nb-tab>
-      <nb-tab tabTitle="Charge">
-        <form #ngForm="ngForm" (submit)="addExtraCharge()" ngNativeValidate>
-          <!-- <div class="form-group">
-            <label for="exampleFormControlSelect1">Category</label>
-            <select
-              nbInput
-              fullWidth
-              [disabled]="show === false"
-              class="form-control"
-              [(ngModel)]="extraCharge.extraChargeCategoryId"
-              id="extraChargeCategoryId"
-              name="extraChargeCategoryId"
-              required
-              #extraChargeCategoryId="ngModel">
-              <option
-              *ngFor="let extraChargeCategory of extraChargeCategory"
-              value="{{extarChangeCategory.extraChargeCategoryId}}">{{extarChangeCategory.extraChargeCategoryName}}</option>
-            </select>
-          </div> -->
-          <div class="row">
-              <div class="col-4 col-md-4">
+    <div class="row form-info">
+      <div class="col-8">
+        <nb-card>
+          <nb-card-body>
+            <div class="row">
+              <div class="col-6">
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Discount</label>
                   <input
                     type="text"
-                    nbInput
                     fieldSize="tiny"
+                    disabled
                     [disabled]="show === false"
                     class="form-control"
                     [(ngModel)]="charge.discount"
@@ -40,13 +27,13 @@
                     #discount="ngModel"
                     placeholder="Discount">
                 </div>
-
+    
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Total charge</label>
                   <input
                     type="text"
-                    nbInput
                     fieldSize="tiny"
+                    disabled
                     [disabled]="show === false"
                     class="form-control"
                     [(ngModel)]="charge.totalCharge"
@@ -56,13 +43,14 @@
                     #discount="ngModel"
                     placeholder="Total charge">
                 </div>
-
+              </div>
+              <div class="col-6">
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Total rate</label>
                   <input
                     type="text"
-                    nbInput
                     fieldSize="tiny"
+                    disabled
                     [disabled]="show === false"
                     class="form-control"
                     [(ngModel)]="charge.totalRate"
@@ -72,13 +60,13 @@
                     #discount="ngModel"
                     placeholder="Total rate">
                 </div>
-
+    
                 <div class="form-group">
                   <label for="exampleFormControlInput1">Total tax</label>
                   <input
                     type="text"
-                    nbInput
                     fieldSize="tiny"
+                    disabled
                     [disabled]="show === false"
                     class="form-control"
                     [(ngModel)]="charge.totalTax"
@@ -88,10 +76,314 @@
                     #discount="ngModel"
                     placeholder="Total tax">
                 </div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <div class="col-4">
+          <nb-card>
+            <nb-card-body>
+              
+              <div class="col-auto">
+                <button size="tiny" outline nbButton status="primary" [nbContextMenu]="items" nbContextMenuTag="booking-charge">
+                  <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </button>
+              </div>
+            </nb-card-body>
+          </nb-card>
+      </div>
+    </div>
+
+    <nb-tabset *ngIf="showOption.tabs === true">
+      <nb-tab tabTitle="Payment" [active]="showOption.payment.active === true" [disabled]="showOption.payment.disabled === true">
+        <form #ngForm="ngForm" class="step-container" ngNativeValidate>
+          <div class="row form-info">
+            <div class="col-12">
+              <nb-card>
+                <nb-card-header>
+                  Payment 
+                </nb-card-header>
+    
+                <nb-card-body>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Total Paid</label>
+                    <input
+                      type="text"
+                      nbInput
+                      fullWidth
+                      currencyMask
+                      [disabled]="show === false"
+                      class="form-control"
+                      [(ngModel)]="addingPayment.totalPaid"
+                      id="totalPaid"
+                      name="totalPaid"
+                      required
+                      #totalPaid="ngModel"
+                      placeholder="Total Paid">
+                  </div>
+            
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Payment Type</label>
+                    <select
+                      nbInput
+                      fullWidth
+                      [disabled]="show === false"
+                      class="form-control"
+                      [(ngModel)]="addingPayment.paymentTypeId"
+                      id="paymentTypeId"
+                      name="paymentTypeId"
+                      required
+                      #paymentTypeId="ngModel">
+                      <option
+                      *ngFor="let paymentType of paymentType"
+                      value="{{paymentType.paymentTypeId}}">{{paymentType.paymentTypeName}}</option>
+                    </select>
+                  </div>
+            
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Note</label>
+                    <textarea
+                      nbInput
+                      fullWidth
+                      [disabled]="show === false"
+                      class="form-control"
+                      [(ngModel)]="addingPayment.paymentNote"
+                      id="paymentNote"
+                      name="paymentNote"
+                      required
+                      #paymentNote="ngModel"
+                      placeholder="Note">
+                      </textarea>
+                  </div>
+
+                  <div class="buttons">
+                      <button type="submit" nbButton (click)="addPayment()">Add Payment</button>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+        </form>
+      </nb-tab>
+
+      <nb-tab tabTitle="Deposit" [active]="showOption.deposit.active === true" [disabled]="showOption.deposit.disabled === true">
+        <form #ngForm="ngForm" class="step-container" ngNativeValidate>
+          <div class="row form-info">
+            <div class="col-12">
+              <nb-card>
+                <nb-card-header>
+                  Deposit 
+                </nb-card-header>
+    
+                <nb-card-body>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+        </form>
+      </nb-tab>
+
+      <nb-tab tabTitle="Extra payment" [active]="showOption.extraPayment.active === true" [disabled]="showOption.extraPayment.disabled === true">
+        <form #ngForm="ngForm" class="step-container" ngNativeValidate>
+          <div class="row form-info">
+            <div class="col-12">
+              <nb-card>
+                <nb-card-header>
+                  Extra Payment 
+                </nb-card-header>
+    
+                <nb-card-body>
+                </nb-card-body>
+              </nb-card>
             </div>
           </div>
         </form>
       </nb-tab>
     </nb-tabset>
+
+    <nb-tabset *ngIf="showOption.tabs === false">
+      <nb-tab tabTitle="General information">
+        <form class="step-container">
+          <div class="row form-info">
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+              <nb-card>
+                <nb-card-header>
+                  Guest Information
+                </nb-card-header>
+    
+                <nb-card-body>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Name</label>
+                    <input
+                    type="text"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="bookingDetail.guestName"
+                    id="guestName"
+                    name="guestName"
+                    required
+                    #guestName="ngModel"
+                    placeholder="Guest name">
+                  </div>
+        
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Email</label>
+                    <input
+                    type="email"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="bookingDetail.email"
+                    id="email"
+                    name="email"
+                    required
+                    #email="ngModel"
+                    placeholder="email">
+                  </div>
+        
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Phone number</label>
+                    <input
+                    type="number"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="bookingDetail.phoneNumber"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    required
+                    #phoneNumber="ngModel"
+                    placeholder="phone number">
+                  </div>
+        
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Country name</label>
+                    <textarea
+                    type="text"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="bookingDetail.countryName"
+                    id="countryName"
+                    name="countryName"
+                    required
+                    #countryName="ngModel"
+                    placeholder="Country name"></textarea>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
+              <nb-card>
+                <nb-card-header>
+                  Booking Status Information
+                </nb-card-header>
+
+                <nb-card-body>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="inputEmail4">Arrival Date</label>
+                        <input
+                        [nbDatepicker]="arrivalDate"
+                        [(ngModel)]="bookingDetail.arrivalDate"
+                        class="form-control"
+                        id="arrivalDate"
+                        name="arrivalDate"
+                        required
+                        disabled
+                        #arrivalDate="ngModel"
+                        placeholder="From Date">
+                        <nb-datepicker
+                          #arrivalDate
+                          format="MMM d, y">
+                        </nb-datepicker>
+                      </div>
+          
+                      <div class="form-group col-md-6">
+                        <label for="inputEmail4">Departure Date</label>
+                        <input
+                        [nbDatepicker]="departureDate"
+                        [(ngModel)]="bookingDetail.departureDate"
+                        class="form-control"
+                        id="departureDate"
+                        name="departureDate"
+                        required
+                        disabled
+                        #departureDate="ngModel"
+                        placeholder="From Date">
+                        <nb-datepicker
+                          #departureDate
+                          format="MMM d, y">
+                        </nb-datepicker>
+                      </div>
+                    </div>
+                </nb-card-body>
+
+                <nb-card-body>
+                  <div class="form-row">
+                    <div class="form-group col-12">
+                      <label for="exampleFormControlInput1">Business source name</label>
+                      <input
+                      type="text"
+                      nbInput
+                      fullWidth
+                      disabled
+                      class="form-control"
+                      [(ngModel)]="bookingDetail.businessSourceName"
+                      id="businessSourceName"
+                      name="businessSourceName"
+                      required
+                      #guestName="ngModel"
+                      placeholder="Business source name">
+                    </div>
+        
+                    <div class="form-group col-12">
+                      <label for="exampleFormControlInput1">Status</label>
+                      <input
+                      type="text"
+                      nbInput
+                      fullWidth
+                      disabled
+                      class="form-control"
+                      [(ngModel)]="bookingDetail.bookingStatusName"
+                      id="bookingStatusName"
+                      name="bookingStatusName"
+                      required
+                      #bookingStatusName="ngModel"
+                      placeholder="Status">
+                    </div>
+                  </div>
+              </nb-card-body>
+              </nb-card>
+            </div>
+
+
+          </div>
+        </form>
+      </nb-tab>
+      <nb-tab tabTitle="Charge">
+        <div class="table">
+            <ng2-smart-table [settings]="settingsChargeDetail"  [source]="chargeDetail"></ng2-smart-table>
+        </div> 
+      </nb-tab>
+      <nb-tab tabTitle="Extra Charge">
+          
+      </nb-tab>
+      <!-- <nb-tab tabTitle="Room List">
+        <div class="table">
+            <ng2-smart-table [settings]="settingsRoomListDetail"  [source]="roomListBooking"></ng2-smart-table>
+        </div> 
+      </nb-tab> -->
+    </nb-tabset>
   </nb-card-body>
 </nb-card>
+
+
+

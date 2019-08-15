@@ -90,7 +90,7 @@ export class LinkDetailComponent implements OnInit, OnDestroy {
       map(({item}) => item),
     ).subscribe(item => {
       if (item.data.id === this.renderValue && item.title === 'Charge List') {
-        this.router.navigate(['/pages/booking-charge', this.renderValue]);
+        this.router.navigate(['/pages/booking-detail', this.renderValue]);
       }
     });
   }
