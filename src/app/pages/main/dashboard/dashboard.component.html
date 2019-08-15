@@ -1,3 +1,29 @@
+<nb-card>
+  <nb-card-body>
+    <div class="action-groups-header">
+      Action Buttons
+    </div>
+    <nb-actions size="medium">
+      <nb-action icon="fa fa-book" href="#/pages/booking"></nb-action>
+      <nb-action icon="fas fa-user-check" title="CHECK IN"></nb-action>
+      <nb-action icon="fas fa-sign-out-alt" title="CHECK OUT"></nb-action>
+      <nb-action icon="fa fa-wallet" title="PAYMENT"></nb-action>
+      <nb-action icon="fa fa-users" href="#pages/user" title="LIST SERVICE"></nb-action>
+      <nb-action>
+        <nb-user name="Extra Charge"></nb-user>
+      </nb-action>
+    </nb-actions>
+  </nb-card-body>
+</nb-card>
+
 <ngx-room-status></ngx-room-status>
-<ngx-rooms></ngx-rooms>
+
+<div class="row">
+  <div class="col-md-6">
+    <ngx-room-list></ngx-room-list>
+  </div>
+  <div class="col-md-6">
+    <ngx-room-maps></ngx-room-maps>
+  </div>
+</div>
 <ngx-shortcut></ngx-shortcut>

@@ -2,11 +2,11 @@ import { Component, OnDestroy } from '@angular/core';
 import { NbThemeService} from '@nebular/theme';
 
 @Component({
-  selector: 'ngx-rooms',
-  styleUrls: ['./rooms.component.scss'],
-  templateUrl: './rooms.component.html',
+  selector: 'ngx-room-maps',
+  styleUrls: ['./room-maps.component.scss'],
+  templateUrl: './room-maps.component.html',
 })
-export class RoomsComponent implements OnDestroy {
+export class RoomMapsComponent implements OnDestroy {
 
   private selected: number;
   themeSubscription: any;

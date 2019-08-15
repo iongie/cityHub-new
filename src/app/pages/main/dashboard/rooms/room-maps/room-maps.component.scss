@@ -1,8 +1,12 @@
-@import '../../../@theme/styles/themes';
+@import '../../../../../@theme/styles/themes';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/breakpoints';
 
 @include nb-install-component() {
+  nb-card{
+    height: 96%;
+    padding: 0;
+  }
   ngx-room-selector {
     width: auto;
     background: url('/assets/images/square_pattern.svg') repeat;
@@ -29,6 +33,7 @@
       width: 90%;
       max-width: 650px;
       padding-bottom: 1rem;
+      padding-top: 2rem;
     }
   }
   ngx-room-selector2 {
@@ -41,6 +46,7 @@
       width: 90%;
       max-width: 650px;
       padding-bottom: 1rem;
+      padding-top: 2rem;
     }
   }
   ngx-room-selector3 {
@@ -53,6 +59,7 @@
       width: 90%;
       max-width: 650px;
       padding-bottom: 1rem;
+      padding-top: 2rem;
     }
   }
 }

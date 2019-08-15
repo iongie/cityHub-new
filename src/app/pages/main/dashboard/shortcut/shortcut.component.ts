@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
 @Component({
   selector: 'ngx-shortcut',
   templateUrl: './shortcut.component.html',
