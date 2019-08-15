@@ -159,6 +159,21 @@ const routes: Routes = [{
       }, ],
     },
     {
+      path: 'payment-type',
+      loadChildren: './main/payment-type/payment-type.module#PaymentTypeModule',
+    },
+    {
+      path: 'add-payment-type',
+      loadChildren: './main/payment-type/conf/add/add.module#AddModule',
+    },
+    {
+      path: 'view-payment-type',
+      children: [{
+        path: ':id',
+        loadChildren: './main/payment-type/conf/detail/detail.module#DetailModule',
+      }, ],
+    },
+    {
       path: 'booking',
       loadChildren: './main/booking/booking.module#BookingModule',
     },

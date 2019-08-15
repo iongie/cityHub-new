@@ -4,6 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { NotificationService } from '../notification/notification.service';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
@@ -33,11 +34,6 @@ export class PaymentTypeService {
          if(!navigator.onLine) {
            console.error('Browser Offline')
          } else {
-           if(error){
-            const title = JSON.stringify(error.status);
-            const content = error.statusText;
-            this.notifServ.showDangerTypeToast(title, content);
-           }
            console.error('Http Error');
          }
        } else {
@@ -64,8 +60,8 @@ export class PaymentTypeService {
     );
   }
 
-  getById(roomTypeId: any): Observable<any> {
-    return this.http.get<any>(this.url + '/payment-type/show/' + roomTypeId.id, httpOptions).pipe(
+  getById(paymentTypeId: any): Observable<any> {
+    return this.http.get<any>(this.url + '/payment-type/show/' + paymentTypeId.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }

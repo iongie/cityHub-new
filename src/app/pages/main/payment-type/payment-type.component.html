@@ -1,3 +1,16 @@
-<p>
-  payment-type works!
-</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Payment Type Management</div>
+      <div class="col-auto" *ngIf="show">
+        <button type="submit" class="btn btn-primary" (click)="toFormAdd()">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings"  [source]="paymentType"></ng2-smart-table>
+  </nb-card-body>
+</nb-card>
