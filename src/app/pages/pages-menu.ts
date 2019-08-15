@@ -39,39 +39,43 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'fa fa-cogs',
     children: [
       {
-        title: 'Property information',
-        link: '/pages/property-information',
-      },
-      {
-        title: 'Extra charge category',
-        link: '/pages/extra-charge-category',
-      },
-      {
-        title: 'Extra charge',
+        title: 'Extra Charge',
         link: '/pages/extra-charge',
+      },
+      {
+        title: 'Extra Charge Category',
+        link: '/pages/extra-charge-category',
       },
       {
         title: 'Floor',
         link: '/pages/floor',
       },
       {
-        title: 'Room type',
-        link: '/pages/room-type',
+        title: 'Payment Type',
+        link: '/pages/payment-type',
       },
       {
-        title: 'Room operation',
+        title: 'Property Information',
+        link: '/pages/property-information',
+      },
+      {
+        title: 'Room Operation',
         link: '/pages/room-operation',
       },
       {
-        title: 'Room tariff',
+        title: 'Room Tariff',
         link: '/pages/room-tariff',
+      },
+      {
+        title: 'Room Type',
+        link: '/pages/room-type',
       },
       {
         title: 'Season',
         link: '/pages/season',
       },
       {
-        title: 'Season-Type',
+        title: 'Season Type',
         link: '/pages/season-type',
       },
       {
