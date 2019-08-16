@@ -13,7 +13,8 @@ import { CountryService } from '../../../../services/country/country.service';
 import { DatePipe } from '@angular/common';
 import { PaymentTypeService } from '../../../../services/payment-type/payment-type.service';
 import { NbMenuService } from '@nebular/theme';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
+import { LocalDataSource } from 'ng2-smart-table';
 
 @Component({
   selector: 'ngx-booking-detail',
@@ -22,9 +23,97 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class BookingDetailComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
-  show: any;
+  show = {
+    role : false,
+    button: {
+      roomList: false,
+    },
+    tab : {
+      generalInformation: true,
+      roomList: true,
+      roomInformation: false,
+      deposit: false,
+      charge: false,
+      extraCharge: false,
+      payment: false,
+      extraPayment: false,
+    }
+  };
   forRole: any;
-  bookingData: any;
+  bookingNumber: any;
+  bookingData = {
+    bookingId: '',
+    guestId: '',
+    bookingStatusId: '',
+    businessSourceId: '',
+    bookingNumber: '',
+    arrivalDate: new Date(),
+    duration: 0,
+    departureDate: new Date(),
+    totalRoom: '',
+    bookingCreatedAt: '',
+    bookingCreatedBy: '',
+    bookingUpdatedAt: '',
+    bookingupdatedBy: '',
+    checkinAt: '',
+    checkinBy: '',
+    checkoutAt: '',
+    checkoutBy: '',
+    cancelAt: '',
+    cancelBy: '',
+    cancelReason: '',
+    countryId: '',
+    guestName: '',
+    address: '',
+    city: '',
+    email: '',
+    phoneNumber: '',
+    guestFileScan: '',
+    guestCreatedAt: '',
+    guestUpdateAt: '',
+    businessSourceName: '',
+    businessSourceDescription: '',
+    businessSourceCreatedAt: '',
+    businessSourceUpdateAt: '',
+    bookingStatusName: '',
+    countryName: '',
+  };
+  chargeTotal = {
+    totalCharge: '',
+    totalTax: '',
+    totalRate: '',
+    discount: '',
+  };
+  roomListBooking: LocalDataSource;
+  settingsRoomListBooking = {
+    actions: false,
+    selectMode: 'multi',
+    columns: {
+      roomTypeName: {
+        title: 'Room type name',
+        type: 'string',
+        editable: false,
+      },
+      baseAdult: {
+        title: 'base adult',
+        type: 'string',
+        editable: false,
+      },
+      baseChild: {
+        title: 'base child',
+        type: 'string',
+      },
+      maxAdult: {
+        title: 'max adult',
+        type: 'string',
+      },
+      maxChild: {
+        title: 'max child',
+        type: 'string',
+      },
+    },
+  };
+  selectedRowsRoomList: any;
   constructor(
     public router: Router,
     private activeRoute: ActivatedRoute,
@@ -43,18 +132,17 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.viewByBookingId();
-    this.viewByBookingRoomId();
+    this.view();
+    this.refreshView();
+    this.selectRoomList;
   }
 
   ngOnDestroy() {
     this.subs.next();
     this.subs.complete();
-    this.refreshByBookingId();
-    this.refreshByBookingRoomId();
   }
 
-  viewByBookingId() {
+  view() {
     const token = {
       token: localStorage.getItem('p_l1oxt'),
     };
@@ -71,21 +159,21 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         });
 
         if (filter[0].create_permision === 'allowed') {
-          this.show = true;
+          this.show.role = true;
         }else if (filter[0].create_permision === 'not allowed') {
-          this.show = false;
+          this.show.role = false;
         }if (filter[0].read_permision === 'allowed') {
-          this.show = true;
+          this.show.role = true;
         }else if (filter[0].read_permision === 'not allowed') {
-          this.show = false;
+          this.show.role = false;
         }if (filter[0].update_permision === 'allowed') {
-          this.show = true;
+          this.show.role = true;
         }else if (filter[0].update_permision === 'not allowed') {
-          this.show = false;
+          this.show.role = false;
         }if (filter[0].delete_permision === 'allowed') {
-          this.show = true;
+          this.show.role = true;
         }else if (filter[0].delete_permision === 'not allowed') {
-          this.show = false;
+          this.show.role = false;
         }
 
         this.activeRoute.params.subscribe(params => {
@@ -96,6 +184,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
           this.bookingServ.getByBookingId(bookingId)
           .pipe(takeUntil(this.subs))
           .subscribe(resGetByBookingId => {
+            this.bookingNumber = resGetByBookingId.booking_data.booking_number;
             const bookingData = {
               bookingId: resGetByBookingId.booking_data.booking_id,
               guestId: resGetByBookingId.booking_data.guest_id,
@@ -126,13 +215,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
               guestFileScan: resGetByBookingId.booking_data.guest_file_scan,
               guestCreatedAt: resGetByBookingId.booking_data.guest_created_at,
               guestUpdateAt: resGetByBookingId.booking_data.guest_updated_at,
-              busineesSourceName: resGetByBookingId.booking_data.business_source_name,
-              busineesSourceDescription: resGetByBookingId.booking_data.business_source_description,
-              busineesSourceCreatedAt: resGetByBookingId.booking_data.business_source_created_at,
-              busineesSourceUpdateAt: resGetByBookingId.booking_data.business_source_updated_at,
+              businessSourceName: resGetByBookingId.booking_data.business_source_name,
+              businessSourceDescription: resGetByBookingId.booking_data.business_source_description,
+              businessSourceCreatedAt: resGetByBookingId.booking_data.business_source_created_at,
+              businessSourceUpdateAt: resGetByBookingId.booking_data.business_source_updated_at,
               bookingStatusName: resGetByBookingId.booking_data.booking_status_name,
               countryName: resGetByBookingId.booking_data.country_name,
-            }
+            };
+            this.bookingData = bookingData;
 
             const roomListBooking = resGetByBookingId.room_list.map((y) => {
               const data = {
@@ -155,6 +245,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
               }
               return data;
             });
+
+            this.roomListBooking = new LocalDataSource (roomListBooking);
 
             resGetByBookingId.room_list.map((y) => {
               const data = {
@@ -258,53 +350,56 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  viewByBookingRoomId() {
-    const token = {
-      token: localStorage.getItem('p_l1oxt'),
-    };
-    this.authServ.detailAfterLogin(token).pipe(takeUntil(this.subs)).subscribe(res => {
-      this.forRole = {
-        id : res[0].privilege_id,
+  refreshView() {
+    this.bookingServ.refresh.subscribe(() => {
+      this.view();
+    });
+  }
+
+  selectRoomListTab(event) {
+    if( event.tabTitle === 'Room list') {
+      this.show.button.roomList = true;
+    } else {
+      this.show.button.roomList = false;
+    }
+  }
+
+  selectRoomList (event) {
+    this.selectedRowsRoomList = event.selected;
+  }
+
+  roomList() {
+    const selectedRowsRoomList = this.selectedRowsRoomList.map((y) => {
+      const data = {
+        bookingRoomTypeId: y.bookingRoomTypeId,
       };
-
-      console.log(this.forRole);
-
-      this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
-        const filter = resUserRole.filter((forResUserRole) => {
-          return forResUserRole.module_name === 'booking_module';
-        });
-
-        if (filter[0].create_permision === 'allowed') {
-          this.show = true;
-        }else if (filter[0].create_permision === 'not allowed') {
-          this.show = false;
-        }if (filter[0].read_permision === 'allowed') {
-          this.show = true;
-        }else if (filter[0].read_permision === 'not allowed') {
-          this.show = false;
-        }if (filter[0].update_permision === 'allowed') {
-          this.show = true;
-        }else if (filter[0].update_permision === 'not allowed') {
-          this.show = false;
-        }if (filter[0].delete_permision === 'allowed') {
-          this.show = true;
-        }else if (filter[0].delete_permision === 'not allowed') {
-          this.show = false;
-        }
-      });
+      return data;
     });
+    console.log(selectedRowsRoomList);
+    const dataSelectedRowsRoomList = selectedRowsRoomList.map((y) =>{
+      const data = {
+        id: y.bookingRoomTypeId,
+      };
+     return this.bookingServ.getByBookingRoomId(data)
+      .pipe(
+        map(x => {
+          return x;
+        })
+      );
+    });
+
+    console.log('[dataSelectedRowsRoomList]', dataSelectedRowsRoomList);
+   
+    this.show.button.roomList = false;
+    this.show.tab.generalInformation = false;
+    this.show.tab.roomList = false;
+    this.show.tab.roomInformation = true;
+    this.show.tab.payment = true;
+    this.show.tab.extraCharge = true;
+    this.show.tab.extraPayment = true;
+    this.show.tab.deposit = true;
   }
 
-  refreshByBookingId() {
-    this.bookingServ.refresh.subscribe(() => {
-      this.viewByBookingId();
-    });
-  }
-
-  refreshByBookingRoomId() {
-    this.bookingServ.refresh.subscribe(() => {
-      this.viewByBookingRoomId();
-    });
-  }
+  
 
 }
