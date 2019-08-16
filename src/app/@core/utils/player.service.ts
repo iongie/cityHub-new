@@ -12,22 +12,22 @@ export class PlayerService {
   current: number;
   playlist: Track[] = [
     {
-      name: 'On My Way',
-      artist: 'Alan Walker',
-      url: '/assets/data/onmyway.mp3',
-      cover: '/assets/images/alanwalker.jpg',
+      name: 'Prambors FM',
+      artist: 'Jakarta ',
+      url: 'http://masima.rastream.com/masima-pramborsjakarta?',
+      cover: '/assets/images/prambors.jpg',
     },
     {
-      name: 'Lily',
-      artist: 'Alan Walker',
-      url: '/assets/data/Lily.mp3',
-      cover: '/assets/images/alanwalker.jpg',
+      name: 'Hard Rock FM',
+      artist: 'Jakarta',
+      url: 'http://cloudstreaming.mramedia.com:8001/live',
+      cover: '/assets/images/hardrock.jpg',
     },
     {
-      name: 'Faded',
-      artist: 'Alan Walker',
-      url: '/assets/data/Faded.mp3',
-      cover: '/assets/images/alanwalker.jpg',
+      name: 'RDI FM',
+      artist: 'Jakarta',
+      url: 'http://202.147.199.99:8000/;',
+      cover: '/assets/images/dangdut.png',
     },
   ];
 

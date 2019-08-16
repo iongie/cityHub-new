@@ -12,6 +12,7 @@ import { RoomMapsComponent } from './rooms/room-maps/room-maps.component';
 import { RoomSelectorComponent } from './rooms/room-maps/room-selector/room-selector.component';
 import { RoomSelector2Component } from './rooms/room-maps/room-selector2/room-selector2.component';
 import { RoomSelector3Component } from './rooms/room-maps/room-selector3/room-selector3.component';
+import { PlayerComponent } from './player/player.component';
 
 
 const routes: Routes = [
@@ -30,8 +31,8 @@ const routes: Routes = [
     RoomSelectorComponent,
     RoomSelector2Component,
     RoomSelector3Component,
-
-    RoomMapsComponent,],
+    RoomMapsComponent,
+    PlayerComponent,],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
