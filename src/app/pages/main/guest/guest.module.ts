@@ -3,17 +3,19 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { ThemeModule } from '../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { UnderConstractionModule } from '../under-constraction/under-constraction.module';
+// import { UnderConstractionModule } from '../under-constraction/under-constraction.module';
 import { LinkDetailModule } from './conf/link-detail/link-detail.module';
-import { ExtraChargeCategoryComponent } from './extra-charge-category.component';
+import { GuestComponent } from './guest.component';
+
 const routes: Routes = [
   {
     path: '',
-    component: ExtraChargeCategoryComponent,
+    component: GuestComponent,
   },
 ];
+
 @NgModule({
-  declarations: [ExtraChargeCategoryComponent],
+  declarations: [GuestComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -21,6 +23,6 @@ const routes: Routes = [
     Ng2SmartTableModule,
     // UnderConstractionModule,
     LinkDetailModule,
-  ],
+  ]
 })
-export class ExtraChargeCategoryModule { }
+export class GuestModule { }

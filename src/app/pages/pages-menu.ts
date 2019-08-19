@@ -88,6 +88,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'fa fa-hotel',
     children: [
       {
+        title: 'Guest',
+        link: '/pages/guest',
+      },
+      {
         title: 'Booking',
         link: '/pages/booking',
       },
