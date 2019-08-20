@@ -87,6 +87,42 @@ export class BookingService implements OnDestroy {
     );
   }
 
+  addDeposit(payment: any): Observable<any> {
+    return this.http.post<any>(this.url + '/payment/deposit', payment, httpOptions).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
+    );
+  }
+
+  assignRoom(assignRoom: any): Observable<any> {
+    return this.http.post<any>(this.url + '/booking/asign-room', assignRoom, httpOptions).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
+    );
+  }
+
+  checkIn(checkIn: any): Observable<any> {
+    return this.http.post<any>(this.url + '/booking/checkin', checkIn, httpOptions).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
+    );
+  }
+
+  checkOut(checkOut: any): Observable<any> {
+    return this.http.post<any>(this.url + '/booking/checkout', checkOut, httpOptions).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
+    );
+  }
+
   getByBookingId(booking: any): Observable<any> {
     return this.http.get<any>(this.url + '/booking/room/' + booking.id, httpOptions).pipe(
       catchError(this.handleError),

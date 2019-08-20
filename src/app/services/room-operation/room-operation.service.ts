@@ -58,6 +58,14 @@ export class RoomOperationService implements OnDestroy {
     );
   }
 
+  getByRoomTypeIdAndRoomStatus(roomTypeId: any): Observable<any> {
+    return this.http.get<any>(this.url + '/room/option/' + roomTypeId.id + '/available', httpOptions).pipe(
+      catchError(this.handleError),
+    );
+  }
+
+  
+
   update(data: any): Observable<any> {
     return this.http.post(this.url + '/room/edit', data, httpOptions).pipe(
       catchError(this.handleError),
