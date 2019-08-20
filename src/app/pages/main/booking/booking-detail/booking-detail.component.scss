@@ -1,5 +1,29 @@
-.form-info, .table, .button{
+.btn {
+  margin: 0 8px 10px 0;
+}
+
+.form-filter, .form-info, .table, .button{
     margin: 5px;
 }
+
+.flex-centered {
+    margin: auto;
+  }
+
+  
+  .title {
+    text-align: center;
+  }
+  
+  .sub-title {
+    text-align: center;
+    display: block;
+    margin-bottom: 3rem;
+  }
+  
+  .btn {
+    margin-bottom: 2rem;
+  }
+  
 
 
