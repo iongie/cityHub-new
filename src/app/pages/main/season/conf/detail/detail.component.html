@@ -14,87 +14,39 @@
     <form #ngForm="ngForm" (submit)="updateSeason()" ngNativeValidate>
       <div class="form-group">
         <label for="exampleFormControlInput1">Name</label>
-        <input
-        type="text"
-        nbInput
-        fullWidth
-        [disabled]="show === false"
-        class="form-control"
-        [(ngModel)]="season.name"
-        id="name"
-        name="name"
-        required
-        #name="ngModel"
-        placeholder="name">
+        <input type="text" nbInput fullWidth [disabled]="show === false" class="form-control" [(ngModel)]="season.name"
+          id="name" name="name" required #name="ngModel" placeholder="name">
       </div>
 
       <div class="form-group">
         <label for="exampleFormControlSelect1">Season Type</label>
-        <select
-        nbInput
-        fullWidth
-        class="form-control"
-        [disabled]="show === false"
-        [(ngModel)]="season.typeId"
-        id="typeId"
-        name="typeId"
-        required
-        #typeId="ngModel">
-          <option
-          *ngFor="let seasonType of seasonType"
-          value="{{seasonType.seasonTypeId}}">{{seasonType.seasonTypeName}}</option>
+        <select nbInput fullWidth class="form-control" [disabled]="show === false" [(ngModel)]="season.typeId"
+          id="typeId" name="typeId" required #typeId="ngModel">
+          <option *ngFor="let seasonType of seasonType" value="{{seasonType.seasonTypeId}}">
+            {{seasonType.seasonTypeName}}</option>
         </select>
       </div>
 
       <div class="form-group">
         <label for="exampleFormControlInput1">Description</label>
-        <textarea
-        nbInput
-        fullWidth
-        [disabled]="show === false"
-        class="form-control"
-        [(ngModel)]="season.desc"
-        id="desc"
-        name="desc"
-        required
-        #desc="ngModel"
-        placeholder="Description">
+        <textarea nbInput fullWidth [disabled]="show === false" class="form-control" [(ngModel)]="season.desc" id="desc"
+          name="desc" required #desc="ngModel">
         </textarea>
       </div>
 
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputEmail4">From Date</label>
-          <input
-          [nbDatepicker]="fromDate"
-          [(ngModel)]="season.fromDate"
-          class="form-control"
-          id="fromDate"
-          name="fromDate"
-          [disabled]="show === false"
-          required
-          #fromDate="ngModel"
-          placeholder="From Date">
-          <nb-datepicker
-            #fromDate
-            format="MMM d, y">
+          <input [nbDatepicker]="fromDate" [(ngModel)]="season.fromDate" class="form-control" id="fromDate"
+            name="fromDate" [disabled]="show === false" required #fromDate="ngModel" placeholder="From Date">
+          <nb-datepicker #fromDate format="MMM d, y">
           </nb-datepicker>
         </div>
         <div class="form-group col-md-6">
           <label for="inputPassword4">To Date</label>
-          <input
-          [nbDatepicker]="toDate"
-          [(ngModel)]="season.toDate"
-          class="form-control"
-          id="toDate"
-          name="toDate"
-          required
-          [disabled]="show === false"
-          #toDate="ngModel"
-          placeholder="From Date">
-          <nb-datepicker
-            #toDate
-            format="MMM d, y">
+          <input [nbDatepicker]="toDate" [(ngModel)]="season.toDate" class="form-control" id="toDate" name="toDate"
+            required [disabled]="show === false" #toDate="ngModel" placeholder="From Date">
+          <nb-datepicker #toDate format="MMM d, y">
           </nb-datepicker>
         </div>
       </div>
@@ -102,46 +54,26 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputEmail4">Start Date</label>
-          <input
-          [nbDatepicker]="startDate"
-          [(ngModel)]="season.startDate"
-          class="form-control"
-          id="startDate"
-          name="startDate"
-          required
-          [disabled]="show === false"
-          #startDate="ngModel"
-          placeholder="Start Date">
-          <nb-datepicker
-            #startDate
-            format="MMM d, y">
+          <input [nbDatepicker]="startDate" [(ngModel)]="season.startDate" class="form-control" id="startDate"
+            name="startDate" required [disabled]="show === false" #startDate="ngModel" placeholder="Start Date">
+          <nb-datepicker #startDate format="MMM d, y">
           </nb-datepicker>
         </div>
         <div class="form-group col-md-6">
           <label for="inputPassword4">End Date</label>
-          <input
-          [disabled]="show === false"
-          [nbDatepicker]="endDate"
-          [(ngModel)]="season.endDate"
-          class="form-control"
-          id="endDate"
-          name="endDate"
-          required
-          #endDate="ngModel"
-          placeholder="End Date">
-          <nb-datepicker
-            #endDate
-            format="MMM d, y">
+          <input [disabled]="show === false" [nbDatepicker]="endDate" [(ngModel)]="season.endDate" class="form-control"
+            id="endDate" name="endDate" required #endDate="ngModel" placeholder="End Date">
+          <nb-datepicker #endDate format="MMM d, y">
           </nb-datepicker>
         </div>
       </div>
 
       <div class="buttons">
         <button type="submit" class="btn btn-primary" *ngIf="show">Update</button>
-        <button type="button" class="btn btn-warning" [routerLink]="['/pages/season']" routerLinkActive="router-link-active" >Cancel</button>
+        <button type="button" class="btn btn-warning" [routerLink]="['/pages/season']"
+          routerLinkActive="router-link-active">Cancel</button>
       </div>
     </form>
   </nb-card-body>
 
 </nb-card>
-

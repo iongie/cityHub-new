@@ -1,3 +1,68 @@
-<p>
-  detail works!
-</p>
+<nb-card>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-auto mr-auto">Guest Management</div>
+        <!-- <div class="col-auto">
+            <button type="submit" class="btn btn-primary">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+          </div> -->
+      </div>
+    </nb-card-header>
+  
+    <nb-card-body *ngFor="let guest of guest">
+        <form #ngForm="ngForm" (submit)="updateGuest()" ngNativeValidate>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Name</label>
+          <input type="text" nbInput fullWidth [disabled]="show === false" class="form-control" [(ngModel)]="guest.guestName"
+            id="guestName" name="guestName" required #guestName="ngModel" placeholder="Guest Name">
+        </div>
+  
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Address</label>
+          <textarea nbInput fullWidth [disabled]="show === false" class="form-control" [(ngModel)]="guest.address"
+            id="address" name="address" required #desc="ngModel" placeholder="Address">
+              </textarea>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="exampleFormControlInput1">City</label>
+            <input type="text" nbInput fullWidth [disabled]="show === false" class="form-control" [(ngModel)]="guest.city"
+              id="city" name="city" required #name="ngModel" placeholder="City">
+          </div>
+  
+          <div class="form-group col-md-6">
+            <label for="exampleFormControlSelect1">Country</label>
+            <select nbInput fullWidth [disabled]="show === false" class="form-control" [(ngModel)]="guest.countryId"
+              id="countryId" name="countryId" required #countryId="ngModel">
+              <option *ngFor="let country of country" value="{{country.countryId}}">{{country.countryName}}</option>
+            </select>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="exampleFormControlInput1">Email</label>
+            <input type="text" nbInput fullWidth [disabled]="show === false" class="form-control"
+              [(ngModel)]="guest.email" id="email" name="email" required #name="ngModel" placeholder="Email">
+          </div>
+  
+          <div class="form-group col-md-6">
+            <label for="exampleFormControlInput1">Phone Number</label>
+            <input type="text" nbInput fullWidth [disabled]="show === false" class="form-control"
+              [(ngModel)]="guest.phoneNumber" id="phoneNumber" name="phoneNumber" required #name="ngModel"
+              placeholder="Phone Number">
+          </div>
+        </div>
+  
+        <div class="buttons">
+          <button type="submit" class="btn btn-primary" *ngIf="show">Update</button>
+          <button type="button" class="btn btn-warning" [routerLink]="['/pages/guest']"
+            routerLinkActive="router-link-active">Cancel</button>
+        </div>
+  
+      </form>
+    </nb-card-body>
+  </nb-card>
+  
