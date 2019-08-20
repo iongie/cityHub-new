@@ -189,6 +189,21 @@ const routes: Routes = [{
       loadChildren: './main/booking/booking-list/booking-list.module#BookingListModule',
     },
     {
+      path: 'guest',
+      loadChildren: './main/guest/guest.module#GuestModule',
+    },
+    {
+      path: 'add-guest',
+      loadChildren: './main/guest/conf/add/add.module#AddModule',
+    },
+    {
+      path: 'view-guest',
+      children: [{
+        path: ':id',
+        loadChildren: './main/guest/conf/detail/detail.module#DetailModule',
+      }, ],
+    },
+    {
       path: 'miscellaneous-sales',
       loadChildren: './main/miscellaneous-sales/miscellaneous-sales.module#MiscellaneousSalesModule',
     },
