@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { throwError, Subject, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
@@ -9,7 +9,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class GuestService {
+export class GuestService implements OnDestroy {
   private url = environment.baseUrl;
   private subs: Subject<void> = new Subject();
   private _refresh = new Subject();
@@ -55,8 +55,8 @@ export class GuestService {
     );
   }
 
-  getById(guest: any): Observable<any> {
-    return this.http.get<any>(this.url + '/guest/show/' + guest.id, httpOptions).pipe(
+  getById(guestId: any): Observable<any> {
+    return this.http.get<any>(this.url + '/guest/show/' + guestId.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }

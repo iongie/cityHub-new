@@ -91,7 +91,7 @@ export class AddComponent implements OnInit, OnDestroy {
 
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {
-          return forResUserRole.module_name === 'extra_charge_module';
+          return forResUserRole.module_name === 'guest_module';
         });
 
         if (filter[0].create_permision === 'allowed') {
