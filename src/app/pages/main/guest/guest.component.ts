@@ -21,6 +21,7 @@ export class GuestComponent implements OnInit {
   private subs: Subject<void> = new Subject();
   forRole: any;
   show: any;
+  country: any;
   settings = {
     actions: false,
     columns: {
@@ -28,23 +29,27 @@ export class GuestComponent implements OnInit {
         title: 'Name',
         type: 'string',
       },
-      guestAddress: {
+      address: {
         title: 'Address',
         type: 'string',
       },
-      guestCity: {
+      city: {
         title: 'City',
-        type: 'boolean',
+        type: 'string',
       },
-      guestEmail: {
+      countryId: {
+        title: 'Country',
+        type: 'string',
+      },
+      email: {
         title: 'Email',
         type: 'string',
       },
-      guestPhone: {
+      phoneNumber: {
         title: 'Phone',
         type: 'string',
       },
-      guestFile: {
+      guestFileScan: {
         title: 'File',
         type: 'string',
       },
@@ -58,7 +63,7 @@ export class GuestComponent implements OnInit {
   };
   constructor(
     public guestServ: GuestService,
-    public countrycountryServ: CountryService,
+    public countryServ: CountryService,
     public notifServ: NotificationService,
     public userRoleServ: UserRoleService,
     public authServ: AuthService,
@@ -67,12 +72,28 @@ export class GuestComponent implements OnInit {
 
   ngOnInit() {
     this.getGuest();
+    this.getCountry();
   }
 
   ngOnDestroy() {
     this.subs.next();
     this.subs.complete();
   }
+  
+  getCountry() {
+    this.countryServ.get().pipe(takeUntil(this.subs)).subscribe(resCountry => {
+      this.country = resCountry.map((y) => {
+        const xyz = {
+          countryId: y.country_id,
+          countryName: y.country_name,
+        };
+        return xyz;
+      })
+      
+    console.log(resCountry);
+    });
+  }
+
   getGuest() {
     const token = {
       token: localStorage.getItem('p_l1oxt'),
@@ -86,7 +107,7 @@ export class GuestComponent implements OnInit {
 
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {
-          return forResUserRole.module_name === 'extra_charge_category_module';
+          return forResUserRole.module_name === 'guest_module';
         });
 
         if (filter[0].create_permision === 'allowed') {
@@ -112,12 +133,12 @@ export class GuestComponent implements OnInit {
             const dataForResGuest = {
               guestId: forResGuest.guest_id,
               guestName : forResGuest.guest_name,
-              guestAddress : forResGuest.address,
-              guestCity : forResGuest.city,
-              guestCountry : forResGuest.country_id,
-              guestEmail : forResGuest.email,
-              guestPhone : forResGuest.phone_number,
-              guestFile : forResGuest.guest_file_scan,
+              address : forResGuest.address,
+              city : forResGuest.city,
+              countryId : forResGuest.country_id,
+              email : forResGuest.email,
+              phoneNumber : forResGuest.phone_number,
+              guestFileScan : forResGuest.guest_file_scan,
               detail: {
                 guestId: forResGuest.guest_id,
                 guestRoleCreate: filter[0].create_permision,

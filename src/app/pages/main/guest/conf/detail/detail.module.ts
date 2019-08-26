@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { DetailComponent } from './detail.component';
 // import { UnderConstractionModule } from '../../../under-constraction/under-constraction.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { NbInputModule } from '@nebular/theme';
 import { ThemeModule } from '../../../../../@theme/theme.module';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { NbInputModule } from '@nebular/theme';
+// import { FormsModule } from '@angular/forms';
 const routes: Routes = [
   {
     path: '',
@@ -17,8 +17,8 @@ const routes: Routes = [
   declarations: [DetailComponent],
   imports: [
     CommonModule,
-    FormsModule,
     RouterModule.forChild(routes),
+    // FormsModule,
     ThemeModule,
     NbInputModule,
     Ng2SmartTableModule,

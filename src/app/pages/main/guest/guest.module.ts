@@ -23,6 +23,7 @@ const routes: Routes = [
     Ng2SmartTableModule,
     // UnderConstractionModule,
     LinkDetailModule,
+
   ]
 })
 export class GuestModule { }
