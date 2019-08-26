@@ -7,7 +7,7 @@ import { NbToastStatus } from '@nebular/theme/components/toastr/model';
 })
 export class NotificationService {
   index = 1;
-  duration = 3000;
+  duration = 7000;
   constructor(
     public toastrService: NbToastrService,
   ) { }
@@ -98,7 +98,7 @@ export class NotificationService {
     const config = {
       status:  status,
       destroyByClick: true,
-      duration: 2000,
+      duration: this.duration,
       hasIcon: true,
       position: position,
       preventDuplicates: false,

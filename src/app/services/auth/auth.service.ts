@@ -58,6 +58,12 @@ export class AuthService implements OnDestroy {
       catchError(this.handleError),
     );
   }
+  
+  changePassword(user: any): Observable<any> {
+    return this.http.post<any>(this.url + '/user/change-password', user, httpOptions).pipe(
+      catchError(this.handleError),
+    );
+  }
 
   login(user: any): Observable<any> {
     return this.http.post<any>(this.url + '/user/login', user, httpOptions).pipe(

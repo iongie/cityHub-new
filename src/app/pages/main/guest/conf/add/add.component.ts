@@ -31,6 +31,11 @@ export class AddComponent implements OnInit, OnDestroy {
   country: any;
   forRole: any;
   show: any;
+
+  fileData = new FormData();
+  reader = new FileReader();
+  selectedFile: File = null;
+  imgURL: any;
   constructor(
     public datepipe: DatePipe,
     public notifServ: NotificationService,
@@ -113,6 +118,17 @@ export class AddComponent implements OnInit, OnDestroy {
         }
       });
     });
+  }
+
+  onFile(event) {
+    console.log(event);
+    this.selectedFile = <File>event.target.files[0];
+    console.log(this.selectedFile.name);
+    this.reader.readAsDataURL(this.selectedFile);
+    this.reader.onload = (_event) => {
+      this.imgURL = this.reader.result;
+    };
+
   }
 
   addGuest() {

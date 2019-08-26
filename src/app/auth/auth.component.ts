@@ -16,6 +16,11 @@ export class AuthComponent implements OnInit, OnDestroy {
     username: '',
     password: '',
   };
+
+  settingPass = {
+    type: 'password',
+    icon: 'fa fa-eye-slash',
+  };
   constructor(
     public authServ: AuthService,
     public notifServ: NotificationService,
@@ -23,6 +28,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.settingPass;
   }
 
   ngOnDestroy() {
@@ -47,6 +53,18 @@ export class AuthComponent implements OnInit, OnDestroy {
       const content = 'Incorrect username and password';
       this.notifServ.showInfoTypeToast(title, content);
     });
+  }
+
+  changePass() {
+    if(this.settingPass.type === 'fa fa-eye-slash'){
+      this.settingPass.icon ='fa fa-eye';
+      this.settingPass.type = 'text';
+    } else {
+      this.settingPass.icon ='fa fa-eye-slash';
+      this.settingPass.type = 'password';
+    }
+
+  console.log('tesssssss');
   }
 
 }

@@ -22,7 +22,12 @@
         <label for="exampleFormControlInput1">Address</label>
         <textarea nbInput fullWidth [disabled]="show === false" class="form-control" [(ngModel)]="guest.address"
           id="address" name="address" required #desc="ngModel" placeholder="Address">
-            </textarea>
+        </textarea>
+      </div>
+
+      <div class="input-group">
+        <input type="file" name="image" id="image" (change)="onFile($event)">
+        <img [src]="imgURL" [ngClass]="{'img-preview': true}" *ngIf="imgURL">
       </div>
 
       <div class="form-row">
