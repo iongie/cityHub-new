@@ -2,34 +2,15 @@
   <nb-card-header>
     <div class="row">
       <div class="col-auto mr-auto">Detail Booking Number: {{bookingNumber}}</div>
-      <div class="col-auto" *ngIf="show.button.roomList === true">
-        <button type="button" class="btn btn-primary" (click)="roomList()">
-          <i class="fa fa-th-list" aria-hidden="true"></i>
-        </button>
-      </div>
-
-      <div class="col-auto" *ngIf="show.button.checkIn === false">
-        <button type="button" class="btn btn-primary" (click)="checkIn()">
-          <i class="fa fa-th-list" aria-hidden="true"></i>
-        </button>
-      </div>
-
-      <div class="col-auto" *ngIf="show.button.room === true">
-        <button type="button" class="btn btn-primary" (click)="backToRoomList()">
-          <i class="fa fa-undo" aria-hidden="true"></i>
-        </button>
-      </div>
-
       <div class="col-auto">
-        <button type="button" class="btn btn-primary" (click)="checkOut()">
-          Check Out
-        </button>
+        <nb-action class="control-item" icon="fa fa-bars" [nbContextMenu]="showMenuRoomList.menuRoomList" nbContextMenuTag="menuRoomList"></nb-action>
       </div>
     </div>
   </nb-card-header>
 
   <nb-card-body>
-    <div class="form-filter" *ngIf="show.select.roomTypeId === true">
+    <div class="form-filter"
+    *ngIf="showSelect.select.roomTypeId === true">
       <div class="form-row align-items-center">
         <div class="col-auto">
           <label class="mr-sm-2" for="roomTypeId">Room type</label>
@@ -53,11 +34,11 @@
         </div>
       </div>
     </div>
-    <nb-tabset (changeTab)="selectRoomListTab($event)">
+    <nb-tabset>
       <nb-tab 
       tabTitle="General Information"
-      *ngIf="show.tab.generalInformation === true"
-      [active]="show.tabActive.generalInformation === true">
+      *ngIf="showTab.show.generalInformation === true"
+      [active]="showTab.active.generalInformation === true">
         <form class="step-container">
           <div class="row form-info">
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -219,7 +200,9 @@
           </div>
         </form>
       </nb-tab>
-      <nb-tab tabTitle="Room list" *ngIf="show.tab.roomList === true">
+      <nb-tab tabTitle="Room list"
+      *ngIf="showTab.show.roomList === true"
+      [active]="showTab.active.roomList === true">
         <div class="table">
           <ng2-smart-table 
             [settings]="settingsRoomListBooking"
@@ -229,11 +212,11 @@
         </div> 
       </nb-tab>
       <nb-tab tabTitle="Room Information"
-       *ngIf="show.tab.roomInformation === true"
-       [active]="show.tabActive.roomInformation === true">
+      *ngIf="showTab.show.roomInformation === true"
+      [active]="showTab.active.roomInformation === true">
         <form class="step-container">
           <div class="row form-info">
-            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
               <nb-card>
                 <nb-card-header>
                   Charge
@@ -326,45 +309,41 @@
                 </nb-card-body>
               </nb-card>
             </div>
-            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
               <nb-card>
                 <nb-card-header>
                   Room
                 </nb-card-header>
                 <nb-card-body>
                   <div
-                  class="flex-centered col-xl-8 col-lg-8 col-md-8 col-sm-12"
-                  *ngIf="show.view.assignRoom === false">
+                  class="flex-centered col-xl-8 col-lg-8 col-md-8 col-sm-12">
                     <h2 class="title">Room is not found</h2>
-                    <small class="sub-title">Sorry this page can't be run yet</small>
+                    <small class="sub-title">please make payment and deposit</small>
                     <button 
                     type="button"
                     (click)="toAssignRoom()" 
-                    class="btn btn-block btn-hero-primary"
-                    *ngIf="show.button.assignRoom === true">
-                        Assign room
+                    class="btn btn-block btn-hero-primary">
+                      Assign room
                     </button>
                     <button 
                     type="button"
                     disabled
                     (click)="toAssignRoom()" 
-                    class="btn btn-block btn-hero-primary"
-                    *ngIf="show.button.assignRoom === false">                        
-                      please make payment and deposit
+                    class="btn btn-block btn-hero-primary">                        
+                      Assign room
                     </button>
                   </div>
 
                   <div 
-                  class="flex-centered col-xl-8 col-lg-8 col-md-8 col-sm-12"
-                  *ngIf="show.view.assignRoom === true">
+                  class="flex-centered col-xl-8 col-lg-8 col-md-8 col-sm-12">
                     <div class="form-group">
                       <label for="exampleFormControlSelect1">Room</label>
                       <select
                       nbInput
                       fullWidth
-                      [disabled]="show === false"
+                      [disabled]="role === false"
                       class="form-control"
-                      [(ngModel)]="assignRoom.roomId"
+                      [(ngModel)]="roomA.roomId"
                       (ngModelChange)="addRoom($event)"
                       id="roomId"
                       name="roomId"
@@ -376,17 +355,38 @@
                       </select>
                     </div>
                   </div>
+
+                  <div 
+                  class="flex-centered col-xl-8 col-lg-8 col-md-8 col-sm-12">
+                    <div class="form-group">
+                      <label for="exampleFormControlSelect1">Room</label>
+                      <input
+                        type="text"
+                        nbInput
+                        fullWidth
+                        disabled
+                        class="form-control"
+                        [(ngModel)]="room.roomName"
+                        id="roomName"
+                        name="roomName"
+                        required
+                        #roomName="ngModel"
+                        placeholder="Room">
+                    </div>
+                  </div>
                 </nb-card-body>
               </nb-card>
             </div>
           </div>
         </form>
       </nb-tab>
-      <nb-tab tabTitle="Deposit" *ngIf="show.tab.deposit === true">
+      <nb-tab tabTitle="Deposit"
+      *ngIf="showTab.show.deposit === true"
+      [active]="showTab.active.deposit === true">
         <div class="row">
           <div class="col-md-12">
             <nb-card>
-              <nb-card-body  *ngIf="show.notFound.deposit === true">
+              <nb-card-body *ngIf="showCrud.notFound.deposit === true">
                 <div class="flex-centered col-xl-8 col-lg-8 col-md-8 col-sm-12">
                   <h2 class="title">Deposit is not found</h2>
                   <small class="sub-title">Sorry this page can't be run yet</small>
@@ -396,7 +396,7 @@
                 </div>
               </nb-card-body>
 
-              <nb-card-body *ngIf="show.add.deposit === true">
+              <nb-card-body *ngIf="showCrud.add.deposit === true">
                 <form #ngForm="ngForm" (submit)="addDeposit()" ngNativeValidate>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Total Paid</label>
@@ -405,7 +405,7 @@
                           nbInput
                           fullWidth
                           currencyMask
-                          [disabled]="show === false"
+                          [disabled]="role === false"
                           class="form-control"
                           [(ngModel)]="addingDeposit.totalPaid"
                           id="totalPaid"
@@ -420,7 +420,7 @@
                         <select
                           nbInput
                           fullWidth
-                          [disabled]="show === false"
+                          [disabled]="role === false"
                           class="form-control"
                           [(ngModel)]="addingDeposit.paymentTypeId"
                           id="paymentTypeId"
@@ -438,7 +438,7 @@
                         <textarea
                           nbInput
                           fullWidth
-                          [disabled]="show === false"
+                          [disabled]="role === false"
                           class="form-control"
                           [(ngModel)]="addingDeposit.paymentNote"
                           id="paymentNote"
@@ -450,20 +450,26 @@
                       </div>
             
                   <div class="buttons">
-                    <button type="submit" class="btn btn-primary" *ngIf="show">Save</button>
+                    <button type="submit" class="btn btn-primary" *ngIf="role">Save</button>
                     <button type="button" class="btn btn-warning" [routerLink]="['/pages/booking-management']" routerLinkActive="router-link-active" >Cancel</button>
                   </div>
                 </form>
+              </nb-card-body>
+
+              <nb-card-body *ngIf="showCrud.view.deposit === true">
+                {{deposit.paymentId}}
               </nb-card-body>
             </nb-card>
           </div>
         </div>
       </nb-tab>
-      <nb-tab tabTitle="Charge" *ngIf="show.tab.charge === true">
+      <nb-tab tabTitle="Charge"
+      *ngIf="showTab.show.charge === true"
+      [active]="showTab.active.charge === true">
         <div class="row">
           <div class="col-md-12">
             <nb-card>
-              <nb-card-body *ngIf="show.notFound.charge === true">
+              <nb-card-body *ngIf="showCrud.notFound.charge === true">
                 <div class="flex-centered col-xl-8 col-lg-8 col-md-8 col-sm-12">
                   <h2 class="title">Charge is not found</h2>
                   <small class="sub-title">Sorry, this data can't be displayed yet</small>
@@ -472,15 +478,25 @@
                   </button>
                 </div>
               </nb-card-body>
+
+              <nb-card-body *ngIf="showCrud.add.charge === true">
+
+              </nb-card-body>
+              
+              <nb-card-body *ngIf="showCrud.view.charge === true">
+
+              </nb-card-body>
             </nb-card>
           </div>
         </div>
       </nb-tab>
-      <nb-tab tabTitle="Extra Charge" *ngIf="show.tab.extraCharge === true">
+      <nb-tab tabTitle="Extra Charge"
+      *ngIf="showTab.show.extraCharge === true"
+      [active]="showTab.active.extraCharge === true">
         <div class="row">
           <div class="col-md-12">
             <nb-card>
-              <nb-card-body *ngIf="show.notFound.extraCharge === true">
+              <nb-card-body *ngIf="showCrud.notFound.extraCharge === true">
                 <div class="flex-centered col-xl-8 col-lg-8 col-md-8 col-sm-12">
                   <h2 class="title">Extra Charge is not found</h2>
                   <small class="sub-title">Sorry, this data can't be displayed yet</small>
@@ -489,15 +505,24 @@
                   </button>
                 </div>
               </nb-card-body>
+              <nb-card-body *ngIf="showCrud.add.extraCharge === true">
+
+              </nb-card-body>
+              
+              <nb-card-body *ngIf="showCrud.view.extraCharge === true">
+
+              </nb-card-body>
             </nb-card>
           </div>
         </div>
       </nb-tab>
-      <nb-tab tabTitle="Payment" *ngIf="show.tab.payment === true">
+      <nb-tab tabTitle="Payment"
+      *ngIf="showTab.show.payment === true"
+      [active]="showTab.active.payment === true">
         <div class="row">
           <div class="col-md-12">
             <nb-card>
-              <nb-card-body *ngIf="show.notFound.payment === true">
+              <nb-card-body *ngIf="showCrud.notFound.payment === true">
                 <div class="flex-centered col-xl-8 col-lg-8 col-md-8 col-sm-12">
                   <h2 class="title">Payment is not found</h2>
                   <small class="sub-title">Sorry, this data can't be displayed yet</small>
@@ -507,7 +532,7 @@
                 </div>
               </nb-card-body>
 
-              <nb-card-body *ngIf="show.add.payment === true">
+              <nb-card-body *ngIf="showCrud.add.payment === true">
                 <form #ngForm="ngForm" (submit)="addPayment()" ngNativeValidate>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Total Paid</label>
@@ -516,7 +541,7 @@
                           nbInput
                           fullWidth
                           currencyMask
-                          [disabled]="show === false"
+                          [disabled]="role === false"
                           class="form-control"
                           [(ngModel)]="addingPayment.totalPaid"
                           id="totalPaid"
@@ -531,7 +556,7 @@
                         <select
                           nbInput
                           fullWidth
-                          [disabled]="show === false"
+                          [disabled]="role === false"
                           class="form-control"
                           [(ngModel)]="addingPayment.paymentTypeId"
                           id="paymentTypeId"
@@ -549,7 +574,7 @@
                         <textarea
                           nbInput
                           fullWidth
-                          [disabled]="show === false"
+                          [disabled]="role === false"
                           class="form-control"
                           [(ngModel)]="addingPayment.paymentNote"
                           id="paymentNote"
@@ -561,20 +586,26 @@
                       </div>
             
                   <div class="buttons">
-                    <button type="submit" class="btn btn-primary" *ngIf="show">Save</button>
+                    <button type="submit" class="btn btn-primary" *ngIf="role">Save</button>
                     <button type="button" class="btn btn-warning" [routerLink]="['/pages/booking-management']" routerLinkActive="router-link-active" >Cancel</button>
                   </div>
                 </form>
+              </nb-card-body>
+
+              <nb-card-body *ngIf="showCrud.view.payment === true">
+                {{payment.paymentId}}
               </nb-card-body>
             </nb-card>
           </div>
         </div>
       </nb-tab>
-      <nb-tab tabTitle="Extra Payment" *ngIf="show.tab.extraPayment === true">
+      <nb-tab tabTitle="Extra Payment"
+      *ngIf="showTab.show.extraPayment === true"
+      [active]="showTab.active.extraPayment === true">
         <div class="row">
           <div class="col-md-12">
             <nb-card>
-              <nb-card-body *ngIf="show.notFound.extraPayment === true">
+              <nb-card-body *ngIf="showCrud.notFound.extraPayment === true">
                 <div class="flex-centered col-xl-8 col-lg-8 col-md-8 col-sm-12">
                   <h2 class="title">Extra Payment is not found</h2>
                   <small class="sub-title">Sorry, this data can't be displayed yet</small>
@@ -582,6 +613,172 @@
                     Add Extra Payment
                   </button>
                 </div>
+              </nb-card-body>
+              <nb-card-body *ngIf="showCrud.add.extraPayment === true">
+
+              </nb-card-body>
+              
+              <nb-card-body *ngIf="showCrud.view.extraPayment === true">
+
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+      </nb-tab>
+      <nb-tab tabTitle="Add Stay"
+      *ngIf="showTab.show.addStay === true"
+      [active]="showTab.active.addStay === true">
+        <div class="row">
+          <div class="col-md-12">
+            <nb-card>
+              <nb-card-body>
+                <form #ngForm="ngForm" (submit)="addStay()" ngNativeValidate>
+                  <div class="form-group col-md-6">
+                    <label for="exampleFormControlInput1">Duration</label>
+                    <input
+                    type="number"
+                    min = 1
+                    nbInput
+                    fullWidth
+                    [disabled]="show === false"
+                    class="form-control"
+                    [(ngModel)]="formAddStay.duration"
+                    id="duration"
+                    name="duration"
+                    required
+                    #duration="ngModel"
+                    placeholder="Duration">
+                  </div>
+  
+                  <div class="buttons">
+                    <button type="submit" class="btn btn-primary" *ngIf="role">Save</button>
+                    <button type="button" class="btn btn-warning" (click)="cancelAction()" >Cancel</button>
+                  </div>
+                </form>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+      </nb-tab>
+      <nb-tab tabTitle="Less Stay"
+      *ngIf="showTab.show.lessStay === true"
+      [active]="showTab.active.lessStay === true">
+      <div class="row">
+          <div class="col-md-12">
+            <nb-card>
+              <nb-card-body>
+                <form #ngForm="ngForm" (submit)="lessStay()" ngNativeValidate>
+                  <div class="form-group col-md-6">
+                    <label for="inputEmail4">Arrival Date</label>
+                    <input
+                    [nbDatepicker]="arrivalDate"
+                    [(ngModel)]="formLessStay.arrivalDate"
+                    class="form-control"
+                    id="arrivalDate"
+                    name="arrivalDate"
+                    required
+                    disabled
+                    #arrivalDate="ngModel"
+                    placeholder="From Date">
+                    <nb-datepicker
+                      #arrivalDate
+                      format="MMM d, y">
+                    </nb-datepicker>
+                  </div>
+
+                  <div class="form-group col-md-6">
+                    <label for="inputEmail4">Departure Date</label>
+                    <input
+                    [nbDatepicker]="departureDate"
+                    [(ngModel)]="formLessStay.departureDate"
+                    class="form-control"
+                    id="departureDate"
+                    name="departureDate"
+                    required
+                    disabled
+                    #departureDate="ngModel"
+                    placeholder="From Date">
+                    <nb-datepicker
+                      #departureDate
+                      format="MMM d, y">
+                    </nb-datepicker>
+                  </div>
+
+                  <div class="form-group col-md-6">
+                      <label for="exampleFormControlInput1">Duration</label>
+                      <input
+                      type="number"
+                      min = 1
+                      [max] = "formLessStay.duration"
+                      nbInput
+                      fullWidth
+                      [disabled]="show === false"
+                      class="form-control"
+                      [(ngModel)]="formLessStay.duration"
+                      (change) = "durationLessStay($event)"
+                      id="duration"
+                      name="duration"
+                      required
+                      #duration="ngModel"
+                      placeholder="Duration">
+                  </div>
+  
+                  <div class="buttons">
+                    <button type="submit" class="btn btn-primary" *ngIf="role">Save</button>
+                    <button type="button" class="btn btn-warning" (click)="cancelAction()" >Cancel</button>
+                  </div>
+                </form>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+      </nb-tab>
+      <nb-tab tabTitle="Move Room"
+      *ngIf="showTab.show.moveRoom === true"
+      [active]="showTab.active.moveRoom === true">
+        <div class="row">
+          <div class="col-md-12">
+            <nb-card>
+              <nb-card-body>
+                <form class="step-container" #ngForm="ngForm" (submit)="moveRoomStepTwo()" ngNativeValidate>
+                  <div class="input-group mb-3" *ngFor="let roomListMoveRoom of roomListMoveRoom; let i=index">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <input 
+                        type="checkbox"
+                        [(ngModel)]="roomListMoveRoom.check"
+                        id="check{{i}}"
+                        name="check{{i}}"
+                        (ngModelChange)="checkRoomListMoveRoomBooking($event)">
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      fullWidth
+                      disabled
+                      [(ngModel)]="roomListMoveRoom.roomTypeName"
+                      class="form-control"
+                      id="roomTypeName{{i}}"
+                      name="roomTypeName{{i}}"
+                      placeholder="Guest">
+                    <input
+                    type="number"
+                    fullWidth
+                    [max]="roomListMoveRoom.available"
+                    min ="1"
+                    [disabled]="show === false"
+                    [(ngModel)]="roomListMoveRoom.available"
+                    id="available{{i}}"
+                    name="available{{i}}"
+                    class="form-control"
+                    placeholder="Guest">
+                  </div>
+        
+                  <div class="buttons">
+                    <button type="submit" class="btn btn-primary" *ngIf="role">Save</button>
+                    <button type="button" class="btn btn-warning" (click)="cancelAction()" >Cancel</button>
+                  </div>
+                </form>
               </nb-card-body>
             </nb-card>
           </div>

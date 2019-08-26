@@ -33,6 +33,13 @@ export class LinkDetailComponent implements OnInit, OnDestroy {
         id: '',
       },
     },
+    { 
+      title: 'Cancel',
+      icon: 'fa fa-times',
+      data: {
+        id: '',
+      },
+    },
   ];
   data: any[];
   constructor(
@@ -91,6 +98,19 @@ export class LinkDetailComponent implements OnInit, OnDestroy {
     ).subscribe(item => {
       if (item.data.id === this.renderValue && item.title === 'Charge List') {
         this.router.navigate(['/pages/booking-detail', this.renderValue]);
+      }else if (item.data.id === this.renderValue && item.title === 'Cancel') {
+        const data = {
+          cancelBy: '',
+          cancelReason: '',
+          bookingId: this.renderValue
+        }
+        this.bookingServ.cancelBooking(data)
+        .pipe(takeUntil(this.subs))
+        .subscribe(resCancelBooking => {
+          const title = 'Cancel Booking';
+          const content = 'Data has been save';
+          this.notifServ.showSuccessTypeToast(title, content);
+        })
       }
     });
   }

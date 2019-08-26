@@ -123,6 +123,15 @@ export class BookingService implements OnDestroy {
     );
   }
 
+  cancelBooking(cancelBooking: any): Observable<any> {
+    return this.http.post<any>(this.url + '/booking/cancel', cancelBooking, httpOptions).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
+    );
+  }
+
   getByBookingId(booking: any): Observable<any> {
     return this.http.get<any>(this.url + '/booking/room/' + booking.id, httpOptions).pipe(
       catchError(this.handleError),
@@ -149,6 +158,42 @@ export class BookingService implements OnDestroy {
   getById(bookingRoom: any): Observable<any> {
     return this.http.get<any>(this.url + '/booking/show/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
+    );
+  }
+
+  addStay(addStay: any): Observable<any> {
+    return this.http.post<any>(this.url + '/booking/stay/add', addStay, httpOptions).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
+    );
+  }
+
+  lessStay(lessStay: any): Observable<any> {
+    return this.http.post<any>(this.url + '/booking/stay/less', lessStay, httpOptions).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
+    );
+  }
+
+  moveRoomStepOne(prepareMoveRoom: any): Observable<any> {
+    return this.http.post<any>(this.url + '/booking/move/prepare', prepareMoveRoom, httpOptions).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
+    );
+  }
+
+  moveRoomStepTwo(selectRoom: any, dataStepTwo: any): Observable<any> {
+    return this.http.post<any>(this.url + '/booking/select-room/'+selectRoom.id, dataStepTwo, httpOptions).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
     );
   }
 

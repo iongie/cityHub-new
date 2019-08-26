@@ -52,6 +52,10 @@ export class BookingListComponent implements OnInit, OnDestroy {
         title: 'Departure date',
         type: 'string',
       },
+      bookingStatusName: {
+        title: 'Status',
+        type: 'string',
+      },
       detail: {
         title: 'Actions',
         type: 'custom',
@@ -138,6 +142,7 @@ export class BookingListComponent implements OnInit, OnDestroy {
                   bookingGuestId: y.guest_id,
                   bookingGuestName: filterGuest[0].guest_name,
                   bookingStatusId: y.booking_status_id,
+                  bookingStatusName: y.booking_status_name,
                   bookingBusinessSourceId: y.business_source_id,
                   bookingBusinessSourceName: filterBusinessSource[0].business_source_name,
                   bookingNumber: y.booking_number,
@@ -167,7 +172,7 @@ export class BookingListComponent implements OnInit, OnDestroy {
                 return fgh;
               });
               this.booking = new LocalDataSource (dataBooking);
-              console.log(this.booking);
+              console.log(resBooking);
             });
           });
         });

@@ -1,3 +1,4 @@
+import { BookingData, SelectedRowsRoomList, FilterSelectedRowsRoomList, ChargeTotal, Room, ReturnDeposit, AddingDeposit, AddingPayment, ChargeList, AssignRoom, Deposit, Payment, FormAddStay, FormLessStay, LessDateArray } from './../../../../data/booking';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, interval, Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -17,6 +18,10 @@ import { takeUntil, map, first, mergeMap, filter } from 'rxjs/operators';
 import { LocalDataSource } from 'ng2-smart-table';
 import { FloorService } from '../../../../services/floor/floor.service';
 import { RoomStatusService } from '../../../../services/room-status/room-status.service';
+import { DefaultTab, DetailRoomTab, DetailAddStay, DetailLessStay, DetailMoveRoom } from './setting-tab';
+import { DefaultCrud } from './setting-crud';
+import { DefaultSelect, DefaultRoomTypeId } from './setting-select';
+import { DefaultMenu, AfterSelectRoom } from './setting-context-menu-booking';
 
 @Component({
   selector: 'ngx-booking-detail',
@@ -24,111 +29,16 @@ import { RoomStatusService } from '../../../../services/room-status/room-status.
   styleUrls: ['./booking-detail.component.scss']
 })
 export class BookingDetailComponent implements OnInit, OnDestroy {
-  tes$: Observable<any>;
   private subs: Subject<void> = new Subject();
-  show = {
-    role : false,
-    button: {
-      roomList: false,
-      room: false,
-      assignRoom: false,
-      checkIn: false,
-      checkOut: false,
-    },
-    select: {
-      roomTypeId: false,
-    },
-    tab : {
-      generalInformation: true,
-      roomList: true,
-      roomInformation: false,
-      deposit: false,
-      charge: false,
-      extraCharge: false,
-      payment: false,
-      extraPayment: false,
-    },
-    tabActive: {
-      generalInformation: true,
-      roomList: true,
-      roomInformation: false,
-      deposit: false,
-      charge: false,
-      extraCharge: false,
-      payment: false,
-      extraPayment: false,
-    },
-    notFound: {
-      deposit: true,
-      charge: true,
-      extraCharge: true,
-      payment: true,
-      extraPayment: true,
-    },
-    add: {
-      deposit: false,
-      charge: false,
-      extraCharge: false,
-      payment: false,
-      extraPayment: false,
-    },
-    edit: {
-      deposit: false,
-      charge: false,
-      extraCharge: false,
-      payment: false,
-      extraPayment: false,
-    },
-    view: {
-      deposit: false,
-      charge: false,
-      extraCharge: false,
-      payment: false,
-      extraPayment: false,
-      assignRoom: false,
-    }
-  };
+  showMenuRoomList = new DefaultMenu;
+  showTab = new DefaultTab; 
+  showCrud = new DefaultCrud;
+  showSelect = new DefaultSelect;
+  role: any;
   forRole: any;
   bookingNumber: any;
-  bookingData = {
-    bookingId: '',
-    guestId: '',
-    bookingStatusId: '',
-    businessSourceId: '',
-    bookingNumber: '',
-    arrivalDate: new Date(),
-    duration: 0,
-    departureDate: new Date(),
-    totalRoom: '',
-    bookingCreatedAt: '',
-    bookingCreatedBy: '',
-    bookingUpdatedAt: '',
-    bookingupdatedBy: '',
-    checkinAt: '',
-    checkinBy: '',
-    checkoutAt: '',
-    checkoutBy: '',
-    cancelAt: '',
-    cancelBy: '',
-    cancelReason: '',
-    countryId: '',
-    guestName: '',
-    address: '',
-    city: '',
-    email: '',
-    phoneNumber: '',
-    guestFileScan: '',
-    guestCreatedAt: '',
-    guestUpdateAt: '',
-    businessSourceName: '',
-    businessSourceDescription: '',
-    businessSourceCreatedAt: '',
-    businessSourceUpdateAt: '',
-    bookingStatusName: '',
-    countryName: '',
-  };
+  bookingData = new BookingData;
   roomListBooking: LocalDataSource;
-  
   settingsRoomListBooking = {
     actions: false,
     selectMode: 'multi',
@@ -157,99 +67,42 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       },
     },
   };
-  selectedRowsRoomList = {
-    bookingRoomId:'',
-    bookingId: '',
-    bookingRoomTypeId: '',
-    roomId: '',
-    bookingRoomStatusId: '',
-    roomTypeName: '',
-    baseAdult: '',
-    baseChild: '',
-    maxAdult: '',
-    maxChild: '',
-    baseRate: '',
-    increaseRate: '',
-    totalRoom: '',
-    roomDescription: '',
-    createdAt:'',
-    updatedAt: '',
-  };
-  filterSelectedRowsRoomList = {
-    bookingRoomId: '',
-  };
-  chargeTotal = {
-    totalCharge: '',
-    totalTax: '',
-    totalRate: '',
-    discount: '',
-  };
+  selectedRowsRoomList = new SelectedRowsRoomList;
+  filterSelectedRowsRoomList = new FilterSelectedRowsRoomList;
+  chargeTotal = new ChargeTotal;
   extraCharge: any;
-  room = {
-    bookingRoomId: '',
-    bookingId: '',
-    roomTypeId: '',
-    roomId: '',
-    bookingRoomStatusId: '',
-    roomTypeName: '',
-    baseAdult: '',
-    baseChild: '',
-    maxAdult: '',
-    maxChild: '',
-    baseRate: '',
-    increaseRate: '',
-    totalRoom: '',
-    roomDescription: '',
-    createdAt: '',
-    updateAt: '',
-    bookingRoomStatusName: '',
-  };
+  room = new Room;
   paymentList: any;
-  chargeList = {
-    bookingRoomId: '',
-    chargeCategory: '',
-    chargeCreatedAt: '',
-    chargecreatedBy: '',
-    chargeId: '',
-    chargeNote: '',
-    chargeRate: '',
-    
-  };
-  addingPayment = {
-    bookingId: '',
-    paymentTypeId: '',
-    totalPaid: '',
-    paymentNote: '',
-    createdBy: '',
-    paymentRemark: 'charge',
-  };
-  addingDeposit = {
-    bookingId: '',
-    paymentTypeId: '',
-    totalPaid: '',
-    paymentNote: '',
-    createdBy: '',
-    paymentRemark: 'add_deposit',
-  };
-  returnDeposit = {
-    bookingId: '',
-    paymentTypeId: '',
-    totalPaid: '',
-    paymentNote: '',
-    createdBy: '',
-    paymentRemark: 'return_deposit',
-  };
+  chargeList = new ChargeList;
+  addingPayment = new AddingPayment;
+  addingDeposit = new AddingDeposit;
+  returnDeposit = new ReturnDeposit;
   paymentType: any;
   userCityHub: any;
   bookingRoomId: any;
   roomTypeId: any;
-  assignRoom = {
-    bookingRoomId: '',
-    roomId: '',
-  };
   earlyCheckin = false;
   lateCheckout = false;
-  lateCheckoutRate = '';
+  lateCheckoutRate = ''
+  assignRoom: any;
+  roomA = {
+    roomId: '',
+  };
+  deposit = new Deposit;
+  payment = new Payment;
+  formAddStay = new FormAddStay;
+  formLessStay = new FormLessStay;
+  lessDateArray = new LessDateArray;
+  dataLessDate = [];
+  arraySelectRoom = {
+    floorId: '',
+    rateId : '',
+    iRoom: new Date(),
+    roomTypeId: '',
+    tariff: '',
+  };
+  moveRoomBooking: any;
+  roomListMoveRoom: any;
   constructor(
     public router: Router,
     private activeRoute: ActivatedRoute,
@@ -270,16 +123,56 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.showTab;
+    this.showCrud;
+    this.showSelect;
+    this.selectedRowsRoomList;
+    this.deposit;
+    this.payment;
     this.view();
     this.refreshView();
     this.getPaymentType();
     this.detailAccount();
     this.selectRoomList;
+    this.action();
+
+    console.log('[selectedRowsRoomList]', this.selectedRowsRoomList);
   }
 
   ngOnDestroy() {
     this.subs.next();
     this.subs.complete();
+  }
+
+  action() {
+    this.nbMenuService.onItemClick().pipe(
+      takeUntil(this.subs),
+      filter(({ tag }) => tag === 'menuRoomList'),
+      map(({item}) => item),
+    ).subscribe(item => {
+      if (item.title === 'Add Stay') {
+        this.showTab = new DetailAddStay;
+      }else if (item.title === 'Less Stay') {
+        this.showTab = new DetailLessStay;
+      }else if (item.title === 'Move Room') {
+        this.showTab = new DetailMoveRoom;
+        this.moveRoomStepOne();
+      }else if (item.title === 'Check In') {
+        this.checkIn();
+      }else if (item.title === 'Check Out') {
+        this.checkOut();
+      }else if (item.title === 'Go Detail Room') {
+        if(this.selectedRowsRoomList.bookingId === '') {
+          const title = 'Detail Romm';
+          const content = 'Please Select room in tab room list';
+          this.notifServ.showWarningTypeToast(title, content);
+        } else {
+          this.roomList();
+        }
+      }else if (item.title === 'Back') {
+        this.backToRoomList();
+      }
+    });
   }
 
   view() {
@@ -291,29 +184,27 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         id : res[0].privilege_id,
       };
 
-      // console.log(this.forRole);
-
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {
           return forResUserRole.module_name === 'booking_module';
         });
 
         if (filter[0].create_permision === 'allowed') {
-          this.show.role = true;
+          this.role = true;
         }else if (filter[0].create_permision === 'not allowed') {
-          this.show.role = false;
+          this.role = false;
         }if (filter[0].read_permision === 'allowed') {
-          this.show.role = true;
+          this.role = true;
         }else if (filter[0].read_permision === 'not allowed') {
-          this.show.role = false;
+          this.role = false;
         }if (filter[0].update_permision === 'allowed') {
-          this.show.role = true;
+          this.role = true;
         }else if (filter[0].update_permision === 'not allowed') {
-          this.show.role = false;
+          this.role = false;
         }if (filter[0].delete_permision === 'allowed') {
-          this.show.role = true;
+          this.role = true;
         }else if (filter[0].delete_permision === 'not allowed') {
-          this.show.role = false;
+          this.role = false;
         }
 
         this.activeRoute.params.subscribe(params => {
@@ -386,6 +277,27 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
               return data;
             });
 
+            
+            if(this.bookingData.bookingStatusName === "BOOKING") {
+  
+            }
+
+            if(this.bookingData.bookingStatusName === "RESERVED") {
+              
+            }
+
+            if(this.bookingData.bookingStatusName === "CHECK IN") {
+ 
+            }
+
+            if(this.bookingData.bookingStatusName === "CHECK OUT") {
+ 
+            }
+
+            this.formLessStay.arrivalDate = new Date(this.bookingData.arrivalDate);
+            this.formLessStay.departureDate =  new Date(this.bookingData.departureDate);
+            this.formLessStay.duration =  this.bookingData.duration;
+
             this.roomListBooking = new LocalDataSource (roomListBooking);
             console.log('[roomListBooking]', roomListBooking);
             console.log('[bookingData]', bookingData);
@@ -441,14 +353,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  selectRoomListTab(event) {
-    if( event.tabTitle === 'Room list') {
-      this.show.button.roomList = true;
-    } else {
-      this.show.button.roomList = false;
-    }
-  }
-
   selectRoomList (event) {
     this.selectedRowsRoomList = event.selected.map((y) =>{
       const data = {
@@ -482,6 +386,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         bookingId: resGetByBookingRoomId.room.booking_id,
         roomTypeId: resGetByBookingRoomId.room.room_type_id,
         roomId: resGetByBookingRoomId.room.room_id,
+        roomName: resGetByBookingRoomId.room.room_name,
         bookingRoomStatusId: resGetByBookingRoomId.room.booking_room_status_id,
         roomTypeName: resGetByBookingRoomId.room.room_type_name,
         baseAdult: resGetByBookingRoomId.room.base_adult,
@@ -499,9 +404,27 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
       const paymentList = resGetByBookingRoomId.payment_list.map((y) => {
         const data = {
-          example: 'tes',
+          bookingRoomId: y.booking_room_id,
+          paymentCategory: y.payment_category,
+          paymentCreatedAt: y.payment_created_at,
+          paymentCreatedBy: y.payment_created_by,
+          paymentDate: y.payment_date,
+          paymentId: y.payment_id,
+          paymentNote: y.payment_note,
+          paymentNumber: y.payment_number,
+          paymentRemark: y.payment_remark,
+          paymentStatus: y.payment_status,
+          paymentTypeDbStatus: y.payment_type_db_status,
+          paymentTypeId: y.payment_type_id,
+          paymentTypeName: y.payment_type_name,
+          paymentUpdatedAt: y.payment_updated_at,
+          paymentUpdatedBy: y.payment_updated_by,
+          totalAmount: y.total_amount,
+          totalPaid: y.total_paid,
+          totalRate: y.total_rate,
+          totalTax: y.total_tax,
         };
-        return y;
+        return data;
       });
 
       const chargeList = resGetByBookingRoomId.charge_list.map((y) => {
@@ -546,7 +469,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         const data = {
           example: 'tes',
         };
-        return data;
+        return y;
       });
 
       const chargeTotal = {
@@ -563,21 +486,44 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       this.paymentList = paymentList;
       this.chargeList = chargeList;
 
+      this.roomA.roomId = this.room.roomId;
+
+      console.log('this.roomA.roomId', this.roomA.roomId);
+
       if(this.bookingData.bookingStatusName === "BOOKING") {
-        this.show.button.assignRoom = false;
         this.addingPayment.totalPaid = this.chargeTotal.totalCharge ;
         console.log('[resGetByBookingRoomId - addingPayment]' ,this.addingPayment);
-      }else{
-        this.show.notFound.deposit = false;
-        this.show.notFound.payment = false;
-        this.show.button.assignRoom = true;
       }
 
+      const dataDeposit = this.paymentList.filter((y) => {
+        return y.paymentRemark === 'deposit';
+      });
+
+      const dataPayment = this.paymentList.filter((y) => {
+        return y.paymentRemark === 'charge';
+      });
+
+      if(dataPayment.length > 0){
+        this.showCrud.notFound.payment = false;
+        this.showCrud.view.payment = true;
+      }else {
+        this.showCrud.notFound.payment = true;
+        this.showCrud.view.payment = false;
+      }
+
+      if(dataDeposit.length > 0){
+        this.showCrud.notFound.deposit = false;
+        this.showCrud.view.deposit = true;
+      }else {
+        this.showCrud.notFound.deposit = true;
+        this.showCrud.view.deposit = false;
+      }
+      
       this.roomTypeId = {
         id: this.room.roomTypeId,
       };
-      this.roomOperationServ.getByRoomTypeIdAndRoomStatus(this.roomTypeId).pipe(takeUntil(this.subs)).subscribe(resRoomOperation => {
-        this.floorServ.get().pipe(takeUntil(this.subs)).subscribe(resFloor => {
+      this.floorServ.get().pipe(takeUntil(this.subs)).subscribe(resFloor => {
+        this.roomOperationServ.getByRoomTypeIdAndRoomStatus(this.roomTypeId).pipe(takeUntil(this.subs)).subscribe(resRoomOperation => {
           this.roomTypeServ.get().pipe(takeUntil(this.subs)).subscribe(resRoomType => {
             this.roomStatusServ.get().pipe(takeUntil(this.subs)).subscribe(resRoomStatus => {
               const data = resRoomOperation.map((forResRoom) => {
@@ -621,22 +567,16 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       console.log('[chargeList]', chargeList);
       console.log('[room]', room);
       console.log('[paymentList]', paymentList);
+      console.log('[resGetByBookingRoomId]' ,resGetByBookingRoomId)
     });
   }
 
   roomList() {
+    this.showSelect = new DefaultRoomTypeId;
+    this.showMenuRoomList = new AfterSelectRoom;
+    this.showTab = new DetailRoomTab;
     console.log('[selectedRowsRoomList]', this.selectedRowsRoomList)
-    this.show.button.roomList = false;
-    this.show.button.room = true;
-    this.show.tab.generalInformation = false;
-    this.show.tab.roomList = false;
-    this.show.tab.roomInformation = true;
-    this.show.tab.payment = true;
-    this.show.tab.extraCharge = true;
-    this.show.tab.extraPayment = true;
-    this.show.tab.deposit = true;
-    this.show.select.roomTypeId = true;
-    this.show.tabActive.roomInformation = true;
+    
     this.filterSelectedRowsRoomList.bookingRoomId = this.selectedRowsRoomList[0].bookingRoomId;
     this.bookingRoomId = this.selectedRowsRoomList[0].bookingRoomId;
     this.roomTypeId = this.selectedRowsRoomList[0].bookingRoomTypeId;
@@ -657,69 +597,33 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
   }
 
   backToRoomList() {
-    this.show.button.roomList = true;
-    this.show.button.room = false;
-    this.show.tab.generalInformation = true;
-    this.show.tab.roomList = true;
-    this.show.tab.roomInformation = false;
-    this.show.tab.payment = false;
-    this.show.tab.extraCharge = false;
-    this.show.tab.extraPayment = false;
-    this.show.tab.deposit = false;
-    this.show.select.roomTypeId = false;
-    this.show.tabActive.roomInformation = false;
-    this.show.tabActive.generalInformation = true;
+    this.showTab = new DefaultTab;
+    this.showMenuRoomList = new DefaultMenu;
   }
 
   toCharge() {
-    this.show.add.charge = true;
-    this.show.add.deposit = false;
-    this.show.add.extraCharge = false;
-    this.show.add.extraPayment = false;
-    this.show.add.payment = false;
-
-    this.show.notFound.charge = false;
+    this.showCrud.notFound.charge = false;
+    this.showCrud.add.charge = true;
   }
 
   toDeposit() {
-    this.show.add.charge = false;
-    this.show.add.deposit = true;
-    this.show.add.extraCharge = false;
-    this.show.add.extraPayment = false;
-    this.show.add.payment = false;
-
-    this.show.notFound.deposit = false;
+    this.showCrud.notFound.deposit = false;
+    this.showCrud.add.deposit = true;
   }
 
   toPayment() {
-    this.show.add.charge = false;
-    this.show.add.deposit = false;
-    this.show.add.extraCharge = false;
-    this.show.add.extraPayment = false;
-    this.show.add.payment = true;
-
-    this.show.notFound.payment = false;
-
+    this.showCrud.notFound.payment = false;
+    this.showCrud.add.payment = true;
   }
 
   toExtraPayment() {
-    this.show.add.charge = false;
-    this.show.add.deposit = false;
-    this.show.add.extraCharge = false;
-    this.show.add.extraPayment = true;
-    this.show.add.payment = false;
-
-    this.show.notFound.extraPayment = false;
+    this.showCrud.notFound.extraPayment = false;
+    this.showCrud.add.extraPayment = true;
   }
 
   toExtraCharge() {
-    this.show.add.charge = false;
-    this.show.add.deposit = false;
-    this.show.add.extraCharge = true;
-    this.show.add.extraPayment = false;
-    this.show.add.payment = false;
-
-    this.show.notFound.extraCharge = false;
+    this.showCrud.notFound.extraCharge = false;
+    this.showCrud.add.extraCharge = true;
   }
 
   addPayment() {
@@ -739,18 +643,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       const content = 'Data has been save';
       this.notifServ.showSuccessTypeToast(title, content);
 
-      this.show.button.roomList = true;
-      this.show.button.room = false;
-      this.show.tab.generalInformation = true;
-      this.show.tab.roomList = true;
-      this.show.tab.roomInformation = false;
-      this.show.tab.payment = false;
-      this.show.tab.extraCharge = false;
-      this.show.tab.extraPayment = false;
-      this.show.tab.deposit = false;
-      this.show.select.roomTypeId = false;
-      this.show.tabActive.roomInformation = false;
-      this.show.tabActive.generalInformation = true;
+      this.showCrud.add.payment = false;
+      this.showCrud.view.payment = true;
     }, err => {
       const title = 'Add Payment';
       const content = 'Data has been not save';
@@ -775,18 +669,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       const content = 'Data has been save';
       this.notifServ.showSuccessTypeToast(title, content);
 
-      this.show.button.roomList = true;
-      this.show.button.room = false;
-      this.show.tab.generalInformation = true;
-      this.show.tab.roomList = true;
-      this.show.tab.roomInformation = false;
-      this.show.tab.payment = false;
-      this.show.tab.extraCharge = false;
-      this.show.tab.extraPayment = false;
-      this.show.tab.deposit = false;
-      this.show.select.roomTypeId = false;
-      this.show.tabActive.roomInformation = false;
-      this.show.tabActive.generalInformation = true;
+      this.showCrud.add.deposit = false;
+      this.showCrud.view.deposit = true;
     }, err => {
       const title = 'Add Deposit';
       const content = 'Data has been not save';
@@ -795,7 +679,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
   }
 
   toAssignRoom() {
-    this.show.view.assignRoom = true;
+   
   }
 
   addRoom(event) {
@@ -851,9 +735,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       this.lateCheckoutRate = '50';
     }
 
-    if (timeString >= "3.01 AM") {
-      this.router.navigate(['pages/add-stay']);
-    }
+    // if (timeString >= "3.01 AM") {
+    //   this.router.navigate(['pages/add-stay']);
+    // }
 
 
     const data = {
@@ -871,6 +755,157 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       const content = 'Checkout successfully';
       this.notifServ.showSuccessTypeToast(title, content);
       console.log('[resCheckIn]', resCheckIn);
+
+      this.showTab = new DefaultTab;
     })
+  }
+
+  addStay() {
+    const data = {
+      bookingId: this.bookingData.bookingId,
+      duration: this.formAddStay.duration,
+      updatedBy: this.userCityHub.name,
+    };
+
+    console.log('[data add stay]', data);
+
+    this.bookingServ.addStay(data)
+    .pipe(takeUntil(this.subs))
+    .subscribe(resAddStay => {
+      const title = 'Add stay';
+      const content = 'Add stay successfully';
+      this.notifServ.showSuccessTypeToast(title, content);
+      console.log('[resAddStay]', resAddStay);
+
+      this.showTab = new DefaultTab;
+    })
+  }
+
+  cancelAction() {
+    this.showTab = new DefaultTab;
+  }
+
+  lessStay() {
+    const data = {
+      
+    };
+
+    this.dataLessDate.map((y) => {
+      const data = {
+        forDate: this.datepipe.transform(y.lessDate, 'longDate'),
+        bookingId: y.bookingId,
+      };
+
+      this.bookingServ.lessStay(data)
+      .pipe(takeUntil(this.subs))
+      .subscribe(resAddStay => {
+        const title = 'Less stay';
+        const content = 'Less stay successfully';
+        this.notifServ.showSuccessTypeToast(title, content);
+
+        this.showTab = new DefaultTab;
+      })
+    })
+  }
+
+  durationLessStay(event) {
+    console.log('[arrayDuration]', event);
+    const departureDate =  new Date().setDate(new Date(this.bookingData.arrivalDate).getDate()+this.formLessStay.duration) ;
+    this.formLessStay.departureDate = new Date(departureDate);
+    const lessDate = new Date().setDate(new Date(this.formLessStay.departureDate).getDate()+1)
+    const dataLessDate = new Date(lessDate);
+    console.log('this.formLessStay.departureDate', this.datepipe.transform(this.formLessStay.departureDate, 'longDate'));
+    this.lessDateArray = {
+      bookingId : this.bookingData.bookingId,
+      lessDate: new Date(dataLessDate),
+    }
+    this.dataLessDate.push(this.lessDateArray);
+    console.log('[dataA]', this.dataLessDate);
+  }
+
+  moveRoomStepOne() {
+    const dataPrepare = {
+      bookingId: this.bookingData.bookingId,
+      arrivalDate: new Date(this.bookingData.arrivalDate),
+      departureDate: new Date(this.bookingData.departureDate),
+      duration: this.bookingData.departureDate,
+    };
+
+    this.bookingServ.moveRoomStepOne(dataPrepare)
+    .pipe(takeUntil(this.subs))
+    .subscribe(resMoveRoomStepOne => {
+      this.moveRoomBooking = {
+        bookingId: resMoveRoomStepOne.booking_id,
+        bookingNumber: resMoveRoomStepOne.booking_number,
+        departureDate: resMoveRoomStepOne.departure_date,
+        arrivalDate: resMoveRoomStepOne.arrival_date,
+        duration: resMoveRoomStepOne.duration,
+        room: resMoveRoomStepOne.room,
+      };
+      this.roomListMoveRoom = this.moveRoomBooking.room.map((y) => {
+        const datax = {
+          available: y.available,
+          roomTypeId: y.room_type_id,
+          roomTypeName: y.room_type_name,
+          check: false,
+        }
+        return datax;
+      });
+
+      console.log('[resMoveRoomStepOne]', resMoveRoomStepOne);
+      console.log('[this.moveRoomBooking]', this.moveRoomBooking);
+      console.log('[this.roomListMoveRoom]', this.roomListMoveRoom);
+    });
+  }
+
+  checkRoomListMoveRoomBooking(event) {
+    const data = this.roomListMoveRoom.map((y) => {
+      const yui = {
+        available: y.available,
+        roomTypeId: y.roomTypeId,
+        roomTypeName: y.roomTypeName,
+        check: event.checked,
+      }
+      return yui;
+    });
+
+    console.log('[checkRoomListMoveRoomBooking]', event);
+  }
+
+  moveRoomStepTwo() {
+    const filterRoomListBooking = this.roomListMoveRoom.filter((y)=> {
+      return y.check === true;
+    });
+
+    const roomTypeId = filterRoomListBooking.map((x) => {
+      return JSON.stringify(x.roomTypeId);
+    });
+
+    const numberOfRoom = filterRoomListBooking.map((x) => {
+      return x.available;
+    });
+
+    const dataStepTwo = {
+      roomTypeId,
+      numberOfRoom,
+      remark: 'move_room',
+      updatedBy: this.userCityHub.name,
+    };
+
+    const moveRoomBooking = {
+      id: this.moveRoomBooking.bookingId,
+    };
+
+    console.log('[moveRoomStepTwo]', dataStepTwo, moveRoomBooking);
+
+    this.bookingServ.moveRoomStepTwo(moveRoomBooking, dataStepTwo)
+    .pipe(takeUntil(this.subs))
+    .subscribe(resMoveRoomStepOne => {
+      const title = 'Move room';
+      const content = 'Move room successfully';
+      this.notifServ.showSuccessTypeToast(title, content);
+
+      this.showTab = new DefaultTab;
+    });
   }
 }

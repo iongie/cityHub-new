@@ -210,6 +210,7 @@
             type="number"
             fullWidth
             [max]="roomListBooking.available"
+            min ="1"
             [disabled]="show === false"
             [(ngModel)]="roomListBooking.available"
             id="available{{i}}"

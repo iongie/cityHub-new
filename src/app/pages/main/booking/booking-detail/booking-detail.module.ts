@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ThemeModule } from '../../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbMomentDateModule } from '@nebular/moment';
+import { NbDateFnsDateModule  } from '@nebular/date-fns';
 import { NbCheckboxModule, NbDialogModule } from '@nebular/theme';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { UnderConstractionModule } from '../../under-constraction/under-constraction.module';
