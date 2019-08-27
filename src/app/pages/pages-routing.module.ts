@@ -174,8 +174,12 @@ const routes: Routes = [{
       }, ],
     },
     {
+      path: 'add-booking',
+      loadChildren: './main/booking-rev3/booking-add/booking-add.module#BookingAddModule',
+    },
+    {
       path: 'booking',
-      loadChildren: './main/booking/booking.module#BookingModule',
+      loadChildren: './main/booking-rev3/booking-list/booking-list.module#BookingListModule',
     },
     {
       path: 'booking-detail',
