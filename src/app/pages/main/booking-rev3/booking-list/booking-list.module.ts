@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ThemeModule } from '../../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { UnderConstractionModule } from '../../under-constraction/under-constraction.module';
+import { LinkDetailModule } from './link-detail/link-detail.module';
 const routes: Routes = [
   {
     path: '',
@@ -20,6 +21,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ThemeModule,
     Ng2SmartTableModule,
+    LinkDetailModule,
     // UnderConstractionModule,
   ]
 })

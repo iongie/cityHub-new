@@ -185,12 +185,12 @@ const routes: Routes = [{
       path: 'booking-detail',
       children: [{
         path: ':id',
-        loadChildren: './main/booking/booking-detail/booking-detail.module#BookingDetailModule',
+        loadChildren: './main/booking-rev3/booking-detail/booking-detail.module#BookingDetailModule',
       }, ],
     },
     {
       path: 'booking-management',
-      loadChildren: './main/booking/booking-list/booking-list.module#BookingListModule',
+      loadChildren: './main/booking-rev3/booking-list/booking-list.module#BookingListModule',
     },
     {
       path: 'guest',

@@ -55,8 +55,8 @@ export class BookingService implements OnDestroy {
     );
   }
 
-  getBookingInformation(booking: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/booking/information/'+booking.id, httpOptions).pipe(
+  getBookingInformation(booking: any): Observable<any> {
+    return this.http.get<any>(this.url + '/booking/information/'+booking.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }

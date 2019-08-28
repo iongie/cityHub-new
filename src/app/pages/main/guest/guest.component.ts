@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { Subject } from 'rxjs';
+import { Subject, combineLatest } from 'rxjs';
 import { NotificationService } from '../../../services/notification/notification.service';
 import { takeUntil } from 'rxjs/operators';
 import { UserRoleService } from '../../../services/user-role/user-role.service';
@@ -37,7 +37,7 @@ export class GuestComponent implements OnInit {
         title: 'City',
         type: 'string',
       },
-      countryId: {
+      countryName: {
         title: 'Country',
         type: 'string',
       },
@@ -128,29 +128,42 @@ export class GuestComponent implements OnInit {
           this.show = false;
         }
 
-        this.guestServ.get().pipe(takeUntil(this.subs)).subscribe(resGuest => {
-          const data = resGuest.map((forResGuest) => {
-            const dataForResGuest = {
-              guestId: forResGuest.guest_id,
-              guestName : forResGuest.guest_name,
-              address : forResGuest.address,
-              city : forResGuest.city,
-              countryId : forResGuest.country_id,
-              email : forResGuest.email,
-              phoneNumber : forResGuest.phone_number,
-              guestFileScan : forResGuest.guest_file_scan,
+        combineLatest(
+          this.guestServ.get(),
+          this.countryServ.get(),
+        )
+        .pipe(takeUntil(this.subs))
+        .subscribe(res => {
+          const guest = res[0];
+          const country = res[1];
+
+          const data = guest.map(x => {
+            const filterGuest = country.filter(y => {
+              return x.country_id === y.country_id;
+            });
+            
+            const data = {
+              guestId: x.guest_id,
+              guestName : x.guest_name,
+              address : x.address,
+              city : x.city,
+              countryId : x.country_id,
+              countryName: filterGuest[0].country_name,
+              email : x.email,
+              phoneNumber : x.phone_number,
+              guestFileScan : x.guest_file_scan,
               detail: {
-                guestId: forResGuest.guest_id,
+                guestId: x.guest_id,
                 guestRoleCreate: filter[0].create_permision,
                 guestRoleRead: filter[0].read_permision,
                 guestRoleUpdate: filter[0].update_permision,
                 guestRoleDelete: filter[0].delete_permision,
               },
             };
-            return dataForResGuest;
+            return data;
           });
-          console.log('dataGuest', data);
-          this.guest = new LocalDataSource (data);
+
+          this.guest = new LocalDataSource(data);
         });
       });
     });

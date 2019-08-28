@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BookingService } from '../../../../services/booking-rev3/booking.service';
 import { BusinessSourceService } from '../../../../services/business-source/business-source.service';
 import { GuestService } from '../../../../services/guest/guest.service';
 import { NotificationService } from '../../../../services/notification/notification.service';
@@ -13,6 +12,8 @@ import { Router } from '@angular/router';
 import { Subject, combineLatest, zip } from 'rxjs';
 import { LocalDataSource } from 'ng2-smart-table';
 import { takeUntil } from 'rxjs/operators';
+import { LinkDetailComponent } from './link-detail/link-detail.component';
+import { BookingService } from '../../../../services/booking-rev3/booking.service';
 
 @Component({
   selector: 'ngx-booking-list',
@@ -27,6 +28,33 @@ export class BookingListComponent implements OnInit, OnDestroy {
   forRole: any;
   show: any;
   userCityHub: any;
+  settings = {
+    actions: false,
+    columns: {
+      bookingNumber: {
+        title: 'Booking number',
+        type: 'string',
+      },
+      guestName: {
+        title: 'Guest name',
+        type: 'string',
+      },
+      businessSourceName: {
+        title: 'Business Source name',
+        type: 'string',
+      },
+      bookingStatusName: {
+        title: 'Status',
+        type: 'string',
+      },
+      detail: {
+        title: 'Actions',
+        type: 'custom',
+        renderComponent: LinkDetailComponent,
+        filter: false,
+      },
+    },
+  };
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
@@ -91,19 +119,26 @@ export class BookingListComponent implements OnInit, OnDestroy {
         combineLatest(
           this.bookingServ.get(menu),
           this.businessSourceServ.get(),
+          this.guestServ.get(),
         )
         .pipe(takeUntil(this.subs))
         .subscribe( resBooking => {
             const dataBookingList = resBooking[0];
             const dataBusinessSource = resBooking[1];
+            const dataGuest = resBooking[2];
 
             const data = dataBookingList.map(y => {
               const filterDataBusinnesSource = dataBusinessSource.filter(x => {
                 return x.business_source_id === y.business_source_id;
               });
+
+              const filterDataGuest = dataGuest.filter(x  => {
+                return x.guest_id === y.guest_id;
+              });
               const data = {
                 bookingId: y.booking_id,
                 guestId: y.guest_id,
+                guestName: filterDataGuest[0].guest_name,
                 businessSourceId: y.businees_source_id,
                 businessSourceName : filterDataBusinnesSource[0].business_source_name,
                 bookingNumber: y.booking_number,
@@ -115,10 +150,15 @@ export class BookingListComponent implements OnInit, OnDestroy {
                 cancelBy: y.cancel_by,
                 cancelReason: y.cancel_reason,
                 bookingStatusName: y.booking_status_name,
+                detail: {
+                  id: y.booking_id,
+                  number: y.booking_number
+                },
               };
               return data;
             });
-          console.log('[resBooking]',data);
+            this.booking = new LocalDataSource(data);
+          console.log('[resBooking]',resBooking);
         }, err => {
 
         });
