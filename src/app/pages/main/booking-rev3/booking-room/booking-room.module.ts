@@ -1,17 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BookingDetailComponent } from './booking-detail.component';
+import { BookingRoomComponent } from './booking-room.component';
+import { UnderConstractionModule } from '../../under-constraction/under-constraction.module';
+import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
 import { ThemeModule } from '../../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbMomentDateModule } from '@nebular/moment';
 import { NbCheckboxModule } from '@nebular/theme';
-import { UnderConstractionModule } from '../../under-constraction/under-constraction.module';
-import { BookingInformationComponent } from './booking-information/booking-information.component';
-import { RoomInformationComponent } from './room-information/room-information.component';
-import { ChargeInformationComponent } from './charge-information/charge-information.component';
-import { LinkDetailModule } from './room-information/link-detail/link-detail.module';
 export const customCurrencyMaskConfig = {
   align: 'right',
   allowNegative: true,
@@ -26,11 +22,11 @@ export const customCurrencyMaskConfig = {
 const routes: Routes = [
   {
     path: '',
-    component: BookingDetailComponent,
+    component: BookingRoomComponent,
   },
 ];
 @NgModule({
-  declarations: [BookingDetailComponent, BookingInformationComponent, RoomInformationComponent, ChargeInformationComponent],
+  declarations: [BookingRoomComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -40,7 +36,7 @@ const routes: Routes = [
     NbMomentDateModule,
     NbCheckboxModule,
     // UnderConstractionModule,
-    LinkDetailModule,
+    // LinkDetailModule,
   ],
 })
-export class BookingDetailModule { }
+export class BookingRoomModule { }

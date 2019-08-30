@@ -1,3 +1,39 @@
-<p>
-  booking-detail works!
-</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">
+        Booking Number : {{detailBookingByBookingId.bookingInformation.bookingNumber}} 
+      </div>
+      <div class="col-auto mr-auto">
+        Booking Status : {{detailBookingByBookingId.bookingInformation.bookingStatusName}}
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <nb-tabset>
+      <nb-tab tabTitle="Booking Infomation">
+        <nb-card>
+          <nb-card-body>
+            <ngx-booking-information [value]="detailBookingByBookingId"></ngx-booking-information>
+          </nb-card-body>
+        </nb-card>
+      </nb-tab>
+      <nb-tab tabTitle="Room Information">
+        <nb-card>
+          <nb-card-body>
+            <ngx-room-information [value]="detailBookingByBookingId">
+            </ngx-room-information>
+          </nb-card-body>
+        </nb-card>
+      </nb-tab>
+      <nb-tab tabTitle="Charge Information">
+        <nb-card>
+          <nb-card-body>
+            <ngx-charge-information [value]="detailBookingByBookingId"></ngx-charge-information>
+          </nb-card-body>
+        </nb-card> 
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>

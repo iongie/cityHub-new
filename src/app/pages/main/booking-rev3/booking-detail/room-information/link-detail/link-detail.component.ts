@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { NbMenuService } from '@nebular/theme';
-import { takeUntil, filter, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { BookingService } from '../../../../../services/booking-rev3/booking.service';
-import { NotificationService } from '../../../../../services/notification/notification.service';
+import { NotificationService } from '../../../../../../services/notification/notification.service';
+import { BookingService } from '../../../../../../services/booking-rev3/booking.service';
+import { takeUntil, filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-link-detail',
@@ -12,20 +12,21 @@ import { NotificationService } from '../../../../../services/notification/notifi
   styleUrls: ['./link-detail.component.scss'],
 })
 export class LinkDetailComponent implements OnInit, OnDestroy {
-  renderValue: any;
+  renderId: any;
+  renderNumber: any;
 
   @Input() value: any;
   @Input() rowData: any;
   private subs: Subject<void> = new Subject();
   items = [
-    { title: 'Detail',
+    { title: 'Detail Room',
       icon: 'fa fa-search-plus',
       data: {
         id: '',
         number: '',
       },
     },
-    { title: 'Cancel Booking',
+    { title: 'Cancel Room',
       icon: 'fa fa-times',
     },
   ];
@@ -38,10 +39,11 @@ export class LinkDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.renderValue  = this.value.id;
-    this.action();
+    this.renderId  = this.value.id;
+    this.renderNumber  = this.value.number;
+    console.log('[value]', this.value);
     this.viewOption();
-    console.log('[renderValue]', this.value.tess.array[0].id);
+    this.action();
   }
 
   ngOnDestroy() {
@@ -68,32 +70,17 @@ export class LinkDetailComponent implements OnInit, OnDestroy {
     this.nbMenuService.onItemClick()
     .pipe(
       takeUntil(this.subs),
-      filter(({ tag }) => tag === 'booking'),
+      filter(({ tag }) => tag === 'booking-room'),
       map(({item}) => item),
     )
     .subscribe(item => {
-      if (item.title === 'Detail') {
-        this.router.navigate(['pages/booking-detail/' + this.renderValue]);
+      if (item.title === 'Detail Room') {
+        console.log('[this.data.number]', this.data.number);
+        this.router.navigate(['pages/booking-detail/' + this.renderNumber + '/' + this.renderId]);
       }
 
-      if (item.title === 'Cancel Booking') {
-        const booking = {
-          id: this.renderValue,
-        };
-        const data = {
-          bookingId: this.renderValue,
-          cancelBy: '',
-          cancelReason: 'Cancel Booking',
-        };
-        this.bookingServ.cancelBookingByBookingId(booking, data)
-        .pipe(takeUntil(this.subs))
-        .subscribe(() => {
-          const title = 'Cancel booking number:' + this.renderValue;
-          const content = 'Successfully';
-          setTimeout(() => {
-            this.notifServ.showSuccessTypeToast(title, content);
-          });
-        });
+      if (item.title === 'Cancel Room') {
+
       }
     });
   }

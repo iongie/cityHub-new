@@ -43,7 +43,7 @@ const routes: Routes = [{
       children: [{
         path: ':id',
         loadChildren: './main/extra-charge-category/conf/detail/detail.module#DetailModule',
-      }, ],
+      } ],
     },
     {
       path: 'extra-charge',
@@ -58,7 +58,7 @@ const routes: Routes = [{
       children: [{
         path: ':id',
         loadChildren: './main/extra-charge/conf/detail/detail.module#DetailModule',
-      }, ],
+      } ],
     },
     {
       path: 'floor',
@@ -73,7 +73,7 @@ const routes: Routes = [{
       children: [{
         path: ':id',
         loadChildren: './main/floor/conf/detail/detail.module#DetailModule',
-      }, ],
+      } ],
     },
     {
       path: 'room-operation',
@@ -88,7 +88,7 @@ const routes: Routes = [{
       children: [{
         path: ':id',
         loadChildren: './main/room-operation/conf/detail/detail.module#DetailModule',
-      }, ],
+      }],
     },
     {
       path: 'room-tariff',
@@ -111,7 +111,7 @@ const routes: Routes = [{
       children: [{
         path: ':id',
         loadChildren: './main/room-type/conf/detail/detail.module#DetailModule',
-      }, ],
+      } ],
     },
     {
       path: 'season',
@@ -126,7 +126,7 @@ const routes: Routes = [{
       children: [{
         path: ':id',
         loadChildren: './main/season/conf/detail/detail.module#DetailModule',
-      }, ],
+      } ],
     },
     {
       path: 'season-type',
@@ -141,7 +141,7 @@ const routes: Routes = [{
       children: [{
         path: ':id',
         loadChildren: './main/season-type/conf/detail/detail.module#DetailModule',
-      }, ],
+      } ],
     },
     {
       path: 'tax',
@@ -156,7 +156,7 @@ const routes: Routes = [{
       children: [{
         path: ':id',
         loadChildren: './main/tax/conf/detail/detail.module#DetailModule',
-      }, ],
+      } ],
     },
     {
       path: 'payment-type',
@@ -171,7 +171,7 @@ const routes: Routes = [{
       children: [{
         path: ':id',
         loadChildren: './main/payment-type/conf/detail/detail.module#DetailModule',
-      }, ],
+      } ],
     },
     {
       path: 'add-booking',
@@ -183,10 +183,21 @@ const routes: Routes = [{
     },
     {
       path: 'booking-detail',
-      children: [{
-        path: ':id',
-        loadChildren: './main/booking-rev3/booking-detail/booking-detail.module#BookingDetailModule',
-      }, ],
+      children: [
+        {
+          path: ':id',
+          loadChildren: './main/booking-rev3/booking-detail/booking-detail.module#BookingDetailModule',
+        },
+        {
+          path: ':number',
+          children: [
+            {
+              path: ':id',
+              loadChildren: './main/booking-rev3/booking-room/booking-room.module#BookingRoomModule',
+            },
+          ],
+        },
+      ],
     },
     {
       path: 'booking-management',
@@ -205,7 +216,7 @@ const routes: Routes = [{
       children: [{
         path: ':id',
         loadChildren: './main/guest/conf/detail/detail.module#DetailModule',
-      }, ],
+      } ],
     },
     {
       path: 'miscellaneous-sales',
@@ -224,7 +235,7 @@ const routes: Routes = [{
       children: [{
         path: ':id',
         loadChildren: './main/user/conf/detail/detail.module#DetailModule',
-      }, ],
+      } ],
     },
     {
       path: 'user-role',
@@ -246,7 +257,7 @@ const routes: Routes = [{
     {
       path: '**',
       component: NotFoundComponent,
-    }
+    },
   ],
 }];
 

@@ -9,6 +9,15 @@ export class AddBooking {
     numberOfRoom = [];
 }
 
+export class RoomInformation {
+    roomInfo = [{
+        roomTypeId: 0,
+        roomTypeName: '',
+        available: 0,
+        check: false,
+    } ];
+}
+
 export class ListBooking {
     bookingId = 0;
     guestId = 0;
@@ -53,7 +62,7 @@ export class DetailBookingByBookingId {
         businessSourceCreatedAt: '',
         businessSourceUpdatedAt: '',
     };
-    roomInformation = {
+    roomInformation = [{
         bookingRoomId: 0,
         bookingId: 0,
         roomTypeId: 0,
@@ -79,7 +88,7 @@ export class DetailBookingByBookingId {
         createdBy: '',
         updatedAt: '',
         updatedBy: '',
-    };
+    }];
     chargeTotal = {
         discountTotal: 0,
         rateTotal: 0,
@@ -103,10 +112,10 @@ export class DetailBookingByBookingRoomId {
         checkOutBy: '',
         cancelAt: '',
         cancelBy: '',
-        baseAdult: '',
-        baseChild: '',
-        maxAdult: '',
-        maxChild: '',
+        baseAdult: 0,
+        baseChild: 0,
+        maxAdult: 0,
+        maxChild: 0,
         baseRate: 0,
         increaseRate: 0,
         totalRoom: 0,

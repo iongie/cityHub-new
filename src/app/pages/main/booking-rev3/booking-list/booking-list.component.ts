@@ -18,7 +18,7 @@ import { BookingService } from '../../../../services/booking-rev3/booking.servic
 @Component({
   selector: 'ngx-booking-list',
   templateUrl: './booking-list.component.html',
-  styleUrls: ['./booking-list.component.scss']
+  styleUrls: ['./booking-list.component.scss'],
 })
 export class BookingListComponent implements OnInit, OnDestroy {
   booking: LocalDataSource;
@@ -80,10 +80,10 @@ export class BookingListComponent implements OnInit, OnDestroy {
   }
 
   getBooking() {
-    const data = {
+    const datae = {
       token: localStorage.getItem('p_l1oxt'),
     };
-    this.authServ.detailAfterLogin(data).pipe(takeUntil(this.subs)).subscribe(res => {
+    this.authServ.detailAfterLogin(datae).pipe(takeUntil(this.subs)).subscribe(res => {
       this.forRole = {
         id : res[0].privilege_id,
       };
@@ -114,7 +114,7 @@ export class BookingListComponent implements OnInit, OnDestroy {
         }
 
         const menu = {
-          name: 'all'
+          name: 'all',
         };
         combineLatest(
           this.bookingServ.get(menu),
@@ -135,7 +135,7 @@ export class BookingListComponent implements OnInit, OnDestroy {
               const filterDataGuest = dataGuest.filter(x  => {
                 return x.guest_id === y.guest_id;
               });
-              const data = {
+              const datax = {
                 bookingId: y.booking_id,
                 guestId: y.guest_id,
                 guestName: filterDataGuest[0].guest_name,
@@ -152,13 +152,22 @@ export class BookingListComponent implements OnInit, OnDestroy {
                 bookingStatusName: y.booking_status_name,
                 detail: {
                   id: y.booking_id,
-                  number: y.booking_number
+                  number: y.booking_number,
+                  tess: {
+                    tes: y.booking_id,
+                    array: [
+                      {
+                        id: y.booking_id,
+                        number: y.booking_number,
+                      },
+                    ]
+                  },
                 },
               };
-              return data;
+              return datax;
             });
             this.booking = new LocalDataSource(data);
-          console.log('[resBooking]',resBooking);
+          console.log('[resBooking]', resBooking);
         }, err => {
 
         });
@@ -167,10 +176,10 @@ export class BookingListComponent implements OnInit, OnDestroy {
   }
 
   detailAccount() {
-    const data = {
+    const dataZ = {
       token: localStorage.getItem('p_l1oxt'),
     };
-    this.authServ.detailAfterLogin(data).pipe(takeUntil(this.subs)).subscribe(res => {
+    this.authServ.detailAfterLogin(dataZ).pipe(takeUntil(this.subs)).subscribe(res => {
       this.userCityHub = {
         name : res[0].full_name,
       };
