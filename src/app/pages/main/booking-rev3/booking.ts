@@ -5,6 +5,7 @@ export class AddBooking {
     guestId = 0;
     sourceId = 0;
     createdBy = '';
+    roomInformation = false;
     roomTypeId = [];
     numberOfRoom = [];
 }
@@ -16,6 +17,20 @@ export class RoomInformation {
         available: 0,
         check: false,
     } ];
+}
+
+export class Guest {
+    guestId = 0;
+    guestName = '';
+    countryId = 0;
+    address = '';
+    city = '';
+    guestFileScan = '';
+}
+
+export class Source {
+    businnessSourceId = 0;
+    businnessSourceName = '';
 }
 
 export class ListBooking {
@@ -124,8 +139,9 @@ export class DetailBookingByBookingRoomId {
         createdBy: '',
         updatedAt: '',
         updatedBy: '',
+        bookingRoomStatusName: '',
     };
-    charge = {
+    charge = [{
         chargeId: 0,
         taxId: 0,
         seasonId: 0,
@@ -164,17 +180,61 @@ export class DetailBookingByBookingRoomId {
         reservationUpdatedAt: '',
         seasonTypeName: '',
         seasonTypeDescription: '',
-    };
+    }];
     chargeTotal = {
         discountTotal: 0,
         rateTotal: 0,
         taxTotal: 0,
         total: 0,
     };
-    payment = {
+    payment = [{
+        paymentId: 0,
+        bookingRoomId: 0,
+        paymentTypeId: 0,
+        paymentNumber: '',
+        billingNumber: '',
+        paymentDate: new Date(),
+        rateTotal: 0,
+        taxTotal: 0,
+        paidTotal: 0,
+        paymentNote: '',
+        paymentRemark: '',
+        paymentStatus: '',
+        paymentCategory: '',
+        paymentCreatedAt: new Date(),
+        paymentUpdatedAt: new Date(),
+        paymentCreatedBy: '',
+        paymentUpdatedBy: '',
+        paymentTypeName: '',
+        paymentTypeDbStatus: '',
+    }];
+    extraCharge = [{
 
-    };
-    extraCharge = {
+    }];
+}
 
-    };
+export class AddPayment {
+    bookingRoomId = 0;
+    paymentTypeId = 0;
+    totalPaid = 0;
+    paymentNote = '';
+    createdBy = '';
+    paymentRemark = '';
+}
+
+export class Room {
+    createdAt = new Date();
+    createdBy = '';
+    floorId = 0;
+    roomDbStatus = '';
+    roomId = 0;
+    roomName = '';
+    roomStatusId = 0;
+    roomTypeId = 0;
+    updatedAt = new Date();
+    updatedBy = '';
+}
+
+export class AssignRoom{
+    roomId = 0;
 }

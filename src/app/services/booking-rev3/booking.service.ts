@@ -7,7 +7,7 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BookingService implements OnDestroy {
   private url = environment.baseUrl;
@@ -24,14 +24,14 @@ export class BookingService implements OnDestroy {
 
   // --------------------------for Handle Error----------------
   handleError(error: Error | HttpErrorResponse) {
-    if(!navigator.onLine){
-        console.error('Browser Offline')
+    if (!navigator.onLine) {
+        console.error('Browser Offline');
     }  else {
        if (error instanceof HttpErrorResponse) {
-         if(!navigator.onLine) {
-           console.error('Browser Offline')
+         if (!navigator.onLine) {
+           console.error('Browser Offline');
          } else {
-           if(error.status === 500){
+           if (error.status === 500) {
              console.error('error 500');
            }
            console.error('Http Error');
@@ -41,7 +41,7 @@ export class BookingService implements OnDestroy {
        }
        console.error(error);
     }
-    return throwError(error); 
+    return throwError(error);
   }
 
   get refresh() {
@@ -50,31 +50,31 @@ export class BookingService implements OnDestroy {
 
   // all, booked, reserved, on going, done, cancel
   get(menuBookingList: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/booking/show/'+menuBookingList.name, httpOptions).pipe(
+    return this.http.get<any[]>(this.url + '/booking/show/' + menuBookingList.name, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
 
   getBookingInformation(booking: any): Observable<any> {
-    return this.http.get<any>(this.url + '/booking/information/'+booking.id, httpOptions).pipe(
+    return this.http.get<any>(this.url + '/booking/information/' + booking.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
 
-  getBookingIRoomInformation(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/booking/room/'+bookingRoom.id, httpOptions).pipe(
+  getBookingIRoomInformation(bookingRoom: any): Observable<any> {
+    return this.http.get<any[]>(this.url + '/booking/room/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
 
   getCharge(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/charge/'+bookingRoom.id, httpOptions).pipe(
+    return this.http.get<any[]>(this.url + '/charge/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
 
   getChargeTotal(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/charge/total'+bookingRoom.id, httpOptions).pipe(
+    return this.http.get<any[]>(this.url + '/charge/total' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
@@ -102,7 +102,7 @@ export class BookingService implements OnDestroy {
 
 
   cancelBookingByBookingId(booking: any, data: any): Observable<any> {
-    return this.http.post<any>(this.url + '/booking/cancel/'+booking.id, data, httpOptions).pipe(
+    return this.http.post<any>(this.url + '/booking/cancel/' + booking.id, data, httpOptions).pipe(
       catchError(this.handleError),
       tap(() => {
         this._refresh.next();
@@ -111,7 +111,7 @@ export class BookingService implements OnDestroy {
   }
 
   cancelBookingByBookingRoomId(bookingRoom: any, data: any): Observable<any> {
-    return this.http.post<any>(this.url + '/booking/room/cancel/'+bookingRoom.id, data, httpOptions).pipe(
+    return this.http.post<any>(this.url + '/booking/room/cancel/' + bookingRoom.id, data, httpOptions).pipe(
       catchError(this.handleError),
       tap(() => {
         this._refresh.next();
@@ -157,13 +157,13 @@ export class BookingService implements OnDestroy {
   }
 
   getExtraPaymentByBookingRoomId(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/extra-payment/'+bookingRoom.id, httpOptions).pipe(
+    return this.http.get<any[]>(this.url + '/extra-payment/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
 
   getExtraPaymentByExtraPaymentId(extraPayment: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/extra-payment/show/'+extraPayment.id, httpOptions).pipe(
+    return this.http.get<any[]>(this.url + '/extra-payment/show/' + extraPayment.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
@@ -178,7 +178,7 @@ export class BookingService implements OnDestroy {
   }
 
   disabledExtraPayment(payment: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/extra-payment/remove/'+payment.id, httpOptions).pipe(
+    return this.http.get<any[]>(this.url + '/extra-payment/remove/' + payment.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
@@ -204,13 +204,13 @@ export class BookingService implements OnDestroy {
     }
 
     getPaymentByBookingRoomId(bookingRoom: any): Observable<any[]> {
-      return this.http.get<any[]>(this.url + '/payment/'+bookingRoom.id, httpOptions).pipe(
+      return this.http.get<any[]>(this.url + '/payment/' + bookingRoom.id, httpOptions).pipe(
         catchError(this.handleError),
       );
     }
 
     getPaymentByPaymentId(payment: any): Observable<any[]> {
-      return this.http.get<any[]>(this.url + '/payment/show/'+payment.id, httpOptions).pipe(
+      return this.http.get<any[]>(this.url + '/payment/show/' + payment.id, httpOptions).pipe(
         catchError(this.handleError),
       );
     }
@@ -225,7 +225,7 @@ export class BookingService implements OnDestroy {
     }
 
     disabledPayment(payment: any): Observable<any[]> {
-      return this.http.get<any[]>(this.url + '/payment/remove/'+payment.id, httpOptions).pipe(
+      return this.http.get<any[]>(this.url + '/payment/remove/' + payment.id, httpOptions).pipe(
         catchError(this.handleError),
       );
     }
@@ -277,30 +277,30 @@ export class BookingService implements OnDestroy {
 
   // ========================================Nota=============================================
   notaReservation(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/nota/reservation/'+bookingRoom.id, httpOptions).pipe(
+    return this.http.get<any[]>(this.url + '/nota/reservation/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
   notaCheckIn(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/nota/checkin/'+bookingRoom.id, httpOptions).pipe(
+    return this.http.get<any[]>(this.url + '/nota/checkin/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
   notaDeposit(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/nota/deposit/return/'+bookingRoom.id, httpOptions).pipe(
+    return this.http.get<any[]>(this.url + '/nota/deposit/return/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
   notaCheckOut(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/nota/checkout/'+bookingRoom.id, httpOptions).pipe(
+    return this.http.get<any[]>(this.url + '/nota/checkout/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
   notaExtraCharge(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/nota/extra-charge/'+bookingRoom.id, httpOptions).pipe(
+    return this.http.get<any[]>(this.url + '/nota/extra-charge/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
   // =========================================================================================
-  
+
 }

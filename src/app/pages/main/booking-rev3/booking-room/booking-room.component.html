@@ -1,3 +1,50 @@
-<p>
-  booking-room works!
-</p>
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">
+        Booking Room : {{detailBookingByBookingRoomId.roomInformation.bookingRoomId}}' - '{{detailBookingByBookingRoomId.roomInformation.roomTypeName}} 
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <nb-tabset>
+      <nb-tab tabTitle="Booking Room Infomation">
+        <nb-card>
+          <nb-card-body>
+            <ngx-room-information
+            [value]="detailBookingByBookingRoomId"></ngx-room-information>
+          </nb-card-body>
+        </nb-card>
+      </nb-tab>
+      <nb-tab tabTitle="Charge Information">
+        <nb-card>
+          <nb-card-body>
+            <ngx-charge [value]="detailBookingByBookingRoomId"></ngx-charge>
+          </nb-card-body>
+        </nb-card>
+      </nb-tab>
+      <nb-tab tabTitle="Extra Charge Information">
+        <nb-card>
+          <nb-card-body>
+            <ngx-extra-charge [value]="detailBookingByBookingRoomId"></ngx-extra-charge>
+          </nb-card-body>
+        </nb-card> 
+      </nb-tab>
+      <nb-tab tabTitle="Charge Total">
+        <nb-card>
+          <nb-card-body>
+            <ngx-charge-total [value]="detailBookingByBookingRoomId"></ngx-charge-total>
+          </nb-card-body>
+        </nb-card> 
+      </nb-tab>
+      <nb-tab tabTitle="Payment Information">
+        <nb-card>
+          <nb-card-body>
+            <ngx-payment [value]="detailBookingByBookingRoomId"></ngx-payment>
+          </nb-card-body>
+        </nb-card> 
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
+</nb-card>

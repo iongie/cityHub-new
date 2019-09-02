@@ -1,0 +1,159 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Information</div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="inputEmail4">Arrival Date</label>
+          <input
+          [nbDatepicker]="arrivalDate"
+          [(ngModel)]="detailBookingByBookingRoomId.roomInformation.arrivalDate"
+          class="form-control"
+          id="arrivalDate"
+          name="arrivalDate"
+          required
+          disabled
+          #arrivalDate="ngModel"
+          placeholder="Arrival Date">
+          <nb-datepicker
+            #arrivalDate
+            format="MMM d, y">
+          </nb-datepicker>
+        </div>
+    
+        <div class="form-group">
+          <label for="inputEmail4">Departure Date</label>
+          <input
+          [nbDatepicker]="departureDate"
+          [(ngModel)]="detailBookingByBookingRoomId.roomInformation.departureDate"
+          class="form-control"
+          id="departureDate"
+          name="departureDate"
+          required
+          disabled
+          #departureDate="ngModel"
+          placeholder="Departure Date">
+          <nb-datepicker
+            #departureDate
+            format="MMM d, y">
+          </nb-datepicker>
+        </div>
+    
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Room type name</label>
+          <input
+          type="text"
+          nbInput
+          fullWidth
+          disabled
+          class="form-control"
+          [(ngModel)]="detailBookingByBookingRoomId.roomInformation.roomTypeName"
+          id="roomTypeName"
+          name="roomTypeName"
+          required
+          #roomTypeName="ngModel"
+          placeholder="Room type name">
+        </div>
+    
+        <div class="form-group" *ngIf="detailBookingByBookingRoomId.roomInformation.roomId !== null">
+          <label for="exampleFormControlInput1">Room name</label>
+          <input
+          type="text"
+          nbInput
+          fullWidth
+          disabled
+          class="form-control"
+          [(ngModel)]="detailBookingByBookingRoomId.roomInformation.roomName"
+          id="roomName"
+          name="roomName"
+          required
+          #roomName="ngModel"
+          placeholder="Room name">
+        </div>
+    
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Booking room status name</label>
+          <input
+          type="text"
+          nbInput
+          fullWidth
+          disabled
+          class="form-control"
+          [(ngModel)]="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusName"
+          id="bookingRoomStatusName"
+          name="bookingRoomStatusName"
+          required
+          #bookingRoomStatusName="ngModel"
+          placeholder="Booking room status name">
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Room</div>
+    </div>
+  </nb-card-header>
+  <nb-card-body *ngIf="detailBookingByBookingRoomId.roomInformation.roomId === null">
+      <div class="flex-centered col-xl-8 col-lg-8 col-md-8 col-sm-12">
+        <h2 class="title">Room not found</h2>
+        <small class="sub-title">Sorry this page can't be run yet</small>
+        <button type="button"  (click)="open(dialog)" class="btn btn-block btn-hero-primary">
+          Assign Room
+        </button>
+      </div>
+  </nb-card-body>
+  <nb-card-body *ngIf="detailBookingByBookingRoomId.roomInformation.roomId !== null">
+    <div class="row">
+      <div class="col-12">
+        tes
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-auto mr-auto">Assign Room</div>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Room</label>
+            <select
+            nbInput
+            fullWidth
+            [disabled]="role === false"
+            class="form-control"
+            [(ngModel)]="assignRoom.roomId"
+            id="roomId"
+            name="roomId"
+            required
+            #roomId="ngModel">
+            <option
+            *ngFor="let room of room"
+            value="{{room.roomId}}">{{room.roomName}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <button type="button" class="btn btn-primary btnn" (click)="addAssignRoom()" (click)="ref.close()">Save</button>
+        <button type="button" class="btn btn-warning btnn" (click)="ref.close()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+

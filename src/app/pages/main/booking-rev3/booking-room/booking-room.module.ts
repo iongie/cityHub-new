@@ -8,6 +8,14 @@ import { ThemeModule } from '../../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbMomentDateModule } from '@nebular/moment';
 import { NbCheckboxModule } from '@nebular/theme';
+import { RoomInformationComponent } from './room-information/room-information.component';
+import { ChargeComponent } from './charge/charge.component';
+import { ExtraChargeComponent } from './extra-charge/extra-charge.component';
+import { ChargeTotalComponent } from './charge-total/charge-total.component';
+import { PaymentComponent } from './payment/payment.component';
+import { LinkDetailModule } from './charge/link-detail/link-detail.module';
+import { PaymentLinkDetailModule } from './payment/payment-link-detail/payment-link-detail.module';
+import { RoomNotFoundComponent } from './room-information/room-not-found/room-not-found.component';
 export const customCurrencyMaskConfig = {
   align: 'right',
   allowNegative: true,
@@ -26,7 +34,14 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [BookingRoomComponent],
+  declarations: [
+    BookingRoomComponent,
+    RoomInformationComponent,
+    ChargeComponent,
+    ExtraChargeComponent,
+    ChargeTotalComponent,
+    PaymentComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -36,7 +51,8 @@ const routes: Routes = [
     NbMomentDateModule,
     NbCheckboxModule,
     // UnderConstractionModule,
-    // LinkDetailModule,
+    LinkDetailModule,
+    PaymentLinkDetailModule,
   ],
 })
 export class BookingRoomModule { }
