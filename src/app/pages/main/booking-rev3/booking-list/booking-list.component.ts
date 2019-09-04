@@ -72,6 +72,7 @@ export class BookingListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getBooking();
     this.detailAccount();
+    this.refresh();
   }
 
   ngOnDestroy() {
@@ -87,8 +88,6 @@ export class BookingListComponent implements OnInit, OnDestroy {
       this.forRole = {
         id : res[0].privilege_id,
       };
-
-      console.log(this.forRole);
 
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {
@@ -153,25 +152,21 @@ export class BookingListComponent implements OnInit, OnDestroy {
                 detail: {
                   id: y.booking_id,
                   number: y.booking_number,
-                  tess: {
-                    tes: y.booking_id,
-                    array: [
-                      {
-                        id: y.booking_id,
-                        number: y.booking_number,
-                      },
-                    ]
-                  },
                 },
               };
               return datax;
             });
             this.booking = new LocalDataSource(data);
-          console.log('[resBooking]', resBooking);
         }, err => {
 
         });
       });
+    });
+  }
+
+  refresh() {
+    this.bookingServ.refresh.subscribe(() => {
+      this.getBooking();
     });
   }
 
@@ -183,7 +178,6 @@ export class BookingListComponent implements OnInit, OnDestroy {
       this.userCityHub = {
         name : res[0].full_name,
       };
-      console.log(this.userCityHub);
     });
   }
 

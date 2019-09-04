@@ -62,7 +62,6 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.userCityHub = {
         name : res[0].full_name,
       };
-      console.log(this.userCityHub);
     });
   }
 
@@ -86,7 +85,6 @@ export class DetailComponent implements OnInit, OnDestroy {
           return xyz;
         });
         this.extraCharge = data;
-        console.log(this.extraCharge);
       });
     });
   }
@@ -123,8 +121,6 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.forRole = {
         id : res[0].privilege_id,
       };
-
-      console.log(this.forRole);
 
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {

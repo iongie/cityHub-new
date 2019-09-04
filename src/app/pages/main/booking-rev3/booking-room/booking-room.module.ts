@@ -16,6 +16,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { LinkDetailModule } from './charge/link-detail/link-detail.module';
 import { PaymentLinkDetailModule } from './payment/payment-link-detail/payment-link-detail.module';
 import { RoomNotFoundComponent } from './room-information/room-not-found/room-not-found.component';
+import { ActionBookingRoomComponent } from './action-booking-room/action-booking-room.component';
 export const customCurrencyMaskConfig = {
   align: 'right',
   allowNegative: true,
@@ -41,6 +42,7 @@ const routes: Routes = [
     ExtraChargeComponent,
     ChargeTotalComponent,
     PaymentComponent,
+    ActionBookingRoomComponent,
   ],
   imports: [
     CommonModule,

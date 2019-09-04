@@ -50,7 +50,6 @@ export class DetailComponent implements OnInit, OnDestroy {
           return xyz;
         });
         this.extraChargeCategory = data;
-        console.log(this.extraChargeCategory);
       });
     });
   }
@@ -82,8 +81,6 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.forRole = {
         id : res[0].privilege_id,
       };
-
-      console.log(this.forRole);
 
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {

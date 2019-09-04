@@ -44,7 +44,6 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
 
   ngOnInit() {
     this.renderValue = this.value.extraChargeId;
-    console.log( this.renderValue);
     this.action();
     this.viewOption();
   }
@@ -84,7 +83,6 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       if (item.data.id === this.renderValue && item.title === 'View') {
         this.router.navigate(['/pages/view-extra-charge', this.renderValue]);
       }else if (item.data.id === this.renderValue && item.title === 'Change Status') {
-        console.log('cs', this.renderValue);
         const data = {
           id: this.renderValue,
         };

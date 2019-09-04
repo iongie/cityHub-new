@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userCityHub: any[];
   forRole: any;
   private subs = new Subject();
-  
+
   onlineEvent: Observable<Event>;
   offlineEvent: Observable<Event>;
   subscriptions: Subscription[] = [];
@@ -123,8 +123,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         userId: res[0].user_id,
         username: res[0].username,
       };
-
-      console.log(this.forRole);
     });
   }
 
@@ -137,8 +135,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         id : res[0].privilege_id,
       };
 
-      console.log(this.forRole);
-
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const moduleName = resUserRole.map((forResUserRole) => {
           const dataModuleName = {
@@ -146,8 +142,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
           };
           return dataModuleName;
         });
-        console.log('all', resUserRole);
-        console.log('moduleName', moduleName);
       });
     });
   }

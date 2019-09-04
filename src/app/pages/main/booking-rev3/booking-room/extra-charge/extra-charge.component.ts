@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { BookingService } from '../../../../../services/booking-rev3/booking.service';
 
 @Component({
   selector: 'ngx-extra-charge',
@@ -7,9 +8,18 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ExtraChargeComponent implements OnInit {
   @Input() value: any;
-  constructor() { }
+  constructor(
+    public bookingServ: BookingService,
+  ) { }
 
   ngOnInit() {
+    this.refresh();
+  }
+
+  refresh() {
+    this.bookingServ.refresh.subscribe(() => {
+
+    });
   }
 
 }

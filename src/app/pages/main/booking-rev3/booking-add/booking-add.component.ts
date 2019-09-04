@@ -279,6 +279,7 @@ export class BookingAddComponent implements OnInit, OnDestroy {
           const title = 'Add Booking';
           const content = 'Add booking successfully';
           this.notifServ.showSuccessTypeToast(title, content);
+          this.router.navigate(['pages/booking-management']);
         }, err => {
           const title = 'Error - Add Booking';
           const content = 'Add booking not saved';

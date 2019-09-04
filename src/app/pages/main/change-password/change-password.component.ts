@@ -23,7 +23,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       type: 'password',
       icon: 'fa fa-eye-slash',
       valOld: '',
-    }
+    },
   };
   userCityHub: any;
   constructor(
@@ -50,16 +50,15 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       this.userCityHub = {
         id : res[0].user_id,
       };
-      console.log('res', res);
     });
   }
 
-  cancelChange(){
+  cancelChange() {
     this.router.navigate(['pages/dashboard']);
   }
 
   changeNewPassword() {
-    if(this.settingForm.new.icon === 'fa fa-eye-slash') {
+    if (this.settingForm.new.icon === 'fa fa-eye-slash') {
       this.settingForm.new.icon = 'fa fa-eye';
       this.settingForm.new.type = 'text';
     }else {
@@ -69,7 +68,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   }
 
   changeOldPassword() {
-    if(this.settingForm.old.icon === 'fa fa-eye-slash') {
+    if (this.settingForm.old.icon === 'fa fa-eye-slash') {
       this.settingForm.old.icon = 'fa fa-eye';
       this.settingForm.old.type = 'text';
     }else {
@@ -78,11 +77,11 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     }
   }
 
-  changePasswod(){
+  changePasswod() {
     const data = {
       oldPassword:  this.settingForm.old.valOld,
       newPassword:  this.settingForm.new.valNew,
-      userId: this.userCityHub.id
+      userId: this.userCityHub.id,
     };
 
     this.authServ.changePassword(data)
@@ -97,7 +96,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       const title = 'Change Password - Error';
       const content = 'Error';
       this.notifServ.showSuccessTypeToast(title, content);
-    })
+    });
   }
 
 

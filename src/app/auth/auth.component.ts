@@ -56,15 +56,13 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   changePass() {
-    if(this.settingPass.type === 'fa fa-eye-slash'){
-      this.settingPass.icon ='fa fa-eye';
+    if (this.settingPass.type === 'fa fa-eye-slash') {
+      this.settingPass.icon = 'fa fa-eye';
       this.settingPass.type = 'text';
     } else {
-      this.settingPass.icon ='fa fa-eye-slash';
+      this.settingPass.icon = 'fa fa-eye-slash';
       this.settingPass.type = 'password';
     }
-
-  console.log('tesssssss');
   }
 
 }

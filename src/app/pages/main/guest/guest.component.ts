@@ -88,9 +88,7 @@ export class GuestComponent implements OnInit {
           countryName: y.country_name,
         };
         return xyz;
-      })
-      
-    console.log(resCountry);
+      });
     });
   }
 
@@ -102,8 +100,6 @@ export class GuestComponent implements OnInit {
       this.forRole = {
         id : res[0].privilege_id,
       };
-
-      console.log(this.forRole);
 
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {

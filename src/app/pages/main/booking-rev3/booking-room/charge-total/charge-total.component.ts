@@ -41,6 +41,7 @@ export class ChargeTotalComponent implements OnInit, OnDestroy {
     this.getBookingInfomationByBookingRoomId();
     this.detailAccount();
     this.getPaymentType();
+    this.refresh();
   }
 
   ngOnDestroy() {
@@ -114,6 +115,12 @@ export class ChargeTotalComponent implements OnInit, OnDestroy {
           });
         });
       });
+    });
+  }
+
+  refresh() {
+    this.bookingServ.refresh.subscribe(() => {
+      this.getBookingInfomationByBookingRoomId();
     });
   }
 

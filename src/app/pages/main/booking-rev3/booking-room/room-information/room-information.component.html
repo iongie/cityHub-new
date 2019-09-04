@@ -67,7 +67,7 @@
           fullWidth
           disabled
           class="form-control"
-          [(ngModel)]="detailBookingByBookingRoomId.roomInformation.roomName"
+          [(ngModel)]="detailBookingByBookingRoomId.room.roomName"
           id="roomName"
           name="roomName"
           required
@@ -95,13 +95,13 @@
   </nb-card-body>
 </nb-card>
 
-<nb-card>
+<nb-card *ngIf="detailBookingByBookingRoomId.roomInformation.roomId === null">
   <nb-card-header>
     <div class="row">
-      <div class="col-auto mr-auto">Room</div>
+      <div class="col-auto mr-auto">Input Room</div>
     </div>
   </nb-card-header>
-  <nb-card-body *ngIf="detailBookingByBookingRoomId.roomInformation.roomId === null">
+  <nb-card-body>
       <div class="flex-centered col-xl-8 col-lg-8 col-md-8 col-sm-12">
         <h2 class="title">Room not found</h2>
         <small class="sub-title">Sorry this page can't be run yet</small>
@@ -109,13 +109,6 @@
           Assign Room
         </button>
       </div>
-  </nb-card-body>
-  <nb-card-body *ngIf="detailBookingByBookingRoomId.roomInformation.roomId !== null">
-    <div class="row">
-      <div class="col-12">
-        tes
-      </div>
-    </div>
   </nb-card-body>
 </nb-card>
 

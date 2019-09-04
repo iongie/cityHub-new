@@ -119,7 +119,7 @@ export class DetailBookingByBookingRoomId {
         roomTypeId: 0,
         roomTypeName: '',
         roomId: '',
-        bookingRoomStatusId: '',
+        bookingRoomStatusId: 0,
         arrivalDate: '',
         departureDate: '',
         checkInAt: '',
@@ -140,6 +140,10 @@ export class DetailBookingByBookingRoomId {
         updatedAt: '',
         updatedBy: '',
         bookingRoomStatusName: '',
+    };
+    room = {
+        floorName: '',
+        roomName: '',
     };
     charge = [{
         chargeId: 0,
@@ -209,7 +213,31 @@ export class DetailBookingByBookingRoomId {
         paymentTypeDbStatus: '',
     }];
     extraCharge = [{
-
+        bookingRoomId: 0,
+        createdAt: '',
+        createdBy: '',
+        updatedAt: '',
+        updatedBy: '',
+        extraChargeCategoryId: 0,
+        extraChargeCategoryName: '',
+        extraChargeDescription: 0,
+        extraChargeId: '',
+        extraChargeName: '',
+        extraChargeRate: 0,
+        extraChargeStatus: '',
+        extraPaymentAmount: 0,
+        extraPaymentCreatedAt: '',
+        extraPaymentCreatedBy: '',
+        extraPaymentDate: '',
+        extraPaymentId: 0,
+        extraPaymentNote: '',
+        extraPaymentNumber: '',
+        extraPaymentStatus: '',
+        extraPaymentUpdatedAt: '',
+        extraPaymentUpdatedBy: '',
+        paymentTypeDbStatus: '',
+        paymentTypeId: 0,
+        paymentTypeName: '',
     }];
 }
 
@@ -220,6 +248,27 @@ export class AddPayment {
     paymentNote = '';
     createdBy = '';
     paymentRemark = '';
+}
+
+export class ExtraCharge {
+    createAt= '';
+    createBy= '';
+    extraChargeCategoryId= 0;
+    extraChargeCategoryName= '';
+    extraChargeId= 0;
+    extraChargeName= '';
+    extraChargeRate= 0;
+    extraChargeStatus= '';
+    uploadAt= '';
+    uploadBy= '';
+}
+
+export class AddExtraPayment {
+    bookingRoomId = 0;
+    extraChargeId = 0;
+    paymentTypeId = 0;
+    extraPaymentNote = '';
+    createdBy = '';
 }
 
 export class Room {
@@ -235,6 +284,6 @@ export class Room {
     updatedBy = '';
 }
 
-export class AssignRoom{
+export class AssignRoom {
     roomId = 0;
 }

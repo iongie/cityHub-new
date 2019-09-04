@@ -81,10 +81,8 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       map(({item}) => item),
     ).subscribe(item => {
       if (item.data.id === this.renderValue && item.title === 'View') {
-        console.log('v', item.data.id );
         this.router.navigate(['/pages/view-floor', this.renderValue]);
       }else if (item.data.id === this.renderValue && item.title === 'Change Status') {
-        console.log('cs', this.renderValue);
         const data = {
           id: this.renderValue,
         };

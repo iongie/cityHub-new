@@ -1,196 +1,87 @@
-<!-- TODO: Start Action Group Booking Room -->
 <nb-card>
-  <nb-card-body>
-    <nb-actions size="small">
+    <nb-card-body>
+        <div class="action-groups-header">
+        Action Groups
+        </div>
+        <nb-actions size="small">
+          <nb-action
+           icon="fa fa-print"
+           nbTooltip="Print Nota"
+           nbTooltipPlacement="bottom">
+          </nb-action>
 
-      <!-- ! Nota -->
-      <nb-action
-        icon="fa fa-print"
-        nbTooltip="Print Nota"
-        nbTooltipPlacement="bottom">
-      </nb-action>
+          <nb-action
+           icon="fas fa-money-bill-wave-alt"
+           nbTooltip="Add Payment"
+           nbTooltipPlacement="bottom"
+           (click)="openAddDeposit(dialogDeposit)">
+          </nb-action>
 
-      <!-- ! add payment - Done -->
-      <nb-action
-        icon="fas fa-money-bill-wave-alt"
-        nbTooltip="Add Payment"
-        nbTooltipPlacement="bottom"
-        (click)="openAddDeposit(dialogDeposit)">
-      </nb-action>
+          <nb-action
+           icon="ion-cash"
+           nbTooltip="Add Deposit"
+           nbTooltipPlacement="bottom"
+           (click)="openAddDeposit(dialogDeposit)">
+          </nb-action>
 
-      <!-- ! add deposit - Done -->
-      <nb-action
-        icon="ion-cash"
-        nbTooltip="Add Deposit"
-        nbTooltipPlacement="bottom"
-        (click)="openAddDeposit(dialogDeposit)">
-      </nb-action>
+          <nb-action
+           icon="fas fa-money-check"
+           nbTooltip="Add Extra Charge"
+           nbTooltipPlacement="bottom"
+           (click)="openDialogExtraCHarge(dialogExtraCharge)">
+          </nb-action>
 
-      <!-- ! add extra charge - Done -->
-      <nb-action
-        icon="fas fa-money-check"
-        nbTooltip="Add Extra Charge"
-        nbTooltipPlacement="bottom"
-        (click)="openDialogExtraCHarge(dialogExtraCharge)">
-      </nb-action>
+          <nb-action
+          icon="fa fa-bed"
+          nbTooltip="Add Room"
+          nbTooltipPlacement="bottom"
+          (click)="openAddRoom(dialogRoom)">
+          </nb-action>
 
-      <!-- ! add room - Done -->
-      <nb-action
-      icon="fa fa-bed"
-      nbTooltip="Add Room"
-      nbTooltipPlacement="bottom"
-      (click)="openAddRoom(dialogRoom)">
-      </nb-action>
+          <nb-action
+          *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
+           icon="fas fa-sign-in-alt"
+           nbTooltip="Check In"
+           nbTooltipPlacement="bottom"
+           (click)="openActionCheckIn(dialogCheckIn)">
+          </nb-action>
 
-      <!-- !move room -->
-      <nb-action
-        icon="fa fa-bed"
-        nbTooltip="Move Room"
-        nbTooltipPlacement="bottom"
-        (click)="openAddRoom(dialogRoom)">
-      </nb-action>
-      
-      <!-- !extend room -->
-      <nb-action
-        icon="fa fa-bed"
-        nbTooltip="Extend Room"
-        nbTooltipPlacement="bottom"
-        (click)="openAddRoom(dialogRoom)">
-      </nb-action>
-      
-      <!-- !add stay -->
-      <nb-action
-        icon="fa fa-bed"
-        nbTooltip="Add Stay"
-        nbTooltipPlacement="bottom"
-        (click)="openAddRoom(dialogRoom)">
-      </nb-action>
+          <nb-action
+          *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
+           icon="fas fa-sign-out-alt"
+           nbTooltip="Check out"
+           nbTooltipPlacement="bottom"
+           (click)="openActionCheckOut(dialogCheckOut)">
+          </nb-action>
 
+          <nb-action
+          *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
+           icon="fas fa-eye-slash"
+           nbTooltip="No Show"
+           nbTooltipPlacement="bottom"
+           (click)="noShow()">
+          </nb-action>
 
-      <!-- !less stay -->
-      <nb-action
-        icon="fa fa-bed"
-        nbTooltip="Less Stay"
-        nbTooltipPlacement="bottom"
-        (click)="openAddRoom(dialogRoom)">
-      </nb-action>
+          <nb-action
+          *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
+           icon="fas fa-eject"
+           nbTooltip="Cancel"
+           nbTooltipPlacement="bottom"
+           (click)="cancelBookingRoom()">
+          </nb-action>
 
-      <!-- ! check in - Done -->
-      <nb-action
-      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
-        icon="fas fa-sign-in-alt"
-        nbTooltip="Check In"
-        nbTooltipPlacement="bottom"
-        (click)="openActionCheckIn(dialogCheckIn)">
-      </nb-action>
-
-      <!-- ! check out - Done -->
-      <nb-action
-      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
-        icon="fas fa-sign-out-alt"
-        nbTooltip="Check out"
-        nbTooltipPlacement="bottom"
-        (click)="openActionCheckOut(dialogCheckOut)">
-      </nb-action>
-
-      <!-- ! no show - Done -->
-      <nb-action
-      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
-        icon="fas fa-eye-slash"
-        nbTooltip="No Show"
-        nbTooltipPlacement="bottom"
-        (click)="noShow()">
-      </nb-action>
-
-      <!-- ! cancel booking - Done -->
-      <nb-action
-      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
-        icon="fas fa-eject"
-        nbTooltip="Cancel"
-        nbTooltipPlacement="bottom"
-        (click)="cancelBookingRoom()">
-      </nb-action>
-
-      <!-- ! back to booking detail based on booking id - Done  -->
-      <nb-action
-      icon="fa fa-undo"
-      nbTooltip="Undo"
-      nbTooltipPlacement="bottom"
-      [routerLink]="['/pages/booking-detail/' + this.detailBookingByBookingRoomId.roomInformation.bookingId]"
-      routerLinkActive="router-link-active">
-      </nb-action>
-    </nb-actions>
-</nb-card-body>
+          <nb-action
+          icon="fa fa-undo"
+          nbTooltip="Undo"
+          nbTooltipPlacement="bottom"
+          [routerLink]="['/pages/booking-detail/' + this.detailBookingByBookingRoomId.roomInformation.bookingId]"
+          routerLinkActive="router-link-active">
+          </nb-action>
+        </nb-actions>
+    </nb-card-body>
 </nb-card>
-<!-- TODO: End Action Group Booking Room -->
 
-<!-- TODO: Start Tabs -->
-<nb-card> 
-  <nb-card-header>
-    <div class="row">
-      <div class="col-auto mr-auto">
-        Booking Room : {{detailBookingByBookingRoomId.roomInformation.bookingRoomId}} - {{detailBookingByBookingRoomId.roomInformation.roomTypeName}} 
-      </div>
-    </div>
-  </nb-card-header>
 
-  <nb-card-body>
-    <nb-tabset>
-
-      <!-- ! Booking information -->
-      <nb-tab tabTitle="Booking Room Infomation">
-        <nb-card>
-          <nb-card-body>
-            <ngx-room-information
-            [value]="detailBookingByBookingRoomId"></ngx-room-information>
-          </nb-card-body>
-        </nb-card>
-      </nb-tab>
-
-      <!-- ! Charge information -->
-      <nb-tab tabTitle="Charge Information">
-        <nb-card>
-          <nb-card-body>
-              <ng2-smart-table [settings]="settingCharge"  [source]="chargeInformation"></ng2-smart-table>
-          </nb-card-body>
-        </nb-card>
-      </nb-tab>
-
-      <!-- ! Extra Charge information -->
-      <nb-tab tabTitle="Extra Charge Information">
-        <nb-card>
-          <nb-card-body>
-              <ng2-smart-table [settings]="settingExtraCharge"  [source]="extraChargeInformation"></ng2-smart-table>
-          </nb-card-body>
-        </nb-card> 
-      </nb-tab>
-
-      <!-- ! Charge Total -->
-      <nb-tab tabTitle="Charge Total">
-        <nb-card>
-          <nb-card-body>
-            <ngx-charge-total [value]="detailBookingByBookingRoomId"></ngx-charge-total>
-          </nb-card-body>
-        </nb-card> 
-      </nb-tab>
-
-      <!-- ! Payment Information -->
-      <nb-tab tabTitle="Payment Information">
-        <nb-card>
-          <nb-card-body>
-            <ngx-payment [value]="detailBookingByBookingRoomId"></ngx-payment>
-          </nb-card-body>
-        </nb-card> 
-      </nb-tab>
-      
-    </nb-tabset>
-  </nb-card-body>
-</nb-card>
-<!-- TODO: End Tabs -->
-
-<!-- TODO: Start Templating -->
-
-<!-- ! deposit -->
 <ng-template #dialogDeposit let-data let-ref="dialogRef">
   <nb-card>
     <nb-card-header>
@@ -254,7 +145,6 @@
   </nb-card>
 </ng-template>
 
-<!-- ! check in -->
 <ng-template #dialogCheckIn let-data let-ref="dialogRef">
   <nb-card>
     <nb-card-header>
@@ -270,7 +160,6 @@
   </nb-card>
 </ng-template>
 
-<!-- ! check out -->
 <ng-template #dialogCheckOut let-data let-ref="dialogRef">
   <nb-card>
     <nb-card-header>
@@ -302,7 +191,6 @@
   </nb-card>
 </ng-template>
 
-<!-- ! add extra charge -->
 <ng-template #dialogExtraCharge let-data let-ref="dialogRef">
   <nb-card>
     <nb-card-header>
@@ -367,10 +255,4 @@
     </nb-card-footer>
   </nb-card>
 </ng-template>
-
-<!-- ! move room -->
-
-<!-- ! extend room -->
-
-
-<!-- TODO: End Templating -->
+  

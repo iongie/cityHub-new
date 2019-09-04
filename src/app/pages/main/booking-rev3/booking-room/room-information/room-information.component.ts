@@ -48,6 +48,7 @@ export class RoomInformationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getBookingInfomationByBookingRoomId();
+    this.refresh();
   }
 
   ngOnDestroy() {
@@ -125,6 +126,18 @@ export class RoomInformationComponent implements OnInit, OnDestroy {
               bookingRoomStatusName: resGetBookingInformation.room_information.booking_room_status_name,
             };
 
+            if (this.detailBookingByBookingRoomId.roomInformation.roomId === null) {
+              this.detailBookingByBookingRoomId.room = {
+                floorName: '',
+                roomName: '',
+              };
+            }else {
+              this.detailBookingByBookingRoomId.room = {
+                floorName: resGetBookingInformation.room_information.floor_name,
+                roomName: resGetBookingInformation.room_information.room_name,
+              };
+            }
+
             const dataRoomTypeId = {
               id: this.detailBookingByBookingRoomId.roomInformation.roomTypeId,
             };
@@ -151,6 +164,12 @@ export class RoomInformationComponent implements OnInit, OnDestroy {
           });
         });
       });
+    });
+  }
+
+  refresh() {
+    this.bookingServ.refresh.subscribe(() => {
+      this.getBookingInfomationByBookingRoomId();
     });
   }
 

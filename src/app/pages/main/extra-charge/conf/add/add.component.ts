@@ -65,7 +65,6 @@ export class AddComponent implements OnInit, OnDestroy {
       this.userCityHub = {
         name : res[0].full_name,
       };
-      console.log(this.userCityHub);
     });
   }
 
@@ -97,9 +96,6 @@ export class AddComponent implements OnInit, OnDestroy {
       this.forRole = {
         id : res[0].privilege_id,
       };
-
-      console.log(this.forRole);
-
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {
           return forResUserRole.module_name === 'extra_charge_module';

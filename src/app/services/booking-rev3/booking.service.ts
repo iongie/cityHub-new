@@ -146,6 +146,15 @@ export class BookingService implements OnDestroy {
     );
   }
 
+  noShow(data: any): Observable<any> {
+    return this.http.post<any>(this.url + '/booking/no-show', data, httpOptions).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
+    );
+  }
+
   // ====================================Extra Charge=========================================
   extraCharge(data: any): Observable<any> {
     return this.http.post<any>(this.url + '/extra-payment/add', data, httpOptions).pipe(

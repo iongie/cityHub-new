@@ -1,111 +1,37 @@
 import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
-import { BookingService } from '../../../../services/booking-rev3/booking.service';
-import { BusinessSourceService } from '../../../../services/business-source/business-source.service';
-import { GuestService } from '../../../../services/guest/guest.service';
-import { NotificationService } from '../../../../services/notification/notification.service';
-import { UserRoleService } from '../../../../services/user-role/user-role.service';
-import { AuthService } from '../../../../services/auth/auth.service';
-import { RoomTypeService } from '../../../../services/room-type/room-type.service';
-import { RoomOperationService } from '../../../../services/room-operation/room-operation.service';
-import { CountryService } from '../../../../services/country/country.service';
+import { BookingRoomComponent } from '../booking-room.component';
+import { BookingService } from '../../../../../services/booking-rev3/booking.service';
+import { BusinessSourceService } from '../../../../../services/business-source/business-source.service';
+import { GuestService } from '../../../../../services/guest/guest.service';
+import { NotificationService } from '../../../../../services/notification/notification.service';
+import { UserRoleService } from '../../../../../services/user-role/user-role.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
+import { RoomTypeService } from '../../../../../services/room-type/room-type.service';
+import { RoomOperationService } from '../../../../../services/room-operation/room-operation.service';
+import { CountryService } from '../../../../../services/country/country.service';
 import { DatePipe } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
-import { LocalDataSource } from 'ng2-smart-table';
-import { DetailBookingByBookingRoomId, AddPayment, AddExtraPayment } from '../booking';
 import { takeUntil } from 'rxjs/operators';
-import { LinkDetailComponent } from './charge/link-detail/link-detail.component';
-import { ExtraChargeService } from '../../../../services/extra-charge/extra-charge.service';
-import { ExtraChargeCategoryService } from '../../../../services/extra-charge-category/extra-charge-category.service';
-import { PaymentTypeService } from '../../../../services/payment-type/payment-type.service';
+import { Subject } from 'rxjs';
+import { DetailBookingByBookingRoomId, AddPayment, AddExtraPayment, ExtraCharge } from '../../booking';
 import { NbDialogService } from '@nebular/theme';
+import { PaymentTypeService } from '../../../../../services/payment-type/payment-type.service';
+import { ExtraChargeService } from '../../../../../services/extra-charge/extra-charge.service';
+import { ExtraChargeCategoryService } from '../../../../../services/extra-charge-category/extra-charge-category.service';
 
 @Component({
-  selector: 'ngx-booking-room',
-  templateUrl: './booking-room.component.html',
-  styleUrls: ['./booking-room.component.scss'],
+  selector: 'ngx-action-booking-room',
+  templateUrl: './action-booking-room.component.html',
+  styleUrls: ['./action-booking-room.component.scss'],
 })
-export class BookingRoomComponent implements OnInit, OnDestroy {
+export class ActionBookingRoomComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
   userCityHub: any;
   detailBookingByBookingRoomId = new DetailBookingByBookingRoomId;
   show: any;
   forRole: any;
   roomTypeId = 0;
-  chargeInformation: LocalDataSource;
-  settingCharge = {
-    actions: false,
-    columns: {
-      paymentForDate: {
-        title: 'Payment for date',
-        type: 'string',
-      },
-      chargeNote: {
-        title: 'Charge note',
-        type: 'string',
-      },
-      chargeCategory: {
-        title: 'Charge category',
-        type: 'string',
-      },
-      chargeRate: {
-        title: 'Charge rate',
-        type: 'string',
-      },
-      chargeTax: {
-        title: 'Charge tax',
-        type: 'string',
-      },
-      discount: {
-        title: 'Discount',
-        type: 'string',
-      },
-      chargeTotal: {
-        title: 'Charge total',
-        type: 'string',
-      },
-      seasonTypeName: {
-        title: 'Season type',
-        type: 'string',
-      },
-      seasonName: {
-        title: 'Season',
-        type: 'string',
-      },
-      detail: {
-        title: 'Actions',
-        type: 'custom',
-        renderComponent: LinkDetailComponent,
-        filter: false,
-      },
-    },
-  };
-  extraChargeInformation: LocalDataSource;
-  settingExtraCharge = {
-    actions: false,
-    columns: {
-      extraPaymentNumber: {
-        title: 'Extra Payment Number',
-        type: 'string',
-      },
-      extraChargeCategoryName: {
-        title: 'Extra Charge Category',
-        type: 'string',
-      },
-      extraChargeName: {
-        title: 'Extra Charge Name',
-        type: 'string',
-      },
-      extraPaymentAmount: {
-        title: 'Amount',
-        type: 'string',
-      },
-    },
-  };
-
-  // TODO: setting Action
   dataAddPaymentDeposit = new AddPayment;
-  dataAddPaymentCharge = new AddPayment;
   dataAddExtraPaymentDeposit = new AddExtraPayment;
   extraCharge: any;
   paymentType: any;
@@ -114,6 +40,7 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
   actionCheckOut = {
     lateCheckOutRate: '',
   };
+  dataAddPaymentCharge = new AddPayment;
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
@@ -127,19 +54,22 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     public datepipe: DatePipe,
     public router: Router,
     private activeRoute: ActivatedRoute,
+    private dialogService: NbDialogService,
+    public paymentTypeServ: PaymentTypeService,
+    public notifServ: NotificationService,
     public extraChargeServ: ExtraChargeService,
     public extraChargeCategoryServ: ExtraChargeCategoryService,
-    public paymentTypeServ: PaymentTypeService,
-    private dialogService: NbDialogService,
-    public notifServ: NotificationService,
   ) { }
 
   ngOnInit() {
-    this.getExtraCharge();
-    this.getPaymentType();
     this.getBookingInfomationByBookingRoomId();
+    this.getPaymentType();
     this.detailAccount();
     this.refresh();
+    this.dataAddPaymentDeposit.totalPaid = 200000;
+    this.getExtraCharge();
+    this.checkedCheckIn;
+    this.checkedCheckOut;
   }
 
   ngOnDestroy() {
@@ -147,7 +77,6 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     this.subs.complete();
   }
 
-  // TODO: GET extra charge
   getExtraCharge() {
     this.extraChargeServ.get().pipe(takeUntil(this.subs)).subscribe(resExtraCharge => {
       this.extraChargeCategoryServ.get().pipe(takeUntil(this.subs)).subscribe(resExtraChargeCategory => {
@@ -176,14 +105,13 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  // TODO: GET payment type
   getPaymentType() {
     const menu = {
       name: 'all',
     };
     this.paymentTypeServ.get(menu).pipe(takeUntil(this.subs)).subscribe(resPaymentType => {
       const paymentType = resPaymentType.filter((y) => {
-        return y.payment_type_db_status === 'active'; // ! filter payment type
+        return y.payment_type_db_status === 'active';
       });
       this.paymentType = paymentType.map((y) => {
         const iop = {
@@ -196,10 +124,9 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  // TODO: GET information by booking room id
   getBookingInfomationByBookingRoomId() {
     const data = {
-      token: localStorage.getItem('p_l1oxt'), // ! get data of token in local storage
+      token: localStorage.getItem('p_l1oxt'),
     };
     this.authServ.detailAfterLogin(data).pipe(takeUntil(this.subs)).subscribe(res => {
       this.forRole = {
@@ -213,7 +140,6 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
           return forResUserRole.module_name === 'booking_module';
         });
 
-        // ! permission CREATE, READ, UPDATE, DELETE booking module
         if (filter[0].create_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].create_permision === 'not allowed') {
@@ -276,7 +202,7 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
               total: resGetBookingInformation.charge_total.total,
             };
 
-            const charge = resGetBookingInformation
+            this.detailBookingByBookingRoomId.charge = resGetBookingInformation
             .charge.map(x => {
               const y = {
                 chargeId: x.charge_id,
@@ -350,41 +276,7 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
               return y;
             });
 
-            const extraCharge = resGetBookingInformation
-            .extra_charge.map(x => {
-              const xyz = {
-                bookingRoomId: x.booking_room_id,
-                createdAt: x.created_at,
-                createdBy: x.created_by,
-                updatedAt: x.updated_at,
-                updatedBy: x.update_by,
-                extraChargeCategoryId: x.extra_charge_category_id,
-                extraChargeCategoryName: x.extra_charge_category_name,
-                extraChargeDescription: x.extra_charge_description,
-                extraChargeId: x.extra_charge_id,
-                extraChargeName: x.extra_charge_name,
-                extraChargeRate: x.extra_charge_rate,
-                extraChargeStatus: x.extra_charge_status,
-                extraPaymentAmount: x.extra_payment_amount,
-                extraPaymentCreatedAt: x.extra_payment_created_at,
-                extraPaymentCreatedBy: x.extra_payment_created_by,
-                extraPaymentDate: x.extra_payment_date,
-                extraPaymentId: x.extra_payment_id,
-                extraPaymentNote: x.extra_payment_note,
-                extraPaymentNumber: x.extra_payment_number,
-                extraPaymentStatus: x.extra_payment_status,
-                extraPaymentUpdatedAt: x.extra_payment_updated_at,
-                extraPaymentUpdatedBy: x.extra_payment_updated_by,
-                paymentTypeDbStatus: x.payment_type_db_status,
-                paymentTypeId: x.payment_type_id,
-                paymentTypeName: x.payment_type_name,
-              };
-              return xyz;
-            });
-            this.chargeInformation = new LocalDataSource(charge);
-            this.extraChargeInformation = new LocalDataSource(extraCharge);
-
-            console.log('this.detailBookingByBookingRoomId', this.extraCharge);
+            console.log('this.detailBookingByBookingRoomId', this.detailBookingByBookingRoomId);
           });
         });
       });
@@ -393,7 +285,7 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
 
   refresh() {
     this.bookingServ.refresh.subscribe(() => {
-      this.getBookingInfomationByBookingRoomId(); // ! refresh get booking by booking room
+      this.getBookingInfomationByBookingRoomId();
     });
   }
 
@@ -405,52 +297,49 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.subs))
     .subscribe(res => {
       this.userCityHub = {
-        name : res[0].full_name, // ! for created by, updated by,
+        name : res[0].full_name,
       };
       console.log(this.userCityHub);
     });
   }
 
-  // TODO: funtion Dialog
   openAddDeposit(dialogDeposit: TemplateRef<any>) {
-    this.dialogService.open(dialogDeposit); // ! dialog add deposit
+    this.dialogService.open(dialogDeposit);
   }
   openAddRoom(dialogRoom: TemplateRef<any>) {
-    this.dialogService.open(dialogRoom); // ! dialog add aoom
+    this.dialogService.open(dialogRoom);
   }
 
   openActionCheckIn(dialogCheckIn: TemplateRef<any>) {
-    this.dialogService.open(dialogCheckIn); // ! dialog check in process
+    this.dialogService.open(dialogCheckIn);
   }
 
   openActionCheckOut(dialogCheckOut: TemplateRef<any>) {
-    this.dialogService.open(dialogCheckOut); // ! dialog check out process
+    this.dialogService.open(dialogCheckOut);
   }
 
   openActionNoShow(dialogOpenShow: TemplateRef<any>) {
-    this.dialogService.open(dialogOpenShow); // ! dialog no show process
+    this.dialogService.open(dialogOpenShow);
   }
 
   openActionCancel(dialogCancel: TemplateRef<any>) {
-    this.dialogService.open(dialogCancel); // ! dialog cancel process
+    this.dialogService.open(dialogCancel);
   }
 
   openDialogExtraCHarge(dialogExtraCharge: TemplateRef<any>) {
-    this.dialogService.open(dialogExtraCharge); // ! dialog add extra charge process
+    this.dialogService.open(dialogExtraCharge);
   }
 
-  // TODO: Send Condition TRUE, FALSE for early check in and check out
   toggleCheckin(event) {
-    this.checkedCheckIn = event.target.checked; // ! check in
+    this.checkedCheckIn = event.target.checked;
     console.log('checkedCheckIn', event.target.checked);
   }
 
   toogleCheckOut(checkedCheckOut: boolean) {
-    this.checkedCheckOut = checkedCheckOut; // ! check out
+    this.checkedCheckOut = checkedCheckOut;
     console.log('checkedCheckOut', checkedCheckOut);
   }
 
-  // TODO : Function Add Payment of Charge
   addPaymentCharge() {
     this.activeRoute.params.subscribe(params => {
       const data = {
@@ -476,7 +365,6 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  // TODO : Function Add Payment of Extra Charge
   addPaymentExtraCharge() {
     this.activeRoute.params.subscribe(params => {
       const data = {
@@ -501,7 +389,6 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  // TODO : Function Add Payment of Deposit
   addPaymentDeposit() {
     this.activeRoute.params.subscribe(params => {
       const data = {
@@ -527,13 +414,12 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  // TODO : Process Check In
   cancelCheckIn () {
-    this.checkedCheckIn = false; // ! Cancel Check in ---> reset value TRUE to FALSE
+    this.checkedCheckIn = false;
   }
 
   checkIn() {
-    this.activeRoute.params.subscribe(params => { // ! Aprrove Check in
+    this.activeRoute.params.subscribe(params => {
       const data = {
         bookingRoomId: params.id,
         checkinBy: this.userCityHub.name,
@@ -541,12 +427,12 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
       };
       this.bookingServ.checkIn(data)
       .pipe(takeUntil(this.subs))
-      .subscribe(resCheckIn => { // ! Success Check In
+      .subscribe(resCheckIn => {
         const title = 'Check In for Booking room' + this.detailBookingByBookingRoomId.roomInformation.bookingRoomId;
         const content = 'Check In successfully';
         this.notifServ.showSuccessTypeToast(title, content);
         this.checkedCheckIn = false;
-      }, err => { // ! Not Success Check In
+      }, err => {
         const title = 'Check In for Booking room' + this.detailBookingByBookingRoomId.roomInformation.bookingRoomId;
         const content = 'Check In Error';
         this.notifServ.showDangerTypeToast(title, content);
@@ -555,13 +441,12 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-   // TODO : Process Check Out
   cancelCheckOut () {
-    this.checkedCheckOut = false; // ! Cancel Check out ---> reset value TRUE to FALSE
+    this.checkedCheckOut = false;
   }
 
   checkOut() {
-    this.activeRoute.params.subscribe(params => { // ! Aprrove Check Out
+    this.activeRoute.params.subscribe(params => {
       const data = {
         bookingRoomId: params.id,
         checkinBy: this.userCityHub.name,
@@ -570,12 +455,12 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
       };
       this.bookingServ.checkOut(data)
       .pipe(takeUntil(this.subs))
-      .subscribe(resCheckIn => { // ! Success Check Out
+      .subscribe(resCheckIn => {
         const title = 'Check Out for Booking room' + this.detailBookingByBookingRoomId.roomInformation.bookingRoomId;
         const content = 'Check Out successfully';
         this.notifServ.showSuccessTypeToast(title, content);
         this.checkedCheckIn = false;
-      }, err => { // ! Not Success Check Out
+      }, err => {
         const title = 'Check Out for Booking room' + this.detailBookingByBookingRoomId.roomInformation.bookingRoomId;
         const content = 'Check Out Error';
         this.notifServ.showDangerTypeToast(title, content);
@@ -584,7 +469,6 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  // TODO : Process No Show
   noShow() {
     this.activeRoute.params.subscribe(params => {
       const data = {
@@ -605,7 +489,6 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  // TODO : Process Cancel Booking based on Booking room
   cancelBookingRoom() {
     this.activeRoute.params.subscribe(params => {
       const bookingRooom = {
@@ -628,23 +511,4 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
       });
     });
   }
-
-  // TODO : Process Add Stay
-
-  // TODO : Process Less Stay
-
-  // TODO : Process Move Room
-
-  // TODO : Process Extend Room
-
-  // TODO : View Nota by Reservation
-
-  // TODO : View Nota by check in
-
-  // TODO : View Nota by check out
-
-  // TODO : View Nota by Deposit
-
-  // TODO : View Nota by Extra Charge
-
 }

@@ -41,7 +41,6 @@ export class LinkDetailComponent implements OnInit, OnDestroy {
     this.renderValue  = this.value.id;
     this.action();
     this.viewOption();
-    console.log('[renderValue]', this.value.tess.array[0].id);
   }
 
   ngOnDestroy() {
@@ -72,11 +71,12 @@ export class LinkDetailComponent implements OnInit, OnDestroy {
       map(({item}) => item),
     )
     .subscribe(item => {
-      if (item.title === 'Detail') {
+      if (item.data.id === this.renderValue && item.title === 'Detail') {
         this.router.navigate(['pages/booking-detail/' + this.renderValue]);
       }
 
-      if (item.title === 'Cancel Booking') {
+      if (item.data.id === this.renderValue && item.title === 'Cancel Booking') {
+        console.log('this.renderValue', this.renderValue);
         const booking = {
           id: this.renderValue,
         };

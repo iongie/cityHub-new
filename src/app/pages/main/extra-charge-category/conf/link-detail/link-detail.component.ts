@@ -80,10 +80,8 @@ export class LinkDetailComponent implements OnInit, OnDestroy, ViewCell {
       map(({item}) => item),
     ).subscribe(item => {
       if (item.data.id === this.renderValue && item.title === 'View') {
-        console.log('v', item.data.id );
         this.router.navigate(['/pages/view-extra-charge-category', this.renderValue]);
       }else if (item.data.id === this.renderValue && item.title === 'Delete') {
-        console.log('cs', this.renderValue);
         const data = {
           id: this.renderValue,
         };

@@ -61,7 +61,6 @@ export class DetailComponent implements OnInit, OnDestroy {
         floorId: params.id,
         floorName: this.floor[0].floorName,
       };
-      console.log(data);
       this.floorServ.update(data).pipe(takeUntil(this.subs)).subscribe(() => {
         const title = 'Floor';
         const content = 'Data has been update';
@@ -83,8 +82,6 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.forRole = {
         id : res[0].privilege_id,
       };
-
-      console.log(this.forRole);
 
       this.userRoleServ.getByPrivilegeId(this.forRole).pipe(takeUntil(this.subs)).subscribe(resUserRole => {
         const filter = resUserRole.filter((forResUserRole) => {
