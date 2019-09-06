@@ -1,23 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BookingRoomComponent } from './booking-room.component';
-import { UnderConstractionModule } from '../../under-constraction/under-constraction.module';
+import { ExtendRoomComponent } from './extend-room.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ThemeModule } from '../../../../@theme/theme.module';
+import { ThemeModule } from '../../../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbMomentDateModule } from '@nebular/moment';
 import { NbCheckboxModule } from '@nebular/theme';
-import { LinkDetailModule } from './charge/link-detail/link-detail.module';
-import { PaymentLinkDetailModule } from './payment/payment-link-detail/payment-link-detail.module';
-import { NgxPrintModule } from 'ngx-print';
-import { NgxCurrencyModule } from 'ngx-currency';
+import { UnderConstractionModule } from '../../../under-constraction/under-constraction.module';
 export const customCurrencyMaskConfig = {
   align: 'right',
   allowNegative: true,
   allowZero: true,
   decimal: ',',
-  precision: 0,
+  precision: 2,
   prefix: 'Rp ',
   suffix: '',
   thousands: '.',
@@ -26,13 +22,11 @@ export const customCurrencyMaskConfig = {
 const routes: Routes = [
   {
     path: '',
-    component: BookingRoomComponent,
+    component: ExtendRoomComponent,
   },
 ];
 @NgModule({
-  declarations: [
-    BookingRoomComponent,
-  ],
+  declarations: [ExtendRoomComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -41,11 +35,7 @@ const routes: Routes = [
     Ng2SmartTableModule,
     NbMomentDateModule,
     NbCheckboxModule,
-    NgxPrintModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     // UnderConstractionModule,
-    LinkDetailModule,
-    PaymentLinkDetailModule,
   ],
 })
-export class BookingRoomModule { }
+export class ExtendRoomModule { }

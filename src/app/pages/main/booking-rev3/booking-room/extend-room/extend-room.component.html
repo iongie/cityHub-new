@@ -1,0 +1,128 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Extend Room</div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <form #ngForm="ngForm" (submit)="extendRoom()" ngNativeValidate>
+      <nb-card>
+        <nb-card-header>
+          <div class="row">
+            <div class="col-auto mr-auto">Date Arrival</div>
+          </div>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="form-group col-8">
+              <label for="inputEmail4">Arrival Date</label>
+              <input
+              [nbDatepicker]="arrivalDate"
+              [(ngModel)]="dataExtendRoom.arrivalDate"
+              class="form-control"
+              id="arrivalDate"
+              name="arrivalDate"
+              required
+              [disabled]="show === false"
+              #arrivalDate="ngModel"
+              placeholder="Arrival Date">
+              <nb-datepicker
+                #arrivalDate
+                format="MMM d, y">
+              </nb-datepicker>
+            </div>
+
+            <div class="form-group col-4">
+              <label for="exampleFormControlInput1">Duration</label>
+              <input
+              type="number"
+              min = 1
+              nbInput
+              fullWidth
+              [disabled]="show === false"
+              class="form-control"
+              [(ngModel)]="dataExtendRoom.duration"
+              (change)="getInfo($event)"
+              id="duration"
+              name="duration"
+              required
+              #duration="ngModel"
+              placeholder="Duration">
+            </div>
+
+            <div class="form-group col-12">
+              <label for="inputEmail4">Departure Date</label>
+              <input
+              [nbDatepicker]="departureDate"
+              [(ngModel)]="dataExtendRoom.departureDate"
+              class="form-control"
+              id="departureDate"
+              name="departureDate"
+              required
+              [disabled]="show === false"
+              #departureDate="ngModel"
+              placeholder="Departure Date">
+              <nb-datepicker
+                #departureDate
+                format="MMM d, y">
+              </nb-datepicker>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card *ngIf="this.dataExtendRoom.roomInformation === true">
+        <nb-card-header>
+          <div class="row">
+            <div class="col-auto mr-auto">Room Available</div>
+          </div>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="input-group mb-3" *ngFor="let roomInformation of roomInformation.roomInfo; let i=index">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <input 
+                  type="checkbox"
+                  [(ngModel)]="roomInformation.check"
+                  id="check{{i}}"
+                  name="check{{i}}"
+                  (ngModelChange)="checkRoomListBooking($event)">
+                </div>
+              </div>
+
+              <input
+                type="text"
+                fullWidth
+                disabled
+                [(ngModel)]="roomInformation.roomTypeName"
+                class="form-control"
+                id="roomTypeName{{i}}"
+                name="roomTypeName{{i}}"
+                placeholder="Guest">
+
+              <input
+                type="number"
+                fullWidth
+                [max]="roomInformation.available"
+                min ="1"
+                [disabled]="show === false"
+                [(ngModel)]="roomInformation.available"
+                id="available{{i}}"
+                name="available{{i}}"
+                class="form-control"
+                placeholder="Guest">
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      
+      
+      <div class="buttons">
+        <button type="submit" class="btn btn-primary btnn">Save</button>
+        <button type="button" class="btn btn-warning btnn" (click)="cancel()" >Cancel</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

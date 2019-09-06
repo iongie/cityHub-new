@@ -182,4 +182,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       console.log(this.userCityHub);
     });
   }
+
+  // TODO : Go To Extend Room
+  goToExtendRoom() {
+    this.activeRoute.params.subscribe(params => {
+      const booking = {
+        id: params.id,
+      };
+
+      this.router.navigate(['/pages/extend-room/' + booking.id]);
+    });
+  }
 }

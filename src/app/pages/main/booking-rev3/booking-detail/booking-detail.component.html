@@ -1,3 +1,22 @@
+<!-- TODO: Start Action Group Booking -->
+<nb-card>
+    <nb-card-body>
+      <nb-actions size="small">
+
+        <!-- !extend room -->
+        <nb-action
+          icon="fas fa-plus-square"
+          nbTooltip="Extend Room"
+          nbTooltipPlacement="bottom"
+          (click)="goToExtendRoom()">
+        </nb-action>
+        
+      </nb-actions>
+  </nb-card-body>
+  </nb-card>
+  <!-- TODO: End Action Group Booking -->
+
+<!-- TODO: start tabs -->
 <nb-card>
   <nb-card-header>
     <div class="row">
@@ -12,6 +31,8 @@
 
   <nb-card-body>
     <nb-tabset>
+
+      <!-- ! booking information -->
       <nb-tab tabTitle="Booking Infomation">
         <nb-card>
           <nb-card-body>
@@ -19,6 +40,8 @@
           </nb-card-body>
         </nb-card>
       </nb-tab>
+      
+      <!-- ! room information -->
       <nb-tab tabTitle="Room Information">
         <nb-card>
           <nb-card-body>
@@ -27,6 +50,8 @@
           </nb-card-body>
         </nb-card>
       </nb-tab>
+
+      <!-- ! charge information -->
       <nb-tab tabTitle="Charge Information">
         <nb-card>
           <nb-card-body>
@@ -34,6 +59,8 @@
           </nb-card-body>
         </nb-card> 
       </nb-tab>
+
     </nb-tabset>
   </nb-card-body>
 </nb-card>
+<!-- TODO: end tabs -->

@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { LocalDataSource } from 'ng2-smart-table';
-import { DetailBookingByBookingRoomId, AddPayment, AddExtraPayment } from '../booking';
+import { DetailBookingByBookingRoomId, AddPayment, AddExtraPayment, AssignRoom, Room} from '../booking';
 import { takeUntil } from 'rxjs/operators';
 import { LinkDetailComponent } from './charge/link-detail/link-detail.component';
 import { ExtraChargeService } from '../../../../services/extra-charge/extra-charge.service';
@@ -32,6 +32,46 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
   show: any;
   forRole: any;
   roomTypeId = 0;
+
+   // TODO: setting for smart table payment information
+   paymentInformation: LocalDataSource;
+   settingPayment = {
+    actions: false,
+    columns: {
+      paymentNumber: {
+        title: 'Payment number',
+        type: 'string',
+      },
+      billingNumber: {
+        title: 'Billing number',
+        type: 'string',
+      },
+      rateTotal: {
+        title: 'Rate total',
+        type: 'string',
+      },
+      taxTotal: {
+        title: 'Tax total',
+        type: 'string',
+      },
+      paidTotal: {
+        title: 'Paid total',
+        type: 'string',
+      },
+      paymentCategory: {
+        title: 'Payment category',
+        type: 'string',
+      },
+      // detail: {
+      //   title: 'Actions',
+      //   type: 'custom',
+      //   renderComponent: PaymentLinkDetailComponent,
+      //   filter: false,
+      // },
+    },
+  };
+
+   // TODO: setting for smart table charge information
   chargeInformation: LocalDataSource;
   settingCharge = {
     actions: false,
@@ -80,6 +120,8 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
       },
     },
   };
+
+  // TODO: setting for smart table extra charge
   extraChargeInformation: LocalDataSource;
   settingExtraCharge = {
     actions: false,
@@ -112,8 +154,19 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
   checkedCheckIn = false;
   checkedCheckOut = false;
   actionCheckOut = {
-    lateCheckOutRate: '',
+    lateCheckOutRate: 0,
   };
+
+  // TODO : variable for GET ChargeTotal
+  charge = {
+    total: 0,
+  };
+  // TODO : variable for Add Room
+  assignRoom = new AssignRoom;
+  room = new Room;
+
+  // TODO: for setting view button deposit
+  viewDeposit = false;
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
@@ -138,13 +191,39 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     this.getExtraCharge();
     this.getPaymentType();
     this.getBookingInfomationByBookingRoomId();
+    this.dataAddPaymentDeposit.totalPaid = 200000;
     this.detailAccount();
+    this.getTotalCharge();
     this.refresh();
+    this.refreshTotalCharge();
   }
 
   ngOnDestroy() {
     this.subs.next();
     this.subs.complete();
+  }
+
+  // TODO: GET total charge
+  getTotalCharge() {
+    this.activeRoute.params.subscribe(params => {
+      const bookingRoom = {
+        id: params.id,
+      };
+
+      this.bookingServ.getChargeTotal(bookingRoom)
+      .pipe(takeUntil(this.subs))
+      .subscribe(resChargeTotal => {
+        this.charge.total = resChargeTotal.charge_total;
+        console.log('this.charge.total ', this.charge.total );
+        this.dataAddPaymentCharge.totalPaid = this.charge.total;
+      });
+    });
+  }
+
+  refreshTotalCharge() {
+    this.bookingServ.refresh.subscribe(() => {
+      this.getTotalCharge(); // ! refresh get Total charge
+    });
   }
 
   // TODO: GET extra charge
@@ -240,7 +319,8 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
           .pipe(takeUntil(this.subs))
           .subscribe(resGetBookingInformation => {
             this.roomTypeId = resGetBookingInformation.room_information.room_type_id;
-            this.detailBookingByBookingRoomId.roomInformation = {
+
+            this.detailBookingByBookingRoomId.roomInformation = { // ! data room information
               bookingRoomId: resGetBookingInformation.room_information.booking_room_id,
               bookingId: resGetBookingInformation.room_information.booking_id,
               roomTypeId: resGetBookingInformation.room_information.room_type_id,
@@ -269,14 +349,14 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
               bookingRoomStatusName: resGetBookingInformation.room_information.booking_room_status_name,
             };
 
-            this.detailBookingByBookingRoomId.chargeTotal = {
+            this.detailBookingByBookingRoomId.chargeTotal = { // ! data charge total
               discountTotal: resGetBookingInformation.charge_total.discount_total,
               rateTotal: resGetBookingInformation.charge_total.rate_total,
               taxTotal: resGetBookingInformation.charge_total.tax_total,
               total: resGetBookingInformation.charge_total.total,
             };
 
-            const charge = resGetBookingInformation
+            const charge = resGetBookingInformation // ! data charge
             .charge.map(x => {
               const y = {
                 chargeId: x.charge_id,
@@ -321,7 +401,7 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
               return y;
             });
 
-            this.detailBookingByBookingRoomId.payment = resGetBookingInformation
+            const payment = resGetBookingInformation // ! data payment
             .payment.map(x => {
               const y = {
                 paymentId: x.payment_id,
@@ -350,7 +430,7 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
               return y;
             });
 
-            const extraCharge = resGetBookingInformation
+            const extraCharge = resGetBookingInformation // ! data extra charge
             .extra_charge.map(x => {
               const xyz = {
                 bookingRoomId: x.booking_room_id,
@@ -381,10 +461,55 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
               };
               return xyz;
             });
+            this.paymentInformation = new LocalDataSource(payment);
             this.chargeInformation = new LocalDataSource(charge);
             this.extraChargeInformation = new LocalDataSource(extraCharge);
 
-            console.log('this.detailBookingByBookingRoomId', this.extraCharge);
+            console.log('this.detailBookingByBookingRoomId', payment);
+
+            // TODO: Condition for view button add deposit
+            if (payment.length === 0) {
+              this.viewDeposit = true; // ! show button deposit
+            } else {
+              this.viewDeposit = false; // ! no show button deposit
+            }
+
+            // TODO: GET Data room type
+            if (this.detailBookingByBookingRoomId.roomInformation.roomId === null) {
+              this.detailBookingByBookingRoomId.room = {
+                floorName: '',
+                roomName: '',
+              };
+            }else {
+              this.detailBookingByBookingRoomId.room = {
+                floorName: resGetBookingInformation.room_information.floor_name,
+                roomName: resGetBookingInformation.room_information.room_name,
+              };
+            }
+
+            const dataRoomTypeId = {
+              id: this.detailBookingByBookingRoomId.roomInformation.roomTypeId,
+            };
+            this.roomOperationServ.getByRoomTypeIdAndRoomStatus(dataRoomTypeId)
+            .pipe(takeUntil(this.subs))
+            .subscribe(resGetRoom => {
+              console.log('[resGetRoom]', resGetRoom);
+              this.room = resGetRoom.map(x => {
+                const p = {
+                  createdAt: x.created_at,
+                  createdBy: x.created_by,
+                  floorId: x.floor_id,
+                  roomDbStatus: x.room_db_status,
+                  roomId: x.room_id,
+                  roomName: x.room_name,
+                  roomStatusId: x.room_statusId,
+                  roomTypeId: x.room_type_id,
+                  updatedAt: x.updated_at,
+                  updatedBy: x.updated_by,
+                };
+                return p;
+              });
+            });
           });
         });
       });
@@ -412,11 +537,15 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
   }
 
   // TODO: funtion Dialog
+  openAddPayment(dialogPayment: TemplateRef<any>) {
+    this.dialogService.open(dialogPayment); // ! dialog add payment
+  }
+
   openAddDeposit(dialogDeposit: TemplateRef<any>) {
     this.dialogService.open(dialogDeposit); // ! dialog add deposit
   }
-  openAddRoom(dialogRoom: TemplateRef<any>) {
-    this.dialogService.open(dialogRoom); // ! dialog add aoom
+  openAddRoom(dialogAddRoom: TemplateRef<any>) {
+    this.dialogService.open(dialogAddRoom); // ! dialog add aoom
   }
 
   openActionCheckIn(dialogCheckIn: TemplateRef<any>) {
@@ -450,6 +579,27 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     console.log('checkedCheckOut', checkedCheckOut);
   }
 
+  // TODO : Function Add Room
+  addAssignRoom() {
+    this.activeRoute.params.subscribe(params => {
+      const data = {
+        bookingRoomId: params.id,
+        roomId: this.assignRoom.roomId,
+      };
+      this.bookingServ.assignRoom(data)
+      .pipe(takeUntil(this.subs))
+      .subscribe(resAssignRoom => {
+        const title = 'Add Room';
+        const content = 'Add Room successfully';
+        this.notifServ.showSuccessTypeToast(title, content);
+      }, err => {
+        const title = 'Error - Add Room';
+        const content = 'Add Room not saved';
+        this.notifServ.showDangerTypeToast(title, content);
+      });
+    });
+  }
+
   // TODO : Function Add Payment of Charge
   addPaymentCharge() {
     this.activeRoute.params.subscribe(params => {
@@ -468,6 +618,7 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
         const title = 'Add Payment';
         const content = 'Add Payment successfully';
         this.notifServ.showSuccessTypeToast(title, content);
+        this.charge.total;
       }, err => {
         const title = 'Error - Add Payment';
         const content = 'Add payment not saved';
@@ -575,6 +726,22 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
         const content = 'Check Out successfully';
         this.notifServ.showSuccessTypeToast(title, content);
         this.checkedCheckIn = false;
+
+        // TODO: include action return deposit
+      this.activeRoute.params.subscribe(paramsDeposit => {
+        const dataReturnDeposit = {
+          bookingRoomId: paramsDeposit.id,
+          paymentTypeId: this.dataAddPaymentDeposit.paymentTypeId,
+          totalPaid: this.dataAddPaymentDeposit.totalPaid,
+          paymentNote: this.dataAddPaymentDeposit.paymentNote,
+          createdBy: this.userCityHub.name,
+          paymentRemark: 'return_deposit',
+        };
+
+      this.bookingServ.payment(data)
+        .pipe(takeUntil(this.subs))
+        .subscribe(() => {});
+      });
       }, err => { // ! Not Success Check Out
         const title = 'Check Out for Booking room' + this.detailBookingByBookingRoomId.roomInformation.bookingRoomId;
         const content = 'Check Out Error';
@@ -629,13 +796,68 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  // TODO : Process Add Stay
+  // TODO : Go To Page Add Stay
+  goToAddStay() {
+    this.activeRoute.params.subscribe(params => {
+      const bookingRooom = {
+        id: params.id,
+        number: params.number,
+      };
 
-  // TODO : Process Less Stay
+      this.router.navigate([
+        '/pages/booking-detail/add-stay/' +
+        params.number + '/' +
+        params.id,
+      ]);
+    });
+  }
 
-  // TODO : Process Move Room
+  // TODO : Go To Page Less Stay
+  goToLessStay() {
+    this.activeRoute.params.subscribe(params => {
+      const bookingRooom = {
+        id: params.id,
+        number: params.number,
+      };
 
-  // TODO : Process Extend Room
+      this.router.navigate([
+        '/pages/booking-detail/less-stay/' +
+        params.number + '/' +
+        params.id,
+      ]);
+    });
+  }
+
+  // TODO : Go To Page Move Room
+  goToMoveRoom() {
+    this.activeRoute.params.subscribe(params => {
+      const bookingRooom = {
+        id: params.id,
+        number: params.number,
+      };
+
+      this.router.navigate([
+        '/pages/booking-detail/move-room/' +
+        params.number + '/' +
+        params.id,
+      ]);
+    });
+  }
+
+  // TODO : Go To Extend Room
+  goToExtendRoom() {
+    this.activeRoute.params.subscribe(params => {
+      const bookingRooom = {
+        id: params.id,
+        number: params.number,
+      };
+
+      this.router.navigate([
+        '/pages/booking-detail/extend-room/' +
+        this.detailBookingByBookingRoomId.roomInformation.bookingId,
+      ]);
+    });
+  }
 
   // TODO : View Nota by Reservation
 

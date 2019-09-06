@@ -197,6 +197,71 @@ const routes: Routes = [{
             },
           ],
         },
+        {
+          path: 'add-stay',
+          children: [
+            {
+              path: ':number',
+              children: [
+                {
+                  path: ':id',
+                  loadChildren: './main/booking-rev3/booking-room/add-stay/add-stay.module#AddStayModule',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          path: 'less-stay',
+          children: [
+            {
+              path: ':number',
+              children: [
+                {
+                  path: ':id',
+                  loadChildren: './main/booking-rev3/booking-room/less-stay/less-stay.module#LessStayModule',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          path: 'move-room',
+          children: [
+            {
+              path: ':number',
+              children: [
+                {
+                  path: ':id',
+                  loadChildren: './main/booking-rev3/booking-room/move-room/move-room.module#MoveRoomModule',
+                },
+              ],
+            },
+          ],
+        },
+        // {
+        //   path: 'extend-room',
+        //   children: [
+        //     {
+        //       path: ':number',
+        //       children: [
+        //         {
+        //           path: ':id',
+        //           loadChildren: './main/booking-rev3/booking-room/extend-room/extend-room.module#ExtendRoomModule',
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // },
+      ],
+    },
+    {
+      path: 'extend-room',
+      children: [
+        {
+          path: ':id',
+          loadChildren: './main/booking-rev3/booking-room/extend-room/extend-room.module#ExtendRoomModule',
+        },
       ],
     },
     {

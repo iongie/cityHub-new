@@ -12,14 +12,16 @@
 
       <!-- ! add payment - Done -->
       <nb-action
+        *ngIf="charge.total !== 0"
         icon="fas fa-money-bill-wave-alt"
         nbTooltip="Add Payment"
         nbTooltipPlacement="bottom"
-        (click)="openAddDeposit(dialogDeposit)">
+        (click)="openAddPayment(dialogPayment)">
       </nb-action>
 
       <!-- ! add deposit - Done -->
       <nb-action
+        *ngIf="viewDeposit === true"
         icon="ion-cash"
         nbTooltip="Add Deposit"
         nbTooltipPlacement="bottom"
@@ -36,43 +38,47 @@
 
       <!-- ! add room - Done -->
       <nb-action
+      *ngIf="detailBookingByBookingRoomId.roomInformation.roomId === null"
       icon="fa fa-bed"
       nbTooltip="Add Room"
       nbTooltipPlacement="bottom"
-      (click)="openAddRoom(dialogRoom)">
+      (click)="openAddRoom(dialogAddRoom)">
       </nb-action>
 
-      <!-- !move room -->
+      <!-- !move room - Done -->
       <nb-action
-        icon="fa fa-bed"
+        *ngIf="detailBookingByBookingRoomId.roomInformation.roomId !== null"
+        icon="fas fa-dolly-flatbed"
         nbTooltip="Move Room"
         nbTooltipPlacement="bottom"
-        (click)="openAddRoom(dialogRoom)">
+        (click)="goToMoveRoom()">
       </nb-action>
       
-      <!-- !extend room -->
+      <!-- !extend room - Done -->
       <nb-action
-        icon="fa fa-bed"
+        icon="fas fa-plus-square"
         nbTooltip="Extend Room"
         nbTooltipPlacement="bottom"
-        (click)="openAddRoom(dialogRoom)">
+        (click)="goToExtendRoom()">
       </nb-action>
       
-      <!-- !add stay -->
+      <!-- !add stay - Done -->
       <nb-action
-        icon="fa fa-bed"
+        *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
+        icon="fa fa-plus-circle"
         nbTooltip="Add Stay"
         nbTooltipPlacement="bottom"
-        (click)="openAddRoom(dialogRoom)">
+        (click)="goToAddStay()">
       </nb-action>
 
 
-      <!-- !less stay -->
+      <!-- !less stay - Done -->
       <nb-action
-        icon="fa fa-bed"
+        *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
+        icon="fa fa-minus-circle"
         nbTooltip="Less Stay"
         nbTooltipPlacement="bottom"
-        (click)="openAddRoom(dialogRoom)">
+        (click)="goToLessStay()">
       </nb-action>
 
       <!-- ! check in - Done -->
@@ -104,7 +110,7 @@
 
       <!-- ! cancel booking - Done -->
       <nb-action
-      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
+      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 3"
         icon="fas fa-eject"
         nbTooltip="Cancel"
         nbTooltipPlacement="bottom"
@@ -119,6 +125,7 @@
       [routerLink]="['/pages/booking-detail/' + this.detailBookingByBookingRoomId.roomInformation.bookingId]"
       routerLinkActive="router-link-active">
       </nb-action>
+
     </nb-actions>
 </nb-card-body>
 </nb-card>
@@ -141,8 +148,105 @@
       <nb-tab tabTitle="Booking Room Infomation">
         <nb-card>
           <nb-card-body>
-            <ngx-room-information
-            [value]="detailBookingByBookingRoomId"></ngx-room-information>
+
+            <!-- TODO: START Data of Booking information -->
+            <nb-card>
+              <nb-card-header>
+                <div class="row">
+                  <div class="col-auto mr-auto">Information</div>
+                </div>
+              </nb-card-header>
+              <nb-card-body>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="inputEmail4">Arrival Date</label>
+                      <input
+                      [nbDatepicker]="arrivalDate"
+                      [(ngModel)]="detailBookingByBookingRoomId.roomInformation.arrivalDate"
+                      class="form-control"
+                      id="arrivalDate"
+                      name="arrivalDate"
+                      required
+                      disabled
+                      #arrivalDate="ngModel"
+                      placeholder="Arrival Date">
+                      <nb-datepicker
+                        #arrivalDate
+                        format="MMM d, y">
+                      </nb-datepicker>
+                    </div>
+                
+                    <div class="form-group">
+                      <label for="inputEmail4">Departure Date</label>
+                      <input
+                      [nbDatepicker]="departureDate"
+                      [(ngModel)]="detailBookingByBookingRoomId.roomInformation.departureDate"
+                      class="form-control"
+                      id="departureDate"
+                      name="departureDate"
+                      required
+                      disabled
+                      #departureDate="ngModel"
+                      placeholder="Departure Date">
+                      <nb-datepicker
+                        #departureDate
+                        format="MMM d, y">
+                      </nb-datepicker>
+                    </div>
+                
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">Room type name</label>
+                      <input
+                      type="text"
+                      nbInput
+                      fullWidth
+                      disabled
+                      class="form-control"
+                      [(ngModel)]="detailBookingByBookingRoomId.roomInformation.roomTypeName"
+                      id="roomTypeName"
+                      name="roomTypeName"
+                      required
+                      #roomTypeName="ngModel"
+                      placeholder="Room type name">
+                    </div>
+                
+                    <div class="form-group" *ngIf="detailBookingByBookingRoomId.roomInformation.roomId !== null">
+                      <label for="exampleFormControlInput1">Room name</label>
+                      <input
+                      type="text"
+                      nbInput
+                      fullWidth
+                      disabled
+                      class="form-control"
+                      [(ngModel)]="detailBookingByBookingRoomId.room.roomName"
+                      id="roomName"
+                      name="roomName"
+                      required
+                      #roomName="ngModel"
+                      placeholder="Room name">
+                    </div>
+                
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">Booking room status name</label>
+                      <input
+                      type="text"
+                      nbInput
+                      fullWidth
+                      disabled
+                      class="form-control"
+                      [(ngModel)]="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusName"
+                      id="bookingRoomStatusName"
+                      name="bookingRoomStatusName"
+                      required
+                      #bookingRoomStatusName="ngModel"
+                      placeholder="Booking room status name">
+                    </div>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+            <!-- TODO: END Data of Booking information -->
           </nb-card-body>
         </nb-card>
       </nb-tab>
@@ -169,7 +273,77 @@
       <nb-tab tabTitle="Charge Total">
         <nb-card>
           <nb-card-body>
-            <ngx-charge-total [value]="detailBookingByBookingRoomId"></ngx-charge-total>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Discount total</label>
+                  <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  disabled
+                  currencyMask
+                  class="form-control"
+                  [(ngModel)]="detailBookingByBookingRoomId.chargeTotal.discountTotal"
+                  id="discountTotal"
+                  name="discountTotal"
+                  required
+                  #discountTotal="ngModel"
+                  placeholder="Discount total">
+                </div>
+            
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Rate total</label>
+                  <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  disabled
+                  currencyMask
+                  class="form-control"
+                  [(ngModel)]="detailBookingByBookingRoomId.chargeTotal.rateTotal"
+                  id="rateTotal"
+                  name="rateTotal"
+                  required
+                  #rateTotal="ngModel"
+                  placeholder="Rate total">
+                </div>
+            
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Tax total</label>
+                  <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  disabled
+                  currencyMask
+                  class="form-control"
+                  [(ngModel)]="detailBookingByBookingRoomId.chargeTotal.taxTotal"
+                  id="taxtTotal"
+                  name="taxtTotal"
+                  required
+                  #taxtTotal="ngModel"
+                  placeholder="Tax total">
+                </div>
+            
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Total</label>
+                  <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  disabled
+                  currencyMask
+                  class="form-control"
+                  [(ngModel)]="detailBookingByBookingRoomId.chargeTotal.total"
+                  id="total"
+                  name="total"
+                  required
+                  #total="ngModel"
+                  placeholder="Total">
+                </div>
+              </div>
+            </div>
           </nb-card-body>
         </nb-card> 
       </nb-tab>
@@ -178,7 +352,7 @@
       <nb-tab tabTitle="Payment Information">
         <nb-card>
           <nb-card-body>
-            <ngx-payment [value]="detailBookingByBookingRoomId"></ngx-payment>
+            <ng2-smart-table [settings]="settingPayment"  [source]="paymentInformation"></ng2-smart-table>
           </nb-card-body>
         </nb-card> 
       </nb-tab>
@@ -190,6 +364,70 @@
 
 <!-- TODO: Start Templating -->
 
+<!-- ! payment -->
+<ng-template #dialogPayment let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>
+      Add Payment
+    </nb-card-header>
+    <nb-card-body>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Total paid</label>
+        <input
+        type="text"
+        nbInput
+        fullWidth
+        disabled
+        currencyMask
+        class="form-control"
+        [(ngModel)]="dataAddPaymentCharge.totalPaid"
+        id="totalPaid"
+        name="totalPaid"
+        required
+        #totalPaid="ngModel"
+        placeholder="Total paid">
+      </div>
+
+      <div class="form-group">
+          <label for="exampleFormControlSelect1">Payment Type</label>
+          <select
+            nbInput
+            fullWidth
+            [disabled]="show === false"
+            class="form-control"
+            [(ngModel)]="dataAddPaymentCharge.paymentTypeId"
+            id="paymentTypeId"
+            name="paymentTypeId"
+            required
+            #paymentTypeId="ngModel">
+            <option value="0" disabled selected>Choose your payment option</option>
+            <option
+            *ngFor="let paymentType of paymentType"
+            value="{{paymentType.paymentTypeId}}">{{paymentType.paymentTypeName}}</option>
+          </select>
+        </div>
+
+      <div class="form-group">
+          <label for="exampleFormControlInput1">Payment Note</label>
+          <textarea
+          nbInput
+          fullWidth
+          class="form-control"
+          [(ngModel)]="dataAddPaymentCharge.paymentNote"
+          id="paymentNote"
+          name="paymentNote"
+          required
+          #paymentNote="ngModel"
+          placeholder="Payment Note"></textarea>
+        </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button type="button" class="btn btn-primary btnn" (click)="addPaymentCharge()" (click)="ref.close()">Save</button>
+      <button type="button" class="btn btn-warning btnn" (click)="ref.close()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
 <!-- ! deposit -->
 <ng-template #dialogDeposit let-data let-ref="dialogRef">
   <nb-card>
@@ -198,13 +436,13 @@
     </nb-card-header>
     <nb-card-body>
       <div class="form-group">
-        <label for="exampleFormControlInput1">Totalpaid</label>
+        <label for="exampleFormControlInput1">Total paid</label>
         <input
         type="text"
         nbInput
         fullWidth
         disabled
-        CurrencyMask
+        currencyMask
         class="form-control"
         [(ngModel)]="dataAddPaymentDeposit.totalPaid"
         id="totalPaid"
@@ -226,7 +464,7 @@
           name="paymentTypeId"
           required
           #paymentTypeId="ngModel">
-          <option value="" disabled selected>Choose your option</option>
+          <option value="0" disabled selected>Choose your payment option</option>
           <option
           *ngFor="let paymentType of paymentType"
           value="{{paymentType.paymentTypeId}}">{{paymentType.paymentTypeName}}</option>
@@ -290,6 +528,7 @@
             name="lateCheckOutRate"
             required
             #lateCheckOutRate="ngModel">
+            <option value="0" disabled>Choose your option</option>
             <option value="25">13:01 AM - 14.00 AM</option>
             <option value="50">14:01 AM - 15.00 AM</option>
           </select>
@@ -321,7 +560,7 @@
           name="extraChargeId"
           required
           #extraChargeId="ngModel">
-          <option value="" disabled selected>Choose your option</option>
+          <option value="0" disabled selected>Choose your option</option>
           <option
           *ngFor="let extraCharge of extraCharge"
           value="{{extraCharge.extraChargeId}}">{{extraCharge.extraChargeName}}</option>
@@ -340,7 +579,7 @@
             name="paymentTypeId"
             required
             #paymentTypeId="ngModel">
-            <option value="" disabled selected>Choose your option</option>
+            <option value="0" disabled selected>Choose your option</option>
             <option
             *ngFor="let paymentType of paymentType"
             value="{{paymentType.paymentTypeId}}">{{paymentType.paymentTypeName}}</option>
@@ -368,7 +607,44 @@
   </nb-card>
 </ng-template>
 
-<!-- ! move room -->
+<!-- ! Add room -->
+<ng-template #dialogAddRoom let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-auto mr-auto">Assign Room</div>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Room</label>
+            <select
+            nbInput
+            fullWidth
+            [disabled]="role === false"
+            class="form-control"
+            [(ngModel)]="assignRoom.roomId"
+            id="roomId"
+            name="roomId"
+            required
+            #roomId="ngModel">
+            <option value="0" disabled selected>Choose your room option</option>
+            <option
+            *ngFor="let room of room"
+            value="{{room.roomId}}">{{room.roomName}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <button type="button" class="btn btn-primary btnn" (click)="addAssignRoom()" (click)="ref.close()">Save</button>
+        <button type="button" class="btn btn-warning btnn" (click)="ref.close()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
 
 <!-- ! extend room -->
 

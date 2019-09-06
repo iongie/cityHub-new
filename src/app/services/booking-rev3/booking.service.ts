@@ -22,7 +22,7 @@ export class BookingService implements OnDestroy {
     this.subs.complete();
   }
 
-  // --------------------------for Handle Error----------------
+  // ! --------------------------for Handle Error----------------
   handleError(error: Error | HttpErrorResponse) {
     if (!navigator.onLine) {
         console.error('Browser Offline');
@@ -48,7 +48,7 @@ export class BookingService implements OnDestroy {
     return this._refresh;
   }
 
-  // all, booked, reserved, on going, done, cancel
+  // TODO: all, booked, reserved, on going, done, cancel
   get(menuBookingList: any): Observable<any[]> {
     return this.http.get<any[]>(this.url + '/booking/show/' + menuBookingList.name, httpOptions).pipe(
       catchError(this.handleError),
@@ -73,15 +73,14 @@ export class BookingService implements OnDestroy {
     );
   }
 
-  getChargeTotal(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/charge/total' + bookingRoom.id, httpOptions).pipe(
+  getChargeTotal(bookingRoom: any): Observable<any> {
+    return this.http.get<any>(this.url + '/charge/total/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
 
 
-
-  // just Info for Add Booking , Move Room, Extend Room
+  // TODO: just Info for Add Booking , Move Room, Extend Room
   checkRoom(data: any): Observable<any> {
     return this.http.post<any>(this.url + '/booking/room-information', data, httpOptions).pipe(
       catchError(this.handleError),
@@ -155,7 +154,7 @@ export class BookingService implements OnDestroy {
     );
   }
 
-  // ====================================Extra Charge=========================================
+  // TODO: ====================================Extra Charge=========================================
   extraCharge(data: any): Observable<any> {
     return this.http.post<any>(this.url + '/extra-payment/add', data, httpOptions).pipe(
       catchError(this.handleError),
@@ -193,7 +192,7 @@ export class BookingService implements OnDestroy {
   }
   // =========================================================================================
 
-  // ======================================Payment============================================
+  // TODO: ======================================Payment============================================
     payment(data: any): Observable<any> {
       return this.http.post<any>(this.url + '/payment/add', data, httpOptions).pipe(
         catchError(this.handleError),
@@ -241,7 +240,7 @@ export class BookingService implements OnDestroy {
   // =========================================================================================
 
 
-  // ===================================Case MOVE ROOM========================================
+  // todo: ===================================Case MOVE ROOM========================================
     moveRoom(data: any): Observable<any> {
       return this.http.post<any>(this.url + '/booking/move', data, httpOptions).pipe(
         catchError(this.handleError),
