@@ -21,10 +21,7 @@
   <nb-card-header>
     <div class="row">
       <div class="col-auto mr-auto">
-        Booking Number : {{detailBookingByBookingId.bookingInformation.bookingNumber}} 
-      </div>
-      <div class="col-auto mr-auto">
-        Booking Status : {{detailBookingByBookingId.bookingInformation.bookingStatusName}}
+        Booking Number : {{detailBookingByBookingId.bookingInformation.bookingNumber}} - {{detailBookingByBookingId.bookingInformation.bookingStatusName}}
       </div>
     </div>
   </nb-card-header>
@@ -36,7 +33,88 @@
       <nb-tab tabTitle="Booking Infomation">
         <nb-card>
           <nb-card-body>
-            <ngx-booking-information [value]="detailBookingByBookingId"></ngx-booking-information>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Name</label>
+                  <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  disabled
+                  class="form-control"
+                  [(ngModel)]="detailBookingByBookingId.bookingInformation.guestName"
+                  id="guestName"
+                  name="guestName"
+                  required
+                  #guestName="ngModel"
+                  placeholder="Guest name">
+                </div>
+            
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Address</label>
+                  <textarea
+                  nbInput
+                  fullWidth
+                  disabled
+                  class="form-control"
+                  [(ngModel)]="detailBookingByBookingId.bookingInformation.address"
+                  id="address"
+                  name="address"
+                  required
+                  #address="ngModel"
+                  placeholder="Address"></textarea>
+                </div>
+            
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">City</label>
+                  <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  disabled
+                  class="form-control"
+                  [(ngModel)]="detailBookingByBookingId.bookingInformation.city"
+                  id="city"
+                  name="city"
+                  required
+                  #city="ngModel"
+                  placeholder="City">
+                </div>
+            
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Email</label>
+                  <input
+                  type="email"
+                  nbInput
+                  fullWidth
+                  disabled
+                  class="form-control"
+                  [(ngModel)]="detailBookingByBookingId.bookingInformation.email"
+                  id="email"
+                  name="email"
+                  required
+                  #email="ngModel"
+                  placeholder="Email Adress">
+                </div>
+            
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Phone Number</label>
+                  <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  disabled
+                  class="form-control"
+                  [(ngModel)]="detailBookingByBookingId.bookingInformation.phoneNumber"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  required
+                  #phoneNumber="ngModel"
+                  placeholder="Phone Number">
+                </div>
+              </div>
+            </div>
           </nb-card-body>
         </nb-card>
       </nb-tab>
@@ -45,8 +123,7 @@
       <nb-tab tabTitle="Room Information">
         <nb-card>
           <nb-card-body>
-            <ngx-room-information [value]="detailBookingByBookingId">
-            </ngx-room-information>
+            <ng2-smart-table [settings]="settingRoomInformation"  [source]="roomInformation"></ng2-smart-table>
           </nb-card-body>
         </nb-card>
       </nb-tab>
@@ -55,7 +132,74 @@
       <nb-tab tabTitle="Charge Information">
         <nb-card>
           <nb-card-body>
-            <ngx-charge-information [value]="detailBookingByBookingId"></ngx-charge-information>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Rate total</label>
+                  <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  disabled
+                  class="form-control"
+                  [(ngModel)]="detailBookingByBookingId.chargeTotal.rateTotal"
+                  id="rateTotal"
+                  name="rateTotal"
+                  required
+                  #rateTotal="ngModel"
+                  placeholder="Rate total">
+                </div>
+          
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Tax total</label>
+                  <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  disabled
+                  class="form-control"
+                  [(ngModel)]="detailBookingByBookingId.chargeTotal.taxTotal"
+                  id="taxTotal"
+                  name="taxTotal"
+                  required
+                  #taxTotal="ngModel"
+                  placeholder="Tax total">
+                </div>
+          
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Discount total</label>
+                  <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  disabled
+                  class="form-control"
+                  [(ngModel)]="detailBookingByBookingId.chargeTotal.discountTotal"
+                  id="discountTotal"
+                  name="discountTotal"
+                  required
+                  #discountTotal="ngModel"
+                  placeholder="Discount total">
+                </div>
+          
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Total</label>
+                  <input
+                  type="text"
+                  nbInput
+                  fullWidth
+                  disabled
+                  class="form-control"
+                  [(ngModel)]="detailBookingByBookingId.chargeTotal.total"
+                  id="total"
+                  name="total"
+                  required
+                  #total="ngModel"
+                  placeholder="Total">
+                </div>
+            
+              </div>
+            </div>
           </nb-card-body>
         </nb-card> 
       </nb-tab>

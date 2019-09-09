@@ -14,11 +14,11 @@ import { Subject } from 'rxjs';
 import { LocalDataSource } from 'ng2-smart-table';
 import { DetailBookingByBookingRoomId, AddPayment, AddExtraPayment, AssignRoom, Room} from '../booking';
 import { takeUntil } from 'rxjs/operators';
-import { LinkDetailComponent } from './charge/link-detail/link-detail.component';
 import { ExtraChargeService } from '../../../../services/extra-charge/extra-charge.service';
 import { ExtraChargeCategoryService } from '../../../../services/extra-charge-category/extra-charge-category.service';
 import { PaymentTypeService } from '../../../../services/payment-type/payment-type.service';
 import { NbDialogService } from '@nebular/theme';
+import { LinkDetailPaymentInformationComponent } from './link-detail-payment-information/link-detail-payment-information.component';
 
 @Component({
   selector: 'ngx-booking-room',
@@ -62,12 +62,12 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
         title: 'Payment category',
         type: 'string',
       },
-      // detail: {
-      //   title: 'Actions',
-      //   type: 'custom',
-      //   renderComponent: PaymentLinkDetailComponent,
-      //   filter: false,
-      // },
+      detail: {
+        title: 'Actions',
+        type: 'custom',
+        renderComponent: LinkDetailPaymentInformationComponent,
+        filter: false,
+      },
     },
   };
 
@@ -111,12 +111,6 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
       seasonName: {
         title: 'Season',
         type: 'string',
-      },
-      detail: {
-        title: 'Actions',
-        type: 'custom',
-        renderComponent: LinkDetailComponent,
-        filter: false,
       },
     },
   };
@@ -164,9 +158,6 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
   // TODO : variable for Add Room
   assignRoom = new AssignRoom;
   room = new Room;
-
-  // TODO: for setting view button deposit
-  viewDeposit = false;
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
@@ -466,13 +457,6 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
             this.extraChargeInformation = new LocalDataSource(extraCharge);
 
             console.log('this.detailBookingByBookingRoomId', payment);
-
-            // TODO: Condition for view button add deposit
-            if (payment.length === 0) {
-              this.viewDeposit = true; // ! show button deposit
-            } else {
-              this.viewDeposit = false; // ! no show button deposit
-            }
 
             // TODO: GET Data room type
             if (this.detailBookingByBookingRoomId.roomInformation.roomId === null) {
@@ -859,14 +843,15 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  // TODO : View Nota by Reservation
+  // TODO : GO View Nota 
+  goToNota() {
+    this.activeRoute.params.subscribe(params => {
+      const bookingRoom = {
+        id: params.id,
+        number: params.number,
+      };
 
-  // TODO : View Nota by check in
-
-  // TODO : View Nota by check out
-
-  // TODO : View Nota by Deposit
-
-  // TODO : View Nota by Extra Charge
-
+      this.router.navigate(['/pages/booking-detail/nota/' + bookingRoom.number + '/' + bookingRoom.id]);
+    });
+  }
 }

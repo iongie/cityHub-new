@@ -14,6 +14,7 @@ import { Subject } from 'rxjs';
 import { DetailBookingByBookingId } from '../booking';
 import { takeUntil } from 'rxjs/operators';
 import { LocalDataSource } from 'ng2-smart-table';
+import { LinkDetailRoomInformationComponent } from './link-detail-room-information/link-detail-room-information.component';
 
 @Component({
   selector: 'ngx-booking-detail',
@@ -23,10 +24,35 @@ import { LocalDataSource } from 'ng2-smart-table';
 export class BookingDetailComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
   userCityHub: any;
-  roomInformation: LocalDataSource;
   detailBookingByBookingId = new DetailBookingByBookingId;
   show: any;
   forRole: any;
+
+  // TODO: Setting smart table room information
+  roomInformation: LocalDataSource;
+  settingRoomInformation = {
+    actions: false,
+    columns: {
+      roomTypeName: {
+        title: 'Room Type',
+        type: 'string',
+      },
+      arrivalDate: {
+        title: 'Guest name',
+        type: 'string',
+      },
+      departureDate: {
+        title: 'Business Source name',
+        type: 'string',
+      },
+      detail: {
+        title: 'Actions',
+        type: 'custom',
+        renderComponent: LinkDetailRoomInformationComponent,
+        filter: false,
+      },
+    },
+  };
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,

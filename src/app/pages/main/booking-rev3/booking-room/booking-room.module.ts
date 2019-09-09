@@ -8,10 +8,10 @@ import { ThemeModule } from '../../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbMomentDateModule } from '@nebular/moment';
 import { NbCheckboxModule } from '@nebular/theme';
-import { LinkDetailModule } from './charge/link-detail/link-detail.module';
-import { PaymentLinkDetailModule } from './payment/payment-link-detail/payment-link-detail.module';
 import { NgxPrintModule } from 'ngx-print';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { LinkDetailPaymentInformationModule } from './link-detail-payment-information/link-detail-payment-information.module';
+
 export const customCurrencyMaskConfig = {
   align: 'right',
   allowNegative: true,
@@ -44,8 +44,7 @@ const routes: Routes = [
     NgxPrintModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     // UnderConstractionModule,
-    LinkDetailModule,
-    PaymentLinkDetailModule,
+    LinkDetailPaymentInformationModule,
   ],
 })
 export class BookingRoomModule { }

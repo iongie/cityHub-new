@@ -284,28 +284,28 @@ export class BookingService implements OnDestroy {
   // =========================================================================================
 
   // ========================================Nota=============================================
-  notaReservation(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/nota/reservation/' + bookingRoom.id, httpOptions).pipe(
+  notaReservation(bookingRoom: any): Observable<any> {
+    return this.http.get<any>(this.url + '/nota/reservation/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
-  notaCheckIn(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/nota/checkin/' + bookingRoom.id, httpOptions).pipe(
+  notaCheckIn(bookingRoom: any): Observable<any> {
+    return this.http.get<any>(this.url + '/nota/checkin/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
-  notaDeposit(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/nota/deposit/return/' + bookingRoom.id, httpOptions).pipe(
+  notaDeposit(bookingRoom: any): Observable<any> {
+    return this.http.get<any>(this.url + '/nota/deposit/return/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
-  notaCheckOut(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/nota/checkout/' + bookingRoom.id, httpOptions).pipe(
+  notaCheckOut(bookingRoom: any): Observable<any> {
+    return this.http.get<any>(this.url + '/nota/checkout/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }
-  notaExtraCharge(bookingRoom: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/nota/extra-charge/' + bookingRoom.id, httpOptions).pipe(
+  notaExtraCharge(bookingRoom: any): Observable<any> {
+    return this.http.get<any>(this.url + '/nota/extra-charge/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
     );
   }

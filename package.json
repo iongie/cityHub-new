@@ -43,7 +43,9 @@
     "@angular/http": "^7.2.11",
     "@angular/platform-browser": "^7.2.11",
     "@angular/platform-browser-dynamic": "^7.2.11",
+    "@angular/pwa": "^0.12.4",
     "@angular/router": "^7.2.11",
+    "@angular/service-worker": "^7.2.11",
     "@asymmetrik/ngx-leaflet": "3.0.1",
     "@nebular/auth": "3.4.2",
     "@nebular/bootstrap": "3.4.2",
@@ -53,6 +55,7 @@
     "@nebular/theme": "3.4.2",
     "@ng-bootstrap/ng-bootstrap": "^4.0.0",
     "@swimlane/ngx-charts": "^10.0.0",
+    "@types/html2canvas": "0.0.35",
     "angular-tree-component": "7.2.0",
     "angular2-chartjs": "0.4.1",
     "angular2-toaster": "^7.0.0",
@@ -63,6 +66,7 @@
     "core-js": "2.5.1",
     "echarts": "^4.0.2",
     "eva-icons": "^1.1.0",
+    "html2canvas": "^1.0.0-rc.3",
     "intl": "1.2.5",
     "ionicons": "2.0.1",
     "jspdf": "^1.5.3",
@@ -84,6 +88,7 @@
     "tslib": "^1.9.0",
     "typeface-exo": "0.0.22",
     "web-animations-js": "2.2.5",
+    "written-number": "^0.9.1",
     "zone.js": "^0.8.29"
   },
   "devDependencies": {

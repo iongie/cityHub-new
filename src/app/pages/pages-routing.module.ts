@@ -239,20 +239,20 @@ const routes: Routes = [{
             },
           ],
         },
-        // {
-        //   path: 'extend-room',
-        //   children: [
-        //     {
-        //       path: ':number',
-        //       children: [
-        //         {
-        //           path: ':id',
-        //           loadChildren: './main/booking-rev3/booking-room/extend-room/extend-room.module#ExtendRoomModule',
-        //         },
-        //       ],
-        //     },
-        //   ],
-        // },
+        {
+          path: 'nota',
+          children: [
+            {
+              path: ':number',
+              children: [
+                {
+                  path: ':id',
+                  loadChildren: './main/booking-rev3/booking-room/nota/nota.module#NotaModule',
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
     {
@@ -260,7 +260,7 @@ const routes: Routes = [{
       children: [
         {
           path: ':id',
-          loadChildren: './main/booking-rev3/booking-room/extend-room/extend-room.module#ExtendRoomModule',
+          loadChildren: './main/booking-rev3/booking-detail/extend-room/extend-room.module#ExtendRoomModule',
         },
       ],
     },

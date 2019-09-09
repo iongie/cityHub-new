@@ -7,7 +7,8 @@
       <nb-action
         icon="fa fa-print"
         nbTooltip="Print Nota"
-        nbTooltipPlacement="bottom">
+        nbTooltipPlacement="bottom"
+        (click)="goToNota()">
       </nb-action>
 
       <!-- ! add payment - Done -->
@@ -21,7 +22,6 @@
 
       <!-- ! add deposit - Done -->
       <nb-action
-        *ngIf="viewDeposit === true"
         icon="ion-cash"
         nbTooltip="Add Deposit"
         nbTooltipPlacement="bottom"

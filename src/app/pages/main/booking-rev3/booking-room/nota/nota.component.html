@@ -1,0 +1,55 @@
+<nb-card>
+    <nb-card-body>
+        <nb-tabset>
+            <!-- TODO: Reservation Tab -->
+            <nb-tab tabTitle="Reservation">
+                Tab content 1
+            </nb-tab>
+        
+            <!-- TODO: Check in Tab -->
+            <nb-tab tabTitle="Check in">
+                Tab content 2
+            </nb-tab>
+        
+            <!-- TODO: Check out Tab -->
+            <nb-tab tabTitle="Check out">
+                <div id="demo" class="content" #content>
+                    <div>billNo: {{notaCheckOut.billNo}},</div>
+                    <div>guestName: {{notaCheckOut.guestName}},</div>
+                    <div>address: {{notaCheckOut.address}},</div>
+                    <div>national: {{notaCheckOut.national}},</div>
+                    <div>roomName: {{notaCheckOut.roomName}},</div>
+                    <div>arrivalDate: {{notaCheckOut.arrivalDate}},</div>
+                    <div>departureDate: {{notaCheckOut.departureDate}},</div>
+                    <div>totalRent: {{notaCheckOut.totalRent}},</div>
+                    <div>totalTax: {{notaCheckOut.totalTax}},</div>
+                    <div>totalDiscount: {{notaCheckOut.totalDiscount}},</div>
+                    <div>totalCharge: {{notaCheckOut.totalCharge}},</div>
+                    <div>total: {{notaCheckOut.total}},</div>
+                    <div>amount to word: {{notaCheckOut.amountToWord}},</div>
+                    <div>balance: {{notaCheckOut.balance}},</div>
+                    <div *ngFor="let charge of notaCheckOut.charge">
+                        <div>date: {{charge.date}},</div>
+                        <div>nominal: {{charge.nominal}},</div>
+                        <div>particular: {{charge.particular}},</div>
+                    </div>
+                </div>
+
+                <button printSectionId="demo" ngxPrint>print</button>
+                <button (click)="makePdfCheckOut()">Export to pdf</button>
+            </nb-tab>
+        
+            <!-- TODO: Deposit Tab -->
+            <nb-tab tabTitle="Deposit">
+                Tab content 2
+            </nb-tab>
+        
+            <!-- TODO: Extra Charge Tab -->
+            <nb-tab tabTitle="Extra Charge">
+                Tab content 2
+            </nb-tab>
+        </nb-tabset>
+    </nb-card-body>
+</nb-card>
+
+

@@ -1,6 +1,6 @@
 <nb-card>
   <nb-card-body>
-    <form #ngForm="ngForm" (submit)="lessStay()" ngNativeValidate>
+    <form #ngForm="ngForm" (submit)="saveLessStay()" ngNativeValidate>
       <div class="form-group col-12">
         <label for="inputEmail4">Arrival Date</label>
         <input
@@ -56,7 +56,7 @@
       </div>
 
       <div class="buttons">
-        <button type="submit" class="btnn btn btn-primary" *ngIf="role">Save</button>
+        <button type="submit" class="btnn btn btn-primary" *ngIf="show">Save</button>
         <button type="button" class="btnn btn btn-warning" (click)="back()" >Cancel</button>
       </div>
     </form>

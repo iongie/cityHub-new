@@ -276,6 +276,9 @@ export class BookingAddComponent implements OnInit, OnDestroy {
         this.bookingServ.addBooking(dataAddBooking)
         .pipe(takeUntil(this.subs))
         .subscribe(resAddBooking => {
+          // TODO: after save otomatic go to booking detail
+          this.router.navigate(['pages/booking-detail/' + resAddBooking.booking_information.booking_id]);
+
           const title = 'Add Booking';
           const content = 'Add booking successfully';
           this.notifServ.showSuccessTypeToast(title, content);

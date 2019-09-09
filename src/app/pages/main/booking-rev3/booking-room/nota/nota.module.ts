@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BookingDetailComponent } from './booking-detail.component';
+import { NotaComponent } from './nota.component';
+import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
-import { ThemeModule } from '../../../../@theme/theme.module';
+import { ThemeModule } from '../../../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbMomentDateModule } from '@nebular/moment';
 import { NbCheckboxModule } from '@nebular/theme';
-import { UnderConstractionModule } from '../../under-constraction/under-constraction.module';
-import { LinkDetailRoomInformationModule } from './link-detail-room-information/link-detail-room-information.module';
+import { NgxPrintModule } from 'ngx-print';
+import { NgxCurrencyModule } from 'ngx-currency';
+import { UnderConstractionModule } from '../../../under-constraction/under-constraction.module';
 export const customCurrencyMaskConfig = {
   align: 'right',
   allowNegative: true,
   allowZero: true,
   decimal: ',',
-  precision: 2,
+  precision: 0,
   prefix: 'Rp ',
   suffix: '',
   thousands: '.',
@@ -23,11 +24,11 @@ export const customCurrencyMaskConfig = {
 const routes: Routes = [
   {
     path: '',
-    component: BookingDetailComponent,
+    component: NotaComponent,
   },
 ];
 @NgModule({
-  declarations: [BookingDetailComponent],
+  declarations: [NotaComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -36,8 +37,9 @@ const routes: Routes = [
     Ng2SmartTableModule,
     NbMomentDateModule,
     NbCheckboxModule,
+    NgxPrintModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     // UnderConstractionModule,
-    LinkDetailRoomInformationModule,
   ],
 })
-export class BookingDetailModule { }
+export class NotaModule { }
