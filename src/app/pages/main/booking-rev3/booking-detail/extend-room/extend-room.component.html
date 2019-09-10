@@ -24,11 +24,11 @@
               id="arrivalDate"
               name="arrivalDate"
               required
-              [disabled]="show === false"
               #arrivalDate="ngModel"
               placeholder="Arrival Date">
               <nb-datepicker
                 #arrivalDate
+                [min]="min"
                 format="MMM d, y">
               </nb-datepicker>
             </div>
@@ -60,11 +60,13 @@
               id="departureDate"
               name="departureDate"
               required
-              [disabled]="show === false"
+              [min]="minDate"
+              disabled
               #departureDate="ngModel"
               placeholder="Departure Date">
               <nb-datepicker
                 #departureDate
+                [min]="min"
                 format="MMM d, y">
               </nb-datepicker>
             </div>
@@ -120,8 +122,8 @@
       
       
       <div class="buttons">
-        <button type="submit" class="btn btn-primary btnn">Save</button>
-        <button type="button" class="btn btn-warning btnn" (click)="cancel()" >Cancel</button>
+        <button type="submit" class="btnn btn btn-primary btnn">Save</button>
+        <button type="button" class="btnn btn btn-warning btnn" (click)="cancel()" >Cancel</button>
       </div>
     </form>
   </nb-card-body>

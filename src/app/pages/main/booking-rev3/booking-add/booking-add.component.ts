@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { takeUntil, debounceTime, map } from 'rxjs/operators';
 import { CountryService } from '../../../../services/country/country.service';
+import { NbDateService } from '@nebular/theme/components/calendar-kit';
 
 @Component({
   selector: 'ngx-booking-add',
@@ -34,6 +35,8 @@ export class BookingAddComponent implements OnInit, OnDestroy {
   modelBusinessSource: any;
   guestt = new Guest;
   source = new Source;
+  min = new Date();
+  max = new Date();
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
@@ -47,13 +50,18 @@ export class BookingAddComponent implements OnInit, OnDestroy {
     public router: Router,
     public notifServ: NotificationService,
     public countryServ: CountryService,
-  ) { }
+    protected dateService: NbDateService<Date>,
+  ) {
+
+  }
 
   ngOnInit() {
     this.detailAccount();
     this.getBusinessSource();
     this.getCountry();
     this.getGuest();
+    this.min = new Date(Date.now());
+    this.max = new Date(Date.now());
   }
 
   ngOnDestroy() {
@@ -276,13 +284,14 @@ export class BookingAddComponent implements OnInit, OnDestroy {
         this.bookingServ.addBooking(dataAddBooking)
         .pipe(takeUntil(this.subs))
         .subscribe(resAddBooking => {
+          console.log('resAddBooking', resAddBooking);
           // TODO: after save otomatic go to booking detail
           this.router.navigate(['pages/booking-detail/' + resAddBooking.booking_information.booking_id]);
 
           const title = 'Add Booking';
           const content = 'Add booking successfully';
           this.notifServ.showSuccessTypeToast(title, content);
-          this.router.navigate(['pages/booking-management']);
+          this.router.navigate(['pages/booking-detail/' + resAddBooking.booking_information.booking_id]);
         }, err => {
           const title = 'Error - Add Booking';
           const content = 'Add booking not saved';

@@ -677,10 +677,18 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
       this.bookingServ.checkIn(data)
       .pipe(takeUntil(this.subs))
       .subscribe(resCheckIn => { // ! Success Check In
-        const title = 'Check In for Booking room' + this.detailBookingByBookingRoomId.roomInformation.bookingRoomId;
-        const content = 'Check In successfully';
-        this.notifServ.showSuccessTypeToast(title, content);
-        this.checkedCheckIn = false;
+        console.log('resCheckIn', resCheckIn);
+        if (!resCheckIn.Error) {
+          const title = 'Check In for Booking room' + this.detailBookingByBookingRoomId.roomInformation.bookingRoomId;
+          const content = 'Check In successfully';
+          this.notifServ.showSuccessTypeToast(title, content);
+          this.checkedCheckIn = false;
+        } else {
+          const title = 'No assign room for Booking room' + this.detailBookingByBookingRoomId.roomInformation.bookingRoomId;
+          const content = resCheckIn.Error;
+          this.notifServ.showWarningTypeToast(title, content);
+          this.checkedCheckIn = false;
+        }
       }, err => { // ! Not Success Check In
         const title = 'Check In for Booking room' + this.detailBookingByBookingRoomId.roomInformation.bookingRoomId;
         const content = 'Check In Error';
@@ -705,16 +713,16 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
       };
       this.bookingServ.checkOut(data)
       .pipe(takeUntil(this.subs))
-      .subscribe(resCheckIn => { // ! Success Check Out
+      .subscribe(resCheckOut => { // ! Success Check Out
+        console.log('resCheckIn', resCheckOut);
         const title = 'Check Out for Booking room' + this.detailBookingByBookingRoomId.roomInformation.bookingRoomId;
         const content = 'Check Out successfully';
         this.notifServ.showSuccessTypeToast(title, content);
         this.checkedCheckIn = false;
 
         // TODO: include action return deposit
-      this.activeRoute.params.subscribe(paramsDeposit => {
         const dataReturnDeposit = {
-          bookingRoomId: paramsDeposit.id,
+          bookingRoomId: params.id,
           paymentTypeId: this.dataAddPaymentDeposit.paymentTypeId,
           totalPaid: this.dataAddPaymentDeposit.totalPaid,
           paymentNote: this.dataAddPaymentDeposit.paymentNote,
@@ -722,10 +730,9 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
           paymentRemark: 'return_deposit',
         };
 
-      this.bookingServ.payment(data)
+      this.bookingServ.deposit(dataReturnDeposit)
         .pipe(takeUntil(this.subs))
         .subscribe(() => {});
-      });
       }, err => { // ! Not Success Check Out
         const title = 'Check Out for Booking room' + this.detailBookingByBookingRoomId.roomInformation.bookingRoomId;
         const content = 'Check Out Error';
@@ -843,7 +850,7 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     });
   }
 
-  // TODO : GO View Nota 
+  // TODO : GO View Nota
   goToNota() {
     this.activeRoute.params.subscribe(params => {
       const bookingRoom = {

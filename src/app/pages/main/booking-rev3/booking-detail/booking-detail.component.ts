@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { BookingService } from '../../../../services/booking-rev3/booking.service';
 import { BusinessSourceService } from '../../../../services/business-source/business-source.service';
 import { GuestService } from '../../../../services/guest/guest.service';
@@ -15,6 +15,7 @@ import { DetailBookingByBookingId } from '../booking';
 import { takeUntil } from 'rxjs/operators';
 import { LocalDataSource } from 'ng2-smart-table';
 import { LinkDetailRoomInformationComponent } from './link-detail-room-information/link-detail-room-information.component';
+import { NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-booking-detail',
@@ -53,7 +54,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       },
     },
   };
+
+  // ! setting Cancel booking
+  cancel = {
+    note: '',
+  };
   constructor(
+    private notifServ: NotificationService,
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
     public guestServ: GuestService,
@@ -66,11 +73,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public datepipe: DatePipe,
     public router: Router,
     private activeRoute: ActivatedRoute,
+    private dialogService: NbDialogService,
   ) { }
 
   ngOnInit() {
     this.getBookingInfomation();
     this.detailAccount();
+    this.cancel.note;
   }
 
   ngOnDestroy() {
@@ -209,6 +218,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     });
   }
 
+  // TODO: Funtion Open Dialog
+  openActionCancelByBooking(dialogCancelByBooking: TemplateRef<any>) {
+    this.dialogService.open(dialogCancelByBooking); // ! dialog check out process
+  }
+
   // TODO : Go To Extend Room
   goToExtendRoom() {
     this.activeRoute.params.subscribe(params => {
@@ -217,6 +231,34 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       };
 
       this.router.navigate(['/pages/extend-room/' + booking.id]);
+    });
+  }
+
+  // TODO : Go To Extend Room
+  goToBookingManagement() {
+    this.router.navigate(['/pages/booking-management']);
+  }
+
+  cancelBooking() {
+    this.activeRoute.params.subscribe(params => {
+      const booking = {
+        id: params.id,
+      };
+
+      const data = {
+        bookingId: params.id,
+        cancelBy: '',
+        cancelReason: 'Cancel Booking',
+      };
+      this.bookingServ.cancelBookingByBookingId(booking, data)
+      .pipe(takeUntil(this.subs))
+      .subscribe(() => {
+        const title = 'Cancel booking number:' + this.detailBookingByBookingId.bookingInformation.bookingNumber;
+        const content = 'Successfully';
+        setTimeout(() => {
+          this.notifServ.showSuccessTypeToast(title, content);
+        });
+      });
     });
   }
 }

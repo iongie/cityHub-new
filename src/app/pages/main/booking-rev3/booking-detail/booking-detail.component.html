@@ -10,6 +10,22 @@
           nbTooltipPlacement="bottom"
           (click)="goToExtendRoom()">
         </nb-action>
+
+        <!-- !Cancel Booking -->
+        <nb-action
+          icon="fas fa-window-close"
+          nbTooltip="Cancel Booking"
+          nbTooltipPlacement="bottom"
+          (click)="openActionCancelByBooking(dialogCancelByBooking)">
+        </nb-action>
+
+        <!-- !Booking Management -->
+        <nb-action
+          icon="fas fa-bars"
+          nbTooltip="Go to Booking Management"
+          nbTooltipPlacement="bottom"
+          (click)="goToBookingManagement()">
+        </nb-action>
         
       </nb-actions>
   </nb-card-body>
@@ -208,3 +224,39 @@
   </nb-card-body>
 </nb-card>
 <!-- TODO: end tabs -->
+
+
+<!-- TODO: Dialog cancel booking -->
+<ng-template #dialogCancelByBooking let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-auto mr-auto">Cancel Room</div>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Cancel Note</label>
+            <textarea
+            nbInput
+            fullWidth
+            class="form-control"
+            [(ngModel)]="cancel.note"
+            id="note"
+            name="note"
+            required
+            #note="ngModel"
+            placeholder="Cancel Note"></textarea>
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <button type="button" class="btn btn-primary btnn" (click)="cancelBooking()" (click)="ref.close()">Save</button>
+        <button type="button" class="btn btn-warning btnn" (click)="ref.close()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+  

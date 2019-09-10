@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CountryService } from '../../../../../services/country/country.service';
 import { takeUntil } from 'rxjs/operators';
+import { NbDateService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-extend-room',
@@ -36,6 +37,9 @@ export class ExtendRoomComponent implements OnInit, OnDestroy {
   forRole: any;
   public subs= new Subject();
   country: any;
+
+  min = new Date();
+  max = new Date();
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
@@ -50,10 +54,13 @@ export class ExtendRoomComponent implements OnInit, OnDestroy {
     public notifServ: NotificationService,
     public countryServ: CountryService,
     private activeRoute: ActivatedRoute,
-  ) { }
+    protected dateService: NbDateService<Date>,
+  ) {}
 
   ngOnInit() {
     this.detailAccount();
+    this.min = new Date(Date.now());
+    this.max = new Date(Date.now());
   }
 
   ngOnDestroy() {

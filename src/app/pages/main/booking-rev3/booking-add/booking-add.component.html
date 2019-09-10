@@ -15,6 +15,8 @@
         </nb-card-header>
         <nb-card-body>
           <div class="row">
+
+            <!-- ! nebular theme date picker -->
             <div class="form-group col-8">
               <label for="inputEmail4">Arrival Date</label>
               <input
@@ -24,11 +26,11 @@
               id="arrivalDate"
               name="arrivalDate"
               required
-              [disabled]="show === false"
               #arrivalDate="ngModel"
               placeholder="Arrival Date">
               <nb-datepicker
-                #arrivalDate
+                #arrivalDate  
+                [min]="min"
                 format="MMM d, y">
               </nb-datepicker>
             </div>
@@ -60,11 +62,12 @@
               id="departureDate"
               name="departureDate"
               required
-              [disabled]="show === false"
+              disabled
               #departureDate="ngModel"
               placeholder="Departure Date">
               <nb-datepicker
                 #departureDate
+                [min]="min"
                 format="MMM d, y">
               </nb-datepicker>
             </div>

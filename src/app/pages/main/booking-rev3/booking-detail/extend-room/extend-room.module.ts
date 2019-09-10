@@ -8,6 +8,9 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbMomentDateModule } from '@nebular/moment';
 import { NbCheckboxModule } from '@nebular/theme';
 import { UnderConstractionModule } from '../../../under-constraction/under-constraction.module';
+import { NbDateFnsDateModule } from '@nebular/date-fns';
+import { eo } from 'date-fns/locale';
+
 export const customCurrencyMaskConfig = {
   align: 'right',
   allowNegative: true,
@@ -33,9 +36,13 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ThemeModule,
     Ng2SmartTableModule,
-    NbMomentDateModule,
+    // NbMomentDateModule,
     NbCheckboxModule,
     // UnderConstractionModule,
+    NbDateFnsDateModule.forRoot({
+      parseOptions: { locale: eo },
+      formatOptions: { locale: eo },
+    }),
   ],
 })
 export class ExtendRoomModule { }

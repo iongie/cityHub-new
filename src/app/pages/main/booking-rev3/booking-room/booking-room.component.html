@@ -13,7 +13,7 @@
 
       <!-- ! add payment - Done -->
       <nb-action
-        *ngIf="charge.total !== 0"
+        *ngIf="charge.total !== 0 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
         icon="fas fa-money-bill-wave-alt"
         nbTooltip="Add Payment"
         nbTooltipPlacement="bottom"
@@ -22,6 +22,7 @@
 
       <!-- ! add deposit - Done -->
       <nb-action
+      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
         icon="ion-cash"
         nbTooltip="Add Deposit"
         nbTooltipPlacement="bottom"
@@ -30,6 +31,7 @@
 
       <!-- ! add extra charge - Done -->
       <nb-action
+      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
         icon="fas fa-money-check"
         nbTooltip="Add Extra Charge"
         nbTooltipPlacement="bottom"
@@ -38,7 +40,7 @@
 
       <!-- ! add room - Done -->
       <nb-action
-      *ngIf="detailBookingByBookingRoomId.roomInformation.roomId === null"
+      *ngIf="detailBookingByBookingRoomId.roomInformation.roomId === null && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
       icon="fa fa-bed"
       nbTooltip="Add Room"
       nbTooltipPlacement="bottom"
@@ -47,7 +49,7 @@
 
       <!-- !move room - Done -->
       <nb-action
-        *ngIf="detailBookingByBookingRoomId.roomInformation.roomId !== null"
+        *ngIf="detailBookingByBookingRoomId.roomInformation.roomId !== null && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
         icon="fas fa-dolly-flatbed"
         nbTooltip="Move Room"
         nbTooltipPlacement="bottom"
@@ -56,6 +58,7 @@
       
       <!-- !extend room - Done -->
       <nb-action
+        *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
         icon="fas fa-plus-square"
         nbTooltip="Extend Room"
         nbTooltipPlacement="bottom"
@@ -64,7 +67,7 @@
       
       <!-- !add stay - Done -->
       <nb-action
-        *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
+        *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
         icon="fa fa-plus-circle"
         nbTooltip="Add Stay"
         nbTooltipPlacement="bottom"
@@ -74,7 +77,7 @@
 
       <!-- !less stay - Done -->
       <nb-action
-        *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
+        *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
         icon="fa fa-minus-circle"
         nbTooltip="Less Stay"
         nbTooltipPlacement="bottom"
@@ -83,7 +86,7 @@
 
       <!-- ! check in - Done -->
       <nb-action
-      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
+      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
         icon="fas fa-sign-in-alt"
         nbTooltip="Check In"
         nbTooltipPlacement="bottom"
@@ -92,7 +95,7 @@
 
       <!-- ! check out - Done -->
       <nb-action
-      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
+      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
         icon="fas fa-sign-out-alt"
         nbTooltip="Check out"
         nbTooltipPlacement="bottom"
@@ -101,7 +104,7 @@
 
       <!-- ! no show - Done -->
       <nb-action
-      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
+      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
         icon="fas fa-eye-slash"
         nbTooltip="No Show"
         nbTooltipPlacement="bottom"
@@ -110,7 +113,7 @@
 
       <!-- ! cancel booking - Done -->
       <nb-action
-      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 3"
+      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 3 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
         icon="fas fa-eject"
         nbTooltip="Cancel"
         nbTooltipPlacement="bottom"
