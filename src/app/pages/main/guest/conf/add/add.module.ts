@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { ThemeModule } from '../../../../../@theme/theme.module';
 import { NbInputModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { FileUploadModule } from 'ng2-file-upload';
+
 const routes: Routes = [
   {
     path: '',
@@ -23,6 +25,7 @@ const routes: Routes = [
     NbInputModule,
     Ng2SmartTableModule,
     // UnderConstractionModule,
+    FileUploadModule,
   ],
 })
 export class AddModule { }

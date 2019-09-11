@@ -23,7 +23,7 @@ export class AddComponent implements OnInit, OnDestroy {
   countryId: '',
   email: '',
   phoneNumber: '',
-  // guestFileScan: '',
+  guestFileScan: '',
   };
 
   private subs: Subject<void> = new Subject();
@@ -32,6 +32,7 @@ export class AddComponent implements OnInit, OnDestroy {
   forRole: any;
   show: any;
 
+  // TODO: Setting for upload
   fileData = new FormData();
   reader = new FileReader();
   selectedFile: File = null;
@@ -65,8 +66,7 @@ export class AddComponent implements OnInit, OnDestroy {
           countryName: y.country_name,
         };
         return xyz;
-      })
-      
+      });
     console.log(resCountry);
     });
   }
@@ -121,9 +121,8 @@ export class AddComponent implements OnInit, OnDestroy {
   }
 
   onFile(event) {
-    console.log(event);
     this.selectedFile = <File>event.target.files[0];
-    console.log(this.selectedFile.name);
+    console.log(this.selectedFile);
     this.reader.readAsDataURL(this.selectedFile);
     this.reader.onload = (_event) => {
       this.imgURL = this.reader.result;
@@ -132,18 +131,16 @@ export class AddComponent implements OnInit, OnDestroy {
   }
 
   addGuest() {
-    const data = {
-      guestName: this.guest.guestName,
-      countryId: this.guest.countryId,
-      address: this.guest.address,
-      city: this.guest.city,
-      email: this.guest.email,
-      phoneNumber: this.guest.phoneNumber,
-      // guestFileScan: this.guest.guestFileScan,
-      createdBy: this.userCityHub.username,
-    };
-    console.log(data);
-    this.guestServ.add(data).pipe(takeUntil(this.subs)).subscribe(res => {
+    this.fileData.append('guestName', this.guest.guestName);
+    this.fileData.append('countryId', this.guest.countryId);
+    this.fileData.append('address', this.guest.address);
+    this.fileData.append('city', this.guest.city);
+    this.fileData.append('email', this.guest.email);
+    this.fileData.append('phoneNumber', this.guest.phoneNumber);
+    this.fileData.append('createdBy', this.userCityHub.name);
+    this.fileData.append('image', this.selectedFile, this.selectedFile.name);
+
+    this.guestServ.add(this.fileData).pipe(takeUntil(this.subs)).subscribe(res => {
       const title = 'Guest';
       const content = 'Data has been saved';
       this.notifServ.showSuccessTypeToast(title, content);
