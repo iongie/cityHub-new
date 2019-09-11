@@ -1,55 +1,187 @@
 <nb-card>
-    <nb-card-body>
-        <nb-tabset>
-            <!-- TODO: Reservation Tab -->
-            <nb-tab tabTitle="Reservation">
-                Tab content 1
-            </nb-tab>
-        
-            <!-- TODO: Check in Tab -->
-            <nb-tab tabTitle="Check in">
-                Tab content 2
-            </nb-tab>
-        
-            <!-- TODO: Check out Tab -->
-            <nb-tab tabTitle="Check out">
-                <div id="demo" class="content" #content>
-                    <div>billNo: {{notaCheckOut.billNo}},</div>
-                    <div>guestName: {{notaCheckOut.guestName}},</div>
-                    <div>address: {{notaCheckOut.address}},</div>
-                    <div>national: {{notaCheckOut.national}},</div>
-                    <div>roomName: {{notaCheckOut.roomName}},</div>
-                    <div>arrivalDate: {{notaCheckOut.arrivalDate}},</div>
-                    <div>departureDate: {{notaCheckOut.departureDate}},</div>
-                    <div>totalRent: {{notaCheckOut.totalRent}},</div>
-                    <div>totalTax: {{notaCheckOut.totalTax}},</div>
-                    <div>totalDiscount: {{notaCheckOut.totalDiscount}},</div>
-                    <div>totalCharge: {{notaCheckOut.totalCharge}},</div>
-                    <div>total: {{notaCheckOut.total}},</div>
-                    <div>amount to word: {{notaCheckOut.amountToWord}},</div>
-                    <div>balance: {{notaCheckOut.balance}},</div>
-                    <div *ngFor="let charge of notaCheckOut.charge">
-                        <div>date: {{charge.date}},</div>
-                        <div>nominal: {{charge.nominal}},</div>
-                        <div>particular: {{charge.particular}},</div>
+  <nb-card-body>
+    <nb-tabset>
+      <!-- TODO: Reservation Tab -->
+      <nb-tab tabTitle="Reservation">
+        Tab content 1
+      </nb-tab>
+
+      <!-- TODO: Check in Tab -->
+      <nb-tab tabTitle="Check in">
+        <div id="demo" #content>
+          <div class="invoice">
+            <div class="invoice-print">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="invoice-title">
+                    <h2>Invoice</h2>
+                    <div class="invoice-number">Invoice No. #12345</div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <address>
+                        <strong>Bill No : {{notaCheckOut.billNo}}</strong>
+
+                      </address>
+                      <address>
+                        <strong>Guest Name :</strong><br>
+                        {{notaCheckOut.guestName}}<br>
+
+                      </address>
+                      <address>
+                        <strong>Address :</strong><br>
+                        {{notaCheckOut.address}}<br>
+
+                      </address>
+                      <address>
+                        <strong>National :</strong><br>
+                        {{notaCheckOut.national}}<br>
+
+                      </address>
                     </div>
+                    <div class="col-md-6 text-md-right">
+                      <address>
+                        <strong>Room No : {{notaCheckOut.roomName}}</strong>
+
+                      </address>
+                      <address>
+                        <div *ngFor="let charge of notaCheckOut.charge">
+                          <strong>Tariff :</strong><br>
+                          {{charge.nominal}}<br>
+                        </div>
+
+                      </address>
+                      <address>
+                        <strong>Arrival Date :</strong><br>
+                        {{notaCheckOut.arrivalDate}}<br>
+
+                      </address>
+                      <address>
+                        <strong>Departure Date :</strong><br>
+                        {{notaCheckOut.departureDate}}<br>
+
+                      </address>
+                    </div>
+                  </div>
+
                 </div>
+              </div>
 
-                <button printSectionId="demo" ngxPrint>print</button>
-                <button (click)="makePdfCheckOut()">Export to pdf</button>
-            </nb-tab>
-        
-            <!-- TODO: Deposit Tab -->
-            <nb-tab tabTitle="Deposit">
-                Tab content 2
-            </nb-tab>
-        
-            <!-- TODO: Extra Charge Tab -->
-            <nb-tab tabTitle="Extra Charge">
-                Tab content 2
-            </nb-tab>
-        </nb-tabset>
-    </nb-card-body>
+              <div class="row mt-4">
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table class="table table-striped table-hover table-md">
+                      <tr>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Particular</th>
+                        <th class="text-right">Subtotal</th>
+                      </tr>
+
+                      <tr *ngFor="let charge of notaCheckOut.charge">
+                        <td class="text-center">{{charge.date}}</td>
+                        <td class="text-center">{{charge.particular}}</td>
+                        <td class="text-right">{{charge.nominal}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col-lg-8">
+                      <h5>Amount In Words</h5>
+                      <h5>{{notaCheckOut.amountToWord}}</h5>
+                    </div>
+                    <div class="col-lg-4 text-right">
+                      <div class="invoice-detail-item">
+                        <table class="table table-striped table-md text-right">
+                          <tr>
+                            <td>Total Rent</td>
+                            <td>:</td>
+                            <td>{{notaCheckOut.totalRent}}</td>
+                          </tr>
+                          <tr>
+                            <td>Total Tax</td>
+                            <td>:</td>
+                            <td>{{notaCheckOut.totalTax}}</td>
+                          </tr>
+                          <tr>
+                            <td>Total Charge</td>
+                            <td>:</td>
+                            <td>{{notaCheckOut.totalCharge}}</td>
+                          </tr>
+                          <hr class="mt-2 mb-2">
+                          <tr>
+                            <td>Total</td>
+                            <td>:</td>
+                            <td>{{notaCheckOut.total}}</td>
+                          </tr>
+                          <tr>
+                            <td>Total Discount</td>
+                            <td>:</td>
+                            <td>{{notaCheckOut.totalDiscount}}</td>
+                          </tr>
+                          <hr class="mt-2 mb-2">
+                          <tr>
+                            <td><strong>Balance</strong></td>
+                            <td>:</td>
+                            <td><strong>{{notaCheckOut.balance}}</strong></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="text-md-right">
+          <div class="float-lg-left mb-lg-0 mb-3">
+            <button printSectionId="demo" ngxPrint [useExistingCss]="true" class="btn btn-primary btn-icon icon-left">
+              <i class="fas fa-print"></i>Print</button>
+          </div>
+          <button (click)="makePdfCheckOut()" class="btn btn-warning btn-icon icon-left">
+              <i class="fas fa-file"></i> Export to PDF</button>
+        </div>
+      </nb-tab>
+
+      <!-- TODO: Check out Tab -->
+      <nb-tab tabTitle="Check out">
+        <div id="demo" class="content" #content>
+          <div>billNo: {{notaCheckOut.billNo}},</div>
+          <div>guestName: {{notaCheckOut.guestName}},</div>
+          <div>address: {{notaCheckOut.address}},</div>
+          <div>national: {{notaCheckOut.national}},</div>
+          <div>roomName: {{notaCheckOut.roomName}},</div>
+          <div>arrivalDate: {{notaCheckOut.arrivalDate}},</div>
+          <div>departureDate: {{notaCheckOut.departureDate}},</div>
+          <div>totalRent: {{notaCheckOut.totalRent}},</div>
+          <div>totalTax: {{notaCheckOut.totalTax}},</div>
+          <div>totalDiscount: {{notaCheckOut.totalDiscount}},</div>
+          <div>totalCharge: {{notaCheckOut.totalCharge}},</div>
+          <div>total: {{notaCheckOut.total}},</div>
+          <div>amount to word: {{notaCheckOut.amountToWord}},</div>
+          <div>balance: {{notaCheckOut.balance}},</div>
+          <div *ngFor="let charge of notaCheckOut.charge">
+            <div>date: {{charge.date}},</div>
+            <div>nominal: {{charge.nominal}},</div>
+            <div>particular: {{charge.particular}},</div>
+          </div>
+        </div>
+
+        <button printSectionId="demo" ngxPrint>print</button>
+        <button (click)="makePdfCheckOut()">Export to pdf</button>
+      </nb-tab>
+
+      <!-- TODO: Deposit Tab -->
+      <nb-tab tabTitle="Deposit">
+        Tab content 2
+      </nb-tab>
+
+      <!-- TODO: Extra Charge Tab -->
+      <nb-tab tabTitle="Extra Charge">
+        Tab content 2
+      </nb-tab>
+    </nb-tabset>
+  </nb-card-body>
 </nb-card>
-
-
