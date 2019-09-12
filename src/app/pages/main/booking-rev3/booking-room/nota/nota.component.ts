@@ -19,6 +19,7 @@ export class NotaComponent implements OnInit, OnDestroy {
     address: '',
     national: '',
     roomName: '',
+    duration: '',
     arrivalDate: new Date(),
     departureDate: new Date(),
     totalRent: 0,
@@ -27,7 +28,10 @@ export class NotaComponent implements OnInit, OnDestroy {
     totalCharge: '',
     total: 0,
     amountToWord: '',
+    datePrint: new Date(),
     balance: 0,
+    checkInBy: '',
+    checkOutBy: '',
     charge: [
       {
         date: new Date(),
@@ -74,6 +78,9 @@ export class NotaComponent implements OnInit, OnDestroy {
           address: resNota[4].guest.address,
           national: resNota[4].guest.country_name,
           roomName: resNota[4].room.room_name,
+          checkInBy: resNota[4].room.checkin_by,
+          checkOutBy: resNota[4].room.checkout_by,
+          duration: resNota[4].room.duration,
           arrivalDate: resNota[4].room.arrival_date,
           departureDate: resNota[4].room.departure_date,
           totalRent: resNota[4].subtotal_charge.total_rent,
@@ -82,6 +89,7 @@ export class NotaComponent implements OnInit, OnDestroy {
           totalCharge: resNota[4].subtotal_charge.total_charge,
           total: resNota[4].total_charge.total,
           amountToWord: writtenForm(resNota[4].total_charge.total),
+          datePrint: new Date (Date.now()),
           balance: resNota[4].total_charge.balance,
           charge: resNota[4].charge.map(x => {
             const dataCharge = {
