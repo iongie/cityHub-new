@@ -67,7 +67,7 @@
       
       <!-- !add stay - Done -->
       <nb-action
-        *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
+        *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
         icon="fa fa-plus-circle"
         nbTooltip="Add Stay"
         nbTooltipPlacement="bottom"
@@ -77,7 +77,7 @@
 
       <!-- !less stay - Done -->
       <nb-action
-        *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
+        *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
         icon="fa fa-minus-circle"
         nbTooltip="Less Stay"
         nbTooltipPlacement="bottom"
@@ -86,7 +86,7 @@
 
       <!-- ! check in - Done -->
       <nb-action
-      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
+      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
         icon="fas fa-sign-in-alt"
         nbTooltip="Check In"
         nbTooltipPlacement="bottom"
@@ -95,7 +95,7 @@
 
       <!-- ! check out - Done -->
       <nb-action
-      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
+      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
         icon="fas fa-sign-out-alt"
         nbTooltip="Check out"
         nbTooltipPlacement="bottom"
@@ -104,7 +104,7 @@
 
       <!-- ! no show - Done -->
       <nb-action
-      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
+      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
         icon="fas fa-eye-slash"
         nbTooltip="No Show"
         nbTooltipPlacement="bottom"

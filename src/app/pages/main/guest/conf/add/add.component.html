@@ -25,6 +25,7 @@
         </textarea>
       </div>
 
+      <!-- ! Manual Setting for Upload -->
       <div class="input-group">
         <input type="file" name="image" id="image" (change)="onFile($event)">
         <img [src]="imgURL" [ngClass]="{'img-preview': true}" *ngIf="imgURL">
