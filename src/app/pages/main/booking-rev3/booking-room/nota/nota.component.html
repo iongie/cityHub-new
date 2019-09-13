@@ -8,7 +8,116 @@
 
       <!-- TODO: Check in Tab -->
       <nb-tab tabTitle="Check in">
-          Tab content Check In
+        <div id="demo" #content>
+          <div class="invoice">
+            <div class="invoice-print">
+              <div class="row">
+                <div class="col-12">
+                  <div class="invoice-title">
+                    <h2 class="text-center">Receipt</h2>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-6">
+                      <address>
+                        <strong>Room No.</strong><br>
+                        {{notaCheckIn.roomName}}
+                      </address>
+                      <address>
+                        <strong>Guest</strong><br>
+                        {{notaCheckIn.guestName}}
+                      </address>
+                    </div>
+                    <div class="col-6 text-right">
+                      <address>
+                        <strong>No.</strong><br>
+                        {{notaCheckIn.bookingNo}}
+                      </address>
+                      <address>
+                        <strong>Date.</strong><br>
+                        {{notaCheckIn.datePrint  | date:'medium'}}
+                      </address>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-6">
+                  <div class="table-responsive">
+                    <table>
+                      <tr>
+                        <td><strong>Payment Info</strong></td>
+                        <td>:</td>
+                        <td>{{notaCheckIn.paymentType}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="table-responsive">
+                    <table>
+                      <tr>
+                        <td><strong>Amount</strong></td>
+                        <td>:</td>
+                        <td>{{notaCheckIn.totalCharge | currency:"Rp. " }}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="table-responsive">
+                <table>
+                  <tr>
+                    <td><strong>Amount in Words</strong></td>
+                    <td>:</td>
+                    <td>{{notaCheckIn.amountToWord}}</td>
+                  </tr><br>
+                  <tr>
+                    <td><strong>Remark</strong></td>
+                    <td>:</td>
+                    <td></td>
+                  </tr>
+                </table>
+              </div>
+              <hr>
+              <p>Booking Policy: No Cancel, No Reschedule, No Refund</p><br>
+              <div class="row">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="table-responsive">
+                        <table class="table">
+                          <tr>
+                            <td><strong>User</strong></td>
+                            <td>:</td>
+                            <td>{{notaCheckIn.checkInBy}}</td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="table-responsive">
+                        <table class="table">
+                          <tr>
+                            <td>Authorized Signatory</td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button printSectionId="demo" ngxPrint [useExistingCss]="true" class="btn btn-primary">
+            <i class="fas fa-print"></i>Print</button>
+          <button (click)="makePdfCheckOut()" class="btn btn-warning">
+            <i class="fas fa-file"></i> Export to PDF</button>
+        </div>
       </nb-tab>
 
       <!-- TODO: Check out Tab -->
@@ -19,12 +128,11 @@
               <div class="row">
                 <div class="col-12">
                   <div class="invoice-title">
-                    <h2>Invoice</h2>
-                    <div class="invoice-number">Invoice No. #12345</div>
+                    <h2 class="text-center">Invoice</h2>
                   </div>
                   <hr>
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-6">
                       <address>
                         <strong>Bill No : {{notaCheckOut.billNo}}</strong>
                       </address>
@@ -42,9 +150,7 @@
                       </address>
                     </div>
                     <div class="col-6 text-right">
-                      <address>
-                        <strong>Room No : {{notaCheckOut.roomName}}</strong>
-                      </address>
+                      <strong>Room No : {{notaCheckOut.roomName}}</strong>
                       <address>
                         <strong>Arrival Date :</strong><br>
                         {{notaCheckOut.arrivalDate}}<br>

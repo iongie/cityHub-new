@@ -13,6 +13,17 @@ import * as html2canvas from 'html2canvas';
 })
 export class NotaComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
+  notaCheckIn = {
+    bookingNo:'',
+    guestName:'',
+    roomName:'',
+    datePrint: new Date(),
+    totalCharge: '',
+    amountToWord: '',
+    paymentType: '',
+    checkInBy: '',
+  };
+
   notaCheckOut = {
     billNo: '',
     guestName: '',
@@ -71,9 +82,22 @@ export class NotaComponent implements OnInit, OnDestroy {
       ).pipe(takeUntil(this.subs)).subscribe(resNota => {
         const writtenForm = require('written-number');
 
+        // ! get data nota check in
+        this.notaCheckIn = {
+          roomName: resNota[3].room.room_name,
+          guestName: resNota[3].guest.guest_name,
+          bookingNo : resNota[3].booking.booking_number,
+          datePrint: new Date (Date.now()),
+          checkInBy: resNota[3].room.checkin_by,
+          paymentType: resNota[3].total_charge.payment_type,
+          totalCharge: resNota[3].total_charge.total_charge,
+          amountToWord: writtenForm(resNota[3].total_charge.total_charge),
+        };
+        console.log('nota', resNota); 
+        
         // ! get data nota check out
         this.notaCheckOut = {
-          billNo: resNota[4].booking.booking_number,
+          billNo: resNota[4].total_charge.billing_number,
           guestName: resNota[4].guest.guest_name,
           address: resNota[4].guest.address,
           national: resNota[4].guest.country_name,
