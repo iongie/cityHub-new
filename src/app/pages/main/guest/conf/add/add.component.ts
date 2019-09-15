@@ -12,7 +12,7 @@ import { CountryService } from '../../../../../services/country/country.service'
 @Component({
   selector: 'ngx-add',
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss']
+  styleUrls: ['./add.component.scss'],
 })
 
 export class AddComponent implements OnInit, OnDestroy {
@@ -141,6 +141,7 @@ export class AddComponent implements OnInit, OnDestroy {
     this.fileData.append('image', this.selectedFile, this.selectedFile.name);
 
     this.guestServ.add(this.fileData).pipe(takeUntil(this.subs)).subscribe(res => {
+      console.log('res-guard', res);
       const title = 'Guest';
       const content = 'Data has been saved';
       this.notifServ.showSuccessTypeToast(title, content);

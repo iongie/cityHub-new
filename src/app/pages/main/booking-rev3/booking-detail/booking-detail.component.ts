@@ -46,6 +46,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         title: 'Business Source name',
         type: 'string',
       },
+      bookingRoomStatusName: {
+        title: 'Status',
+        type: 'string',
+      },
       detail: {
         title: 'Actions',
         type: 'custom',
@@ -169,6 +173,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 bookingRoomTypeId: y.room_type_id,
                 roomId: y.room_id,
                 bookingRoomStatusId: y.booking_room_status_id,
+                bookingRoomStatusName: y.booking_room_status_name,
                 roomTypeName: y.room_type_name,
                 baseAdult: y.base_adult,
                 baseChild: y.base_child,

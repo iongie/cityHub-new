@@ -22,9 +22,11 @@ export class RoomInformation {
 export class Guest {
     guestId = 0;
     guestName = '';
-    countryId = 0;
+    countryId = '';
     address = '';
     city = '';
+    email = '';
+    phoneNumber = '';
     guestFileScan = '';
 }
 

@@ -35,8 +35,16 @@ export class BookingAddComponent implements OnInit, OnDestroy {
   modelBusinessSource: any;
   guestt = new Guest;
   source = new Source;
+
+  // TODO: Setting disable date for arrival date and departure date
   min = new Date();
   max = new Date();
+
+  // TODO: Setting for upload
+  fileData = new FormData();
+  reader = new FileReader();
+  selectedFile: File = null;
+  imgURL: any;
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
@@ -170,10 +178,12 @@ export class BookingAddComponent implements OnInit, OnDestroy {
       this.guestt = {
         guestId: 0,
         guestName: '',
-        countryId: 0,
+        countryId: '',
         address: '',
         city: '',
+        phoneNumber: '',
         guestFileScan: '',
+        email: '',
       };
     } else {
       this.guestt = {
@@ -182,6 +192,8 @@ export class BookingAddComponent implements OnInit, OnDestroy {
         countryId: event.countryId,
         address: event.address,
         city: event.city,
+        email: event.email,
+        phoneNumber: event.phoneNumber,
         guestFileScan: event.guestFileScan,
       };
     }
@@ -223,6 +235,16 @@ export class BookingAddComponent implements OnInit, OnDestroy {
       };
       return yui;
     });
+  }
+
+  onFile(event) {
+    this.selectedFile = <File>event.target.files[0];
+    console.log(this.selectedFile);
+    this.reader.readAsDataURL(this.selectedFile);
+    this.reader.onload = (_event) => {
+      this.imgURL = this.reader.result;
+    };
+
   }
 
   addBooking() {
@@ -271,32 +293,85 @@ export class BookingAddComponent implements OnInit, OnDestroy {
           return x.available;
         });
 
-        const dataAddBooking = {
-          arrivalDate: this.datepipe.transform( this.dataAddBooking.arrivalDate, 'yyyy-MM-dd'),
-          duration: this.dataAddBooking.duration,
-          guestId: this.guestt.guestId,
-          sourceId: this.source.businnessSourceId,
-          createdBy: this.userCityHub.name,
-          roomTypeId,
-          numberOfRoom,
-        };
+        // TODO: condition new Guest
+        if (this.guestt.guestId === 0) {
+          // ! data for add guest
+          this.fileData.append('guestName', this.guestt.guestName);
+          this.fileData.append('countryId', this.guestt.countryId);
+          this.fileData.append('address', this.guestt.address);
+          this.fileData.append('city', this.guestt.city);
+          this.fileData.append('email', this.guestt.email);
+          this.fileData.append('phoneNumber', this.guestt.phoneNumber);
+          this.fileData.append('createdBy', this.userCityHub.name);
+          this.fileData.append('image', this.selectedFile, this.selectedFile.name);
 
-        this.bookingServ.addBooking(dataAddBooking)
-        .pipe(takeUntil(this.subs))
-        .subscribe(resAddBooking => {
-          console.log('resAddBooking', resAddBooking);
-          // TODO: after save otomatic go to booking detail
-          this.router.navigate(['pages/booking-detail/' + resAddBooking.booking_information.booking_id]);
+          this.guestServ.add(this.fileData).pipe(takeUntil(this.subs)).subscribe(resAddGuest => {
+            const title = 'Guest';
+            const content = 'Data has been saved';
+            this.notifServ.showSuccessTypeToast(title, content);
 
-          const title = 'Add Booking';
-          const content = 'Add booking successfully';
-          this.notifServ.showSuccessTypeToast(title, content);
-          this.router.navigate(['pages/booking-detail/' + resAddBooking.booking_information.booking_id]);
-        }, err => {
-          const title = 'Error - Add Booking';
-          const content = 'Add booking not saved';
-          this.notifServ.showDangerTypeToast(title, content);
-        });
+            // ! data for new booking
+            const dataAddBookingNull = {
+              arrivalDate: this.datepipe.transform( this.dataAddBooking.arrivalDate, 'yyyy-MM-dd'),
+              duration: this.dataAddBooking.duration,
+              guestId: resAddGuest[0].guest_id,
+              sourceId: this.source.businnessSourceId,
+              createdBy: this.userCityHub.name,
+              roomTypeId,
+              numberOfRoom,
+            };
+            console.log('val-booking', dataAddBookingNull);
+            this.bookingServ.addBooking(dataAddBookingNull)
+            .pipe(takeUntil(this.subs))
+            .subscribe(resAddBooking => {
+              console.log('resAddBooking', resAddBooking);
+              // TODO: after save otomatic go to booking detail
+
+              const titleNull = 'Add Booking';
+              const contentNull = 'Add booking successfully';
+              this.notifServ.showSuccessTypeToast(titleNull, contentNull);
+              this.router.navigate(['pages/booking-detail/' + resAddBooking.booking_information.booking_id]);
+            }, err => {
+              const titleNull = 'Error - Add Booking';
+              const contentNull = 'Add booking not saved';
+              this.notifServ.showDangerTypeToast(titleNull, contentNull);
+            });
+          }, err => {
+            const title = 'User';
+            const content = 'Error';
+            this.notifServ.showInfoTypeToast(title, content);
+          });
+        } else {
+            // TODO: Save New Booking
+
+            // ! data for new booking
+            const dataAddBooking = {
+              arrivalDate: this.datepipe.transform( this.dataAddBooking.arrivalDate, 'yyyy-MM-dd'),
+              duration: this.dataAddBooking.duration,
+              guestId: this.guestt.guestId,
+              sourceId: this.source.businnessSourceId,
+              createdBy: this.userCityHub.name,
+              roomTypeId,
+              numberOfRoom,
+            };
+            console.log('val-booking', dataAddBooking);
+            this.bookingServ.addBooking(dataAddBooking)
+            .pipe(takeUntil(this.subs))
+            .subscribe(resAddBooking => {
+              console.log('resAddBooking', resAddBooking);
+              // TODO: after save otomatic go to booking detail
+              this.router.navigate(['pages/booking-detail/' + resAddBooking.booking_information.booking_id]);
+
+              const title = 'Add Booking';
+              const content = 'Add booking successfully';
+              this.notifServ.showSuccessTypeToast(title, content);
+              this.router.navigate(['pages/booking-detail/' + resAddBooking.booking_information.booking_id]);
+            }, err => {
+              const title = 'Error - Add Booking';
+              const content = 'Add booking not saved';
+              this.notifServ.showDangerTypeToast(title, content);
+            });
+        }
       });
     });
   }

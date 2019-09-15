@@ -50,8 +50,7 @@ export class DetailComponent implements OnInit, OnDestroy {
           countryName: y.country_name,
         };
         return xyz;
-      })
-      
+      });
     console.log(resCountry);
     });
   }

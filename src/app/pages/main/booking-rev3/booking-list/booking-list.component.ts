@@ -35,10 +35,10 @@ export class BookingListComponent implements OnInit, OnDestroy {
         title: 'Booking number',
         type: 'string',
       },
-      guestName: {
-        title: 'Guest name',
-        type: 'string',
-      },
+      // guestName: {
+      //   title: 'Guest name',
+      //   type: 'string',
+      // },
       businessSourceName: {
         title: 'Business Source name',
         type: 'string',
@@ -134,6 +134,8 @@ export class BookingListComponent implements OnInit, OnDestroy {
               const filterDataGuest = dataGuest.filter(x  => {
                 return x.guest_id === y.guest_id;
               });
+
+              console.log('filterDataGuest', filterDataGuest);
               const datax = {
                 bookingId: y.booking_id,
                 guestId: y.guest_id,

@@ -288,6 +288,19 @@ const routes: Routes = [{
       loadChildren: './main/miscellaneous-sales/miscellaneous-sales.module#MiscellaneousSalesModule',
     },
     {
+      path: 'add-miscellaneous-sales',
+      loadChildren: './main/miscellaneous-sales/add-miscellaneous-sales/add-miscellaneous-sales.module#AddMiscellaneousSalesModule',
+    },
+    {
+      path: 'detail-miscellaneous-sales',
+      children: [
+        {
+          path: ':id',
+          loadChildren: './main/miscellaneous-sales/detail-miscellaneous-sales/miscellaneous-sales-detail.module#MiscellaneousSalesDetailModule',
+        },
+      ],
+    },
+    {
       path: 'user',
       loadChildren: './main/user/user.module#UserModule',
     },

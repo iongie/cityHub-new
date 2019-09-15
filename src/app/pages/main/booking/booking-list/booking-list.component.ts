@@ -18,7 +18,7 @@ import { LinkDetailComponent } from './conf/link-detail/link-detail.component';
 @Component({
   selector: 'ngx-booking-list',
   templateUrl: './booking-list.component.html',
-  styleUrls: ['./booking-list.component.scss']
+  styleUrls: ['./booking-list.component.scss'],
 })
 export class BookingListComponent implements OnInit, OnDestroy {
   booking: LocalDataSource;
@@ -130,10 +130,10 @@ export class BookingListComponent implements OnInit, OnDestroy {
             this.guestServ.get().pipe(takeUntil(this.subs)).subscribe(resGuest => {
               const dataBooking = resBooking.map((y) => {
                 const filterBusinessSource = resBusinessSource.filter((forResBusinessSource) => {
-                  return forResBusinessSource.business_source_id == y.business_source_id;
+                  return forResBusinessSource.business_source_id === y.business_source_id;
                 });
                 const filterGuest = resGuest.filter((forResGuest) => {
-                  return forResGuest.guest_id == y.guest_id;
+                  return forResGuest.guest_id === y.guest_id;
                 });
                 console.log('filterGuest', filterGuest);
                 console.log('filterBusinessSource', filterBusinessSource);

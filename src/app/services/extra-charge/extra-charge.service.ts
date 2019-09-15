@@ -46,6 +46,12 @@ export class ExtraChargeService implements OnDestroy {
     );
   }
 
+  getActive(): Observable<any[]> {
+    return this.http.get<any[]>(this.url + '/extra-charge/active', httpOptions).pipe(
+      catchError(this.handleError),
+    );
+  }
+
   add(data: any): Observable<any> {
     return this.http.post<any>(this.url + '/extra-charge/add', data, httpOptions).pipe(
       catchError(this.handleError),
