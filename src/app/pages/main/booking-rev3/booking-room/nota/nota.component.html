@@ -150,7 +150,9 @@
                       </address>
                     </div>
                     <div class="col-6 text-right">
-                      <strong>Room No : {{notaCheckOut.roomName}}</strong>
+                      <address>
+                        <strong>Room No : {{notaCheckOut.roomName}}</strong>
+                      </address>
                       <address>
                         <strong>Arrival Date :</strong><br>
                         {{notaCheckOut.arrivalDate}}<br>
@@ -315,7 +317,23 @@
 
       <!-- TODO: Extra Charge Tab -->
       <nb-tab tabTitle="Extra Charge">
-        Tab content Extra Charge
+        <div id="demo" #content>
+          <p>{{notaExtraCharge.roomName}}</p>
+          <p>{{notaExtraCharge.guestName}}</p>
+          <p>{{notaExtraCharge.address}}</p>
+          <p>{{notaExtraCharge.datePrint | date }}</p>
+          <p>{{notaExtraCharge.datePrint | date:'shortTime' }}</p>
+          <p>{{notaExtraCharge.totalExtraCharge | currency:"Rp. "}}</p>
+          <p>{{notaExtraCharge.amountToWord}}</p>
+          <p>{{notaExtraCharge.user}}</p>
+          <div *ngFor="let charge of notaExtraCharge.charge">
+
+            <p>{{charge.voucherNo}}</p>
+            <p>{{charge.particular}}</p>
+            <p>{{charge.nominal | currency:"Rp. "}}</p>
+            <p>{{charge.date}}</p>
+          </div>
+        </div>
       </nb-tab>
     </nb-tabset>
   </nb-card-body>
