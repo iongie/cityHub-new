@@ -39,10 +39,10 @@ export class BookingListComponent implements OnInit, OnDestroy {
       //   title: 'Guest name',
       //   type: 'string',
       // },
-      businessSourceName: {
-        title: 'Business Source name',
-        type: 'string',
-      },
+      // businessSourceName: {
+      //   title: 'Business Source name',
+      //   type: 'string',
+      // },
       bookingStatusName: {
         title: 'Status',
         type: 'string',

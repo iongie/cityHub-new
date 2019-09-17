@@ -11,6 +11,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
 import { UnderConstractionModule } from '../../under-constraction/under-constraction.module';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { eo } from 'date-fns/locale';
+import { MiscellaneousSalesDetailLinkModule } from './miscellaneous-sales-detail-link/miscellaneous-sales-detail-link.module';
 export const customCurrencyMaskConfig = {
   align: 'right',
   allowNegative: true,
@@ -39,11 +40,12 @@ const routes: Routes = [
     NbCheckboxModule,
     NgxPrintModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    UnderConstractionModule,
+    // UnderConstractionModule,
     NbDateFnsDateModule.forRoot({
       parseOptions: { locale: eo },
       formatOptions: { locale: eo },
     }),
+    MiscellaneousSalesDetailLinkModule,
   ],
 })
 export class MiscellaneousSalesDetailModule { }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { throwError, Subject, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -9,9 +9,9 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class PaymentTypeService {
+export class PaymentTypeService implements OnDestroy {
   private url = environment.baseUrl;
   private subs: Subject<void> = new Subject();
   private _refresh = new Subject();
@@ -27,12 +27,12 @@ export class PaymentTypeService {
 
   // --------------------------for Handle Error----------------
   handleError(error: Error | HttpErrorResponse) {
-    if(!navigator.onLine){
-        console.error('Browser Offline')
+    if (!navigator.onLine) {
+        console.error('Browser Offline');
     }  else {
        if (error instanceof HttpErrorResponse) {
-         if(!navigator.onLine) {
-           console.error('Browser Offline')
+         if (!navigator.onLine) {
+           console.error('Browser Offline');
          } else {
            console.error('Http Error');
          }
@@ -41,7 +41,7 @@ export class PaymentTypeService {
        }
        console.error(error);
     }
-    return throwError(error); 
+    return throwError(error);
   }
 
   get refresh() {
@@ -49,7 +49,13 @@ export class PaymentTypeService {
   }
 
   get(menu: any): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/payment-type/'+menu.name, httpOptions).pipe(
+    return this.http.get<any[]>(this.url + '/payment-type/' + menu.name, httpOptions).pipe(
+      catchError(this.handleError),
+    );
+  }
+
+  getPay(menu: any): Observable<any> {
+    return this.http.get<any>(this.url + '/payment-type/' + menu.name, httpOptions).pipe(
       catchError(this.handleError),
     );
   }

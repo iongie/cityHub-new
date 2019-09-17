@@ -76,7 +76,7 @@ export class MiscellaneousSalesService implements OnDestroy {
   }
 
   getMiscRangeDate(misc: any): Observable<any> {
-    return this.http.get<any>(this.url + '/misc-sales/custom/' + misc.fromDate + '/' + misc.toDate, httpOptions).pipe(
+    return this.http.get<any>(this.url + '/misc-sales/' + misc.fromDate + '/' + misc.toDate, httpOptions).pipe(
       catchError(this.handleError),
       tap(() => {
         this._refresh.next();

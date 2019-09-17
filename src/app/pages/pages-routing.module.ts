@@ -296,7 +296,17 @@ const routes: Routes = [{
       children: [
         {
           path: ':id',
-          loadChildren: './main/miscellaneous-sales/detail-miscellaneous-sales/miscellaneous-sales-detail.module#MiscellaneousSalesDetailModule',
+          loadChildren: './main/miscellaneous-sales/miscellaneous-sales-detail/miscellaneous-sales-detail.module#MiscellaneousSalesDetailModule',
+        },
+      ],
+    },
+    {
+      path: 'detail-miscellaneous-sales-extra-charge',
+      children: [
+        {
+          path: ':id',
+          // tslint:disable-next-line: max-line-length
+          loadChildren: './main/miscellaneous-sales/miscellaneous-sales-detail/miscellaneous-sales-detail-extra-charge/miscellaneous-sales-detail-extra-charge.module#MiscellaneousSalesDetailExtraChargeModule',
         },
       ],
     },

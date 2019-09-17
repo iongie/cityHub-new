@@ -1,3 +1,290 @@
-<p>
-  miscellaneous-sales-detail works!
-</p>
+<nb-card>
+  <nb-card-body>
+    <nb-actions size="small">
+      <!-- ! Extend Miscellaneous Sales -->
+      <nb-action
+        icon="fa fa-plus-square"
+        nbTooltip="Extend Miscellaneous Sales"
+        nbTooltipPlacement="bottom">
+      </nb-action>
+
+      <!-- ! Miscellaneous Sales Management -->
+      <nb-action
+        icon="fas fa-bars"
+        nbTooltip="Go to Miscellaneous Sales Management"
+        nbTooltipPlacement="bottom"
+        (click)="goToMiscSalesManagement()">
+      </nb-action>
+    </nb-actions>
+  </nb-card-body>
+</nb-card>
+
+
+<nb-card>
+    <nb-card-header>
+      <div class="row">
+        <div class="col-auto mr-auto">
+          Miscellaneous sales Number : {{detailMiscSalesById.miscSales.miscSalesNumber}}
+        </div>
+      </div>
+    </nb-card-header>
+  
+    <nb-card-body>
+      <nb-tabset>
+          <!-- ! Misc Sales information -->
+          <nb-tab tabTitle="Guest Infomation">
+            <nb-card>
+              <nb-card-body>
+                <div class="row">
+                  <div class="form-group col-12">
+                    <label for="exampleFormControlInput1">Name</label>
+                    <input
+                    type="text"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="detailMiscSalesById.miscSales.guestName"
+                    id="guestName"
+                    name="guestName"
+                    required
+                    #guestName="ngModel"
+                    placeholder="Guest name">
+                  </div>
+
+                  <div class="form-group col-12">
+                    <img [src]="imgURL" [ngClass]="{'img-fluid': true}" *ngIf="imgURL">
+                  </div>
+
+                  <div class="form-group col-12">
+                    <label for="exampleFormControlInput1">Address</label>
+                    <textarea
+                    type="text"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="detailMiscSalesById.miscSales.address"
+                    id="address"
+                    name="address"
+                    required
+                    #address="ngModel"
+                    placeholder="Address"></textarea>
+                  </div>
+                  
+                  <div class="form-group col-12">
+                    <label for="exampleFormControlInput1">City</label>
+                    <input
+                    type="text"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="detailMiscSalesById.miscSales.city"
+                    id="city"
+                    name="city"
+                    required
+                    #city="ngModel"
+                    placeholder="City">
+                  </div>
+
+                  <div class="form-group col-12">
+                    <label for="exampleFormControlInput1">Country</label>
+                    <input
+                    type="text"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="detailMiscSalesById.miscSales.countryName"
+                    id="countryName"
+                    name="countryName"
+                    required
+                    #countryName="ngModel"
+                    placeholder="Country">
+                  </div>
+
+                  <div class="form-group col-12">
+                    <label for="exampleFormControlInput1">Email</label>
+                    <input
+                    type="text"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="detailMiscSalesById.miscSales.email"
+                    id="email"
+                    name="email"
+                    required
+                    #email="ngModel"
+                    placeholder="Email">
+                  </div> 
+
+                  <div class="form-group col-12">
+                    <label for="exampleFormControlInput1">Phone number</label>
+                    <input
+                    type="text"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="detailMiscSalesById.miscSales.phoneNumber"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    required
+                    #phoneNumber="ngModel"
+                    placeholder="phone number">
+                  </div> 
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </nb-tab>
+
+          <!-- ! Misc Sales Detail -->
+          <nb-tab tabTitle="Miscellaneous sales information">
+            <nb-card>
+              <nb-card-body>
+                <div class="row">
+                  <div class="form-group col-12">
+                    <label for="exampleFormControlInput1">Miscellaneous sales number</label>
+                    <input
+                    type="text"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="detailMiscSalesById.miscSales.miscSalesNumber"
+                    id="miscSalesNumber"
+                    name="miscSalesNumber"
+                    required
+                    #miscSalesNumber="ngModel"
+                    placeholder="Miscellaneous sales number">
+                  </div>
+    
+                  <div class="form-group col-12">
+                    <label for="exampleFormControlInput1">Miscellaneous sales date</label>
+                    <input
+                    type="text"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="detailMiscSalesById.miscSales.miscSalesDate"
+                    id="miscSalesDate"
+                    name="miscSalesDate"
+                    required
+                    #miscSalesDate="ngModel"
+                    placeholder="Miscellaneous sales date">
+                  </div>
+    
+                  <div class="form-group col-12">
+                    <label for="exampleFormControlInput1">Miscellaneous sales note</label>
+                    <textarea
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="detailMiscSalesById.miscSales.miscSalesNote"
+                    id="miscSalesNote"
+                    name="miscSalesNote"
+                    required
+                    #miscSalesNote="ngModel"
+                    placeholder="Miscellaneous sales note"></textarea>
+                  </div>
+    
+                  <div class="form-group col-12">
+                    <label for="exampleFormControlInput1">Miscellaneous sales status</label>
+                    <input
+                    type="text"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="detailMiscSalesById.miscSales.miscSalesStatus"
+                    id="miscSalesStatus"
+                    name="miscSalesStatus"
+                    required
+                    #miscSalesDate="ngModel"
+                    placeholder="Miscellaneous sales status">
+                  </div>
+  
+                  <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <label for="exampleFormControlInput1">Created At</label>
+                    <input
+                    type="text"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="detailMiscSalesById.miscSales.miscSalesCreatedAt"
+                    id="miscSalesCreatedAt"
+                    name="miscSalesCreatedAt"
+                    required
+                    #miscSalesCreatedAt="ngModel"
+                    placeholder="Created At">
+                  </div>
+  
+                  <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <label for="exampleFormControlInput1">Created By</label>
+                    <input
+                    type="text"
+                    nbInput
+                    fullWidth
+                    disabled
+                    class="form-control"
+                    [(ngModel)]="detailMiscSalesById.miscSales.miscSalesCreatedBy"
+                    id="miscSalesCreatedBy"
+                    name="miscSalesCreatedBy"
+                    required
+                    #miscSalesCreatedBy="ngModel"
+                    placeholder="Created By">
+                  </div>
+
+                  <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                      <label for="exampleFormControlInput1">Updated At</label>
+                      <input
+                      type="text"
+                      nbInput
+                      fullWidth
+                      disabled
+                      class="form-control"
+                      [(ngModel)]="detailMiscSalesById.miscSales.miscSalesUpdatedAt"
+                      id="miscSalesUpdatedAt"
+                      name="miscSalesUpdatedAt"
+                      required
+                      #miscSalesUpdatedAt="ngModel"
+                      placeholder="Updated At">
+                    </div>
+    
+                    <div class="form-group col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                      <label for="exampleFormControlInput1">Updated By</label>
+                      <input
+                      type="text"
+                      nbInput
+                      fullWidth
+                      disabled
+                      class="form-control"
+                      [(ngModel)]="detailMiscSalesById.miscSales.miscSalesUpdatedBy"
+                      id="miscSalesUpdatedBy"
+                      name="miscSalesUpdatedBy"
+                      required
+                      #miscSalesUpdatedBy="ngModel"
+                      placeholder="Updated By">
+                    </div>
+    
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </nb-tab>
+
+          <!-- ! Misc Sales Detail -->
+          <nb-tab tabTitle="Miscellaneous sales detail">
+            <nb-card>
+              <nb-card-body>
+                <ng2-smart-table [settings]="settings"  [source]="miscSalesDetails"></ng2-smart-table>
+              </nb-card-body>
+            </nb-card>
+          </nb-tab>
+      </nb-tabset>
+    </nb-card-body>
+</nb-card>

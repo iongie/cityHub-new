@@ -9,5 +9,9 @@
         (click)="goToAddMiscSales()">
       </nb-action>
     </nb-actions>
+
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings"  [source]="miscSales"></ng2-smart-table>
+    </nb-card-body>
   </nb-card-body>
 </nb-card>

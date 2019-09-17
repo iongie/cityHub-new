@@ -1,24 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MiscellaneousSalesComponent } from './miscellaneous-sales.component';
-import { RouterModule, Routes } from '@angular/router';
-import { ThemeModule } from '../../../@theme/theme.module';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { UnderConstractionModule } from '../under-constraction/under-constraction.module';
+import { MiscellaneousSalesDetailExtraChargeComponent } from './miscellaneous-sales-detail-extra-charge.component';
+import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NbMomentDateModule } from '@nebular/moment';
+import { ThemeModule } from '../../../../../@theme/theme.module';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbCheckboxModule } from '@nebular/theme';
 import { NgxPrintModule } from 'ngx-print';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { eo } from 'date-fns/locale';
-import { MiscellaneousSalesLinkModule } from './miscellaneous-sales-link/miscellaneous-sales-link.module';
+import { UnderConstractionModule } from '../../../under-constraction/under-constraction.module';
 export const customCurrencyMaskConfig = {
   align: 'right',
   allowNegative: true,
   allowZero: true,
   decimal: ',',
-  precision: 0,
+  precision: 2,
   prefix: 'Rp ',
   suffix: '',
   thousands: '.',
@@ -27,18 +25,17 @@ export const customCurrencyMaskConfig = {
 const routes: Routes = [
   {
     path: '',
-    component: MiscellaneousSalesComponent,
+    component: MiscellaneousSalesDetailExtraChargeComponent,
   },
 ];
 @NgModule({
-  declarations: [MiscellaneousSalesComponent],
+  declarations: [MiscellaneousSalesDetailExtraChargeComponent],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule.forChild(routes),
     ThemeModule,
     Ng2SmartTableModule,
-    // NbMomentDateModule,
     NbCheckboxModule,
     NgxPrintModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
@@ -47,7 +44,6 @@ const routes: Routes = [
       parseOptions: { locale: eo },
       formatOptions: { locale: eo },
     }),
-    MiscellaneousSalesLinkModule,
   ],
 })
-export class MiscellaneousSalesModule { }
+export class MiscellaneousSalesDetailExtraChargeModule { }
