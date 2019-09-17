@@ -87,10 +87,11 @@ export class NotaComponent implements OnInit, OnDestroy {
     guestName:'',
     roomName:'',
     datePrint: new Date(),
-    totalCharge: '',
+    totalCharge: 0,
     amountToWord: '',
     paymentType: '',
     checkInBy: '',
+    paymentNote:'',
   };
 
 // 4. Declaration Checkout  
@@ -231,6 +232,7 @@ export class NotaComponent implements OnInit, OnDestroy {
           datePrint: new Date (Date.now()),
           checkInBy: resNota[3].room.checkin_by,
           paymentType: resNota[3].total_charge.payment_type,
+          paymentNote: resNota[3].total_charge.payment_note,
           totalCharge: resNota[3].total_charge.total_charge,
           amountToWord: writtenForm(resNota[3].total_charge.total_charge),
         };

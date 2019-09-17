@@ -3,27 +3,159 @@
     <nb-tabset>
       <!-- TODO: Reservation Tab -->
       <nb-tab tabTitle="Reservation">
-          <div id="demoReservation" #content>
-        <p>{{notaReservation.guestName}}</p>
-        <p>{{notaReservation.address}} - {{notaReservation.city}}</p>
-        <p>{{notaReservation.country}}</p>
-        <p>{{notaReservation.phone}}</p>
-        <p>{{notaReservation.email}}</p>
-        <p>{{notaReservation.bookingNo}}</p>
-        <p>{{notaReservation.bookingStatus}}</p>
-        <p>{{notaReservation.bookingDate}}</p>
-        <p>{{notaReservation.checkInDate}}</p>
-        <p>{{notaReservation.checkOutDate}}</p>
-        <p>{{notaReservation.duration}}</p>
-        <p>{{notaReservation.datePrint | date:'medium'}}</p>
-        <p>{{notaReservation.source}}</p>
-        <p>{{notaReservation.roomType}}</p>
-        <p>{{notaReservation.roomCharge}}</p>
-        <p>{{notaReservation.totalExtraCharge}}</p>
-        <p>{{notaReservation.discount}}</p>
-        <p>{{notaReservation.tax}}</p>
-        <p>{{notaReservation.grandTotal}}</p>
-        <p>{{notaReservation.user}}</p>
+        <div id="demoReservation" #content>
+          <div class="invoice">
+            <div class="invoice-print">
+              <div class="row">
+                <div class="col-12">
+                  <div class="invoice-title">
+                    <h2 class="text-center">Invoice</h2>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-6">
+                      <address>
+                        <strong>Guest</strong><br>
+                        {{notaCheckIn.guestName}}
+                      </address>
+                      <address>
+                        <strong>Address :</strong><br>
+                        {{notaReservation.address}} - {{notaReservation.city}}
+                      </address>
+                      <address>
+                        <strong>Country :</strong><br>
+                        {{notaReservation.country}}
+                      </address>
+                      <address>
+                        <strong>Phone :</strong><br>
+                        {{notaReservation.phone}}
+                      </address>
+                      <address>
+                        <strong>Email :</strong><br>
+                        {{notaReservation.email}}
+                      </address>
+                    </div>
+                    <div class="col-6 text-right">
+                      <address>
+                        <strong>Booking No. :</strong><br>
+                        {{notaReservation.bookingNo}}
+                      </address>
+                      <address>
+                        <strong>Booking Date :</strong><br>
+                        {{notaReservation.bookingDate}}
+                      </address>
+                      <address>
+                        <strong>Check In Date :</strong><br>
+                        {{notaReservation.checkInDate | date }}
+                      </address>
+                      <address>
+                        <strong>Check Out Date :</strong><br>
+                        {{notaReservation.checkOutDate | date }}
+                      </address>
+                      <address>
+                        <strong>Bussiness Source :</strong><br>
+                        {{notaReservation.source}}
+                      </address>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <tr>
+                        <th colspan="2" class="text-center">Description</th>
+                        <th colspan="2" class="text-center">Room Charges</th>
+                      </tr>
+                      <tr>
+                        <td colspan="2"><strong>{{notaReservation.guestName}}</strong></td>
+                        <td colspan="2"><strong>{{notaReservation.roomType}}</strong></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Check In</strong></td>
+                        <td>: {{notaReservation.checkInDate}}</td>
+                        <td><strong>Room Charge</strong></td>
+                        <td>: {{notaReservation.roomCharge | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Check Out</strong></td>
+                        <td>: {{notaReservation.checkOutDate}}</td>
+                        <td><strong>Discount</strong></td>
+                        <td>: {{notaReservation.discount | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Reference</strong></td>
+                        <td>: {{notaReservation.bookingNo}} (Booking No.)</td>
+                        <td><strong>Tax</strong></td>
+                        <td>: {{notaReservation.tax | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Status</strong></td>
+                        <td>: {{notaReservation.bookingStatus}}</td>
+                        <td><strong>Extra Charges</strong></td>
+                        <td>: {{notaReservation.totalExtraCharge | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>No.of Night(s)</strong></td>
+                        <td>: {{notaReservation.duration}}</td>
+                        <td><strong>GRAND TOTAL</strong></td>
+                        <td><strong>: {{notaReservation.grandTotal | currency:"Rp. " }}</strong></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tr>
+                        <td><strong>Remark</strong></td>
+                        <td>:</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Total Rent</strong></td>
+                        <td>:</td>
+                        <td>{{notaReservation.roomCharge | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Discount</strong></td>
+                        <td>:</td>
+                        <td>{{notaReservation.discount | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Total Tax</strong></td>
+                        <td>:</td>
+                        <td>{{notaReservation.tax | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Total Extra Charge</strong></td>
+                        <td>:</td>
+                        <td>{{notaReservation.totalExtraCharge | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Grand Total</strong></td>
+                        <td>:</td>
+                        <td>{{notaReservation.grandTotal | currency:"Rp. " }}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-6 text-center">
+                  <p>Date : {{notaReservation.datePrint | date }}</p>
+                  <p>User : <u>{{notaReservation.user}}</u></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button printSectionId="demoReservation" ngxPrint [useExistingCss]="true" class="btn btn-primary">
+            <i class="fas fa-print"></i>Print</button>
+          <button (click)="makePdfReservation()" class="btn btn-warning">
+            <i class="fas fa-file"></i> Export to PDF</button>
         </div>
       </nb-tab>
 
@@ -98,36 +230,20 @@
                   <tr>
                     <td><strong>Remark</strong></td>
                     <td>:</td>
-                    <td></td>
+                    <td>{{notaCheckIn.paymentNote}}</td>
                   </tr>
                 </table>
               </div>
               <hr>
-              <p>Booking Policy: No Cancel, No Reschedule, No Refund</p><br>
               <div class="row">
-                <div class="col-12">
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="table-responsive">
-                        <table class="table">
-                          <tr>
-                            <td><strong>User</strong></td>
-                            <td>:</td>
-                            <td>{{notaCheckIn.checkInBy}}</td>
-                          </tr>
-                        </table>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="table-responsive">
-                        <table class="table">
-                          <tr>
-                            <td>Authorized Signatory</td>
-                          </tr>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
+                <div class="col-2">
+                  User :
+                </div>
+                <div class="col-4">
+                  <strong>{{notaCheckIn.checkInBy}}</strong>
+                </div>
+                <div class="col-6 text-center">
+                  <u>Authorized Signatory</u>
                 </div>
               </div>
             </div>
@@ -214,7 +330,7 @@
                   </div>
                   <div class="row">
                     <div class="col-6">
-                      <h5>Amount In Words</h5>
+                      <h5>Amount In Words : </h5>
                       <h5>{{notaCheckOut.amountToWord}}</h5>
                     </div>
                     <div class="col-6">
