@@ -450,22 +450,117 @@
       <!-- TODO: Deposit Tab -->
       <nb-tab tabTitle="Deposit">
         <div id="demoDeposit" #content>
-          <p>{{notaDeposit.bookingNo}}</p>
-          <p>{{notaDeposit.source}}</p>
-          <p>{{notaDeposit.paymentType}}</p>
-          <p>{{notaDeposit.deposit}}</p>
-          <p>{{notaDeposit.guestName}}</p>
-          <p>{{notaDeposit.address}} - {{notaDeposit.city}}</p>
-          <p>{{notaDeposit.country}}</p>
-          <p>{{notaDeposit.phone}}</p>
-          <p>{{notaDeposit.email}}</p>
-          <p>{{notaDeposit.datePrint}}</p>
-          <p>{{notaDeposit.user}}</p>
-          <p>{{notaDeposit.roomName}}</p>
-          <p>{{notaDeposit.roomType}}</p>
-          <p>{{notaDeposit.arrivalDate}}</p>
-          <p>{{notaDeposit.departureDate}}</p>
-          <p>{{notaDeposit.duration}}</p>
+          <div class="invoice">
+            <div class="invoice-print">
+              <div class="row">
+                <div class="col-12">
+                  <div class="invoice-title">
+                    <h2 class="text-center">Receipt</h2>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-6">
+                      <address><strong>Guest :</strong><br>
+                        {{notaDeposit.guestName}}
+                      </address>
+                      <address><strong>Address :</strong><br>
+                        {{notaDeposit.address}} - {{notaDeposit.city}}<br>{{notaExtraCharge.country}}
+                      </address>
+                      <address><strong>Phone :</strong><br>
+                        {{notaDeposit.phone}}
+                      </address>
+                      <address><strong>Email :</strong><br>
+                        {{notaDeposit.email}}
+                      </address>
+                    </div>
+
+                    <div class="col-6 text-right">
+                      <address><strong>Booking No :</strong><br>
+                        {{notaDeposit.bookingNo}}
+                      </address>
+                      <address>
+                        <strong>Date
+                          :</strong><br>{{notaDeposit.datePrint | date }}<br>{{notaDeposit.datePrint | date:'shortTime' }}
+                      </address>
+                      <address><strong>Bussiness Source :</strong><br>
+                        {{notaDeposit.source}}
+                      </address>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <tr>
+                        <td><strong>Reff #</strong></td>
+                        <td>: {{notaDeposit.bookingNo}} (Booking No.)</td>
+                        <td><strong>Room No.</strong></td>
+                        <td>: {{notaDeposit.roomName}}</td>
+                        <td><strong>Room Type</strong></td>
+                        <td>: {{notaDeposit.roomType}}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Arrival Date</strong></td>
+                        <td>: {{notaDeposit.arrivalDate}}</td>
+                        <td><strong>Departure Date</strong></td>
+                        <td>: {{notaDeposit.arrivalDate}}</td>
+                        <td><strong>No. of Night (s)</strong></td>
+                        <td>: {{notaDeposit.duration}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="table-responsive">
+                      <table class="table table-striped">
+                      <tr>
+                        <td><strong>Payment Info : {{notaDeposit.paymentType}}</strong></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <tr>
+                        <td><strong>Deposit : {{notaDeposit.deposit | currency:"Rp. " }}</strong></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <br>
+              Amount In Words : <h5><strong>{{notaDeposit.amountToWord}}</strong></h5>
+              <p>Booking Policy: No Cancel, No Reschedule, No Refund</p><br>
+              <div class="row">
+                <div class="col-6">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tr>
+                        <td>User :</td>
+                        <td>{{notaDeposit.user}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <u>
+                    <h6 class="text-center">Authorized Signatory</h6>
+                  </u>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button printSectionId="demoDeposit" ngxPrint [useExistingCss]="true" class="btn btn-primary">
+            <i class="fas fa-print"></i>Print</button>
+          <button (click)="makePdfExtraCharge()" class="btn btn-warning">
+            <i class="fas fa-file"></i> Export to PDF</button>
         </div>
       </nb-tab>
 
