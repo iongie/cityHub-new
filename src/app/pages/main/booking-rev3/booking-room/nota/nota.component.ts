@@ -16,6 +16,11 @@ export class NotaComponent implements OnInit, OnDestroy {
 
   // 0. Declaration Reservation
   notaReservation = {
+    propertyName:'',
+    propertyAddress:'',
+    propertyCity:'',
+    propertyCountry:'',
+    propertyWebsite:'',
     guestName:'',
     address:'',
     phone:'',
@@ -156,6 +161,11 @@ export class NotaComponent implements OnInit, OnDestroy {
         
         // 0. get data nota reservation
         this.notaReservation = {
+          propertyName: resNota[0].property.property_name,
+          propertyAddress: resNota[0].property.address,
+          propertyCity: resNota[0].property.city,
+          propertyCountry: resNota[0].property.country_name,
+          propertyWebsite: resNota[0].property.website,
           guestName: resNota[0].guest.guest_name,
           address: resNota[0].guest.address,
           phone: resNota[0].guest.phone_number,
