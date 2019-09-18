@@ -292,6 +292,24 @@ const routes: Routes = [{
       loadChildren: './main/miscellaneous-sales/add-miscellaneous-sales/add-miscellaneous-sales.module#AddMiscellaneousSalesModule',
     },
     {
+      path: 'extend-miscellaneous-sales',
+      children: [
+        {
+          path: ':id',
+          loadChildren: './main/miscellaneous-sales/miscellaneous-sales-extend/miscellaneous-sales-extend.module#MiscellaneousSalesExtendModule',
+        },
+      ],
+    },
+    {
+      path: 'nota-miscellaneous-sales',
+      children: [
+        {
+          path: ':id',
+          loadChildren: './main/miscellaneous-sales/miscellaneous-sales-nota/miscellaneous-sales-nota.module#MiscellaneousSalesNotaModule',
+        },
+      ],
+    },
+    {
       path: 'detail-miscellaneous-sales',
       children: [
         {

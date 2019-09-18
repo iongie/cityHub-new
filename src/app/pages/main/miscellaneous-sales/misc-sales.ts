@@ -50,3 +50,73 @@ export class MiscDetailById {
         },
     ];
 }
+
+export class NotaMiscSales {
+    guest = {
+        guestId: 0,
+        countryId: 0,
+        guestName: '',
+        address: '',
+        city: '',
+        email: '',
+        phoneNumber: '',
+        guestFileScan: '',
+        guestCreatedAt: '',
+        guestUpdatedBy: '',
+        countryName: '',
+    };
+    property = {
+        propertyId: 0,
+        countryId: 0,
+        propertyName: '',
+        address: '',
+        city: '',
+        phoneNumber: '',
+        website: '',
+        createdAt: '',
+        createdBy: '',
+        updatedAt: '',
+        updatedBy: '',
+        countryName: '',
+    };
+    miscSales = {
+        miscSalesId: 0,
+        guestId: 0,
+        paymentTypeId: 0,
+        miscSalesNumber: '',
+        miscSalesTotal: 0,
+        miscSalesDate: '',
+        miscSalesNote: '',
+        miscSalesStatus: '',
+        miscSalesCreatedAt: '',
+        miscSalesCreatedBy: '',
+        miscSalesUpdatedAt: '',
+        miscSalesUpdatedBy: '',
+        miscSalesCancelAt: '',
+        miscSalesCancelBy: '',
+        miscSalesCancelReason: '',
+        paymentTypeName: '',
+        paymentTypeDbStatus: '',
+    };
+    miscSalesDetails = [
+        {
+            miscSalesDetailsId: 0,
+            extraChargeId: 0,
+            miscSalesId: 0,
+            quantity: 0,
+            price: 0,
+            subtotal: 0,
+            miscSalesDetailsStatus: '',
+            extraChargeCategoryId: 0,
+            extraChargeName: '',
+            extraChargeRate: 0,
+            extraChargeDescription: '',
+            extraChargeStatus: '',
+            createdAt: '',
+            createdBy: '',
+            updatedAt: '',
+            updatedBy: '',
+            extraChargeCategoryName: '',
+        },
+    ];
+}

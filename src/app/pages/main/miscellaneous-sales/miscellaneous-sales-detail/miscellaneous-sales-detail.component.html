@@ -1,11 +1,20 @@
 <nb-card>
   <nb-card-body>
     <nb-actions size="small">
+      <!-- ! Nota -->
+      <nb-action
+        icon="fa fa-print"
+        nbTooltip="Print Nota"
+        nbTooltipPlacement="bottom"
+        (click)="goToNota()">
+      </nb-action>
+      
       <!-- ! Extend Miscellaneous Sales -->
       <nb-action
         icon="fa fa-plus-square"
         nbTooltip="Extend Miscellaneous Sales"
-        nbTooltipPlacement="bottom">
+        nbTooltipPlacement="bottom"
+        (click)="goToExtendMiscSales()">
       </nb-action>
 
       <!-- ! Miscellaneous Sales Management -->

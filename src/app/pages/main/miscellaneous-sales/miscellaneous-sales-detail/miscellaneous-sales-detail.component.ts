@@ -226,4 +226,12 @@ export class MiscellaneousSalesDetailComponent implements OnInit, OnDestroy {
   goToMiscSalesManagement() {
     this.router.navigate(['pages/miscellaneous-sales']);
   }
+
+  goToExtendMiscSales() {
+    this.router.navigate(['pages/extend-miscellaneous-sales/' + this.detailMiscSalesById.miscSales.miscSalesId]);
+  }
+
+  goToNota() {
+    this.router.navigate(['pages/nota-miscellaneous-sales/' + this.detailMiscSalesById.miscSales.miscSalesId]);
+  }
 }
