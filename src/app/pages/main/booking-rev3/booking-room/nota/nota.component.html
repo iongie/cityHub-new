@@ -171,6 +171,13 @@
         <div id="demoCheckIn" #content>
           <div class="invoice">
             <div class="invoice-print">
+              <div class="col-12 text-center">
+                <h5>{{notaCheckIn.propertyName}}</h5>
+                <p>{{notaCheckIn.propertyAddress}} - {{notaCheckIn.propertyCity}},
+                  {{notaCheckIn.propertyCountry}}</p>
+                <strong>{{notaCheckIn.propertyWebsite}}</strong>
+              </div>
+              <br>
               <div class="row">
                 <div class="col-12">
                   <div class="invoice-title">
@@ -269,6 +276,13 @@
         <div id="demoCheckOut" #content>
           <div class="invoice">
             <div class="invoice-print">
+              <div class="col-12 text-center">
+                <h5>{{notaCheckOut.propertyName}}</h5>
+                <p>{{notaCheckOut.propertyAddress}} - {{notaCheckIn.propertyCity}},
+                  {{notaCheckOut.propertyCountry}}</p>
+                <strong>{{notaCheckOut.propertyWebsite}}</strong>
+              </div>
+              <br>
               <div class="row">
                 <div class="col-12">
                   <div class="invoice-title">
@@ -459,6 +473,13 @@
         <div id="demoDeposit" #content>
           <div class="invoice">
             <div class="invoice-print">
+              <div class="col-12 text-center">
+                <h5>{{notaDeposit.propertyName}}</h5>
+                <p>{{notaDeposit.propertyAddress}} - {{notaDeposit.propertyCity}},
+                  {{notaDeposit.propertyCountry}}</p>
+                <strong>{{notaDeposit.propertyWebsite}}</strong>
+              </div>
+              <br>
               <div class="row">
                 <div class="col-12">
                   <div class="invoice-title">
@@ -566,7 +587,7 @@
         <div class="buttons">
           <button printSectionId="demoDeposit" ngxPrint [useExistingCss]="true" class="btn btn-primary">
             <i class="fas fa-print"></i>Print</button>
-          <button (click)="makePdfExtraCharge()" class="btn btn-warning">
+          <button (click)="makePdfDeposit()" class="btn btn-warning">
             <i class="fas fa-file"></i> Export to PDF</button>
         </div>
       </nb-tab>
@@ -576,6 +597,13 @@
         <div id="demoExtraCharge" #content>
           <div class="invoice">
             <div class="invoice-print">
+              <div class="col-12 text-center">
+                <h5>{{notaExtraCharge.propertyName}}</h5>
+                <p>{{notaExtraCharge.propertyAddress}} - {{notaExtraCharge.propertyCity}},
+                  {{notaExtraCharge.propertyCountry}}</p>
+                <strong>{{notaExtraCharge.propertyWebsite}}</strong>
+              </div>
+              <br>
               <div class="row">
                 <div class="col-12">
                   <div class="invoice-title">

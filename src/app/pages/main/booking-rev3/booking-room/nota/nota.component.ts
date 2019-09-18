@@ -46,6 +46,11 @@ export class NotaComponent implements OnInit, OnDestroy {
 
 // 1. Declaration Extra Charge
   notaExtraCharge = {
+    propertyName:'',
+    propertyAddress:'',
+    propertyCity:'',
+    propertyCountry:'',
+    propertyWebsite:'',
     roomName:'',
     guestName:'',
     address:'',
@@ -67,6 +72,11 @@ export class NotaComponent implements OnInit, OnDestroy {
 
 // 2. Declaration Deposit
   notaDeposit = {
+    propertyName:'',
+    propertyAddress:'',
+    propertyCity:'',
+    propertyCountry:'',
+    propertyWebsite:'',
     bookingNo: '',
     source:'',
     paymentType:'',
@@ -89,6 +99,11 @@ export class NotaComponent implements OnInit, OnDestroy {
   
 // 3. Declaration Check In  
   notaCheckIn = {
+    propertyName:'',
+    propertyAddress:'',
+    propertyCity:'',
+    propertyCountry:'',
+    propertyWebsite:'',
     bookingNo:'',
     guestName:'',
     roomName:'',
@@ -102,6 +117,11 @@ export class NotaComponent implements OnInit, OnDestroy {
 
 // 4. Declaration Checkout  
   notaCheckOut = {
+    propertyName:'',
+    propertyAddress:'',
+    propertyCity:'',
+    propertyCountry:'',
+    propertyWebsite:'',
     billNo: '',
     guestName: '',
     address: '',
@@ -192,6 +212,11 @@ export class NotaComponent implements OnInit, OnDestroy {
 
         // 1. get data nota extra charge
         this.notaExtraCharge = {
+          propertyName: resNota[1].property.property_name,
+          propertyAddress: resNota[1].property.address,
+          propertyCity: resNota[1].property.city,
+          propertyCountry: resNota[1].property.country_name,
+          propertyWebsite: resNota[1].property.website,
           roomName: resNota[1].room.room_name,
           guestName: resNota[1].guest.guest_name,
           address: resNota[1].guest.address,
@@ -215,6 +240,11 @@ export class NotaComponent implements OnInit, OnDestroy {
 
         // 2. get data nota deposit
         this.notaDeposit = {
+          propertyName: resNota[2].property.property_name,
+          propertyAddress: resNota[2].property.address,
+          propertyCity: resNota[2].property.city,
+          propertyCountry: resNota[2].property.country_name,
+          propertyWebsite: resNota[2].property.website,
           bookingNo: resNota[2].booking.booking_number,
           source: resNota[2].booking.business_source_name,
           paymentType: resNota[2].deposit.payment_type,
@@ -238,6 +268,11 @@ export class NotaComponent implements OnInit, OnDestroy {
 
         // 3. get data nota check in
         this.notaCheckIn = {
+          propertyName: resNota[3].property.property_name,
+          propertyAddress: resNota[3].property.address,
+          propertyCity: resNota[3].property.city,
+          propertyCountry: resNota[3].property.country_name,
+          propertyWebsite: resNota[3].property.website,
           roomName: resNota[3].room.room_name,
           guestName: resNota[3].guest.guest_name,
           bookingNo : resNota[3].booking.booking_number,
@@ -252,6 +287,11 @@ export class NotaComponent implements OnInit, OnDestroy {
         
         // 4. get data nota check out
         this.notaCheckOut = {
+          propertyName: resNota[4].property.property_name,
+          propertyAddress: resNota[4].property.address,
+          propertyCity: resNota[4].property.city,
+          propertyCountry: resNota[4].property.country_name,
+          propertyWebsite: resNota[4].property.website,
           billNo: resNota[4].total_charge.billing_number,
           guestName: resNota[4].guest.guest_name,
           address: resNota[4].guest.address,
@@ -284,16 +324,94 @@ export class NotaComponent implements OnInit, OnDestroy {
     });
   }
 
-  makePdfCheckOut() {
-    html2canvas(this.content.nativeElement, <Html2Canvas.Html2CanvasOptions>{
-      onrendered: function(canvas: HTMLCanvasElement) {
-        const elementToPrint = document.getElementById('demo'); // The html element to become a pdf
-        const pdf = new jsPDF();
-        pdf.addHTML(canvas, () => {
-            pdf.save('web.pdf');
-        });
-      },
-    });
+  public makePdfCheckOut()  
+  {  
+    var data = document.getElementById('demoCheckOut');  
+    html2canvas(data).then(canvas => {  
+      // Few necessary setting options  
+      var imgWidth = 208;   
+      var pageHeight = 295;    
+      var imgHeight = canvas.height * imgWidth / canvas.width;  
+      var heightLeft = imgHeight;  
+  
+      const contentDataURL = canvas.toDataURL('doc/pdf')  
+      let pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF  
+      var position = 0;  
+      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight)  
+      pdf.save('Nota_Check_Out.pdf'); // Generated PDF   
+    });  
+  }
+
+  public makePdfReservation()  
+  {  
+    var data = document.getElementById('demoReservation');  
+    html2canvas(data).then(canvas => {  
+      // Few necessary setting options  
+      var imgWidth = 208;   
+      var pageHeight = 295;    
+      var imgHeight = canvas.height * imgWidth / canvas.width;  
+      var heightLeft = imgHeight;  
+  
+      const contentDataURL = canvas.toDataURL('doc/pdf')  
+      let pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF  
+      var position = 0;  
+      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight)  
+      pdf.save('Nota_Reservation.pdf'); // Generated PDF   
+    });  
+  }
+
+  public makePdfCheckIn()  
+  {  
+    var data = document.getElementById('demoCheckIn');  
+    html2canvas(data).then(canvas => {  
+      // Few necessary setting options  
+      var imgWidth = 208;   
+      var pageHeight = 295;    
+      var imgHeight = canvas.height * imgWidth / canvas.width;  
+      var heightLeft = imgHeight;  
+  
+      const contentDataURL = canvas.toDataURL('doc/pdf')  
+      let pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF  
+      var position = 0;  
+      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight)  
+      pdf.save('Nota_Check_In.pdf'); // Generated PDF   
+    });  
+  }
+
+  public makePdfDeposit()  
+  {  
+    var data = document.getElementById('demoDeposit');  
+    html2canvas(data).then(canvas => {  
+      // Few necessary setting options  
+      var imgWidth = 208;   
+      var pageHeight = 295;    
+      var imgHeight = canvas.height * imgWidth / canvas.width;  
+      var heightLeft = imgHeight;  
+  
+      const contentDataURL = canvas.toDataURL('doc/pdf')  
+      let pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF  
+      var position = 0;  
+      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight)  
+      pdf.save('Nota_Deposit.pdf'); // Generated PDF   
+    });  
+  }
+
+  public makePdfExtraCharge()  
+  {  
+    var data = document.getElementById('demoExtraCharge');  
+    html2canvas(data).then(canvas => {  
+      // Few necessary setting options  
+      var imgWidth = 208;   
+      var pageHeight = 295;    
+      var imgHeight = canvas.height * imgWidth / canvas.width;  
+      var heightLeft = imgHeight;  
+  
+      const contentDataURL = canvas.toDataURL('doc/pdf')  
+      let pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF  
+      var position = 0;  
+      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight)  
+      pdf.save('Nota_Extra_Charge.pdf'); // Generated PDF   
+    });  
   }
 
 }
