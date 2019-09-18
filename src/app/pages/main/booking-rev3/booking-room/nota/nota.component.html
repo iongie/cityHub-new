@@ -3,12 +3,165 @@
     <nb-tabset>
       <!-- TODO: Reservation Tab -->
       <nb-tab tabTitle="Reservation">
-        Tab content Reservation
+        <div id="demoReservation" #content>
+          <div class="invoice">
+            <div class="invoice-print">
+              <div class="row">
+                <div class="col-12">
+                  <div class="invoice-title">
+                    <h2 class="text-center">Invoice</h2>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-6">
+                      <address>
+                        <strong>Guest</strong><br>
+                        {{notaCheckIn.guestName}}
+                      </address>
+                      <address>
+                        <strong>Address :</strong><br>
+                        {{notaReservation.address}} - {{notaReservation.city}}
+                      </address>
+                      <address>
+                        <strong>Country :</strong><br>
+                        {{notaReservation.country}}
+                      </address>
+                      <address>
+                        <strong>Phone :</strong><br>
+                        {{notaReservation.phone}}
+                      </address>
+                      <address>
+                        <strong>Email :</strong><br>
+                        {{notaReservation.email}}
+                      </address>
+                    </div>
+                    <div class="col-6 text-right">
+                      <address>
+                        <strong>Booking No. :</strong><br>
+                        {{notaReservation.bookingNo}}
+                      </address>
+                      <address>
+                        <strong>Booking Date :</strong><br>
+                        {{notaReservation.bookingDate}}
+                      </address>
+                      <address>
+                        <strong>Check In Date :</strong><br>
+                        {{notaReservation.checkInDate | date }}
+                      </address>
+                      <address>
+                        <strong>Check Out Date :</strong><br>
+                        {{notaReservation.checkOutDate | date }}
+                      </address>
+                      <address>
+                        <strong>Bussiness Source :</strong><br>
+                        {{notaReservation.source}}
+                      </address>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <tr>
+                        <th colspan="2" class="text-center">Description</th>
+                        <th colspan="2" class="text-center">Room Charges</th>
+                      </tr>
+                      <tr>
+                        <td colspan="2"><strong>{{notaReservation.guestName}}</strong></td>
+                        <td colspan="2"><strong>{{notaReservation.roomType}}</strong></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Check In</strong></td>
+                        <td>: {{notaReservation.checkInDate}}</td>
+                        <td><strong>Room Charge</strong></td>
+                        <td>: {{notaReservation.roomCharge | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Check Out</strong></td>
+                        <td>: {{notaReservation.checkOutDate}}</td>
+                        <td><strong>Discount</strong></td>
+                        <td>: {{notaReservation.discount | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Reference</strong></td>
+                        <td>: {{notaReservation.bookingNo}} (Booking No.)</td>
+                        <td><strong>Tax</strong></td>
+                        <td>: {{notaReservation.tax | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Status</strong></td>
+                        <td>: {{notaReservation.bookingStatus}}</td>
+                        <td><strong>Extra Charges</strong></td>
+                        <td>: {{notaReservation.totalExtraCharge | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>No.of Night(s)</strong></td>
+                        <td>: {{notaReservation.duration}}</td>
+                        <td><strong>GRAND TOTAL</strong></td>
+                        <td><strong>: {{notaReservation.grandTotal | currency:"Rp. " }}</strong></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tr>
+                        <td><strong>Remark</strong></td>
+                        <td>:</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Total Rent</strong></td>
+                        <td>:</td>
+                        <td>{{notaReservation.roomCharge | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Discount</strong></td>
+                        <td>:</td>
+                        <td>{{notaReservation.discount | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Total Tax</strong></td>
+                        <td>:</td>
+                        <td>{{notaReservation.tax | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Total Extra Charge</strong></td>
+                        <td>:</td>
+                        <td>{{notaReservation.totalExtraCharge | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Grand Total</strong></td>
+                        <td>:</td>
+                        <td>{{notaReservation.grandTotal | currency:"Rp. " }}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-6 text-center">
+                  <p>Date : {{notaReservation.datePrint | date }}</p>
+                  <p>User : <u>{{notaReservation.user}}</u></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button printSectionId="demoReservation" ngxPrint [useExistingCss]="true" class="btn btn-primary">
+            <i class="fas fa-print"></i>Print</button>
+          <button (click)="makePdfReservation()" class="btn btn-warning">
+            <i class="fas fa-file"></i> Export to PDF</button>
+        </div>
       </nb-tab>
 
       <!-- TODO: Check in Tab -->
       <nb-tab tabTitle="Check in">
-        <div id="demo" #content>
+        <div id="demoCheckIn" #content>
           <div class="invoice">
             <div class="invoice-print">
               <div class="row">
@@ -77,52 +230,36 @@
                   <tr>
                     <td><strong>Remark</strong></td>
                     <td>:</td>
-                    <td></td>
+                    <td>{{notaCheckIn.paymentNote}}</td>
                   </tr>
                 </table>
               </div>
               <hr>
-              <p>Booking Policy: No Cancel, No Reschedule, No Refund</p><br>
               <div class="row">
-                <div class="col-12">
-                  <div class="row">
-                    <div class="col-6">
-                      <div class="table-responsive">
-                        <table class="table">
-                          <tr>
-                            <td><strong>User</strong></td>
-                            <td>:</td>
-                            <td>{{notaCheckIn.checkInBy}}</td>
-                          </tr>
-                        </table>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="table-responsive">
-                        <table class="table">
-                          <tr>
-                            <td>Authorized Signatory</td>
-                          </tr>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
+                <div class="col-2">
+                  User :
+                </div>
+                <div class="col-4">
+                  <strong>{{notaCheckIn.checkInBy}}</strong>
+                </div>
+                <div class="col-6 text-center">
+                  <u>Authorized Signatory</u>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="buttons">
-          <button printSectionId="demo" ngxPrint [useExistingCss]="true" class="btn btn-primary">
+          <button printSectionId="demoCheckIn" ngxPrint [useExistingCss]="true" class="btn btn-primary">
             <i class="fas fa-print"></i>Print</button>
-          <button (click)="makePdfCheckOut()" class="btn btn-warning">
+          <button (click)="makePdfCheckIn()" class="btn btn-warning">
             <i class="fas fa-file"></i> Export to PDF</button>
         </div>
       </nb-tab>
 
       <!-- TODO: Check out Tab -->
       <nb-tab tabTitle="Check out">
-        <div id="demo" #content>
+        <div id="demoCheckOut" #content>
           <div class="invoice">
             <div class="invoice-print">
               <div class="row">
@@ -150,7 +287,9 @@
                       </address>
                     </div>
                     <div class="col-6 text-right">
-                      <strong>Room No : {{notaCheckOut.roomName}}</strong>
+                      <address>
+                        <strong>Room No : {{notaCheckOut.roomName}}</strong>
+                      </address>
                       <address>
                         <strong>Arrival Date :</strong><br>
                         {{notaCheckOut.arrivalDate}}<br>
@@ -182,7 +321,7 @@
                         <td class="text-right">{{charge.nominal | currency:"Rp. " }}</td>
                       </tr>
                       <tr>
-                        <td colspan="2" class="text-center">
+                        <td colspan="2" class="text-right">
                           <h5>Total</h5>
                         </td>
                         <td class="text-right">{{notaCheckOut.total | currency:"Rp. "}}</td>
@@ -191,7 +330,7 @@
                   </div>
                   <div class="row">
                     <div class="col-6">
-                      <h5>Amount In Words</h5>
+                      <h5>Amount In Words : </h5>
                       <h5>{{notaCheckOut.amountToWord}}</h5>
                     </div>
                     <div class="col-6">
@@ -238,17 +377,17 @@
                 <div class="col-6">
                   <table>
                     <tr>
-                      <td>Bill to</td>
+                      <td><strong>Bill to</strong></td>
                       <td>:</td>
                       <td>{{notaCheckOut.guestName}}</td>
                     </tr><br>
                     <tr>
-                      <td>Address</td>
+                      <td><strong>Address</strong></td>
                       <td>:</td>
                       <td>{{notaCheckOut.address}}</td>
                     </tr><br>
                     <tr>
-                      <td>National</td>
+                      <td><strong>National</strong></td>
                       <td>:</td>
                       <td>{{notaCheckOut.national}}</td>
                     </tr>
@@ -266,12 +405,12 @@
                 <div class="col-4">
                   <table>
                     <tr>
-                      <td>Reception (C/I)</td>
+                      <td><strong>Reception (C/I)</strong></td>
                       <td>:</td>
                       <td>{{notaCheckOut.checkOutBy}}</td>
                     </tr><br>
                     <tr>
-                      <td>Date</td>
+                      <td><strong>Date</strong></td>
                       <td>:</td>
                       <td>{{notaCheckOut.datePrint | date }}</td>
                     </tr>
@@ -301,7 +440,7 @@
           </div>
         </div>
         <div class="buttons">
-          <button printSectionId="demo" ngxPrint [useExistingCss]="true" class="btn btn-primary">
+          <button printSectionId="demoCheckOut" ngxPrint [useExistingCss]="true" class="btn btn-primary">
             <i class="fas fa-print"></i>Print</button>
           <button (click)="makePdfCheckOut()" class="btn btn-warning">
             <i class="fas fa-file"></i> Export to PDF</button>
@@ -310,12 +449,209 @@
 
       <!-- TODO: Deposit Tab -->
       <nb-tab tabTitle="Deposit">
-        Tab content Deposit
+        <div id="demoDeposit" #content>
+          <div class="invoice">
+            <div class="invoice-print">
+              <div class="row">
+                <div class="col-12">
+                  <div class="invoice-title">
+                    <h2 class="text-center">Receipt</h2>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-6">
+                      <address><strong>Guest :</strong><br>
+                        {{notaDeposit.guestName}}
+                      </address>
+                      <address><strong>Address :</strong><br>
+                        {{notaDeposit.address}} - {{notaDeposit.city}}<br>{{notaExtraCharge.country}}
+                      </address>
+                      <address><strong>Phone :</strong><br>
+                        {{notaDeposit.phone}}
+                      </address>
+                      <address><strong>Email :</strong><br>
+                        {{notaDeposit.email}}
+                      </address>
+                    </div>
+
+                    <div class="col-6 text-right">
+                      <address><strong>Booking No :</strong><br>
+                        {{notaDeposit.bookingNo}}
+                      </address>
+                      <address>
+                        <strong>Date
+                          :</strong><br>{{notaDeposit.datePrint | date }}<br>{{notaDeposit.datePrint | date:'shortTime' }}
+                      </address>
+                      <address><strong>Bussiness Source :</strong><br>
+                        {{notaDeposit.source}}
+                      </address>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <tr>
+                        <td><strong>Reff #</strong></td>
+                        <td>: {{notaDeposit.bookingNo}} (Booking No.)</td>
+                        <td><strong>Room No.</strong></td>
+                        <td>: {{notaDeposit.roomName}}</td>
+                        <td><strong>Room Type</strong></td>
+                        <td>: {{notaDeposit.roomType}}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Arrival Date</strong></td>
+                        <td>: {{notaDeposit.arrivalDate}}</td>
+                        <td><strong>Departure Date</strong></td>
+                        <td>: {{notaDeposit.arrivalDate}}</td>
+                        <td><strong>No. of Night (s)</strong></td>
+                        <td>: {{notaDeposit.duration}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="table-responsive">
+                      <table class="table table-striped">
+                      <tr>
+                        <td><strong>Payment Info : {{notaDeposit.paymentType}}</strong></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <tr>
+                        <td><strong>Deposit : {{notaDeposit.deposit | currency:"Rp. " }}</strong></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <br>
+              Amount In Words : <h5><strong>{{notaDeposit.amountToWord}}</strong></h5>
+              <p>Booking Policy: No Cancel, No Reschedule, No Refund</p><br>
+              <div class="row">
+                <div class="col-6">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tr>
+                        <td>User :</td>
+                        <td>{{notaDeposit.user}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <u>
+                    <h6 class="text-center">Authorized Signatory</h6>
+                  </u>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button printSectionId="demoDeposit" ngxPrint [useExistingCss]="true" class="btn btn-primary">
+            <i class="fas fa-print"></i>Print</button>
+          <button (click)="makePdfExtraCharge()" class="btn btn-warning">
+            <i class="fas fa-file"></i> Export to PDF</button>
+        </div>
       </nb-tab>
 
       <!-- TODO: Extra Charge Tab -->
       <nb-tab tabTitle="Extra Charge">
-        Tab content Extra Charge
+        <div id="demoExtraCharge" #content>
+          <div class="invoice">
+            <div class="invoice-print">
+              <div class="row">
+                <div class="col-12">
+                  <div class="invoice-title">
+                    <h2 class="text-center">Voucher</h2>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-6">
+                      <address><strong>Guest :</strong><br>
+                        {{notaExtraCharge.guestName}}
+                      </address>
+                      <address><strong>Address :</strong><br>
+                        {{notaExtraCharge.address}} - {{notaExtraCharge.city}}<br>{{notaExtraCharge.country}}
+                      </address>
+                    </div>
+
+                    <div class="col-6 text-right">
+                      <address><strong>Room No :</strong><br>
+                        {{notaExtraCharge.roomName}}
+                      </address>
+                      <address>
+                        <strong>Date:</strong><br>{{notaExtraCharge.datePrint | date }}<br>{{notaExtraCharge.datePrint | date:'shortTime' }}
+                      </address>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <tr>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Voucher No</th>
+                        <th class="text-center">Particular</th>
+                        <th class="text-right">Subtotal</th>
+                      </tr>
+                      <tr *ngFor="let charge of notaExtraCharge.charge">
+                        <td class="text-center">{{charge.date}}</td>
+                        <td class="text-center">{{charge.voucherNo}}</td>
+                        <td class="text-center">{{charge.particular}}</td>
+                        <td class="text-right">{{charge.nominal | currency:"Rp. " }}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="3" class="text-right">
+                          <h5>Total</h5>
+                        </td>
+                        <td class="text-right">{{notaExtraCharge.totalExtraCharge | currency:"Rp. "}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <br>
+              Amount In Words : <h5><strong>{{notaExtraCharge.amountToWord}}</strong></h5>
+
+              <p>Booking Policy: No Cancel, No Reschedule, No Refund</p><br>
+              <div class="row">
+                <div class="col-6">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tr>
+                        <td>User :</td>
+                        <td>{{notaExtraCharge.user}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <u>
+                    <h6 class="text-center">Authorized Signatory</h6>
+                  </u>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button printSectionId="demoExtraCharge" ngxPrint [useExistingCss]="true" class="btn btn-primary">
+            <i class="fas fa-print"></i>Print</button>
+          <button (click)="makePdfExtraCharge()" class="btn btn-warning">
+            <i class="fas fa-file"></i> Export to PDF</button>
+        </div>
       </nb-tab>
     </nb-tabset>
   </nb-card-body>
