@@ -212,15 +212,21 @@ export class BookingAddComponent implements OnInit, OnDestroy {
     this.bookingServ.checkRoom(data)
     .pipe(takeUntil(this.subs))
     .subscribe(resCheckRoom => {
-      this.roomInformation.roomInfo = resCheckRoom.room_information.map(y => {
+      this.roomInformation.roomInfo = resCheckRoom.room_information.map((y, index) => {
         const c = {
           roomTypeId: y.room_type_id,
           roomTypeName: y.room_type_name,
           available: y.available,
+          maxAvaiable: y.available,
         };
+
+        if (c.available > y.available) {
+          c.available =  y.available;
+        }
 
         return c;
       });
+      console.log('resCHeckRoom', this.roomInformation);
       console.log('resCHeckRoom', this.roomInformation);
     });
   }
@@ -228,6 +234,7 @@ export class BookingAddComponent implements OnInit, OnDestroy {
   checkRoomListBooking(event) {
     this.roomInformation.roomInfo.map((y) => {
       const yui = {
+        maxAvaiable: y.available,
         available: y.available,
         roomTypeId: y.roomTypeId,
         roomTypeName: y.roomTypeName,
@@ -267,15 +274,15 @@ export class BookingAddComponent implements OnInit, OnDestroy {
           this.show = true;
         }else if (filter[0].create_permision === 'not allowed') {
           this.show = false;
-        }else if (filter[0].read_permision === 'allowed') {
+        } if (filter[0].read_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].read_permision === 'not allowed') {
           this.show = false;
-        }else if (filter[0].update_permision === 'allowed') {
+        } if (filter[0].update_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].update_permision === 'not allowed') {
           this.show = false;
-        }else if (filter[0].delete_permision === 'allowed') {
+        } if (filter[0].delete_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].delete_permision === 'not allowed') {
           this.show = false;

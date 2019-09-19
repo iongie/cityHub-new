@@ -288,15 +288,15 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
           this.show = true;
         }else if (filter[0].create_permision === 'not allowed') {
           this.show = false;
-        }else if (filter[0].read_permision === 'allowed') {
+        }if (filter[0].read_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].read_permision === 'not allowed') {
           this.show = false;
-        }else if (filter[0].update_permision === 'allowed') {
+        }if (filter[0].update_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].update_permision === 'not allowed') {
           this.show = false;
-        }else if (filter[0].delete_permision === 'allowed') {
+        }if (filter[0].delete_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].delete_permision === 'not allowed') {
           this.show = false;
@@ -707,7 +707,7 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     this.activeRoute.params.subscribe(params => { // ! Aprrove Check Out
       const data = {
         bookingRoomId: params.id,
-        checkinBy: this.userCityHub.name,
+        checkoutBy: this.userCityHub.name,
         lateCheckOut: this.checkedCheckOut,
         lateCheckOutRate: this.actionCheckOut.lateCheckOutRate,
       };

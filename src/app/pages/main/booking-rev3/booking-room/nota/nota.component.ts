@@ -494,4 +494,10 @@ console.log (resNota);
     });
   }
 
+  back() {
+    this.activeRoute.params.subscribe(params => {
+      this.router.navigate(['pages/booking-detail/' + params.number + '/' + params.id]);
+    });
+  }
+
 }

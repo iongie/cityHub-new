@@ -59,8 +59,16 @@ export class ExtendRoomComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.detailAccount();
-    this.min = new Date(Date.now());
-    this.max = new Date(Date.now());
+    this.minMax();
+    // this.min = new Date(Date.now());
+    // this.max = new Date(Date.now());
+  }
+
+  minMax() {
+    const min = new Date()
+    .setDate(new Date(Date.now())
+    .getDate() - 1);
+    this.min = new Date(min);
   }
 
   ngOnDestroy() {
@@ -100,6 +108,7 @@ export class ExtendRoomComponent implements OnInit, OnDestroy {
           roomTypeId: y.room_type_id,
           roomTypeName: y.room_type_name,
           available: y.available,
+          maxAvaiable: y.available,
         };
 
         return c;
@@ -111,6 +120,7 @@ export class ExtendRoomComponent implements OnInit, OnDestroy {
   checkRoomListBooking(event) {
     this.roomInformation.roomInfo.map((y) => {
       const yui = {
+        maxAvaiable: y.available,
         available: y.available,
         roomTypeId: y.roomTypeId,
         roomTypeName: y.roomTypeName,
@@ -140,15 +150,15 @@ export class ExtendRoomComponent implements OnInit, OnDestroy {
           this.show = true;
         }else if (filter[0].create_permision === 'not allowed') {
           this.show = false;
-        }else if (filter[0].read_permision === 'allowed') {
+        }if (filter[0].read_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].read_permision === 'not allowed') {
           this.show = false;
-        }else if (filter[0].update_permision === 'allowed') {
+        } if (filter[0].update_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].update_permision === 'not allowed') {
           this.show = false;
-        }else if (filter[0].delete_permision === 'allowed') {
+        } if (filter[0].delete_permision === 'allowed') {
           this.show = true;
         }else if (filter[0].delete_permision === 'not allowed') {
           this.show = false;
