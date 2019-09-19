@@ -14,114 +14,141 @@ import * as html2canvas from 'html2canvas';
 export class NotaComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
 
-  // 0. Declaration Reservation
+  // TODO: 0. Declaration Reservation
   notaReservation = {
-    propertyName:'',
-    propertyAddress:'',
-    propertyCity:'',
-    propertyCountry:'',
-    propertyWebsite:'',
-    guestName:'',
-    address:'',
-    phone:'',
-    email:'',
-    city:'',
-    country:'',
-    bookingNo:'',
+    propertyName: '',
+    propertyAddress: '',
+    propertyCity: '',
+    propertyCountry: '',
+    propertyWebsite: '',
+    guestName: '',
+    address: '',
+    phone: '',
+    email: '',
+    city: '',
+    country: '',
+    bookingNo: '',
     bookingDate: new Date(),
     checkInDate: new Date(),
     checkOutDate: new Date(),
     datePrint: new Date(),
-    source:'',
-    roomType:'',
-    bookingStatus:'',
-    duration:'',
+    source: '',
+    roomType: '',
+    bookingStatus: '',
+    duration: '',
     discount: 0,
     roomCharge: 0,
     tax: 0,
     totalExtraCharge: 0,
     grandTotal: 0,
-    user:'',
+    user: '',
   };
 
-// 1. Declaration Extra Charge
+  // TODO: 1. Declaration Extra Charge
   notaExtraCharge = {
-    propertyName:'',
-    propertyAddress:'',
-    propertyCity:'',
-    propertyCountry:'',
-    propertyWebsite:'',
-    roomName:'',
-    guestName:'',
-    address:'',
-    city:'',
-    country:'',
+    propertyName: '',
+    propertyAddress: '',
+    propertyCity: '',
+    propertyCountry: '',
+    propertyWebsite: '',
+    roomName: '',
+    guestName: '',
+    address: '',
+    city: '',
+    country: '',
     datePrint: new Date(),
     charge: [
     {
-      voucherNo:'',
+      voucherNo: '',
       date: new Date(),
       nominal: 0,
       particular: '',
     },
       ],
-    amountToWord:'',
+    amountToWord: '',
     totalExtraCharge: 0,
-    user:'',
+    user: '',
   };
 
-// 2. Declaration Deposit
+  // TODO: 2. Declaration Return Deposit
   notaDeposit = {
-    propertyName:'',
-    propertyAddress:'',
-    propertyCity:'',
-    propertyCountry:'',
-    propertyWebsite:'',
+    propertyName: '',
+    propertyAddress: '',
+    propertyCity: '',
+    propertyCountry: '',
+    propertyWebsite: '',
     bookingNo: '',
-    source:'',
-    paymentType:'',
+    source: '',
+    paymentType: '',
     deposit: 0,
     amountToWord: '',
-    guestName:'',
-    address:'',
-    city:'',
-    country:'',
-    email:'',
-    phone:'',
+    guestName: '',
+    address: '',
+    city: '',
+    country: '',
+    email: '',
+    phone: '',
     arrivalDate: new Date(),
     departureDate: new Date(),
     duration: '',
-    roomType:'',
-    roomName:'',
+    roomType: '',
+    roomName: '',
     datePrint: new Date(),
-    user:'',
+    user: '',
   };
-  
-// 3. Declaration Check In  
+
+  // TODO: 2. Declaration Add Deposit
+  notaAddDeposit = {
+    propertyName: '',
+    propertyAddress: '',
+    propertyCity: '',
+    propertyCountry: '',
+    propertyWebsite: '',
+    bookingNo: '',
+    source: '',
+    paymentType: '',
+    deposit: 0,
+    amountToWord: '',
+    guestName: '',
+    address: '',
+    city: '',
+    country: '',
+    email: '',
+    phone: '',
+    arrivalDate: new Date(),
+    departureDate: new Date(),
+    duration: '',
+    roomType: '',
+    roomName: '',
+    datePrint: new Date(),
+    user: '',
+  };
+
+  // TODO:  3. Declaration Check In
   notaCheckIn = {
-    propertyName:'',
-    propertyAddress:'',
-    propertyCity:'',
-    propertyCountry:'',
-    propertyWebsite:'',
-    bookingNo:'',
-    guestName:'',
-    roomName:'',
+    propertyName: '',
+    propertyAddress: '',
+    propertyCity: '',
+    propertyCountry: '',
+    propertyWebsite: '',
+    bookingNo: '',
+    guestName: '',
+    roomName: '',
     datePrint: new Date(),
     totalCharge: 0,
     amountToWord: '',
     paymentType: '',
     checkInBy: '',
-    paymentNote:'',
+    paymentNote: '',
   };
 
-// 4. Declaration Checkout  
+  // TODO: 4. Declaration Checkout
   notaCheckOut = {
-    propertyName:'',
-    propertyAddress:'',
-    propertyCity:'',
-    propertyCountry:'',
-    propertyWebsite:'',
+    propertyName: '',
+    propertyAddress: '',
+    propertyCity: '',
+    propertyCountry: '',
+    propertyWebsite: '',
     billNo: '',
     guestName: '',
     address: '',
@@ -176,9 +203,10 @@ export class NotaComponent implements OnInit, OnDestroy {
         this.bookingServ.notaDeposit(bookingRoom),
         this.bookingServ.notaCheckIn(bookingRoom),
         this.bookingServ.notaCheckOut(bookingRoom),
+        this.bookingServ.notaAddDeposit(bookingRoom),
       ).pipe(takeUntil(this.subs)).subscribe(resNota => {
         const writtenForm = require('written-number');
-        
+
         // 0. get data nota reservation
         this.notaReservation = {
           propertyName: resNota[0].property.property_name,
@@ -208,7 +236,6 @@ export class NotaComponent implements OnInit, OnDestroy {
           user: resNota[0].property.created_by,
           roomType: resNota[0].room.room_type_name,
         };
-        console.log('nota', resNota); 
 
         // 1. get data nota extra charge
         this.notaExtraCharge = {
@@ -236,9 +263,8 @@ export class NotaComponent implements OnInit, OnDestroy {
             return dataCharge;
           }),
         };
-        console.log('nota', resNota); 
 
-        // 2. get data nota deposit
+        // 2. get data nota Return deposit
         this.notaDeposit = {
           propertyName: resNota[2].property.property_name,
           propertyAddress: resNota[2].property.address,
@@ -264,7 +290,6 @@ export class NotaComponent implements OnInit, OnDestroy {
           arrivalDate: resNota[2].room.arrival_date,
           departureDate: resNota[2].room.departure_date,
         };
-        console.log('nota', resNota); 
 
         // 3. get data nota check in
         this.notaCheckIn = {
@@ -283,8 +308,7 @@ export class NotaComponent implements OnInit, OnDestroy {
           totalCharge: resNota[3].total_charge.total_charge,
           amountToWord: writtenForm(resNota[3].total_charge.total_charge),
         };
-        console.log('nota', resNota); 
-        
+
         // 4. get data nota check out
         this.notaCheckOut = {
           propertyName: resNota[4].property.property_name,
@@ -319,99 +343,150 @@ export class NotaComponent implements OnInit, OnDestroy {
             return dataCharge;
           }),
         };
-        console.log('nota', resNota);
+
+        // 2. get data nota Add deposit
+        this.notaAddDeposit = {
+          propertyName: resNota[5].property.property_name,
+          propertyAddress: resNota[5].property.address,
+          propertyCity: resNota[5].property.city,
+          propertyCountry: resNota[5].property.country_name,
+          propertyWebsite: resNota[5].property.website,
+          bookingNo: resNota[5].booking.booking_number,
+          source: resNota[5].booking.business_source_name,
+          paymentType: resNota[5].deposit.payment_type,
+          deposit: resNota[5].deposit.total_deposit,
+          amountToWord: writtenForm(resNota[5].deposit.total_deposit),
+          guestName: resNota[5].guest.guest_name,
+          address: resNota[5].guest.address,
+          city: resNota[5].guest.city,
+          country: resNota[5].guest.country_name,
+          phone: resNota[5].guest.phone_number,
+          email: resNota[5].guest.email,
+          user: resNota[5].property.created_by,
+          datePrint: new Date (Date.now()),
+          roomName: resNota[5].room.room_name,
+          roomType: resNota[5].room.room_type_name,
+          duration: resNota[5].room.duration,
+          arrivalDate: resNota[5].room.arrival_date,
+          departureDate: resNota[5].room.departure_date,
+        };
+
       });
     });
   }
 
-  public makePdfCheckOut()  
-  {  
-    var data = document.getElementById('demoCheckOut');  
-    html2canvas(data).then(canvas => {  
-      // Few necessary setting options  
-      var imgWidth = 208;   
-      var pageHeight = 295;    
-      var imgHeight = canvas.height * imgWidth / canvas.width;  
-      var heightLeft = imgHeight;  
-  
-      const contentDataURL = canvas.toDataURL('doc/pdf')  
-      let pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF  
-      var position = 0;  
-      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight)  
-      pdf.save('Nota_Check_Out.pdf'); // Generated PDF   
-    });  
+  public makePdfCheckOut()
+  // tslint:disable-next-line: one-line
+  {
+    const data = document.getElementById('demoCheckOut');
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('doc/pdf');
+      const pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
+      pdf.save('Nota_' + this.notaCheckIn.bookingNo + '_Check_Out.pdf'); // Generated PDF
+    });
   }
 
-  public makePdfReservation()  
-  {  
-    var data = document.getElementById('demoReservation');  
-    html2canvas(data).then(canvas => {  
-      // Few necessary setting options  
-      var imgWidth = 208;   
-      var pageHeight = 295;    
-      var imgHeight = canvas.height * imgWidth / canvas.width;  
-      var heightLeft = imgHeight;  
-  
-      const contentDataURL = canvas.toDataURL('doc/pdf')  
-      let pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF  
-      var position = 0;  
-      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight)  
-      pdf.save('Nota_Reservation.pdf'); // Generated PDF   
-    });  
+  public makePdfReservation()
+// tslint:disable-next-line: one-line
+{
+    const data = document.getElementById('demoReservation');
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('doc/pdf');
+      const pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
+      pdf.save('Nota_' + this.notaCheckIn.bookingNo + '_Reservation.pdf'); // Generated PDF
+    });
   }
 
-  public makePdfCheckIn()  
-  {  
-    var data = document.getElementById('demoCheckIn');  
-    html2canvas(data).then(canvas => {  
-      // Few necessary setting options  
-      var imgWidth = 208;   
-      var pageHeight = 295;    
-      var imgHeight = canvas.height * imgWidth / canvas.width;  
-      var heightLeft = imgHeight;  
-  
-      const contentDataURL = canvas.toDataURL('doc/pdf')  
-      let pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF  
-      var position = 0;  
-      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight)  
-      pdf.save('Nota_Check_In.pdf'); // Generated PDF   
-    });  
+  public makePdfCheckIn()
+  // tslint:disable-next-line: one-line
+  {
+    const data = document.getElementById('demoCheckIn');
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('doc/pdf');
+      const pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
+      pdf.save('Nota_' + this.notaCheckIn.bookingNo + '_Check_In.pdf'); // Generated PDF
+    });
   }
 
-  public makePdfDeposit()  
-  {  
-    var data = document.getElementById('demoDeposit');  
-    html2canvas(data).then(canvas => {  
-      // Few necessary setting options  
-      var imgWidth = 208;   
-      var pageHeight = 295;    
-      var imgHeight = canvas.height * imgWidth / canvas.width;  
-      var heightLeft = imgHeight;  
-  
-      const contentDataURL = canvas.toDataURL('doc/pdf')  
-      let pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF  
-      var position = 0;  
-      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight)  
-      pdf.save('Nota_Deposit.pdf'); // Generated PDF   
-    });  
+  public makePdfAddDeposit()
+  // tslint:disable-next-line: one-line
+  {
+    const data = document.getElementById('demoAddDeposit');
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('doc/pdf');
+      const pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
+      pdf.save('Nota_' + this.notaCheckIn.bookingNo + '_Deposit.pdf'); // Generated PDF
+    });
   }
 
-  public makePdfExtraCharge()  
-  {  
-    var data = document.getElementById('demoExtraCharge');  
-    html2canvas(data).then(canvas => {  
-      // Few necessary setting options  
-      var imgWidth = 208;   
-      var pageHeight = 295;    
-      var imgHeight = canvas.height * imgWidth / canvas.width;  
-      var heightLeft = imgHeight;  
-  
-      const contentDataURL = canvas.toDataURL('doc/pdf')  
-      let pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF  
-      var position = 0;  
-      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight)  
-      pdf.save('Nota_Extra_Charge.pdf'); // Generated PDF   
-    });  
+  public makePdfDeposit()
+  // tslint:disable-next-line: one-line
+  {
+    const data = document.getElementById('demoDeposit');
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('doc/pdf');
+      const pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
+      pdf.save('Nota_' + this.notaCheckIn.bookingNo + '_Deposit.pdf'); // Generated PDF
+    });
+  }
+
+  public makePdfExtraCharge()
+  // tslint:disable-next-line: one-line
+  {
+    const data = document.getElementById('demoExtraCharge');
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('doc/pdf');
+      const pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
+      pdf.save('Nota_' + this.notaCheckIn.bookingNo + '_Extra_Charge.pdf'); // ?Generated PDF
+    });
   }
 
 }

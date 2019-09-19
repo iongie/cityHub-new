@@ -294,6 +294,12 @@ export class BookingService implements OnDestroy {
       catchError(this.handleError),
     );
   }
+  notaAddDeposit(bookingRoom: any): Observable<any> {
+    return this.http.get<any>(this.url + '/nota/deposit/add/' + bookingRoom.id, httpOptions).pipe(
+      catchError(this.handleError),
+    );
+  }
+
   notaDeposit(bookingRoom: any): Observable<any> {
     return this.http.get<any>(this.url + '/nota/deposit/return/' + bookingRoom.id, httpOptions).pipe(
       catchError(this.handleError),
