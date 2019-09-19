@@ -108,7 +108,7 @@
               <input
                 type="number"
                 fullWidth
-                [max]="roomInformation.available"
+                max={{roomInformation.maxAvaiable}}
                 min ="1"
                 [disabled]="show === false"
                 [(ngModel)]="roomInformation.available"

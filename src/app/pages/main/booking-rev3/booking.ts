@@ -16,6 +16,7 @@ export class RoomInformation {
         roomTypeName: '',
         available: 0,
         check: false,
+        maxAvaiable: 0,
     } ];
 }
 
