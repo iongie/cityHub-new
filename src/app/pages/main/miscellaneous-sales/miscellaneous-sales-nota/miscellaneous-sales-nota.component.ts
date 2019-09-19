@@ -16,6 +16,8 @@ import { ExtraChargeCategoryService } from '../../../../services/extra-charge-ca
 import { PaymentTypeService } from '../../../../services/payment-type/payment-type.service';
 import { NbDialogService } from '@nebular/theme';
 import { takeUntil } from 'rxjs/operators';
+import * as jsPDF from 'jspdf';
+import * as html2canvas from 'html2canvas';
 
 @Component({
   selector: 'ngx-miscellaneous-sales-nota',
@@ -70,6 +72,7 @@ export class MiscellaneousSalesNotaComponent implements OnInit, OnDestroy {
         miscSalesCancelReason: '',
         paymentTypeName: '',
         paymentTypeDbStatus: '',
+        datePrint: new Date(),
     },
     miscSalesDetails: [
       {
@@ -99,6 +102,7 @@ export class MiscellaneousSalesNotaComponent implements OnInit, OnDestroy {
     ],
     miscSalesTotal: {
       totalMiscSales: 0,
+      amountToWord: '',
       paymentType: 0,
     },
   };
@@ -139,6 +143,7 @@ export class MiscellaneousSalesNotaComponent implements OnInit, OnDestroy {
       this.miscellaneousSalesServ.getMiscNota(data)
       .pipe(takeUntil(this.subs))
       .subscribe(resNotaMiscSales => {
+        const writtenForm = require('written-number');
         this.notaMiscSales.guest = {
           guestId: resNotaMiscSales.guest.guest_id,
           countryId: resNotaMiscSales.guest.country_id,
@@ -186,6 +191,7 @@ export class MiscellaneousSalesNotaComponent implements OnInit, OnDestroy {
           miscSalesCancelReason: resNotaMiscSales.misc_sales.misc_sales_cancel_reason,
           paymentTypeName: resNotaMiscSales.misc_sales.payment_type_name,
           paymentTypeDbStatus: resNotaMiscSales.misc_sales.payment_type_db_status,
+          datePrint: new Date (Date.now()),
         };
 
         this.notaMiscSales.miscSalesDetails = resNotaMiscSales.misc_sales_detail.map(x => {
@@ -220,11 +226,29 @@ export class MiscellaneousSalesNotaComponent implements OnInit, OnDestroy {
 
         this.notaMiscSales.miscSalesTotal = {
           totalMiscSales: resNotaMiscSales.misc_total.total_misc_sales,
+          amountToWord: writtenForm(resNotaMiscSales.misc_total.total_misc_sales),
           paymentType: resNotaMiscSales.misc_total.payment_type,
         };
         console.log('this.notaMiscSales', this.notaMiscSales);
       });
     });
   }
+  public makePdfMS()
+  // tslint:disable-next-line: one-line
+  {
+    const data = document.getElementById('demoMS');
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const heightLeft = imgHeight;
 
+      const contentDataURL = canvas.toDataURL('doc/pdf');
+      const pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
+      pdf.save('Nota_' + this.notaMiscSales.miscSales.miscSalesNumber + '_Misc.Sales.pdf'); // Generated PDF
+    });
+  }
 }

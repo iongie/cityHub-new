@@ -236,6 +236,7 @@ export class NotaComponent implements OnInit, OnDestroy {
           user: resNota[0].property.created_by,
           roomType: resNota[0].room.room_type_name,
         };
+        console.log (resNota);
 
         // 1. get data nota extra charge
         this.notaExtraCharge = {
@@ -263,6 +264,7 @@ export class NotaComponent implements OnInit, OnDestroy {
             return dataCharge;
           }),
         };
+        console.log (resNota);
 
         // 2. get data nota Return deposit
         this.notaDeposit = {
@@ -290,6 +292,7 @@ export class NotaComponent implements OnInit, OnDestroy {
           arrivalDate: resNota[2].room.arrival_date,
           departureDate: resNota[2].room.departure_date,
         };
+        console.log (resNota);
 
         // 3. get data nota check in
         this.notaCheckIn = {
@@ -308,6 +311,7 @@ export class NotaComponent implements OnInit, OnDestroy {
           totalCharge: resNota[3].total_charge.total_charge,
           amountToWord: writtenForm(resNota[3].total_charge.total_charge),
         };
+        console.log (resNota);
 
         // 4. get data nota check out
         this.notaCheckOut = {
@@ -343,6 +347,7 @@ export class NotaComponent implements OnInit, OnDestroy {
             return dataCharge;
           }),
         };
+        console.log (resNota);
 
         // 2. get data nota Add deposit
         this.notaAddDeposit = {
@@ -370,7 +375,7 @@ export class NotaComponent implements OnInit, OnDestroy {
           arrivalDate: resNota[5].room.arrival_date,
           departureDate: resNota[5].room.departure_date,
         };
-
+console.log (resNota);
       });
     });
   }

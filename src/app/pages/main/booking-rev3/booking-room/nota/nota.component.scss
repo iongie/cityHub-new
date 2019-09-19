@@ -1,6 +1,5 @@
-/* 1.37 Activities */
 .invoice {
-  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+  background-color: #fff;
   border-radius: 3px;
   border: none;
   position: relative;
@@ -18,6 +17,7 @@
 .invoice hr {
   margin-top: 10px;
   margin-bottom: 40px;
+  border-top-color: #f9f9f9;
 }
 
 .invoice .invoice-detail-item {
@@ -26,13 +26,14 @@
 
 .invoice .invoice-detail-item .invoice-detail-name {
   letter-spacing: 0.3px;
-  // color: #98a6ad;
+  color: #fff;
   margin-bottom: 4px;
 }
 
 .invoice .invoice-detail-item .invoice-detail-value {
   font-size: 18px;
   font-weight: 700;
+  color: #fff;
 }
 
 .invoice .invoice-detail-item .invoice-detail-value.invoice-detail-value-lg {
