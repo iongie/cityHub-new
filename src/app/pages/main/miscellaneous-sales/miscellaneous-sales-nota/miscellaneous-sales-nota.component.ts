@@ -244,10 +244,10 @@ export class MiscellaneousSalesNotaComponent implements OnInit, OnDestroy {
       const imgHeight = canvas.height * imgWidth / canvas.width;
       const heightLeft = imgHeight;
 
-      const contentDataURL = canvas.toDataURL('image/jpeg');
+      const contentDataURL = canvas.toDataURL('img/png');
       const pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF
       const position = 0;
-      pdf.addImage(contentDataURL, 'JPEG', 0, position, imgWidth, imgHeight);
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
       pdf.save('Nota_' + this.notaMiscSales.miscSales.miscSalesNumber + '_Misc.Sales.pdf'); // Generated PDF
     });
   }
