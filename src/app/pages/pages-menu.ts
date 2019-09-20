@@ -96,7 +96,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/add-booking',
       },
       {
-        title: 'Booking-management',
+        title: 'Booking List Management',
         link: '/pages/booking-management',
       },
       {
