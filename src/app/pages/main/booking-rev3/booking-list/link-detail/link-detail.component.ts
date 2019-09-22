@@ -5,6 +5,7 @@ import { takeUntil, filter, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { BookingService } from '../../../../../services/booking-rev3/booking.service';
 import { NotificationService } from '../../../../../services/notification/notification.service';
+import { AuthService } from '../../../../../services/auth/auth.service';
 
 @Component({
   selector: 'ngx-link-detail',
@@ -30,17 +31,20 @@ export class LinkDetailComponent implements OnInit, OnDestroy {
     },
   ];
   data: any;
+  userCityHub: any;
   constructor(
     private nbMenuService: NbMenuService,
     private router: Router,
     private bookingServ: BookingService,
     private notifServ: NotificationService,
+    public authServ: AuthService,
   ) { }
 
   ngOnInit() {
     this.renderValue  = this.value.id;
     this.action();
     this.viewOption();
+    this.detailAccount();
   }
 
   ngOnDestroy() {
@@ -77,15 +81,12 @@ export class LinkDetailComponent implements OnInit, OnDestroy {
 
       if (item.data.id === this.renderValue && item.title === 'Cancel Booking') {
         console.log('this.renderValue', this.renderValue);
-        const booking = {
-          id: this.renderValue,
-        };
         const data = {
           bookingId: this.renderValue,
-          cancelBy: '',
-          cancelReason: 'Cancel Booking',
+          cancelBy: this.userCityHub.name,
+          cancelReason: 'Cancel Booking by Group',
         };
-        this.bookingServ.cancelBookingByBookingId(booking, data)
+        this.bookingServ.cancelBookingByBookingId(data)
         .pipe(takeUntil(this.subs))
         .subscribe(() => {
           const title = 'Cancel booking number:' + this.renderValue;
@@ -95,6 +96,17 @@ export class LinkDetailComponent implements OnInit, OnDestroy {
           });
         });
       }
+    });
+  }
+
+  detailAccount() {
+    const dataZ = {
+      token: localStorage.getItem('p_l1oxt'),
+    };
+    this.authServ.detailAfterLogin(dataZ).pipe(takeUntil(this.subs)).subscribe(res => {
+      this.userCityHub = {
+        name : res[0].full_name,
+      };
     });
   }
 

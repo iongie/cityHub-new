@@ -18,6 +18,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/dashboard',
   },
   {
+    title: 'New Booking',
+    link: '/pages/add-booking',
+  },
+  {
+    title: 'New Miscellaneous',
+    link: '/pages/add-miscellaneous',
+  },
+  {
     title: 'FEATURES',
     group: true,
   }, {
@@ -82,25 +90,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Tax',
         link: '/pages/tax',
       },
+      {
+        title: 'Guest',
+        link: '/pages/guest',
+      },
     ],
   }, {
     title: 'Sales Operational',
     icon: 'fa fa-hotel',
     children: [
       {
-        title: 'Guest',
-        link: '/pages/guest',
-      },
-      {
-        title: 'Booking',
-        link: '/pages/add-booking',
-      },
-      {
-        title: 'Booking-management',
+        title: 'Booking management',
         link: '/pages/booking-management',
       },
       {
-        title: 'Misc.sales',
+        title: 'Miscellaneous sales management',
         link: '/pages/miscellaneous-sales',
       },
     ],
@@ -115,5 +119,4 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
-  
 ];

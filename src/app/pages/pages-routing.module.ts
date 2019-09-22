@@ -329,6 +329,21 @@ const routes: Routes = [{
       ],
     },
     {
+      path: 'discount-management',
+      loadChildren: './main/discount/discount.module#DiscountModule',
+    },
+    {
+      path: 'add-discount',
+      loadChildren: './main/discount/add/add.module#AddModule',
+    },
+    {
+      path: 'view-discount',
+      children: [{
+        path: ':id',
+        loadChildren: './main/discount/detail/detail.module#DetailModule',
+      } ],
+    },
+    {
       path: 'user',
       loadChildren: './main/user/user.module#UserModule',
     },

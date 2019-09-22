@@ -100,8 +100,8 @@ export class BookingService implements OnDestroy {
   }
 
 
-  cancelBookingByBookingId(booking: any, data: any): Observable<any> {
-    return this.http.post<any>(this.url + '/booking/cancel/' + booking.id, data, httpOptions).pipe(
+  cancelBookingByBookingId( data: any): Observable<any> {
+    return this.http.post<any>(this.url + '/booking/cancel', data, httpOptions).pipe(
       catchError(this.handleError),
       tap(() => {
         this._refresh.next();
@@ -317,4 +317,10 @@ export class BookingService implements OnDestroy {
   }
   // =========================================================================================
 
+  // TODO: GET DATA FOR HISTORY BOOKING
+  history(bookingRoom: any): Observable<any> {
+    return this.http.get<any>(this.url + '/booking/history/' + bookingRoom.id, httpOptions).pipe(
+      catchError(this.handleError),
+    );
+  }
 }

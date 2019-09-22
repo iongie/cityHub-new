@@ -1,0 +1,89 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">UPdate Discount</div>
+      <!-- <div class="col-auto">
+        <button type="submit" class="btn btn-primary">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+      </div> -->
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <form #ngForm="ngForm" (submit)="update()" ngNativeValidate>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Discount name</label>
+        <input
+         type="text"
+         nbInput
+         fullWidth
+         [disabled]="show === false"
+         class="form-control"
+         [(ngModel)]="discount.discountName"
+         id="discountName"
+         name="discountName"
+         required
+         #discountName="ngModel"
+         placeholder="Discount name">
+      </div>
+      
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Discount rate</label>
+        <input
+         type="number"
+         nbInput
+         fullWidth
+         [disabled]="show === false"
+         class="form-control"
+         [(ngModel)]="discount.discountRate"
+         id="discountRate"
+         name="discountRate"
+         required
+         #discountRate="ngModel"
+         placeholder="Discount rate">
+      </div>
+
+      <div class="row">
+        <div class="form-group col-6">
+          <label for="inputEmail4">From Date</label>
+          <input
+          [nbDatepicker]="discountFormDate"
+          [(ngModel)]="discount.discountFormDate"
+          class="form-control"
+          id="discountFormDate"
+          name="discountFormDate"
+          required
+          #discountFormDate="ngModel"
+          placeholder="From Date">
+          <nb-datepicker
+            #discountFormDate
+            format="MMM d, y">
+          </nb-datepicker>
+        </div>
+
+        <div class="form-group col-6">
+          <label for="inputEmail4">To Date</label>
+          <input
+          [nbDatepicker]="discountFormDate"
+          [(ngModel)]="discount.discountToDate"
+          class="form-control"
+          id="discountToDate"
+          name="discountToDate"
+          required
+          #discountToDate="ngModel"
+          placeholder="To Date">
+          <nb-datepicker
+            #discountToDate
+            format="MMM d, y">
+          </nb-datepicker>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button type="submit" class="btnn btn btn-primary" *ngIf="show">Update</button>
+        <button type="button" class="btnn btn-warning" [routerLink]="['/pages/discount-management']" routerLinkActive="router-link-active" >Cancel</button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

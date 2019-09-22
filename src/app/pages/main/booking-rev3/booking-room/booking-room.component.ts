@@ -158,6 +158,42 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
   // TODO : variable for Add Room
   assignRoom = new AssignRoom;
   room = new Room;
+
+  // TODO: SETING HOISTORY
+  history: LocalDataSource;
+  settingHistory = {
+    actions: false,
+    columns: {
+      bookingHistoryId: {
+        title: 'Booking History Id',
+        type: 'string',
+      },
+      bookingRoomId: {
+        title: 'Booking Room Id',
+        type: 'string',
+      },
+      activityId: {
+        title: 'Activity Id',
+        type: 'string',
+      },
+      bookingHistoryCreatedAt: {
+        title: 'Created At',
+        type: 'string',
+      },
+      bookingHistorycreatedBy: {
+        title: 'Created By',
+        type: 'string',
+      },
+      activityName: {
+        title: 'Activity Name',
+        type: 'string',
+      },
+      activityDesc: {
+        title: 'Activity Description',
+        type: 'string',
+      },
+    },
+  };
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
@@ -187,6 +223,8 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     this.getTotalCharge();
     this.refresh();
     this.refreshTotalCharge();
+    this.getHistoryBookingRoomId();
+    this.refreshHistory();
   }
 
   ngOnDestroy() {
@@ -503,6 +541,38 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
   refresh() {
     this.bookingServ.refresh.subscribe(() => {
       this.getBookingInfomationByBookingRoomId(); // ! refresh get booking by booking room
+    });
+  }
+
+  getHistoryBookingRoomId() {
+    this.activeRoute.params.subscribe(params => {
+      const bookingRoom = {
+        id: params.id,
+      };
+
+      this.bookingServ.history(bookingRoom)
+      .pipe(takeUntil(this.subs))
+      .subscribe(resHistory => {
+        const data = resHistory.map(x => {
+          const xy = {
+            bookingHistoryId: x.booking_history_id,
+            bookingRoomId: x.booking_room_id,
+            activityId: x.activity_id,
+            bookingHistoryCreatedAt: x.booking_history_created_at,
+            bookingHistorycreatedBy: x.booking_history_created_by,
+            activityName: x.activity_name,
+            activityDesc: x.activity_description,
+          };
+          return xy;
+        });
+        this.history = new LocalDataSource(data);
+      });
+    });
+  }
+
+  refreshHistory() {
+    this.bookingServ.refresh.subscribe(() => {
+      this.getHistoryBookingRoomId(); // ! refresh get booking by booking room
     });
   }
 

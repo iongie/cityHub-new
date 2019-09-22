@@ -56,15 +56,6 @@
         (click)="goToMoveRoom()">
       </nb-action>
       
-      <!-- !extend room - Done -->
-      <nb-action
-        *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
-        icon="fas fa-plus-square"
-        nbTooltip="Extend Room"
-        nbTooltipPlacement="bottom"
-        (click)="goToExtendRoom()">
-      </nb-action>
-      
       <!-- !add stay - Done -->
       <nb-action
         *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
@@ -360,6 +351,14 @@
         </nb-card> 
       </nb-tab>
       
+      <!-- ! History -->
+      <nb-tab tabTitle="History">
+        <nb-card>
+          <nb-card-body>
+            <ng2-smart-table [settings]="settingHistory"  [source]="history"></ng2-smart-table>
+          </nb-card-body>
+        </nb-card>
+      </nb-tab>
     </nb-tabset>
   </nb-card-body>
 </nb-card>

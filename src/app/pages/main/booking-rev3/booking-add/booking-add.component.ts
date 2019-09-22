@@ -68,13 +68,21 @@ export class BookingAddComponent implements OnInit, OnDestroy {
     this.getBusinessSource();
     this.getCountry();
     this.getGuest();
-    this.min = new Date(Date.now());
-    this.max = new Date(Date.now());
+    this.minMax();
+    // this.min = new Date(Date.now());
+    // this.max = new Date(Date.now());
   }
 
   ngOnDestroy() {
     this.subs.next();
     this.subs.complete();
+  }
+
+  minMax() {
+    const min = new Date()
+    .setDate(new Date(Date.now())
+    .getDate() - 1);
+    this.min = new Date(min);
   }
 
   detailAccount() {

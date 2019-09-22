@@ -64,8 +64,6 @@ export class RoomOperationService implements OnDestroy {
     );
   }
 
-  
-
   update(data: any): Observable<any> {
     return this.http.post(this.url + '/room/edit', data, httpOptions).pipe(
       catchError(this.handleError),

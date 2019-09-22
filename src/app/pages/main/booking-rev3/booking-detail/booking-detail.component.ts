@@ -16,6 +16,7 @@ import { takeUntil } from 'rxjs/operators';
 import { LocalDataSource } from 'ng2-smart-table';
 import { LinkDetailRoomInformationComponent } from './link-detail-room-information/link-detail-room-information.component';
 import { NbDialogService } from '@nebular/theme';
+import { XhrFactory } from '@angular/common/http';
 
 @Component({
   selector: 'ngx-booking-detail',
@@ -246,16 +247,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
   cancelBooking() {
     this.activeRoute.params.subscribe(params => {
-      const booking = {
-        id: params.id,
-      };
-
       const data = {
         bookingId: params.id,
-        cancelBy: '',
+        cancelBy: this.userCityHub.name,
         cancelReason: 'Cancel Booking',
       };
-      this.bookingServ.cancelBookingByBookingId(booking, data)
+      this.bookingServ.cancelBookingByBookingId(data)
       .pipe(takeUntil(this.subs))
       .subscribe(() => {
         const title = 'Cancel booking number:' + this.detailBookingByBookingId.bookingInformation.bookingNumber;

@@ -238,14 +238,14 @@ export class MiscellaneousSalesNotaComponent implements OnInit, OnDestroy {
   {
     const data = document.getElementById('demoMS');
     html2canvas(data).then(canvas => {
-      // Few necessary setting options
+      // ? Few necessary setting options
       const imgWidth = 208;
       const pageHeight = 295;
       const imgHeight = canvas.height * imgWidth / canvas.width;
       const heightLeft = imgHeight;
 
       const contentDataURL = canvas.toDataURL('doc/pdf');
-      const pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF
+      const pdf = new jsPDF ('p', 'mm', 'a4'); // TODO: A4 size page of PDF
       const position = 0;
       pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
       pdf.save('Nota_' + this.notaMiscSales.miscSales.miscSalesNumber + '_Misc.Sales.pdf'); // Generated PDF

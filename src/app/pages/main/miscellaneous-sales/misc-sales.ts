@@ -120,3 +120,8 @@ export class NotaMiscSales {
         },
     ];
 }
+
+export class SortDateMisc {
+    start = new Date();
+    end = new Date();
+}

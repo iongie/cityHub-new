@@ -26,9 +26,12 @@ import { MiscellaneousSalesLinkComponent } from './miscellaneous-sales-link/misc
 })
 export class MiscellaneousSalesComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
+
   sortDateMisc = {
-    fromDate: new Date(),
-    toDate: new Date(),
+    date: {
+      start: new Date(),
+      end: new Date(),
+    },
   };
   miscSales: LocalDataSource;
   forRole: any;
@@ -128,12 +131,9 @@ export class MiscellaneousSalesComponent implements OnInit, OnDestroy {
         }
 
         // TODO: GET Misc Sales
-
-        this.sortDateMisc.fromDate = new Date(Date.now());
-        this.sortDateMisc.toDate = new Date(Date.now());
         const date = {
-          fromDate: this.datepipe.transform( this.sortDateMisc.fromDate, 'yyyy-MM-dd'),
-          toDate: this.datepipe.transform( this.sortDateMisc.toDate, 'yyyy-MM-dd'),
+          fromDate: this.datepipe.transform( Date.now(), 'yyyy-MM-dd'),
+          toDate: this.datepipe.transform( Date.now(), 'yyyy-MM-dd'),
         };
 
 
@@ -198,6 +198,12 @@ export class MiscellaneousSalesComponent implements OnInit, OnDestroy {
     });
   }
 
+  getInfo(event) {
+    // this.sortDateMisc.fromDate = this.datepipe.transform( event.start, 'yyyy-MM-dd');
+    // this.sortDateMisc.toDate = this.datepipe.transform( event.end, 'yyyy-MM-dd');
+    console.log('sortDateMisc', this.sortDateMisc.date);
+  }
+
   filterGetMiscSales() {
     const datae = {
       token: localStorage.getItem('p_l1oxt'),
@@ -233,8 +239,8 @@ export class MiscellaneousSalesComponent implements OnInit, OnDestroy {
 
         // TODO: GET Misc Sales
         const date = {
-          fromDate: this.datepipe.transform( this.sortDateMisc.fromDate, 'yyyy-MM-dd'),
-          toDate: this.datepipe.transform( this.sortDateMisc.toDate, 'yyyy-MM-dd'),
+          fromDate: this.datepipe.transform( this.sortDateMisc.date.start, 'yyyy-MM-dd'),
+          toDate: this.datepipe.transform( this.sortDateMisc.date.end, 'yyyy-MM-dd'),
         };
 
 
@@ -262,10 +268,10 @@ export class MiscellaneousSalesComponent implements OnInit, OnDestroy {
                   const xt = {
                     miscSalesId: x.misc_sales_id,
                     guestId: x.guest_id,
-                    geestName: filterGuest[0].guest_name,
+                    guestName: filterGuest[0].guest_name,
                     paymentTypeId: x.payment_type_id,
                     paymentTypeName: filterPaymentType[0].payment_type_name,
-                    miscSales: x.misc_sales_number,
+                    miscSalesNumber: x.misc_sales_number,
                     miscSalesSalesTotal: x.misc_sales_total,
                     miscSalesDate: x.misc_sales_date,
                     miscSalesNote: x.misc_sales_note,
@@ -277,6 +283,10 @@ export class MiscellaneousSalesComponent implements OnInit, OnDestroy {
                     miscSalesCancelAt: x.misc_sales_cancel_at,
                     miscSalesCancelBy: x.misc_sales_cancel_by,
                     miscSalesCancelReason: x.misc_sales_cancel_reason,
+                    detail: {
+                      id: x.misc_sales_id,
+                      number: x.misc_sales_number,
+                    },
                   };
                   return xt;
               });
