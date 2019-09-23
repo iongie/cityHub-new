@@ -29,6 +29,15 @@
         (click)="openAddDeposit(dialogDeposit)">
       </nb-action>
 
+      <!-- ! add Discount - Done -->
+      <nb-action
+      *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
+        icon="ion-cash"
+        nbTooltip="Add Discount"
+        nbTooltipPlacement="bottom"
+        (click)="openAddDiscount(dialogDiscount)">
+      </nb-action>
+
       <!-- ! add extra charge - Done -->
       <nb-action
       *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
@@ -489,6 +498,91 @@
     </nb-card-body>
     <nb-card-footer>
       <button type="button" class="btn btn-primary btnn" (click)="addPaymentDeposit()" (click)="ref.close()">Save</button>
+      <button type="button" class="btn btn-warning btnn" (click)="ref.close()">Cancel</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<!-- ! discount -->
+<ng-template #dialogDiscount let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>
+      Add Discount
+    </nb-card-header>
+    <nb-card-body>
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Charge for date</label>
+        <select
+          nbInput
+          fullWidth
+          [disabled]="show === false"
+          class="form-control"
+          [(ngModel)]="editCharge.chargeId"
+          id="chargeId"
+          name="chargeId"
+          required
+          (change)="getChargeDiscount($event)"
+          #chargeId="ngModel">
+          <option value="0" disabled selected>Choose your Charge option</option>
+          <option
+          *ngFor="let chargeDisc of chargeDisc"
+          value="{{chargeDisc.chargeId}}">{{chargeDisc.paymentForDate}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Discount</label>
+        <select
+          nbInput
+          fullWidth
+          [disabled]="show === false"
+          class="form-control"
+          [(ngModel)]="editCharge.discountId"
+          id="discountId"
+          name="discountId"
+          required
+          (change)="getChargeDiscountTwo($event)"
+          #discountId="ngModel">
+          <option value="0" disabled selected>Choose your discount option</option>
+          <option
+          *ngFor="let discount of discount"
+          value="{{discount.discountId}}">{{discount.discountName}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Discount total</label>
+        <input
+        type="text"
+        nbInput
+        fullWidth
+        disabled
+        currencyMask
+        class="form-control"
+        [(ngModel)]="editCharge.discountTotal"
+        id="discountTotal"
+        name="discountTotal"
+        required
+        #discountTotal="ngModel"
+        placeholder="Total paid">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Charge Note</label>
+        <textarea
+        nbInput
+        fullWidth
+        class="form-control"
+        [(ngModel)]="editCharge.chargeNote"
+        id="chargeNote"
+        name="chargeNote"
+        required
+        #chargeNote="ngModel"
+        placeholder="Charge Note"></textarea>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button type="button" class="btn btn-primary btnn" (click)="addDiscount()" (click)="ref.close()">Save</button>
       <button type="button" class="btn btn-warning btnn" (click)="ref.close()">Cancel</button>
     </nb-card-footer>
   </nb-card>

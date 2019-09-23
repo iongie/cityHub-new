@@ -40,7 +40,6 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.get();
-    this.refreshDiscount();
   }
 
   ngOnDestroy() {
@@ -92,8 +91,8 @@ export class DetailComponent implements OnInit, OnDestroy {
               discountName: resDiscount.discount_name,
               discountRate: resDiscount.discount_rate,
               discountStatus: resDiscount.discount_status,
-              discountFromDate: resDiscount.discount_form_date,
-              discountToDate: resDiscount.discount_to_date,
+              discountFromDate: new Date(resDiscount.discount_form_date),
+              discountToDate: new Date(resDiscount.discount_to_date),
               discountCreatedAt: resDiscount.discount_created_at,
               discountUpdateAt: resDiscount.discount_updated_at,
             };
@@ -102,12 +101,6 @@ export class DetailComponent implements OnInit, OnDestroy {
         });
 
       });
-    });
-  }
-
-  refreshDiscount() {
-    this.discountServ.refresh.subscribe(() => {
-      this.get();
     });
   }
 

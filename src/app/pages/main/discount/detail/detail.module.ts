@@ -39,7 +39,7 @@ const routes: Routes = [
     NbCheckboxModule,
     NgxPrintModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
-    UnderConstractionModule,
+    // UnderConstractionModule,
     NbDateFnsDateModule.forRoot({
       parseOptions: { locale: eo },
       formatOptions: { locale: eo },

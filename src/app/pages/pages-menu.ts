@@ -94,6 +94,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Guest',
         link: '/pages/guest',
       },
+      {
+        title: 'Discount',
+        link: '/pages/discount-management',
+      },
     ],
   }, {
     title: 'Sales Operational',

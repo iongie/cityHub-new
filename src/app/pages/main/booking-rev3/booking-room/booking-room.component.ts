@@ -19,6 +19,7 @@ import { ExtraChargeCategoryService } from '../../../../services/extra-charge-ca
 import { PaymentTypeService } from '../../../../services/payment-type/payment-type.service';
 import { NbDialogService } from '@nebular/theme';
 import { LinkDetailPaymentInformationComponent } from './link-detail-payment-information/link-detail-payment-information.component';
+import { DiscountService } from '../../../../services/discount/discount.service';
 
 @Component({
   selector: 'ngx-booking-room',
@@ -194,6 +195,26 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
       },
     },
   };
+
+  // TODO: Setting for Edit Charge
+  editCharge = {
+    chargeId: 0,
+    chargeTotal: 0,
+    discountId: 0,
+    discountTotal: 0,
+    chargeNote: '',
+    chargeUpdatedBy: '',
+  };
+  discount = [{
+    discountId: 0,
+    discountName: 0,
+    discountRate: 0,
+  }];
+  chargeDisc = [{
+    chargeId: 0,
+    chargeTotal: 0,
+    paymentForDate: new Date(),
+  }];
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
@@ -212,6 +233,7 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     public paymentTypeServ: PaymentTypeService,
     private dialogService: NbDialogService,
     public notifServ: NotificationService,
+    public discountServ: DiscountService,
   ) { }
 
   ngOnInit() {
@@ -225,11 +247,51 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     this.refreshTotalCharge();
     this.getHistoryBookingRoomId();
     this.refreshHistory();
+    this.getDiscount();
   }
 
   ngOnDestroy() {
     this.subs.next();
     this.subs.complete();
+  }
+
+  // TODO: Calculate for Discount
+  getChargeDiscount(event) {
+    const dataFilter = this.chargeDisc.filter( x => {
+      return x.chargeId === +event.target.value;
+    });
+
+    this.editCharge.chargeTotal = dataFilter[0].chargeTotal;
+  }
+
+  getChargeDiscountTwo(event) {
+    const dataFilter = this.discount.filter( x => {
+      return x.discountId === +event.target.value;
+    });
+
+    this.editCharge.discountTotal = this.editCharge.chargeTotal * (dataFilter[0].discountRate / 100);
+  }
+
+  // TODO: GET total charge
+  getDiscount() {
+    const menu = {
+      name: 'on',
+    };
+
+    this.discountServ.get(menu)
+    .pipe(takeUntil(this.subs))
+    .subscribe(resDiscount => {
+      const data = resDiscount.map(x => {
+        const ccc = {
+          discountId: x.discount_id,
+          discountName: x.discount_name,
+          discountRate: x.discount_rate,
+        };
+        return ccc;
+      });
+
+      this.discount = data;
+    });
   }
 
   // TODO: GET total charge
@@ -430,6 +492,16 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
               return y;
             });
 
+            this.chargeDisc = resGetBookingInformation // ! data charge for dicount
+            .charge.map(x => {
+              const y = {
+                chargeId: x.charge_id,
+                chargeTotal: x.charge_total,
+                paymentForDate: x.payment_for_date,
+              };
+              return y;
+            });
+
             const payment = resGetBookingInformation // ! data payment
             .payment.map(x => {
               const y = {
@@ -598,6 +670,11 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
   openAddDeposit(dialogDeposit: TemplateRef<any>) {
     this.dialogService.open(dialogDeposit); // ! dialog add deposit
   }
+
+  openAddDiscount(dialogDiscount: TemplateRef<any>) {
+    this.dialogService.open(dialogDiscount); // ! dialog add Discount
+  }
+
   openAddRoom(dialogAddRoom: TemplateRef<any>) {
     this.dialogService.open(dialogAddRoom); // ! dialog add aoom
   }
@@ -729,6 +806,29 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
         const content = 'Add payment not saved';
         this.notifServ.showDangerTypeToast(title, content);
       });
+    });
+  }
+
+  // TODO : Process Cancel Booking based on Booking room
+  addDiscount() {
+    const data = {
+      chargeId: this.editCharge.chargeId,
+      chargeTotal: this.editCharge.chargeTotal,
+      discountId: this.editCharge.discountId,
+      discount: this.editCharge.discountTotal,
+      chargeNote: this.editCharge.chargeNote,
+      chargeUpdatedBy: this.userCityHub.name,
+    };
+    this.bookingServ.diskon(data)
+    .pipe(takeUntil(this.subs))
+    .subscribe(resPayment => {
+      const title = 'Add Discount';
+      const content = 'Add Discount successfully';
+      this.notifServ.showSuccessTypeToast(title, content);
+    }, err => {
+      const title = 'Error - Add Discount';
+      const content = 'Add Discount not saved';
+      this.notifServ.showDangerTypeToast(title, content);
     });
   }
 

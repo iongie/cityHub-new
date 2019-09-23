@@ -48,16 +48,16 @@
         <div class="form-group col-6">
           <label for="inputEmail4">From Date</label>
           <input
-          [nbDatepicker]="discountFormDate"
-          [(ngModel)]="discount.discountFormDate"
+          [nbDatepicker]="discountFromDate"
+          [(ngModel)]="discount.discountFromDate"
           class="form-control"
-          id="discountFormDate"
-          name="discountFormDate"
+          id="discountFromDate"
+          name="discountFromDate"
           required
-          #discountFormDate="ngModel"
+          #discountFromDate="ngModel"
           placeholder="From Date">
           <nb-datepicker
-            #discountFormDate
+            #discountFromDate
             format="MMM d, y">
           </nb-datepicker>
         </div>
@@ -65,7 +65,7 @@
         <div class="form-group col-6">
           <label for="inputEmail4">To Date</label>
           <input
-          [nbDatepicker]="discountFormDate"
+          [nbDatepicker]="discountToDate"
           [(ngModel)]="discount.discountToDate"
           class="form-control"
           id="discountToDate"
@@ -82,7 +82,7 @@
 
       <div class="buttons">
         <button type="submit" class="btnn btn btn-primary" *ngIf="show">Update</button>
-        <button type="button" class="btnn btn-warning" [routerLink]="['/pages/discount-management']" routerLinkActive="router-link-active" >Cancel</button>
+        <button type="button" class="btnn btn btn-warning" [routerLink]="['/pages/discount-management']" routerLinkActive="router-link-active" >Cancel</button>
       </div>
     </form>
   </nb-card-body>

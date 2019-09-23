@@ -12,7 +12,7 @@ import { takeUntil, filter, map } from 'rxjs/operators';
 @Component({
   selector: 'ngx-link-to-detail',
   templateUrl: './link-to-detail.component.html',
-  styleUrls: ['./link-to-detail.component.scss']
+  styleUrls: ['./link-to-detail.component.scss'],
 })
 export class LinkToDetailComponent implements OnInit, OnDestroy, ViewCell {
   renderValue: any;
@@ -47,7 +47,7 @@ export class LinkToDetailComponent implements OnInit, OnDestroy, ViewCell {
   ) { }
 
   ngOnInit() {
-    this.renderValue = this.value.extraChargeId;
+    this.renderValue = this.value.discountId;
     this.action();
     this.viewOption();
   }
@@ -63,15 +63,16 @@ export class LinkToDetailComponent implements OnInit, OnDestroy, ViewCell {
         title: y.title,
         icon: y.icon,
         data: {
-          id: this.value.extraChargeId,
-          status: this.value.extraChargeStatus,
+          id: this.value.discountId,
+          status: this.value.discountStatus,
         },
       };
       return xyz;
     });
-    if (this.value.extraChargeRoleUpdate === 'allowed') {
+    // this.data = dataMap;
+    if (this.value.discountRoleUpdate === 'allowed') {
       this.data = dataMap;
-    }else if (this.value.extraChargeRoleUpdate === 'not allowed') {
+    }else if (this.value.discountRoleUpdate === 'not allowed') {
       this.data = dataMap.filter((fil) => {
         return fil.title === 'View';
       });

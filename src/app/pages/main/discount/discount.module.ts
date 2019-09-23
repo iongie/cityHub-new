@@ -12,6 +12,7 @@ import { UnderConstractionModule } from '../under-constraction/under-constractio
 import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { eo } from 'date-fns/locale';
 import { LinkToDetailModule } from './link-to-detail/link-to-detail.module';
+import { StatusModule } from './status/status.module';
 export const customCurrencyMaskConfig = {
   align: 'right',
   allowNegative: true,
@@ -46,6 +47,7 @@ const routes: Routes = [
       formatOptions: { locale: eo },
     }),
     LinkToDetailModule,
+    StatusModule,
   ],
 })
 export class DiscountModule { }

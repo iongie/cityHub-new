@@ -77,7 +77,7 @@ export class DiscountComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.get();
-    this.refreshDiscount();
+    // this.refreshDiscount();
   }
 
   ngOnDestroy() {
@@ -155,11 +155,6 @@ export class DiscountComponent implements OnInit, OnDestroy {
     });
   }
 
-  refreshDiscount() {
-    this.discountServ.refresh.subscribe(() => {
-      this.get();
-    });
-  }
 
   filter() {
     const token = {
@@ -210,6 +205,17 @@ export class DiscountComponent implements OnInit, OnDestroy {
               discountToDate: x.discount_to_date,
               discountCreatedAt: x.discount_created_at,
               discountUpdateAt: x.discount_updated_at,
+              status: {
+                discountStatus: x.discount_status,
+              },
+              detail: {
+                discountId: x.discount_id,
+                discountStatus: x.discount_status,
+                discountRoleCreate: filter[0].create_permision,
+                discountRoleRead: filter[0].read_permision,
+                discountRoleUpdate: filter[0].update_permision,
+                discountRoleDelete: filter[0].delete_permision,
+              },
             };
             return ccc;
           });

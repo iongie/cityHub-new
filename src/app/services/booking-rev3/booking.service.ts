@@ -211,6 +211,15 @@ export class BookingService implements OnDestroy {
       );
     }
 
+    diskon(data: any): Observable<any> {
+      return this.http.post<any>(this.url + '/charge/edit', data, httpOptions).pipe(
+        catchError(this.handleError),
+        tap(() => {
+          this._refresh.next();
+        }),
+      );
+    }
+
     getPaymentByBookingRoomId(bookingRoom: any): Observable<any[]> {
       return this.http.get<any[]>(this.url + '/payment/' + bookingRoom.id, httpOptions).pipe(
         catchError(this.handleError),
