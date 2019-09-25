@@ -8,6 +8,7 @@
       <!-- ! Nota -->
       <nb-action
         icon="fa fa-print"
+        style="-webkit-text-fill-color: black"
         nbTooltip="Print Nota"
         nbTooltipPlacement="bottom"
         (click)="goToNota()">
@@ -16,7 +17,8 @@
       <!-- ! add payment - Done -->
       <nb-action
         *ngIf="charge.total !== 0 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
-        icon="fas fa-money-bill-wave-alt"
+        icon="fab fa-paypal"
+        style="-webkit-text-fill-color: blue"
         nbTooltip="Add Payment"
         nbTooltipPlacement="bottom"
         (click)="openAddPayment(dialogPayment)">
@@ -25,7 +27,8 @@
       <!-- ! add deposit - Done -->
       <nb-action
       *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
-        icon="ion-cash"
+        icon="fa fa-wallet"
+        style="-webkit-text-fill-color: royalblue"
         nbTooltip="Add Deposit"
         nbTooltipPlacement="bottom"
         (click)="openAddDeposit(dialogDeposit)">
@@ -34,8 +37,9 @@
       <!-- ! add Discount - Done -->
       <nb-action
       *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
-        icon="ion-cash"
+        icon="fa fa-percent"
         nbTooltip="Add Discount"
+        style="-webkit-text-fill-color: aqua"
         nbTooltipPlacement="bottom"
         (click)="openAddDiscount(dialogDiscount)">
       </nb-action>
@@ -43,7 +47,8 @@
       <!-- ! add extra charge - Done -->
       <nb-action
       *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
-        icon="fas fa-money-check"
+        icon="fa fa-gift"
+        style="-webkit-text-fill-color: lightseagreen"
         nbTooltip="Add Extra Charge"
         nbTooltipPlacement="bottom"
         (click)="openDialogExtraCHarge(dialogExtraCharge)">
@@ -53,6 +58,7 @@
       <nb-action
       *ngIf="detailBookingByBookingRoomId.roomInformation.roomId === null && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
       icon="fa fa-bed"
+      style="-webkit-text-fill-color: orange"
       nbTooltip="Add Room"
       nbTooltipPlacement="bottom"
       (click)="openAddRoom(dialogAddRoom)">
@@ -62,6 +68,7 @@
       <nb-action
         *ngIf="detailBookingByBookingRoomId.roomInformation.roomId !== null && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
         icon="fas fa-dolly-flatbed"
+        style="-webkit-text-fill-color: lightsalmon"
         nbTooltip="Move Room"
         nbTooltipPlacement="bottom"
         (click)="goToMoveRoom()">
@@ -71,9 +78,10 @@
       <nb-action
         *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
         icon="fa fa-plus-circle"
+      style="-webkit-text-fill-color: violet"
         nbTooltip="Add Stay"
         nbTooltipPlacement="bottom"
-        (click)="goToAddStay()">
+        (click)="goToAddStay()">  
       </nb-action>
 
 
@@ -81,6 +89,7 @@
       <nb-action
         *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
         icon="fa fa-minus-circle"
+      style="-webkit-text-fill-color: lightpink"        
         nbTooltip="Less Stay"
         nbTooltipPlacement="bottom"
         (click)="goToLessStay()">
@@ -90,6 +99,7 @@
       <nb-action
       *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
         icon="fas fa-user-check"
+      style="-webkit-text-fill-color: darkgreen"
         nbTooltip="Check In"
         nbTooltipPlacement="bottom"
         (click)="openActionCheckIn(dialogCheckIn)">
@@ -99,6 +109,7 @@
       <nb-action
       *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 3"
         icon="fas fa-sign-out-alt"
+      style="-webkit-text-fill-color: lightgreen"        
         nbTooltip="Check out"
         nbTooltipPlacement="bottom"
         (click)="openActionCheckOut(dialogCheckOut)">
@@ -108,6 +119,7 @@
       <nb-action
       *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
         icon="fas fa-eye-slash"
+        style="-webkit-text-fill-color: gray"
         nbTooltip="No Show"
         nbTooltipPlacement="bottom"
         (click)="noShow()">
@@ -117,6 +129,7 @@
       <nb-action
       *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 3 && detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId !== 5"
         icon="fas fa-eject"
+        style="-webkit-text-fill-color: red"
         nbTooltip="Cancel"
         nbTooltipPlacement="bottom"
         (click)="cancelBookingRoom()">
@@ -125,6 +138,7 @@
       <!-- ! back to booking detail based on booking id - Done  -->
       <nb-action
       icon="fa fa-undo"
+      style="-webkit-text-fill-color: yellow"
       nbTooltip="Undo"
       nbTooltipPlacement="bottom"
       [routerLink]="['/pages/booking-detail/' + this.detailBookingByBookingRoomId.roomInformation.bookingId]"
