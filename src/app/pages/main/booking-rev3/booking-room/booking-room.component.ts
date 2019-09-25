@@ -49,15 +49,36 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
       },
       rateTotal: {
         title: 'Rate total',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return value = Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            currencyDisplay: 'code' }).format(value);
+        },
+        editable: false,
       },
       taxTotal: {
         title: 'Tax total',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return value = Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            currencyDisplay: 'code' }).format(value);
+        },
+        editable: false,
       },
       paidTotal: {
         title: 'Paid total',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return value = Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            currencyDisplay: 'code' }).format(value);
+        },
+        editable: false,
       },
       paymentCategory: {
         title: 'Payment category',
@@ -91,19 +112,47 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
       },
       chargeRate: {
         title: 'Charge rate',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return value = Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            currencyDisplay: 'code' }).format(value);
+        },
+        editable: false,
       },
       chargeTax: {
         title: 'Charge tax',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return value = Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            currencyDisplay: 'code' }).format(value);
+        },
+        editable: false,
       },
       discount: {
         title: 'Discount',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return value = Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            currencyDisplay: 'code' }).format(value);
+        },
+        editable: false,
       },
       chargeTotal: {
         title: 'Charge total',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return value = Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            currencyDisplay: 'code' }).format(value);
+        },
+        editable: false,
       },
       seasonTypeName: {
         title: 'Season type',
@@ -135,7 +184,14 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
       },
       extraPaymentAmount: {
         title: 'Amount',
-        type: 'string',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return value = Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            currencyDisplay: 'code' }).format(value);
+        },
+        editable: false,
       },
     },
   };

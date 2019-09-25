@@ -371,6 +371,10 @@ const routes: Routes = [{
       loadChildren: './main/property-information/property-information.module#PropertyInformationModule',
     },
     {
+      path: 'night-audit',
+      loadChildren: './main/night-audit/night-audit.module#NightAuditModule',
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',

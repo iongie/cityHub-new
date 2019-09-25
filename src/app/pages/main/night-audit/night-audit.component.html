@@ -1,0 +1,36 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Night Audit</div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div class="row">
+      <div class="col-6">
+        <div class="input-group  mb-3 ">
+          <input
+          [nbDatepicker]="fromDate"
+          class="form-control"
+          [(ngModel)]="forNightAudit.date"
+          id="date"
+          name="date"
+          required
+          #fromDate="ngModel"
+          placeholder="From Date">
+          <nb-datepicker
+            #fromDate
+            format="MMM d, y">
+          </nb-datepicker>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" (click)="getNightAUdit()">
+              <i class="fas fa-filter"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng2-smart-table [settings]="settings"  [source]="nightAudit"></ng2-smart-table>
+  </nb-card-body>
+</nb-card>

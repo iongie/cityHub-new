@@ -19,11 +19,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'New Booking',
+    icon: 'far fa-file',
     link: '/pages/add-booking',
   },
   {
     title: 'New Miscellaneous',
-    link: '/pages/add-miscellaneous',
+    icon: 'far fa-file',
+    link: '/pages/add-miscellaneous-sales',
   },
   {
     title: 'FEATURES',
@@ -120,6 +122,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Daily Report',
         link: '/pages/report',
+      },
+      {
+        title: 'Night Audit',
+        link: '/pages/night-audit',
       },
     ],
   },

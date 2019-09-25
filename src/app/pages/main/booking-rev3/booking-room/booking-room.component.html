@@ -1,8 +1,10 @@
 <!-- TODO: Start Action Group Booking Room -->
 <nb-card>
-  <nb-card-body>
-    <nb-actions size="small">
-
+  <nb-card-body class="nb-card-body">
+    <div class="action-groups-header">
+      Action Detail Room
+    </div>
+    <nb-actions size="medium">
       <!-- ! Nota -->
       <nb-action
         icon="fa fa-print"
@@ -87,7 +89,7 @@
       <!-- ! check in - Done -->
       <nb-action
       *ngIf="detailBookingByBookingRoomId.roomInformation.bookingRoomStatusId === 2"
-        icon="fas fa-sign-in-alt"
+        icon="fas fa-user-check"
         nbTooltip="Check In"
         nbTooltipPlacement="bottom"
         (click)="openActionCheckIn(dialogCheckIn)">

@@ -32,7 +32,8 @@ const routes: Routes = [
     RoomSelector2Component,
     RoomSelector3Component,
     RoomMapsComponent,
-    PlayerComponent,],
+    PlayerComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -42,9 +43,4 @@ const routes: Routes = [
   ],
 })
 
-export class DashboardModule {
-
-  
-  constructor() {}
-  
-}
+export class DashboardModule { }
