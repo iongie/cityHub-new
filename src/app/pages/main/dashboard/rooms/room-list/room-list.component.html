@@ -1,6 +1,26 @@
 <nb-card size="medium">
   <nb-tabset fullWidth>
-    <nb-tab *ngFor="let floor of floor" tabTitle={{floor.floorName}}>
+    <nb-tab *ngFor="let floor of floor" tabTitle="1st Floor">
+      <div class="contact" *ngFor="let user of users">
+        <nb-user [picture]="user.picture" [name]="user.name" [title]="user.title">
+        </nb-user>
+        <i class="fa fa-user" style="color: black" title="Occupant"> </i>
+        <i class="fa fa-book" style="color: blue" title="Booking">
+          <span><i class="fas fa-recycle" style="color: coral" title="Cleaning"></i></span>
+        </i>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="2nd Floor">
+      <div class="contact" *ngFor="let user of users">
+        <nb-user [picture]="user.picture" [name]="user.name" [title]="user.title">
+        </nb-user>
+        <i class="fa fa-user" style="color: black" title="Occupant"> </i>
+        <i class="fa fa-book" style="color: blue" title="Booking">
+          <span><i class="fas fa-recycle" style="color: coral" title="Cleaning"></i></span>
+        </i>
+      </div>
+    </nb-tab>
+    <nb-tab tabTitle="3rd Floor">
       <div class="contact" *ngFor="let user of users">
         <nb-user [picture]="user.picture" [name]="user.name" [title]="user.title">
         </nb-user>
