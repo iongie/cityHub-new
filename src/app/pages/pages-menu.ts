@@ -19,12 +19,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'New Booking',
-    icon: 'far fa-file',
+    icon: 'fa fa-key',
     link: '/pages/add-booking',
   },
   {
     title: 'New Miscellaneous',
-    icon: 'far fa-file',
+    icon: 'fa fa-plus-circle',
     link: '/pages/add-miscellaneous-sales',
   },
   {
@@ -106,11 +106,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'fa fa-hotel',
     children: [
       {
-        title: 'Booking management',
+        title: 'Booking Management',
         link: '/pages/booking-management',
       },
       {
-        title: 'Miscellaneous sales management',
+        title: 'Misc. Sales Management',
         link: '/pages/miscellaneous-sales',
       },
     ],
