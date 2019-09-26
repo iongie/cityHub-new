@@ -1,6 +1,6 @@
 <nb-card size="medium">
-  <nb-tabset fullWidth>
-    <nb-tab *ngFor="let floor of floor" tabTitle="1st Floor">
+  <nb-tabset  fullWidth>
+    <nb-tab tabTitle={{floor.floorName}}>
       <div class="contact" *ngFor="let user of users">
         <nb-user [picture]="user.picture" [name]="user.name" [title]="user.title">
         </nb-user>
