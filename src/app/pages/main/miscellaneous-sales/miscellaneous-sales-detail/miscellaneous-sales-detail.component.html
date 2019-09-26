@@ -5,13 +5,15 @@
       <nb-action
         icon="fa fa-print"
         nbTooltip="Print Nota"
+        style="-webkit-text-fill-color: black"
         nbTooltipPlacement="bottom"
         (click)="goToNota()">
       </nb-action>
       
       <!-- ! Extend Miscellaneous Sales -->
       <nb-action
-        icon="fa fa-plus-square"
+        icon="fa fa-external-link-alt"
+        style="-webkit-text-fill-color: violet"
         nbTooltip="Extend Miscellaneous Sales"
         nbTooltipPlacement="bottom"
         (click)="goToExtendMiscSales()">
@@ -20,6 +22,7 @@
       <!-- ! Miscellaneous Sales Management -->
       <nb-action
         icon="fas fa-bars"
+        style="-webkit-text-fill-color: black"
         nbTooltip="Go to Miscellaneous Sales Management"
         nbTooltipPlacement="bottom"
         (click)="goToMiscSalesManagement()">
@@ -27,7 +30,6 @@
     </nb-actions>
   </nb-card-body>
 </nb-card>
-
 
 <nb-card>
     <nb-card-header>

@@ -8,7 +8,8 @@
 
         <!-- !extend room -->
         <nb-action
-          icon="fas fa-plus-square"
+          icon="fas fa-external-link-alt"
+          style="-webkit-text-fill-color: blue"          
           nbTooltip="Extend Room"
           nbTooltipPlacement="bottom"
           (click)="goToExtendRoom()">
@@ -17,6 +18,7 @@
         <!-- !Cancel Booking -->
         <nb-action
           icon="fas fa-window-close"
+        style="-webkit-text-fill-color: red"
           nbTooltip="Cancel Booking"
           nbTooltipPlacement="bottom"
           (click)="openActionCancelByBooking(dialogCancelByBooking)">
@@ -25,6 +27,7 @@
         <!-- !Booking Management -->
         <nb-action
           icon="fas fa-bars"
+        style="-webkit-text-fill-color: black"
           nbTooltip="Go to Booking Management"
           nbTooltipPlacement="bottom"
           (click)="goToBookingManagement()">

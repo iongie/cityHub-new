@@ -233,7 +233,7 @@ export class NotaComponent implements OnInit, OnDestroy {
           roomCharge: resNota[0].charge.room_charge,
           totalExtraCharge: resNota[0].charge.total_extra_charge,
           tax: resNota[0].charge.total_tax,
-          user: resNota[0].property.created_by,
+          user: resNota[0].booking.booking_by,
           roomType: resNota[0].room.room_type_name,
         };
         console.log (resNota);
@@ -253,7 +253,7 @@ export class NotaComponent implements OnInit, OnDestroy {
           datePrint: new Date (Date.now()),
           totalExtraCharge: resNota[1].total_extra_charge.total_extra_charge,
           amountToWord: writtenForm(resNota[1].total_extra_charge.total_extra_charge),
-          user: resNota[1].property.created_by,
+          user: resNota[1].total_extra_charge.created_by,
           charge: resNota[1].charge.map(x => {
             const dataCharge = {
               voucherNo: x.ref_number,
@@ -284,7 +284,7 @@ export class NotaComponent implements OnInit, OnDestroy {
           country: resNota[2].guest.country_name,
           phone: resNota[2].guest.phone_number,
           email: resNota[2].guest.email,
-          user: resNota[2].property.created_by,
+          user: resNota[2].deposit.created_by,
           datePrint: new Date (Date.now()),
           roomName: resNota[2].room.room_name,
           roomType: resNota[2].room.room_type_name,
@@ -367,7 +367,7 @@ export class NotaComponent implements OnInit, OnDestroy {
           country: resNota[5].guest.country_name,
           phone: resNota[5].guest.phone_number,
           email: resNota[5].guest.email,
-          user: resNota[5].property.created_by,
+          user: resNota[5].deposit.created_by,
           datePrint: new Date (Date.now()),
           roomName: resNota[5].room.room_name,
           roomType: resNota[5].room.room_type_name,
