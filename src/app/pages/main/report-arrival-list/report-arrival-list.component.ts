@@ -31,8 +31,8 @@ export class ReportArrivalListComponent implements OnInit, OnDestroy {
     this.reportServ.getArrivalListReport(report)
     .pipe(takeUntil(this.subs))
     .subscribe(res => {
-      console.log('tes');
-    })
+      console.log('getReportArrivalList', res);
+    });
   }
 
 }
