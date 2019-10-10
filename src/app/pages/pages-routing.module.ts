@@ -375,6 +375,22 @@ const routes: Routes = [{
       loadChildren: './main/night-audit/night-audit.module#NightAuditModule',
     },
     {
+      path: 'arrival-list-report',
+      loadChildren: './main/report-arrival-list/report-arrival-list.module#ReportArrivalListModule',
+    },
+    {
+      path: 'daily-report',
+      loadChildren: './main/report-daily/report-daily.module#ReportDailyModule',
+    },
+    {
+      path: 'number-of-night-report',
+      loadChildren: './main/report-number-of-night/report-number-of-night.module#ReportNumberOfNightModule',
+    },
+    {
+      path: 'user-shift-report',
+      loadChildren: './main/report-user-shift/report-user-shift.module#ReportUserShiftModule',
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',

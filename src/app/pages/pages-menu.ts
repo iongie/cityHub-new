@@ -120,8 +120,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'fa fa-database',
     children: [
       {
-        title: 'Daily Report',
-        link: '/pages/report',
+        title: 'Arrival',
+        link: '/pages/arrival-list-report',
+      },
+      {
+        title: 'Number of night',
+        link: '/pages/number-of-night-report',
+      },
+      {
+        title: 'User shift',
+        link: '/pages/user-shift-report',
+      },
+      {
+        title: 'Daily',
+        link: '/pages/daily-report',
       },
       {
         title: 'Night Audit',
