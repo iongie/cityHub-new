@@ -124,10 +124,11 @@ export class BookingAddComponent implements OnInit, OnDestroy {
           city: forResGuest.city,
           phoneNumber: forResGuest.phone_number,
           guestFileScan: forResGuest.guest_file_scan,
+          email: forResGuest.email,
         };
         return dataResGuest;
       });
-      console.log(this.guest);
+      console.log(resGuest);
     });
   }
 
@@ -204,6 +205,7 @@ export class BookingAddComponent implements OnInit, OnDestroy {
         phoneNumber: event.phoneNumber,
         guestFileScan: event.guestFileScan,
       };
+      this.imgURL = event.guestFileScan;
     }
   }
 
