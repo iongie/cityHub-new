@@ -59,7 +59,7 @@ export class ReportArrivalListComponent implements OnInit, OnDestroy {
   min = new Date();
   max = new Date();
 
-  hiddenContent : true;
+  hiddenContent = true ;
   constructor(
     public reportServ: ReportService,
     public datepipe: DatePipe,
@@ -68,12 +68,12 @@ export class ReportArrivalListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // this.getReportArrivalList();
     this.minMax();
+    this.hiddenContent = true;
   }
 
   ngOnDestroy() {
     this.subs.next();
     this.subs.complete();
-    this.hiddenContent;
   }
 
   minMax() {
@@ -84,6 +84,7 @@ export class ReportArrivalListComponent implements OnInit, OnDestroy {
   }
 
   getReportArrivalList() {
+    this.hiddenContent = false;
     const report = {
       fromDate: this.datepipe.transform( this.sortDate.date.start, 'yyyy-MM-dd'),
       toDate: this.datepipe.transform( this.sortDate.date.end, 'yyyy-MM-dd'),
@@ -134,7 +135,7 @@ export class ReportArrivalListComponent implements OnInit, OnDestroy {
       toDate: this.datepipe.transform( this.sortDate.date.end, 'yyyy-MM-dd'),
     };
     drawDOM(document.getElementById('demoReportArrival')).then(data => {
-      pdf.saveAs(data, 'report_' + report.fromDate + '_' + report.fromDate + '_arrival.pdf');
+      pdf.saveAs(data, 'report_' + report.fromDate + '_' + report.toDate + '_arrival.pdf');
     })
   }
 

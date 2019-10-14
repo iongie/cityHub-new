@@ -1,7 +1,7 @@
 <nb-card>
   <nb-card-header>
     <div class="row">
-      <div class="col-auto mr-auto">Report Date</div>
+      <div class="col-auto mr-auto">Report Arrival List Date</div>
     </div>
   </nb-card-header>
   <nb-card-body>
@@ -33,7 +33,7 @@
 </nb-card>
 
 <!-- TODO: Content Report -->
-<nb-card>
+<nb-card *ngIf="hiddenContent === false">
   <nb-card-body>
     <div id="demoReportArrival" #content>
       <div class="invoice">
@@ -83,10 +83,10 @@
     </div>
 
     <div class="buttons">
-      <button printSectionId="demoReportArrival" ngxPrint [useExistingCss]="true" class="btn btn-primary">
+      <button printSectionId="demoReportArrival" ngxPrint [useExistingCss]="true" class="btnn btn btn-primary">
         <i class="fas fa-print"></i>Print
       </button>
-      <button (click)="makePdfReportArrival(content)"   class="btn btn-warning">
+      <button (click)="makePdfReportArrival(content)"   class="btnn btn btn-warning">
         <i class="fas fa-file"></i> Export to PDF
       </button>
     </div>

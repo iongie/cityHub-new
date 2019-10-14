@@ -10,6 +10,7 @@ import { NgxPrintModule } from 'ngx-print';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { eo } from 'date-fns/locale';
+import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 export const customCurrencyMaskConfig = {
   align: 'right',
   allowNegative: true,
@@ -43,6 +44,7 @@ const routes: Routes = [
       parseOptions: { locale: eo },
       formatOptions: { locale: eo },
     }),
+    PDFExportModule,
   ],
 })
 export class ReportDailyModule { }
