@@ -4,6 +4,7 @@ import { ReportService } from '../../../services/report/report.service';
 import { takeUntil } from 'rxjs/operators';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'ngx-report-arrival-list',
@@ -44,16 +45,24 @@ export class ReportArrivalListComponent implements OnInit, OnDestroy {
       status: '',
     },
   ];
-  report = {
-    fromDate: '2019-01-01',
-    toDate: '2019-12-31',
+  sortDate = {
+    date: {
+      start: new Date(),
+      end: new Date(),
+    },
   };
+
+  // TODO: Setting disable date for from date and to date
+  min = new Date();
+  max = new Date();
   constructor(
     public reportServ: ReportService,
+    public datepipe: DatePipe,
   ) { }
 
   ngOnInit() {
-    this.getReportArrivalList();
+    // this.getReportArrivalList();
+    this.minMax();
   }
 
   ngOnDestroy() {
@@ -61,10 +70,17 @@ export class ReportArrivalListComponent implements OnInit, OnDestroy {
     this.subs.complete();
   }
 
+  minMax() {
+    const max = new Date()
+    .setDate(new Date(Date.now())
+    .getDate() + 1);
+    this.max = new Date(max);
+  }
+
   getReportArrivalList() {
     const report = {
-      fromDate: '2019-01-01',
-      toDate: '2019-12-31',
+      fromDate: this.datepipe.transform( this.sortDate.date.start, 'yyyy-MM-dd'),
+      toDate: this.datepipe.transform( this.sortDate.date.end, 'yyyy-MM-dd'),
     };
     this.reportServ.getArrivalListReport(report)
     .pipe(takeUntil(this.subs))
@@ -121,7 +137,7 @@ export class ReportArrivalListComponent implements OnInit, OnDestroy {
       const pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF
       const position = 0;
       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-      pdf.save('report_' + this.report.fromDate + '_' + this.report.toDate + '_arrival.pdf'); // Generated PDF
+      pdf.save('report_' + this.sortDate.date.start + '_' + this.sortDate.date.end + '_arrival.pdf'); // Generated PDF
     });
   }
 
