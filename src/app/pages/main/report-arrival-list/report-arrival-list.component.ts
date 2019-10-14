@@ -1,10 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ReportService } from '../../../services/report/report.service';
 import { takeUntil } from 'rxjs/operators';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
 import { DatePipe } from '@angular/common';
+import { Path, Text, Group, pdf, exportPDF, drawDOM, DrawOptions } from '@progress/kendo-drawing';
+
+
 
 @Component({
   selector: 'ngx-report-arrival-list',
@@ -55,6 +58,8 @@ export class ReportArrivalListComponent implements OnInit, OnDestroy {
   // TODO: Setting disable date for from date and to date
   min = new Date();
   max = new Date();
+
+  hiddenContent : true;
   constructor(
     public reportServ: ReportService,
     public datepipe: DatePipe,
@@ -68,6 +73,7 @@ export class ReportArrivalListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subs.next();
     this.subs.complete();
+    this.hiddenContent;
   }
 
   minMax() {
@@ -122,23 +128,16 @@ export class ReportArrivalListComponent implements OnInit, OnDestroy {
     });
   }
 
-  public makePdfReportArrival()
-  // tslint:disable-next-line: one-line
-  {
-    const data = document.getElementById('demoReportArrival');
-    html2canvas(data).then(canvas => {
-      // ? Few necessary setting options
-      const imgWidth = 208;
-      const pageHeight = 295;
-      const imgHeight = canvas.height * imgWidth / canvas.width;
-      const heightLeft = imgHeight;
-
-      const contentDataURL = canvas.toDataURL('img/png');
-      const pdf = new jsPDF ('p', 'mm', 'a4'); // A4 size page of PDF
-      const position = 0;
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-      pdf.save('report_' + this.sortDate.date.start + '_' + this.sortDate.date.end + '_arrival.pdf'); // Generated PDF
-    });
+  makePdfReportArrival() {
+    const report = {
+      fromDate: this.datepipe.transform( this.sortDate.date.start, 'yyyy-MM-dd'),
+      toDate: this.datepipe.transform( this.sortDate.date.end, 'yyyy-MM-dd'),
+    };
+    drawDOM(document.getElementById('demoReportArrival')).then(data => {
+      pdf.saveAs(data, 'report_' + report.fromDate + '_' + report.fromDate + '_arrival.pdf');
+    })
   }
+
+  
 
 }
