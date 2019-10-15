@@ -16,6 +16,22 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
     printDate: '',
     reportName: '',
   };
+
+  property = {
+    propertyId: 0,
+    countryId: 0,
+    propertyName: '',
+    address: '',
+    city: '',
+    phoneNumber: '',
+    website: '',
+    createdAt: '',
+    createdBy: '',
+    updatedAt: '',
+    updatedBy: '',
+    countryName: '',
+  };
+
   roomRavenue = {
     today: {
       roomName: 0,
@@ -36,6 +52,7 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
       total: 0,
     }
   };
+
   extraCharge = {
     today: {
       extraCharge: 0,
@@ -65,20 +82,69 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
       total: 0,
     }
   };
-  property = {
-    propertyId: 0,
-    countryId: 0,
-    propertyName: '',
-    address: '',
-    city: '',
-    phoneNumber: '',
-    website: '',
-    createdAt: '',
-    createdBy: '',
-    updatedAt: '',
-    updatedBy: '',
-    countryName: '',
+
+  paymentInformation = {
+    today: [
+      {
+        paymentInformation: '',
+        nominal: 0,
+      }
+    ],
+    month: [
+      {
+        paymentInformation: '',
+        nominal: 0,
+      }
+    ],
+    year:  [
+      {
+        paymentInformation: '',
+        nominal: 0,
+      }
+    ],
   };
+
+  roomSummary = {
+    noOfBooking: {
+      today : 0,
+      month: 0,
+      year: 0,
+    },
+    soldRoom: {
+      today : 0,
+      month: 0,
+      year: 0,
+    },
+    averageGuestPerNights: {
+      today : 0,
+      month: 0,
+      year: 0,
+    },
+    noShowRooms: {
+      today : 0,
+      month: 0,
+      year: 0,
+    },
+    totalAvailableRoomNights: {
+      today : 0,
+      month: 0,
+      year: 0,
+    },
+  };
+
+  statisctics= {
+    occupancyRate: {
+        today: 0,
+        month: 1,
+        year: 1,
+    },
+    averageRevenuePerRoom: {
+      today: 0,
+      month: 0,
+      year: 0,
+    },
+  };
+  
   sortDate = {
     date: {
       start: new Date(),
@@ -93,7 +159,7 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.hiddenContent = true;
+    this.getReportnumberOfNightList();
   }
 
   ngOnDestroy() {
@@ -181,15 +247,80 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
           total: res.misc_sales.year.total,
         }
       };
+
+      this.paymentInformation.today = res.payment_information.today.map(x => {
+        const datax = {
+          paymentInformation: x.payment_information,
+          nominal: x.nominal,
+        };
+        return datax;
+      });
+
+      this.paymentInformation.month = res.payment_information.month.map(x => {
+        const datax = {
+          paymentInformation: x.payment_information,
+          nominal: x.nominal,
+        };
+        return datax;
+      });
+
+      this.paymentInformation.year = res.payment_information.year.map(x => {
+        const datax = {
+          paymentInformation: x.payment_information,
+          nominal: x.nominal,
+        };
+        return datax;
+      });
+
+      this.roomSummary = {
+        noOfBooking: {
+          today : res.room_summary.no_of_booking.today,
+          month: res.room_summary.no_of_booking.month,
+          year: res.room_summary.no_of_booking.year,
+        },
+        soldRoom: {
+          today : res.room_summary.sold_room.today,
+          month: res.room_summary.sold_room.month,
+          year: res.room_summary.sold_room.year,
+        },
+        averageGuestPerNights: {
+          today : res.room_summary.average_guest_per_nights.today,
+          month: res.room_summary.average_guest_per_nights.month,
+          year: res.room_summary.average_guest_per_nights.year,
+        },
+        noShowRooms: {
+          today : res.room_summary.no_show_rooms.today,
+          month: res.room_summary.no_show_rooms.month,
+          year: res.room_summary.no_show_rooms.year,
+        },
+        totalAvailableRoomNights: {
+          today : res.room_summary.total_available_room_nights.today,
+          month: res.room_summary.total_available_room_nights.month,
+          year: res.room_summary.total_available_room_nights.year,
+        },
+      };
+
+      this.statisctics= {
+        occupancyRate: {
+            today: res.statisctics.occupancy_rate.today,
+            month: res.statisctics.occupancy_rate.month,
+            year: res.statisctics.occupancy_rate.year,
+        },
+        averageRevenuePerRoom: {
+          today: res.statisctics.average_revenue_per_room.today,
+          month: res.statisctics.average_revenue_per_room.month,
+          year: res.statisctics.average_revenue_per_room.year,
+        },
+      };
     });
   }
 
-  makePdfReportArrival() {
+  makePdfReportDaily() {
     const report = {
       fromDate: this.datepipe.transform( this.sortDate.date.start, 'yyyy-MM-dd'),
       toDate: this.datepipe.transform( this.sortDate.date.end, 'yyyy-MM-dd'),
     };
-    drawDOM(document.getElementById('demoReportArrival')).then(data => {
+    drawDOM(document.getElementById('demoReportDaily')).then(data => {
       pdf.saveAs(data, 'report_' + report.fromDate + '_' + report.toDate + 'daily.pdf');
     })
   }
