@@ -1,28 +1,99 @@
 <nb-card>
   <nb-card-body>
     <div id="demoReportDaily" #content>
+      <div class="col-12 text-center">
+        <h5>{{property.propertyName}}</h5>
+        <p>{{property.address}} - {{property.city}},
+          {{property.countryName}}</p>
+        <strong>{{property.website}}</strong>
+      </div><br>
+      <div class="float-left"><strong>Printed By : </strong></div>
+      <div class="float-right"><strong>Printed Date : {{printProperty.printDate}}</strong></div><br>
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
-            <table class="table table-borderless">
+            <table class="table">
               <thead>
                 <tr>
-                  <th class="text-center"><strong>Date</strong></th>
-                  <th class="text-center"><strong>Description</strong></th>
-                  <th class="text-center"><strong>Total</strong></th>
+                    <th colspan="4" class="text-center"><strong>{{printProperty.reportName}}</strong></th>
+                </tr>
+                <tr>
+                  <th class="text-center"><strong>Particulars</strong></th>
+                  <th class="text-center"><strong>Today</strong></th>
+                  <th class="text-center"><strong>Month</strong></th>
+                  <th class="text-center"><strong>Year</strong></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="text-center">text</td>
-                  <td class="text-center">test</td>
-                  <td class="text-center">tent</td>
+                  <td colspan="4" class="text-left"><strong>Room AVENUE {{roomRavenue.today.roomName}}</strong></td>
                 </tr>
                 <tr>
-                  <td class="text-center">text</td>
-                  <td class="text-center">test</td>
-                  <td class="text-center">tent</td>
+                    <td class="text-center" label="discount">Discount</td>
+                    <td class="text-right" label="today">{{roomRavenue.today.discount}}</td>
+                    <td class="text-right" label="month">{{roomRavenue.month.discount}}</td>
+                    <td class="text-right" label="year">{{roomRavenue.year.discount}}</td>
                 </tr>
+                <tr>
+                    <td class="text-center" label="tax">Tax</td>
+                    <td class="text-right" label="today">{{roomRavenue.today.tax}}</td>
+                    <td class="text-right" label="month">{{roomRavenue.month.tax}}</td>
+                    <td class="text-right" label="year">{{roomRavenue.year.tax}}</td>
+                </tr>
+                <tr>
+                    <td class="text-center" label="total">Total</td>
+                    <td class="text-right" label="today">{{roomRavenue.today.total}}</td>
+                    <td class="text-right" label="month">{{roomRavenue.month.total}}</td>
+                    <td class="text-right" label="year">{{roomRavenue.year.total}}</td>
+                </tr>
+                <tr><td colspan="4"></td></tr>
+                <tr>
+                  <td colspan="4" class="text-left"><strong>Extra Charge</strong></td>
+                </tr>
+                <tr>
+                    <td class="text-center" label="discount">Extra Charge</td>
+                    <td class="text-right" label="today">{{extraCharge.today.extraCharge}}</td>
+                    <td class="text-right" label="month">{{extraCharge.month.extraCharge}}</td>
+                    <td class="text-right" label="year">{{extraCharge.year.extraCharge}}</td>
+                </tr>
+                <tr>
+                    <td class="text-center" label="tax">Total</td>
+                    <td class="text-right" label="today">{{extraCharge.today.total}}</td>
+                    <td class="text-right" label="month">{{extraCharge.month.total}}</td>
+                    <td class="text-right" label="year">{{extraCharge.year.total}}</td>
+                </tr>
+                <tr><td colspan="4"></td></tr>
+                <tr>
+                    <td colspan="4" class="text-left"><strong>Miscellaneous Sales</strong></td>
+                  </tr>
+                  <tr>
+                      <td class="text-center" label="discount">Miscellaneous Sales</td>
+                      <td class="text-right" label="today">{{miscSales.today.miscSales}}</td>
+                      <td class="text-right" label="month">{{miscSales.month.miscSales}}</td>
+                      <td class="text-right" label="year">{{miscSales.year.miscSales}}</td>
+                  </tr>
+                  <tr>
+                      <td class="text-center" label="tax">Total</td>
+                      <td class="text-right" label="today">{{miscSales.today.total}}</td>
+                      <td class="text-right" label="month">{{miscSales.month.total}}</td>
+                      <td class="text-right" label="year">{{miscSales.year.total}}</td>
+                  </tr>
+                <tr><td colspan="4"></td></tr>
+                <tr>
+                    <td colspan="4" class="text-left"><strong>Payment Information</strong></td>
+                  </tr>
+                  <tr>
+                      <td class="text-center" label="discount">Payment Information</td>
+                      <td class="text-right" label="today">{{miscSales.today.miscSales}}</td>
+                      <td class="text-right" label="month">{{miscSales.month.miscSales}}</td>
+                      <td class="text-right" label="year">{{miscSales.year.miscSales}}</td>
+                  </tr>
+                  <tr>
+                      <td class="text-center" label="tax">Total</td>
+                      <td class="text-right" label="today">{{miscSales.today.total}}</td>
+                      <td class="text-right" label="month">{{miscSales.month.total}}</td>
+                      <td class="text-right" label="year">{{miscSales.year.total}}</td>
+                  </tr>
               </tbody>
             </table>
           </div>
@@ -31,85 +102,6 @@
     </div>
 
     <div class="row" id="demoReportDaily" #content>
-      <div class="col-12">
-        <h5>Print Property</h5>
-        <p>{{printProperty.printDate}}</p>
-        <p>{{printProperty.reportName}}</p>
-      </div>
-
-      <div class="col-12">
-        <h5>Property</h5>
-        <p>{{property.propertyId}}</p>
-        <p>{{property.countryId}}</p>
-        <p>{{property.propertyName}}</p>
-        <p>{{property.address}}</p>
-        <p>{{property.city}}</p>
-        <p>{{property.phoneNumber}}</p>
-        <p>{{property.website}}</p>
-        <p>{{property.createdAt}}</p>
-        <p>{{property.createdBy}}</p>
-        <p>{{property.updatedAt}}</p>
-        <p>{{property.updatedBy}}</p>
-        <p>{{property.propertyId}}</p>
-        <p>{{property.countryName}}</p>
-      </div>
-
-      <div class="col-12">
-        <h5>Room Ravenue - today</h5>
-        <p>{{roomRavenue.today.roomName}}</p>
-        <p>{{roomRavenue.today.discount}}</p>
-        <p>{{roomRavenue.today.tax}}</p>
-        <p>{{roomRavenue.today.total}}</p>
-        <br>
-
-        <h5>Room Ravenue - month</h5>
-        <p>{{roomRavenue.month.roomName}}</p>
-        <p>{{roomRavenue.month.discount}}</p>
-        <p>{{roomRavenue.month.tax}}</p>
-        <p>{{roomRavenue.month.total}}</p>
-        <br>
-
-        <h5>Room Ravenue - year</h5>
-        <p>{{roomRavenue.year.roomName}}</p>
-        <p>{{roomRavenue.year.discount}}</p>
-        <p>{{roomRavenue.year.tax}}</p>
-        <p>{{roomRavenue.year.total}}</p>
-        <br>
-      </div>
-
-      <div class="col-12">
-        <h5>Extra charge - today</h5>
-        <p>{{extraCharge.today.extraCharge}}</p>
-        <p>{{extraCharge.today.total}}</p>
-        <br>
-
-        <h5>Extra charge - month</h5>
-        <p>{{extraCharge.month.extraCharge}}</p>
-        <p>{{extraCharge.month.total}}</p>
-        <br>
-
-        <h5>Extra charge - year</h5>
-        <p>{{extraCharge.year.extraCharge}}</p>
-        <p>{{extraCharge.year.total}}</p>
-        <br>
-      </div>
-
-      <div class="col-12">
-        <h5>Misc Sales - today</h5>
-        <p>{{miscSales.today.miscSales}}</p>
-        <p>{{miscSales.today.total}}</p>
-        <br>
-
-        <h5>Misc Sales - month</h5>
-        <p>{{miscSales.month.miscSales}}</p>
-        <p>{{miscSales.month.total}}</p>
-        <br>
-
-        <h5>Misc Sales - year</h5>
-        <p>{{miscSales.year.miscSales}}</p>
-        <p>{{miscSales.year.total}}</p>
-        <br>
-      </div>
 
       <div class="col-12">
         <h5>Payment Information - today</h5>
