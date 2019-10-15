@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ReportService } from '../../../services/report/report.service';
 import { DatePipe } from '@angular/common';
-import { drawDOM, pdf } from '@progress/kendo-drawing';
+import { drawDOM, pdf, DrawOptions, exportPDF } from '@progress/kendo-drawing';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -315,14 +315,27 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
     });
   }
 
-  makePdfReportDaily() {
+  makePdfReportDaily(element) {
     const report = {
       fromDate: this.datepipe.transform( this.sortDate.date.start, 'yyyy-MM-dd'),
       toDate: this.datepipe.transform( this.sortDate.date.end, 'yyyy-MM-dd'),
     };
-    drawDOM(document.getElementById('demoReportDaily')).then(data => {
+    const opt: DrawOptions = {
+      paperSize: 'A4',
+    }
+    drawDOM(document.getElementById('demoReportDaily'), opt).then(data => {
       pdf.saveAs(data, 'report_' + report.fromDate + '_' + report.toDate + 'daily.pdf');
     })
+    // const report = {
+    //   fromDate: this.datepipe.transform( this.sortDate.date.start, 'yyyy-MM-dd'),
+    //   toDate: this.datepipe.transform( this.sortDate.date.end, 'yyyy-MM-dd'),
+    // };
+    // drawDOM(document.getElementById('demoReportDaily')).then(data => {
+    //   pdf.exportPDF(data).then
+    //   pdf.saveAs(data, 'report_' + report.fromDate + '_' + report.toDate + 'daily.pdf');
+    // })
   }
+
+
 
 }
