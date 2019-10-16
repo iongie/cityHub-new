@@ -7,8 +7,8 @@
           {{property.countryName}}</p>
         <strong>{{property.website}}</strong>
       </div><br>
-      <div class="float-left"><strong>Printed By : </strong></div>
-      <div class="float-right"><strong>Printed Date : {{printProperty.printDate}}</strong></div><br>
+      <div class="float-left"><strong>Printed By : </strong>Edo Novran Saputra</div>
+      <div class="float-right"><strong>Printed Date : </strong>{{printProperty.printDate}}</div><br>
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
@@ -18,7 +18,7 @@
                   <th colspan="4" class="text-center"><strong>{{printProperty.reportName}}</strong></th>
                 </tr>
                 <tr>
-                  <th class="text-center"><strong>Particulars</strong></th>
+                  <th class="text-center" style="width:20%;"><strong>Particulars</strong></th>
                   <th class="text-center"><strong>Today</strong></th>
                   <th class="text-center"><strong>Month</strong></th>
                   <th class="text-center"><strong>Year</strong></th>
@@ -29,22 +29,22 @@
                   <td colspan="4" class="text-left"><strong>Room AVENUE {{roomRavenue.today.roomName}}</strong></td>
                 </tr>
                 <tr>
-                  <td class="text-center" label="discount">Discount</td>
-                  <td class="text-right" label="today">{{roomRavenue.today.discount}}</td>
-                  <td class="text-right" label="month">{{roomRavenue.month.discount}}</td>
-                  <td class="text-right" label="year">{{roomRavenue.year.discount}}</td>
+                  <td class="text-left" label="discount">Discount</td>
+                  <td class="text-right" label="today">{{roomRavenue.today.discount | currency:" " }}</td>
+                  <td class="text-right" label="month">{{roomRavenue.month.discount | currency:" " }}</td>
+                  <td class="text-right" label="year">{{roomRavenue.year.discount | currency:" " }}</td>
                 </tr>
                 <tr>
-                  <td class="text-center" label="tax">Tax</td>
-                  <td class="text-right" label="today">{{roomRavenue.today.tax}}</td>
-                  <td class="text-right" label="month">{{roomRavenue.month.tax}}</td>
-                  <td class="text-right" label="year">{{roomRavenue.year.tax}}</td>
+                  <td class="text-left" label="tax">Tax</td>
+                  <td class="text-right" label="today">{{roomRavenue.today.tax | currency:" " }}</td>
+                  <td class="text-right" label="month">{{roomRavenue.month.tax | currency:" " }}</td>
+                  <td class="text-right" label="year">{{roomRavenue.year.tax | currency:" " }}</td>
                 </tr>
                 <tr>
-                  <td class="text-center" label="total">Total</td>
-                  <td class="text-right" label="today">{{roomRavenue.today.total}}</td>
-                  <td class="text-right" label="month">{{roomRavenue.month.total}}</td>
-                  <td class="text-right" label="year">{{roomRavenue.year.total}}</td>
+                  <td class="text-left" label="total">Total</td>
+                  <td class="text-right" label="today">{{roomRavenue.today.total | currency:" " }}</td>
+                  <td class="text-right" label="month">{{roomRavenue.month.total | currency:" " }}</td>
+                  <td class="text-right" label="year">{{roomRavenue.year.total | currency:" " }}</td>
                 </tr>
                 <tr>
                   <td colspan="4"></td>
@@ -53,16 +53,16 @@
                   <td colspan="4" class="text-left"><strong>Extra Charge</strong></td>
                 </tr>
                 <tr>
-                  <td class="text-center" label="discount">Extra Charge</td>
-                  <td class="text-right" label="today">{{extraCharge.today.extraCharge}}</td>
-                  <td class="text-right" label="month">{{extraCharge.month.extraCharge}}</td>
-                  <td class="text-right" label="year">{{extraCharge.year.extraCharge}}</td>
+                  <td class="text-left" label="discount">Extra Charge</td>
+                  <td class="text-right" label="today">{{extraCharge.today.extraCharge | currency:" " }}</td>
+                  <td class="text-right" label="month">{{extraCharge.month.extraCharge | currency:" " }}</td>
+                  <td class="text-right" label="year">{{extraCharge.year.extraCharge | currency:" " }}</td>
                 </tr>
                 <tr>
-                  <td class="text-center" label="tax">Total</td>
-                  <td class="text-right" label="today">{{extraCharge.today.total}}</td>
-                  <td class="text-right" label="month">{{extraCharge.month.total}}</td>
-                  <td class="text-right" label="year">{{extraCharge.year.total}}</td>
+                  <td class="text-left" label="tax">Total</td>
+                  <td class="text-right" label="today">{{extraCharge.today.total | currency:" " }}</td>
+                  <td class="text-right" label="month">{{extraCharge.month.total | currency:" " }}</td>
+                  <td class="text-right" label="year">{{extraCharge.year.total | currency:" " }}</td>
                 </tr>
                 <tr>
                   <td colspan="4"></td>
@@ -71,16 +71,16 @@
                   <td colspan="4" class="text-left"><strong>Miscellaneous Sales</strong></td>
                 </tr>
                 <tr>
-                  <td class="text-center" label="discount">Miscellaneous Sales</td>
-                  <td class="text-right" label="today">{{miscSales.today.miscSales}}</td>
-                  <td class="text-right" label="month">{{miscSales.month.miscSales}}</td>
-                  <td class="text-right" label="year">{{miscSales.year.miscSales}}</td>
+                  <td class="text-left" label="miscSales">Miscellaneous Sales</td>
+                  <td class="text-right" label="today">{{miscSales.today.miscSales | currency:" " }}</td>
+                  <td class="text-right" label="month">{{miscSales.month.miscSales | currency:" " }}</td>
+                  <td class="text-right" label="year">{{miscSales.year.miscSales | currency:" " }}</td>
                 </tr>
                 <tr>
-                  <td class="text-center" label="tax">Total</td>
-                  <td class="text-right" label="today">{{miscSales.today.total}}</td>
-                  <td class="text-right" label="month">{{miscSales.month.total}}</td>
-                  <td class="text-right" label="year">{{miscSales.year.total}}</td>
+                  <td class="text-left" label="totalMiscSales">Total</td>
+                  <td class="text-right" label="today">{{miscSales.today.total | currency:" " }}</td>
+                  <td class="text-right" label="month">{{miscSales.month.total | currency:" " }}</td>
+                  <td class="text-right" label="year">{{miscSales.year.total | currency:" " }}</td>
                 </tr>
                 <tr>
                   <td colspan="4"></td>
@@ -89,45 +89,113 @@
                   <td colspan="4" class="text-left"><strong>Payment Information</strong></td>
                 </tr>
                 <tr>
-                  <td class="text-center" label="discount">
+                  <td label="payment today">
                     <div *ngFor="let paymentInformation of paymentInformation.today">
-                      <p>{{paymentInformation.paymentInformation}}</p>
+                      <ul>
+                        <li>
+                          {{paymentInformation.paymentInformation}}
+                        </li>
+                      </ul>
                     </div>
                   </td>
-                  <td class="text-right" label=" paymenttoday">
+                  <td class="text-right">
                     <div *ngFor="let paymentInformation of paymentInformation.today">
-                      <p>{{paymentInformation.total}}</p>
+                      <p>{{paymentInformation.total | currency:" " }}</p>
                     </div>
                   </td>
-                  <td></td><td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
                 <tr>
-                  <td class="text-center" label="payment month">
+                  <td label="payment month">
                     <div *ngFor="let paymentInformation of paymentInformation.month">
-                      <p>{{paymentInformation.paymentInformation}}</p>
+                      <ul>
+                        <li>
+                          {{paymentInformation.paymentInformation}}
+                        </li>
+                      </ul>
                     </div>
                   </td>
                   <td></td>
                   <td>
                     <div *ngFor="let paymentInformation of paymentInformation.month">
-                      <p>{{paymentInformation.total}}</p>
+                      <p>{{paymentInformation.total | currency:" " }}</p>
                     </div>
                   </td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td class="text-center" label="payment year">
+                  <td label="payment year">
                     <div *ngFor="let paymentInformation of paymentInformation.year">
-                      <p>{{paymentInformation.paymentInformation}}</p>
+                      <ul>
+                        <li>
+                          {{paymentInformation.paymentInformation}}
+                        </li>
+                      </ul>
                     </div>
                   </td>
-                  <td></td><td></td>
+                  <td></td>
+                  <td></td>
                   <td>
-                        <div *ngFor="let paymentInformation of paymentInformation.year">
-                          <p>{{paymentInformation.total}}</p>
-                        </div>
+                    <div *ngFor="let paymentInformation of paymentInformation.year">
+                      <p>{{paymentInformation.total | currency:" " }}</p>
+                    </div>
                   </td>
                 </tr>
+                <tr>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td colspan="4" class="text-left"><strong>Room Summary</strong></td>
+                </tr>
+                <tr>
+                  <td class="text-left" label="noOFbooking">No of Booking</td>
+                  <td class="text-right" label="today">{{roomSummary.noOfBooking.today}}</td>
+                  <td class="text-right" label="month">{{roomSummary.noOfBooking.month}}</td>
+                  <td class="text-right" label="year">{{roomSummary.noOfBooking.year}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left" label="SoldRoom">Sold Room</td>
+                  <td class="text-right" label="today">{{roomSummary.soldRoom.today}}</td>
+                  <td class="text-right" label="month">{{roomSummary.soldRoom.month}}</td>
+                  <td class="text-right" label="year">{{roomSummary.soldRoom.year}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left" label="AGPN">Average Guest Per Night</td>
+                  <td class="text-right" label="today">{{roomSummary.averageGuestPerNights.today}}</td>
+                  <td class="text-right" label="month">{{roomSummary.averageGuestPerNights.month}}</td>
+                  <td class="text-right" label="year">{{roomSummary.averageGuestPerNights.year}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left" label="noShowRoom">No Show Rooms</td>
+                  <td class="text-right" label="today">{{roomSummary.noShowRooms.today}}</td>
+                  <td class="text-right" label="month">{{roomSummary.noShowRooms.month}}</td>
+                  <td class="text-right" label="year">{{roomSummary.noShowRooms.year}}</td>
+                </tr>
+                <tr>
+                  <td class="text-left" label="TARN">Total Available Room Nights</td>
+                  <td class="text-right" label="today">{{roomSummary.totalAvailableRoomNights.today}}</td>
+                  <td class="text-right" label="month">{{roomSummary.totalAvailableRoomNights.month}}</td>
+                  <td class="text-right" label="year">{{roomSummary.totalAvailableRoomNights.year}}</td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+                  </tr>
+                  <tr>
+                    <td colspan="4" class="text-left"><strong>Statistics</strong></td>
+                  </tr>
+                  <tr>
+                    <td class="text-left" label="OccupancyRate">Occupancy Rate(%)</td>
+                    <td class="text-right" label="today">{{statisctics.occupancyRate.today | currency:" " }}</td>
+                    <td class="text-right" label="month">{{statisctics.occupancyRate.month | currency:" " }}</td>
+                    <td class="text-right" label="year">{{statisctics.occupancyRate.year | currency:" " }}</td>
+                  </tr>
+                  <tr>
+                    <td class="text-left" label="RPAR">Revenue Per Available Room</td>
+                    <td class="text-right" label="today">{{statisctics.averageRevenuePerRoom.today | currency:" " }}</td>
+                    <td class="text-right" label="month">{{statisctics.averageRevenuePerRoom.month | currency:" " }}</td>
+                    <td class="text-right" label="year">{{statisctics.averageRevenuePerRoom.year | currency:" " }}</td>
+                  </tr>
               </tbody>
             </table>
           </div>
@@ -135,78 +203,6 @@
       </div>
     </div>
 
-    <div class="row" id="demoReportDaily" #content>
-
-      <div class="col-12">
-        <h5>Payment Information - today</h5>
-        <div *ngFor="let paymentInformation of paymentInformation.today">
-          {{paymentInformation.paymentInformation}}
-          {{paymentInformation.total}}
-        </div>
-        <br>
-
-        <h5>Payment Information - month</h5>
-        <div *ngFor="let paymentInformation of paymentInformation.month">
-          <p>{{paymentInformation.paymentInformation}}</p>
-          <p>{{paymentInformation.total}}</p>
-        </div>
-        <br>
-
-        <h5>Payment Information - year</h5>
-        <div *ngFor="let paymentInformation of paymentInformation.year">
-          <p>{{paymentInformation.paymentInformation}}</p>
-          <p>{{paymentInformation.total}}</p>
-        </div>
-        <br>
-      </div>
-
-      <div class="col-12">
-        <h5>Room summarry - no of booking</h5>
-        <p>{{roomSummary.noOfBooking.today}}</p>
-        <p>{{roomSummary.noOfBooking.month}}</p>
-        <p>{{roomSummary.noOfBooking.year}}</p>
-        <br>
-
-        <h5>Room summary - sold room</h5>
-        <p>{{roomSummary.soldRoom.today}}</p>
-        <p>{{roomSummary.soldRoom.month}}</p>
-        <p>{{roomSummary.soldRoom.year}}</p>
-        <br>
-
-        <h5>Room summary - average guest per night</h5>
-        <p>{{roomSummary.averageGuestPerNights.today}}</p>
-        <p>{{roomSummary.averageGuestPerNights.month}}</p>
-        <p>{{roomSummary.averageGuestPerNights.year}}</p>
-        <br>
-
-        <h5>Room summary - no show room</h5>
-        <p>{{roomSummary.noShowRooms.today}}</p>
-        <p>{{roomSummary.noShowRooms.month}}</p>
-        <p>{{roomSummary.noShowRooms.year}}</p>
-        <br>
-
-        <h5>Room summary - total available room night</h5>
-        <p>{{roomSummary.totalAvailableRoomNights.today}}</p>
-        <p>{{roomSummary.totalAvailableRoomNights.month}}</p>
-        <p>{{roomSummary.totalAvailableRoomNights.year}}</p>
-        <br>
-      </div>
-
-      <div class="col-12">
-        <h5>Statistic - occupancy rate</h5>
-        <p>{{statisctics.occupancyRate.today}}</p>
-        <p>{{statisctics.occupancyRate.month}}</p>
-        <p>{{statisctics.occupancyRate.year}}</p>
-        <br>
-
-        <h5>Statistic - average revenue per room</h5>
-        <p>{{statisctics.averageRevenuePerRoom.today}}</p>
-        <p>{{statisctics.averageRevenuePerRoom.month}}</p>
-        <p>{{statisctics.averageRevenuePerRoom.year}}</p>
-        <br>
-      </div>
-
-    </div>
 
     <div class="buttons">
       <button printSectionId="demoReportDaily" ngxPrint [useExistingCss]="true" class="btnn btn btn-primary">
