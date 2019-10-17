@@ -94,6 +94,14 @@ export class AuthService implements OnDestroy {
     return localStorage.getItem('p_l1oxt') !== undefined;
   }
 
+  isLoggednInRoleAdmin() {
+    return localStorage.getItem('sd_l1oxt2') !== null;
+  }
+
+  isLoggedInRoleAdminUndefined() {
+    return localStorage.getItem('sd_l1oxt') !== undefined;
+  }
+
   logout(token: any): Observable<any> {
     // localStorage.removeItem('p_l1oxt');
     // this.router.navigate(['auth/login']);
