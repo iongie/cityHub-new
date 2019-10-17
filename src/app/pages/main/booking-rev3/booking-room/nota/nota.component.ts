@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
+import { pdf, drawDOM, DrawOptions } from '@progress/kendo-drawing';
 
 @Component({
   selector: 'ngx-nota',
@@ -397,6 +398,17 @@ console.log (resNota);
       pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
       pdf.save('Nota_' + this.notaCheckIn.bookingNo + '_Check_Out.pdf'); // Generated PDF
     });
+
+    // TODO: Versi KENDO PDF
+    // const margin: any = '1cm';
+    // const opt: DrawOptions = {
+    //   paperSize: 'A4',
+    //   margin: margin,
+    //   repeatHeaders: true,
+    // }
+    // drawDOM(data, opt).then(data => {
+    //   pdf.saveAs(data, 'Nota_' + this.notaCheckIn.bookingNo + '_Check_Out.pdf');
+    // })
   }
 
   public makePdfReservation()
@@ -416,6 +428,17 @@ console.log (resNota);
       pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
       pdf.save('Nota_' + this.notaCheckIn.bookingNo + '_Reservation.pdf'); // Generated PDF
     });
+
+    // TODO: Versi KENDO PDF
+    // const margin: any = '1cm';
+    // const opt: DrawOptions = {
+    //   paperSize: 'A4',
+    //   margin: margin,
+    //   repeatHeaders: true,
+    // }
+    // drawDOM(data, opt).then(data => {
+    //   pdf.saveAs(data, 'Nota_' + this.notaCheckIn.bookingNo + '_Reservation.pdf');
+    // })
   }
 
   public makePdfCheckIn()
@@ -435,6 +458,17 @@ console.log (resNota);
       pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
       pdf.save('Nota_' + this.notaCheckIn.bookingNo + '_Check_In.pdf'); // Generated PDF
     });
+
+    // TODO: Versi KENDO PDF
+    // const margin: any = '1cm';
+    // const opt: DrawOptions = {
+    //   paperSize: 'A4',
+    //   margin: margin,
+    //   repeatHeaders: true,
+    // }
+    // drawDOM(data, opt).then(data => {
+    //   pdf.saveAs(data, 'Nota_' + this.notaCheckIn.bookingNo + '_Check_In.pdf');
+    // })
   }
 
   public makePdfAddDeposit()
@@ -454,6 +488,17 @@ console.log (resNota);
       pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
       pdf.save('Nota_' + this.notaCheckIn.bookingNo + '_Deposit.pdf'); // Generated PDF
     });
+
+    // TODO: Versi KENDO PDF
+    // const margin: any = '1cm';
+    // const opt: DrawOptions = {
+    //   paperSize: 'A4',
+    //   margin: margin,
+    //   repeatHeaders: true,
+    // }
+    // drawDOM(data, opt).then(data => {
+    //   pdf.saveAs(data, 'Nota_' + this.notaCheckIn.bookingNo + '_Deposit.pdf');
+    // })
   }
 
   public makePdfDeposit()
@@ -473,6 +518,17 @@ console.log (resNota);
       pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
       pdf.save('Nota_' + this.notaCheckIn.bookingNo + '_Deposit.pdf'); // Generated PDF
     });
+
+    // TODO: Versi KENDO PDF
+    // const margin: any = '1cm';
+    // const opt: DrawOptions = {
+    //   paperSize: 'A4',
+    //   margin: margin,
+    //   repeatHeaders: true,
+    // }
+    // drawDOM(data, opt).then(data => {
+    //   pdf.saveAs(data, 'Nota_' + this.notaCheckIn.bookingNo + '_Deposit.pdf');
+    // })
   }
 
   public makePdfExtraCharge()
@@ -492,6 +548,17 @@ console.log (resNota);
       pdf.addImage(contentDataURL, 'PDF', 0, position, imgWidth, imgHeight);
       pdf.save('Nota_' + this.notaCheckIn.bookingNo + '_Extra_Charge.pdf'); // ?Generated PDF
     });
+
+    // TODO: Versi KENDO PDF
+    // const margin: any = '1cm';
+    // const opt: DrawOptions = {
+    //   paperSize: 'A4',
+    //   margin: margin,
+    //   repeatHeaders: true,
+    // }
+    // drawDOM(data, opt).then(data => {
+    //   pdf.saveAs(data, 'Nota_' + this.notaCheckIn.bookingNo + '_Extra_Charge.pdf');
+    // })
   }
 
   back() {
