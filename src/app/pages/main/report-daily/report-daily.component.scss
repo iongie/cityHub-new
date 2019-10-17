@@ -3,7 +3,17 @@
       min-width: 800px;
     }
   }
-
+  .text-right{
+    padding-right: 30px;
+  }
+  .table, th, td{
+    font-size: 13px;
+    padding: 4px;
+  }
+  ul, li{
+    margin: 0;
+    padding: 0;
+  }
   .btn {
     margin: 0 8px 10px 0;
   }

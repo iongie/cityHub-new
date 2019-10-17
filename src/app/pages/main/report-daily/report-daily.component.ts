@@ -320,7 +320,7 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
       fromDate: this.datepipe.transform( this.sortDate.date.start, 'yyyy-MM-dd'),
       toDate: this.datepipe.transform( this.sortDate.date.end, 'yyyy-MM-dd'),
     };
-    const margin: any = '2cm';
+    const margin: any = '1cm';
     const opt: DrawOptions = {
       paperSize: 'A4',
       margin: margin,

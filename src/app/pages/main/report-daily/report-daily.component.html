@@ -1,19 +1,27 @@
 <nb-card>
   <nb-card-body>
     <div id="demoReportDaily" #content>
-      <div class="col-12 text-center">
-        <h5>{{property.propertyName}}</h5>
-        <p>{{property.address}} - {{property.city}},
-          {{property.countryName}}</p>
-        <strong>{{property.website}}</strong>
-      </div><br>
-      <div class="float-left"><strong>Printed By : </strong>Edo Novran Saputra</div>
-      <div class="float-right"><strong>Printed Date : </strong>{{printProperty.printDate}}</div><br>
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
             <table class="table">
               <thead>
+                <tr>
+                  <th colspan="4" class="text-center" style="border-top: none;">
+                    <strong>
+                      <h5>{{property.propertyName}}</h5>
+                    </strong>
+                    <p>{{property.address}} - {{property.city}},
+                      {{property.countryName}}</p><strong>{{property.website}}</strong>
+                  </th>
+                </tr>
+                <tr>
+                  <th colspan="4" style="border-bottom: none;"><strong>Printed By : </strong>Edo Novran Saputra</th>
+                </tr>
+                <tr>
+                  <th colspan="4" style="border-top: none;"><strong>Printed Date : </strong>{{printProperty.printDate}}
+                  </th>
+                </tr>
                 <tr>
                   <th colspan="4" class="text-center"><strong>{{printProperty.reportName}}</strong></th>
                 </tr>
@@ -179,30 +187,30 @@
                   <td class="text-right" label="year">{{roomSummary.totalAvailableRoomNights.year}}</td>
                 </tr>
                 <tr>
-                    <td colspan="4"></td>
-                  </tr>
-                  <tr>
-                    <td colspan="4" class="text-left"><strong>Statistics</strong></td>
-                  </tr>
-                  <tr>
-                    <td class="text-left" label="OccupancyRate">Occupancy Rate(%)</td>
-                    <td class="text-right" label="today">{{statisctics.occupancyRate.today | currency:" " }}</td>
-                    <td class="text-right" label="month">{{statisctics.occupancyRate.month | currency:" " }}</td>
-                    <td class="text-right" label="year">{{statisctics.occupancyRate.year | currency:" " }}</td>
-                  </tr>
-                  <tr>
-                    <td class="text-left" label="RPAR">Revenue Per Available Room</td>
-                    <td class="text-right" label="today">{{statisctics.averageRevenuePerRoom.today | currency:" " }}</td>
-                    <td class="text-right" label="month">{{statisctics.averageRevenuePerRoom.month | currency:" " }}</td>
-                    <td class="text-right" label="year">{{statisctics.averageRevenuePerRoom.year | currency:" " }}</td>
-                  </tr>
+                  <td colspan="4"></td>
+                </tr>
+                <tr>
+                  <td colspan="4" class="text-left"><strong>Statistics</strong></td>
+                </tr>
+                <tr>
+                  <td class="text-left" label="OccupancyRate">Occupancy Rate(%)</td>
+                  <td class="text-right" label="today">{{statisctics.occupancyRate.today | currency:" " }}</td>
+                  <td class="text-right" label="month">{{statisctics.occupancyRate.month | currency:" " }}</td>
+                  <td class="text-right" label="year">{{statisctics.occupancyRate.year | currency:" " }}</td>
+                </tr>
+                <tr>
+                  <td class="text-left" label="RPAR">Revenue Per Available Room</td>
+                  <td class="text-right" label="today">{{statisctics.averageRevenuePerRoom.today | currency:" " }}</td>
+                  <td class="text-right" label="month">{{statisctics.averageRevenuePerRoom.month | currency:" " }}</td>
+                  <td class="text-right" label="year">{{statisctics.averageRevenuePerRoom.year | currency:" " }}</td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
-
+    <hr>
 
     <div class="buttons">
       <button printSectionId="demoReportDaily" ngxPrint [useExistingCss]="true" class="btnn btn btn-primary">
