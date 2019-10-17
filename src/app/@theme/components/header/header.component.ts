@@ -123,6 +123,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         userId: res[0].user_id,
         username: res[0].username,
       };
+      if (res[0].privilege_id){
+        localStorage.setItem('sd_l1oxt'+ res[0].privilege_id, 'rtXfhd!skd' + res[0].privilege_id);
+      }
     });
   }
 
@@ -151,7 +154,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       token: localStorage.getItem('p_l1oxt'),
     };
     this.authServ.logout(data).pipe(takeUntil(this.subs)).subscribe(() => {
-        localStorage.removeItem('p_l1oxt');
+        // localStorage.removeItem('p_l1oxt');
+        localStorage.clear();
         this.router.navigate(['auth/login']);
     });
   }
