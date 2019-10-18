@@ -124,7 +124,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         username: res[0].username,
       };
       if (res[0].privilege_id){
-        localStorage.setItem('sd_l1oxt'+ res[0].privilege_id, 'rtXfhd!skd' + res[0].privilege_id);
+        localStorage.setItem('sd_l1oxt', 'rtXfhd!skd' + res[0].privilege_id);
       }
     });
   }
