@@ -5,22 +5,31 @@
     </div>
   </nb-card-header>
   <nb-card-body>
-    <div class="row">
-      <div class="col-6">
-        <div class="input-group  mb-3 ">
-          <input [nbDatepicker]="date" class="form-control" [(ngModel)]="sortDate.date" id="date" name="date" required
-            #date="ngModel" placeholder="From Date">
-          <nb-rangepicker #date format="MMM d, y">
-          </nb-rangepicker>
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" (click)="getReportnumberOfNightList()">
-              <i class="fas fa-filter"></i>
-            </button>
+      <div class="row">
+        <div class="col-6">
+          <div class="input-group  mb-3 ">
+            <input
+            [nbDatepicker]="date"
+            class="form-control"
+            [(ngModel)]="sortDate.date"
+            id="date"
+            name="date"
+            required
+            #date="ngModel"
+            placeholder="From Date">
+            <nb-rangepicker
+              #date
+              format="MMM d, y">
+            </nb-rangepicker>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" (click)="getReportnumberOfNightList()">
+                <i class="fas fa-filter"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </nb-card-body>
+    </nb-card-body>
 </nb-card>
 
 <!-- TODO: Content Report -->
@@ -38,7 +47,7 @@
       <br>
       <div class="row">
         <div class="col-12">
-          <div class="float-left"><strong>Printed By : </strong>Edo Novran Saputra</div>
+          <div class="float-left"><strong>Printed By : </strong>{{printProperty.printName}}</div>
           <div class="float-right"><strong>Printed Date :</strong>{{printProperty.printDate}}</div>
         </div>
       </div>
@@ -52,8 +61,7 @@
                   <th class="text-center"><strong>Arrival</strong></th>
                   <th class="text-center"><strong>Departure</strong></th>
                   <th class="text-center"><strong>No of Night(s)</strong></th>
-                  <th class="text-center"><strong>Room No.</strong></th>
-                  <th class="text-center"><strong>Room Type</strong></th>
+                  <th class="text-center"><strong>Room</strong></th>
                   <th class="text-center"><strong>Rate</strong></th>
                   <th class="text-center"><strong>Billing No.</strong></th>
                   <th class="text-center"><strong>Booking No.</strong></th>
@@ -68,11 +76,10 @@
                   <td  class="text-center">{{numberOfNight.arrivalDate}}</td>
                   <td  class="text-center">{{numberOfNight.departureDate}}</td>
                   <td  class="text-center">{{numberOfNight.nights}}</td>
-                  <td  class="text-center">{{numberOfNight.roomName}}</td>
-                  <td  class="text-center">{{numberOfNight.roomTypeName}}</td>
+                  <td  class="text-center">{{numberOfNight.roomTypeName}} / {{numberOfNight.roomName}}</td>
                   <td  class="text-center">{{numberOfNight.rate | currency:" "}}</td>
                   <td  class="text-center">{{numberOfNight.billingNumber}}</td>
-                  <td  class="text-center">{{numberOfNight.bookingNumber}}</td>
+                  <td  class="text-center text ">{{numberOfNight.bookingNumber}}</td>
                   <td  class="text-center">{{numberOfNight.entryAt}}</td>
                   <td  class="text-center">{{numberOfNight.status}}</td>
                 </tr>

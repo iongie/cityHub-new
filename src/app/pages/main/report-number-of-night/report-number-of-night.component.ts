@@ -4,6 +4,7 @@ import { ReportService } from '../../../services/report/report.service';
 import { DatePipe } from '@angular/common';
 import { pdf, drawDOM, DrawOptions, exportPDF } from '@progress/kendo-drawing';
 import { takeUntil } from 'rxjs/operators';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'ngx-report-number-of-night',
@@ -12,6 +13,10 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ReportNumberOfNightComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
+  printProperty = {
+    printDate: '',
+    printName: '',
+  };
   property = {
     propertyId: 0,
     countryId: 0,
@@ -53,18 +58,35 @@ export class ReportNumberOfNightComponent implements OnInit, OnDestroy {
   };
 
   hiddenContent =  true;
+  userCityHub: any;
   constructor(
     public reportServ: ReportService,
     public datepipe: DatePipe,
+    public authServ: AuthService,
   ) { }
 
   ngOnInit() {
     this.hiddenContent = true;
+    this.detailAccount();
   }
 
   ngOnDestroy() {
     this.subs.next();
     this.subs.complete();
+  }
+
+  detailAccount() {
+    const data = {
+      token: localStorage.getItem('p_l1oxt'),
+    };
+    this.authServ.detailAfterLogin(data)
+    .pipe(takeUntil(this.subs))
+    .subscribe(res => {
+      this.userCityHub = {
+        name : res[0].full_name,
+      };
+      console.log(this.userCityHub);
+    });
   }
 
   getReportnumberOfNightList() {
@@ -77,6 +99,10 @@ export class ReportNumberOfNightComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.subs))
     .subscribe(res => {
       console.log('getReportArrivalList', res);
+      this.printProperty = {
+        printDate: this.datepipe.transform( Date.now(), 'yyyy-MM-dd'),
+        printName: this.userCityHub.name,
+      };
       this.property = {
         propertyId: res.property.property_id,
         countryId: res.property.country_id,
@@ -89,9 +115,12 @@ export class ReportNumberOfNightComponent implements OnInit, OnDestroy {
         createdBy: res.property.created_by,
         updatedAt: res.property.updated_at,
         updatedBy: res.property.updated_by,
-        countryName: res.property.country_name,
+        countryName: res.property.country_name, 
       };
       this.numberOfNight = res.number_of_nights.map(x => {
+        const firstTextBookingNumber = x.booking_number.slice(0, 7);
+        const secondTextBookingNumber = x.booking_number.slice(8, 1000);
+        const joinTextBookingNumber = firstTextBookingNumber + ' ' + secondTextBookingNumber;
         const datax = {
          businnesSourceId: x.business_source_id,
          businnesSourceName: x.business_source_name,
@@ -106,7 +135,7 @@ export class ReportNumberOfNightComponent implements OnInit, OnDestroy {
          roomTypeName: x.room_type_name,
          rate: x.rate,
          billingNumber: x.billing_number,
-         bookingNumber: x.booking_number,
+         bookingNumber: joinTextBookingNumber,
          by: x.by,
          entryAt: x.entry_at,
          status: x.status
@@ -125,7 +154,6 @@ export class ReportNumberOfNightComponent implements OnInit, OnDestroy {
     const opt: DrawOptions = {
       paperSize: 'A4',
       margin: margin,
-      landscape: true,
       repeatHeaders: true,
     }
     drawDOM(document.getElementById('demoReportnumberOfNight'),opt).then(data => {
