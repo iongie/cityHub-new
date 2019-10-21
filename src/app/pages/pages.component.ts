@@ -14,7 +14,7 @@ import { Subject } from 'rxjs';
   `,
 })
 export class PagesComponent implements OnInit, OnDestroy {
-  menu = MENU_ITEMS;
+  menu: any;
   private subs = new Subject();
 
   ngOnDestroy() {
@@ -23,37 +23,37 @@ export class PagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // const data = localStorage.getItem('sd_l1oxt');
+    const data = localStorage.getItem('sd_l1oxt');
     
-    // if(data === 'rtXfhd!skd1') {
-    //   this.menu = MENU_ITEMS;
-    // }
-    // if (data === 'rtXfhd!skd2'){
-    //   this.menu = MENU_ITEMS;
-    // }
-    // if (data === 'rtXfhd!skd3'){
-    //   this.menu = MENU_ITEMS;
-    // }
-    // if (data === 'rtXfhd!skd4'){
-    //   this.menu = MENU_ITEMS;
-    // }
-    // if (data === 'rtXfhd!skd5') {
-    //   this.menu = MENU_ITEMS_NO_ADMIN;
-    // }
-    // if (data === 'rtXfhd!skd6') {
-    //   this.menu = MENU_ITEMS_NO_ADMIN;
-    // }
-    // if (data === 'rtXfhd!skd7') {
-    //   this.menu = MENU_ITEMS_NO_ADMIN;
-    // }
-    // if (data === 'rtXfhd!skd8') {
-    //   this.menu = MENU_ITEMS_NO_ADMIN;
-    // }
-    // if (data === 'rtXfhd!skd9') {
-    //   this.menu = MENU_ITEMS_NO_ADMIN;
-    // }
-    // if (data === 'rtXfhd!skd10') {
-    //   this.menu = MENU_ITEMS_NO_ADMIN;
-    // }
+    if(data === 'rtXfhd!skd1') {
+      this.menu = MENU_ITEMS;
+    }
+    if (data === 'rtXfhd!skd2'){
+      this.menu = MENU_ITEMS;
+    }
+    if (data === 'rtXfhd!skd3'){
+      this.menu = MENU_ITEMS;
+    }
+    if (data === 'rtXfhd!skd4'){
+      this.menu = MENU_ITEMS;
+    }
+    if (data === 'rtXfhd!skd5') {
+      this.menu = MENU_ITEMS_NO_ADMIN;
+    }
+    if (data === 'rtXfhd!skd6') {
+      this.menu = MENU_ITEMS_NO_ADMIN;
+    }
+    if (data === 'rtXfhd!skd7') {
+      this.menu = MENU_ITEMS_NO_ADMIN;
+    }
+    if (data === 'rtXfhd!skd8') {
+      this.menu = MENU_ITEMS_NO_ADMIN;
+    }
+    if (data === 'rtXfhd!skd9') {
+      this.menu = MENU_ITEMS_NO_ADMIN;
+    }
+    if (data === 'rtXfhd!skd10') {
+      this.menu = MENU_ITEMS_NO_ADMIN;
+    }
   }
 }
