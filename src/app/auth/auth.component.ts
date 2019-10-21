@@ -38,6 +38,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.authServ.login(this.login).pipe(takeUntil(this.subs)).subscribe(res => {
+      console.log(res);
       const data = res.token;
       if (res.token) {
         localStorage.setItem('p_l1oxt', data);

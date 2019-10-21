@@ -206,7 +206,6 @@ const routes: Routes = [{
     {
       path: 'add-booking',
       loadChildren: './main/booking-rev3/booking-add/booking-add.module#BookingAddModule',
-      canActivateChild: [UserRoleGuardGuard],
     },
     {
       path: 'booking',
