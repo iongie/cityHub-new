@@ -145,6 +145,7 @@ export class RoomListComponent implements OnInit, OnDestroy {
                     updatedAt: forResRoom.updated_at,
                     createdBy: forResRoom.created_by,
                     updatedBy: forResRoom.updated_by,
+                    picture: '/assets/images/bedroom.png',
                   };
                   return DataForResRoomType;
                 });
@@ -205,5 +206,4 @@ export class RoomListComponent implements OnInit, OnDestroy {
       });
     });
   }
-
 }
