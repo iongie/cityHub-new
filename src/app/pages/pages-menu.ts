@@ -142,3 +142,64 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 ];
+
+export const MENU_ITEMS_NO_ADMIN: NbMenuItem[] = [
+  {
+    title: 'Dashboard',
+    icon: 'nb-home',
+    link: '/pages/dashboard',
+  },
+  {
+    title: 'New Booking',
+    icon: 'fa fa-key',
+    link: '/pages/add-booking',
+  },
+  {
+    title: 'New Miscellaneous',
+    icon: 'fa fa-plus-circle',
+    link: '/pages/add-miscellaneous-sales',
+  },
+  {
+    title: 'FEATURES',
+    group: true,
+  }, {
+    title: 'Sales Operational',
+    icon: 'fa fa-hotel',
+    children: [
+      {
+        title: 'Booking Management',
+        link: '/pages/booking-management',
+      },
+      {
+        title: 'Misc. Sales Management',
+        link: '/pages/miscellaneous-sales',
+      },
+    ],
+  },
+  {
+    title: 'Report',
+    icon: 'fa fa-database',
+    children: [
+      {
+        title: 'Arrival',
+        link: '/pages/arrival-list-report',
+      },
+      {
+        title: 'Number of night',
+        link: '/pages/number-of-night-report',
+      },
+      {
+        title: 'User shift',
+        link: '/pages/user-shift-report',
+      },
+      {
+        title: 'Daily',
+        link: '/pages/daily-report',
+      },
+      {
+        title: 'Night Audit',
+        link: '/pages/night-audit',
+      },
+    ],
+  },
+];

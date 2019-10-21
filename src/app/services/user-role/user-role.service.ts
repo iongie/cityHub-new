@@ -65,7 +65,7 @@ export class UserRoleService implements OnDestroy {
   }
 
   isLoggednInRoleAdmin() {
-    return localStorage.getItem('sd_l1oxt2') !== null;
+    return localStorage.getItem('sd_l1oxt') !== null;
   }
 
   isLoggedInRoleAdminUndefined() {

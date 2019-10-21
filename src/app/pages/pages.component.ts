@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { MENU_ITEMS } from './pages-menu';
+import { MENU_ITEMS, MENU_ITEMS_NO_ADMIN } from './pages-menu';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'ngx-pages',
@@ -12,7 +13,47 @@ import { MENU_ITEMS } from './pages-menu';
     </ngx-sample-layout>
   `,
 })
-export class PagesComponent {
+export class PagesComponent implements OnInit, OnDestroy {
+  menu: any;
+  private subs = new Subject();
 
-  menu = MENU_ITEMS;
+  ngOnDestroy() {
+    this.subs.next();
+    this.subs.complete();
+  }
+
+  ngOnInit() {
+    const data = localStorage.getItem('sd_l1oxt');
+    
+    if(data === 'rtXfhd!skd1') {
+      this.menu = MENU_ITEMS;
+    }
+    if (data === 'rtXfhd!skd2'){
+      this.menu = MENU_ITEMS;
+    }
+    if (data === 'rtXfhd!skd3'){
+      this.menu = MENU_ITEMS;
+    }
+    if (data === 'rtXfhd!skd4'){
+      this.menu = MENU_ITEMS;
+    }
+    if (data === 'rtXfhd!skd5') {
+      this.menu = MENU_ITEMS_NO_ADMIN;
+    }
+    if (data === 'rtXfhd!skd6') {
+      this.menu = MENU_ITEMS_NO_ADMIN;
+    }
+    if (data === 'rtXfhd!skd7') {
+      this.menu = MENU_ITEMS_NO_ADMIN;
+    }
+    if (data === 'rtXfhd!skd8') {
+      this.menu = MENU_ITEMS_NO_ADMIN;
+    }
+    if (data === 'rtXfhd!skd9') {
+      this.menu = MENU_ITEMS_NO_ADMIN;
+    }
+    if (data === 'rtXfhd!skd10') {
+      this.menu = MENU_ITEMS_NO_ADMIN;
+    }
+  }
 }

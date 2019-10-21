@@ -40,6 +40,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.authServ.login(this.login).pipe(takeUntil(this.subs)).subscribe(res => {
       const data = res.token;
       if (res.token) {
+        localStorage.setItem('sd_l1oxt', 'rtXfhd!skd' + res.privilege_id);
         localStorage.setItem('p_l1oxt', data);
         this.router.navigate(['pages/dashboard']);
       }else if (!res.Token) {
