@@ -1,93 +1,93 @@
 <nb-card>
-    <nb-card-header>
-      <div class="row">
-        <div class="col-auto mr-auto">Report number of night Date</div>
-      </div>
-    </nb-card-header>
-    <nb-card-body>
-      <div class="row">
-        <div class="col-6">
-          <div class="input-group  mb-3 ">
-            <input
-            [nbDatepicker]="date"
-            class="form-control"
-            [(ngModel)]="sortDate.date"
-            id="date"
-            name="date"
-            required
-            #date="ngModel"
-            placeholder="From Date">
-            <nb-rangepicker
-              #date
-              format="MMM d, y">
-            </nb-rangepicker>
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="getReportnumberOfNightList()">
-                <i class="fas fa-filter"></i>
-              </button>
-            </div>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Report number of night Date</div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-6">
+        <div class="input-group  mb-3 ">
+          <input [nbDatepicker]="date" class="form-control" [(ngModel)]="sortDate.date" id="date" name="date" required
+            #date="ngModel" placeholder="From Date">
+          <nb-rangepicker #date format="MMM d, y">
+          </nb-rangepicker>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" (click)="getReportnumberOfNightList()">
+              <i class="fas fa-filter"></i>
+            </button>
           </div>
         </div>
       </div>
-    </nb-card-body>
-  </nb-card>
-  
-  <!-- TODO: Content Report -->
-  <nb-card *ngIf="hiddenContent === false">
-    <nb-card-body>
-      <div id="demoReportnumberOfNight" #content>
-        <div class="invoice">
-          <div class="invoice-print">
-            <div class="col-12 text-center">
-              <div>
-                <h5>{{property.propertyName}}</h5>
-                <h5>{{property.address}}</h5>
-                <h5>{{property.city}}</h5>
-                <h5>{{property.countryName}}</h5>
-                <h5>{{property.website}}</h5>
-                <h5>{{property.phoneNumber}}</h5>
-              </div>
-            </div>
-            <div *ngFor="let numberOfNight of numberOfNight">
-              <table class="table">
-                <tbody>
-                  <tr>
-                    <td>{{numberOfNight.businnesSourceName}}</td>
-                    <td>{{numberOfNight.guestName}}</td>
-                    <td>{{numberOfNight.arrivalDate}}</td>
-                    <td>{{numberOfNight.departureDate}}</td>
-                    <td>{{numberOfNight.nights}}</td>
-                    <td>{{numberOfNight.roomName}}</td>
-                    <td>{{numberOfNight.roomTypeName}}</td>
-                    <td>{{numberOfNight.rate}}</td>
-                    <td>{{numberOfNight.billingNumber}}</td>
-                    <td>{{numberOfNight.bookingNumber}}</td>
-                    <td>{{numberOfNight.by}}</td>
-                    <td>{{numberOfNight.entryAt}}</td>
-                    <td>{{numberOfNight.status}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col-12 header-report">
-                <div class="invoice-title">
-                  <h5 class="text-center">Report Number of night List</h5>
-                </div>
-              </div>
-            </div>
-          </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<!-- TODO: Content Report -->
+<nb-card *ngIf="hiddenContent === false">
+  <nb-card-body>
+    <div id="demoReportnumberOfNight" #content>
+      <div class="col-12 text-center">
+        <h5>{{property.propertyName}}</h5>
+        <p>{{property.address}} - {{property.city}},
+          {{property.countryName}}</p>
+        <strong>{{property.website}}</strong>
+        <hr>
+        <strong>Report Number of night List</strong>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-12">
+          <div class="float-left"><strong>Printed By : </strong>Edo Novran Saputra</div>
+          <div class="float-right"><strong>Printed Date :</strong>{{printProperty.printDate}}</div>
         </div>
       </div>
-  
-      <div class="buttons">
-        <button printSectionId="demoReportnumberOfNight" ngxPrint [useExistingCss]="true" class="btnn btn btn-primary">
-          <i class="fas fa-print"></i>Print
-        </button>
-        <button (click)="makePdfReportnumberOfNight(content)"   class="btnn  btn btn-warning">
-          <i class="fas fa-file"></i> Export to PDF
-        </button>
-      </div>
-    </nb-card-body>
-  </nb-card>
+      <br>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="text-center"><strong>Company</strong></th>
+                  <th class="text-center"><strong>Guest</strong></th>
+                  <th class="text-center"><strong>Arrival</strong></th>
+                  <th class="text-center"><strong>Departure</strong></th>
+                  <th class="text-center"><strong>No of Night(s)</strong></th>
+                  <th class="text-center"><strong>Room No.</strong></th>
+                  <th class="text-center"><strong>Room Type</strong></th>
+                  <th class="text-center"><strong>Rate</strong></th>
+                  <th class="text-center"><strong>Billing No.</strong></th>
+                  <th class="text-center"><strong>Booking No.</strong></th>
+                  <th class="text-center"><strong>Date</strong></th>
+                  <th class="text-center"><strong>Status</strong></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let numberOfNight of numberOfNight">
+                  <td  class="text-center">{{numberOfNight.businnesSourceName}}</td>
+                  <td  class="text-center">{{numberOfNight.guestName}}</td>
+                  <td  class="text-center">{{numberOfNight.arrivalDate}}</td>
+                  <td  class="text-center">{{numberOfNight.departureDate}}</td>
+                  <td  class="text-center">{{numberOfNight.nights}}</td>
+                  <td  class="text-center">{{numberOfNight.roomName}}</td>
+                  <td  class="text-center">{{numberOfNight.roomTypeName}}</td>
+                  <td  class="text-center">{{numberOfNight.rate | currency:" "}}</td>
+                  <td  class="text-center">{{numberOfNight.billingNumber}}</td>
+                  <td  class="text-center">{{numberOfNight.bookingNumber}}</td>
+                  <td  class="text-center">{{numberOfNight.entryAt}}</td>
+                  <td  class="text-center">{{numberOfNight.status}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    </div>
+    <hr>
+    <div class="buttons">
+      <button printSectionId="demoReportnumberOfNight" ngxPrint [useExistingCss]="true" class="btn btn-primary">
+        <i class="fas fa-print"></i>Print
+      </button>
+      <button (click)="makePdfReportnumberOfNight(content)" class="btn btn-warning">
+        <i class="fas fa-file"></i> Export to PDF
+      </button>
+    </div>
+  </nb-card-body>
+</nb-card>

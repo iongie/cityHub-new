@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ReportService } from '../../../services/report/report.service';
 import { DatePipe } from '@angular/common';
-import { pdf, drawDOM } from '@progress/kendo-drawing';
+import { pdf, drawDOM, DrawOptions, exportPDF } from '@progress/kendo-drawing';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -116,13 +116,20 @@ export class ReportNumberOfNightComponent implements OnInit, OnDestroy {
     });
   }
 
-  makePdfReportArrival() {
+  makePdfReportnumberOfNight(element) {
     const report = {
       fromDate: this.datepipe.transform( this.sortDate.date.start, 'yyyy-MM-dd'),
       toDate: this.datepipe.transform( this.sortDate.date.end, 'yyyy-MM-dd'),
     };
-    drawDOM(document.getElementById('demoReportArrival')).then(data => {
-      pdf.saveAs(data, 'report_' + report.fromDate + '_' + report.toDate + 'numberOfNight.pdf');
+    const margin: any = '1cm';
+    const opt: DrawOptions = {
+      paperSize: 'A4',
+      margin: margin,
+      landscape: true,
+      repeatHeaders: true,
+    }
+    drawDOM(document.getElementById('demoReportnumberOfNight'),opt).then(data => {
+      pdf.saveAs(data, 'report_' + report.fromDate + '_' + report.toDate + '_NoOfRoomNight.pdf');
     })
   }
 
