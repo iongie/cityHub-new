@@ -100,7 +100,7 @@ export class ReportNumberOfNightComponent implements OnInit, OnDestroy {
     .subscribe(res => {
       console.log('getReportArrivalList', res);
       this.printProperty = {
-        printDate: this.datepipe.transform( Date.now(), 'yyyy-MM-dd'),
+        printDate: this.datepipe.transform( Date.now(), 'longDate'),
         printName: this.userCityHub.name,
       };
       this.property = {
@@ -118,9 +118,8 @@ export class ReportNumberOfNightComponent implements OnInit, OnDestroy {
         countryName: res.property.country_name, 
       };
       this.numberOfNight = res.number_of_nights.map(x => {
-        const firstTextBookingNumber = x.booking_number.slice(0, 7);
+        const firstTextBookingNumber = x.booking_number.slice(0, 8);
         const secondTextBookingNumber = x.booking_number.slice(8, 1000);
-        const joinTextBookingNumber = firstTextBookingNumber + ' ' + secondTextBookingNumber;
         const datax = {
          businnesSourceId: x.business_source_id,
          businnesSourceName: x.business_source_name,
@@ -135,7 +134,9 @@ export class ReportNumberOfNightComponent implements OnInit, OnDestroy {
          roomTypeName: x.room_type_name,
          rate: x.rate,
          billingNumber: x.billing_number,
-         bookingNumber: joinTextBookingNumber,
+         bookingNumber: x.booking_number,
+         firstTextBookingNumber: firstTextBookingNumber,
+         secondTextBookingNumber: secondTextBookingNumber,
          by: x.by,
          entryAt: x.entry_at,
          status: x.status

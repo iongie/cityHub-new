@@ -1,3 +1,21 @@
+.float-right{
+  padding-right: 30px;
+}
+.table, th, td{
+  font-size: 8px;
+}
+
+.table td.text {
+  max-width: 177px;
+}
+.table td.text span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+}
+
 .btnn {
-    margin: 0 8px 10px 0;
-  }
+  margin: 0 8px 10px 0;
+}

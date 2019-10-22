@@ -48,7 +48,7 @@
       <div class="row">
         <div class="col-12">
           <div class="float-left"><strong>Printed By : </strong>{{printProperty.printName}}</div>
-          <div class="float-right"><strong>Printed Date :</strong>{{printProperty.printDate}}</div>
+          <div class="float-right"><strong>Printed Date : </strong>{{printProperty.printDate}}</div>
         </div>
       </div>
       <br>
@@ -79,7 +79,7 @@
                   <td  class="text-center">{{numberOfNight.roomTypeName}} / {{numberOfNight.roomName}}</td>
                   <td  class="text-center">{{numberOfNight.rate | currency:" "}}</td>
                   <td  class="text-center">{{numberOfNight.billingNumber}}</td>
-                  <td  class="text-center text ">{{numberOfNight.bookingNumber}}</td>
+                  <td  class="text-center">{{numberOfNight.firstTextBookingNumber}}<br>{{numberOfNight.secondTextBookingNumber}}</td>
                   <td  class="text-center">{{numberOfNight.entryAt}}</td>
                   <td  class="text-center">{{numberOfNight.status}}</td>
                 </tr>
@@ -89,10 +89,10 @@
     </div>
     <hr>
     <div class="buttons">
-      <button printSectionId="demoReportnumberOfNight" ngxPrint [useExistingCss]="true" class="btn btn-primary">
+      <button printSectionId="demoReportnumberOfNight" ngxPrint [useExistingCss]="true" class="btnn btn btn-primary">
         <i class="fas fa-print"></i>Print
       </button>
-      <button (click)="makePdfReportnumberOfNight(content)" class="btn btn-warning">
+      <button (click)="makePdfReportnumberOfNight(content)" class="btnn btn btn-warning">
         <i class="fas fa-file"></i> Export to PDF
       </button>
     </div>

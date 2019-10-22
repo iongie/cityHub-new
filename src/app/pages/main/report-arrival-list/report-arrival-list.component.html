@@ -1,92 +1,96 @@
 <nb-card>
   <nb-card-header>
     <div class="row">
-      <div class="col-auto mr-auto">Report Arrival List Date</div>
+      <div class="col-auto mr-auto">Report arrival list</div>
     </div>
   </nb-card-header>
   <nb-card-body>
-    <div class="row">
-      <div class="col-6">
-        <div class="input-group  mb-3 ">
-          <input
-          [nbDatepicker]="date"
-          class="form-control"
-          [(ngModel)]="sortDate.date"
-          id="date"
-          name="date"
-          required
-          #date="ngModel"
-          placeholder="From Date">
-          <nb-rangepicker
-            #date
-            format="MMM d, y">
-          </nb-rangepicker>
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" (click)="getReportArrivalList()">
-              <i class="fas fa-filter"></i>
-            </button>
+      <div class="row">
+        <div class="col-6">
+          <div class="input-group  mb-3 ">
+            <input
+            [nbDatepicker]="date"
+            class="form-control"
+            [(ngModel)]="sortDate.date"
+            id="date"
+            name="date"
+            required
+            #date="ngModel"
+            placeholder="From Date">
+            <nb-rangepicker
+              #date
+              format="MMM d, y">
+            </nb-rangepicker>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" (click)="getReportArrivalList()">
+                <i class="fas fa-filter"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </nb-card-body>
+    </nb-card-body>
 </nb-card>
 
 <!-- TODO: Content Report -->
 <nb-card *ngIf="hiddenContent === false">
   <nb-card-body>
     <div id="demoReportArrival" #content>
-      <div class="invoice">
-        <div class="invoice-print">
-          <div class="col-12 text-center">
-            <div>
-              <h5>{{property.propertyName}}</h5>
-              <h5>{{property.address}}</h5>
-              <h5>{{property.city}}</h5>
-              <h5>{{property.countryName}}</h5>
-              <h5>{{property.website}}</h5>
-              <h5>{{property.phoneNumber}}</h5>
-            </div>
-          </div>
-          <div *ngFor="let arrival of arrival">
+      <div class="col-12 text-center">
+        <h5>{{property.propertyName}}</h5>
+        <p>{{property.address}} - {{property.city}},
+          {{property.countryName}}</p>
+        <strong>{{property.website}}</strong>
+        <hr>
+        <strong>Report Arrival List</strong>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-12">
+          <div class="float-left"><strong>Printed By : </strong>{{printProperty.printName}}</div>
+          <div class="float-right"><strong>Printed Date : </strong>{{printProperty.printDate}}</div>
+        </div>
+      </div>
+      <br>
+          <div class="table-responsive">
             <table class="table">
-              <tbody>
+              <thead>
                 <tr>
-                  <td>{{arrival.arrivalDate}}</td>
-                  <td>{{arrival.baseRate}}</td>
-                  <td>{{arrival.bookingNumber}}</td>
-                  <td>{{arrival.businessSourceId}}</td>
-                  <td>{{arrival.businessSourceName}}</td>
-                  <td>{{arrival.by}}</td>
-                  <td>{{arrival.departureDate}}</td>
-                  <td>{{arrival.entryAt}}</td>
-                  <td>{{arrival.guestId}}</td>
-                  <td>{{arrival.guestName}}</td>
-                  <td>{{arrival.night}}</td>
-                  <td>{{arrival.roomTypeId}}</td>
-                  <td>{{arrival.roomTypeName}}</td>
-                  <td>{{arrival.status}}</td>
+                  <th class="text-center"><strong>Company</strong></th>
+                  <th class="text-center"><strong>Guest</strong></th>
+                  <th class="text-center"><strong>Arrival</strong></th>
+                  <th class="text-center"><strong>Departure</strong></th>
+                  <th class="text-center"><strong>No of Night(s)</strong></th>
+                  <th class="text-center"><strong>Room Type</strong></th>
+                  <th class="text-center"><strong>Rate</strong></th>
+                  <th class="text-center"><strong>Booking No.</strong></th>
+                  <th class="text-center"><strong>Date</strong></th>
+                  <th class="text-center"><strong>Status</strong></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let arrival of arrival">
+                  <td  class="text-center">{{arrival.businessSourceName}}</td>
+                  <td  class="text-center">{{arrival.guestName}}</td>
+                  <td  class="text-center">{{arrival.arrivalDate}}</td>
+                  <td  class="text-center">{{arrival.departureDate}}</td>
+                  <td  class="text-center">{{arrival.nights}}</td>
+                  <td  class="text-center">{{arrival.roomTypeName}}</td>
+                  <td  class="text-center">{{arrival.rate | currency:" "}}</td>
+                  <td  class="text-center">{{arrival.firstTextBookingNumber}}<br>{{arrival.secondTextBookingNumber}}</td>
+                  <td  class="text-center">{{arrival.entryAt}}</td>
+                  <td  class="text-center">{{arrival.status}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <br>
-          <div class="row">
-            <div class="col-12 header-report">
-              <div class="invoice-title">
-                <h5 class="text-center">Report Arrival List</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-
+    <hr>
     <div class="buttons">
       <button printSectionId="demoReportArrival" ngxPrint [useExistingCss]="true" class="btnn btn btn-primary">
         <i class="fas fa-print"></i>Print
       </button>
-      <button (click)="makePdfReportArrival(content)"   class="btnn btn btn-warning">
+      <button (click)="makePdfReportArrival(content)" class="btnn btn btn-warning">
         <i class="fas fa-file"></i> Export to PDF
       </button>
     </div>
