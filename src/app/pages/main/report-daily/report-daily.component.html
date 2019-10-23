@@ -8,9 +8,7 @@
               <thead>
                 <tr>
                   <th colspan="4" class="text-center" style="border-top: none;">
-                    <strong>
-                      <h5>{{property.propertyName}}</h5>
-                    </strong>
+                    <h5>{{property.propertyName}}</h5>
                     <p>{{property.address}} - {{property.city}},
                       {{property.countryName}}</p><strong>{{property.website}}</strong>
                   </th>
@@ -34,7 +32,8 @@
               </thead>
               <tbody>
                 <tr>
-                  <td colspan="4" class="text-left"><strong>Room AVENUE {{roomRavenue.today.roomName}}</strong></td>
+                  <td colspan="4" class="text-left title"><strong>Room AVENUE {{roomRavenue.today.roomName}}</strong>
+                  </td>
                 </tr>
                 <tr>
                   <td class="text-left" label="discount">Discount</td>
@@ -58,7 +57,7 @@
                   <td colspan="4"></td>
                 </tr>
                 <tr>
-                  <td colspan="4" class="text-left"><strong>Extra Charge</strong></td>
+                  <td colspan="4" class="text-left title"><strong>Extra Charge</strong></td>
                 </tr>
                 <tr>
                   <td class="text-left" label="discount">Extra Charge</td>
@@ -76,7 +75,7 @@
                   <td colspan="4"></td>
                 </tr>
                 <tr>
-                  <td colspan="4" class="text-left"><strong>Miscellaneous Sales</strong></td>
+                  <td colspan="4" class="text-left title"><strong>Miscellaneous Sales</strong></td>
                 </tr>
                 <tr>
                   <td class="text-left" label="miscSales">Miscellaneous Sales</td>
@@ -94,7 +93,7 @@
                   <td colspan="4"></td>
                 </tr>
                 <tr>
-                  <td colspan="4" class="text-left"><strong>Payment Information</strong></td>
+                  <td colspan="4" class="text-left title"><strong>Payment Information</strong></td>
                 </tr>
                 <tr>
                   <td label="payment today">
@@ -108,7 +107,11 @@
                   </td>
                   <td class="text-right">
                     <div *ngFor="let paymentInformation of paymentInformation.today">
-                      <p>{{paymentInformation.nominal | currency:" " }}</p>
+                      <ol>
+                        <li>
+                          {{paymentInformation.nominal | currency:" " }}
+                        </li>
+                      </ol>
                     </div>
                   </td>
                   <td></td>
@@ -125,9 +128,13 @@
                     </div>
                   </td>
                   <td></td>
-                  <td>
+                  <td class="text-right">
                     <div *ngFor="let paymentInformation of paymentInformation.month">
-                      <p>{{paymentInformation.nominal | currency:" " }}</p>
+                      <ol>
+                        <li>
+                          {{paymentInformation.nominal | currency:" " }}
+                        </li>
+                      </ol>
                     </div>
                   </td>
                   <td></td>
@@ -144,9 +151,13 @@
                   </td>
                   <td></td>
                   <td></td>
-                  <td>
+                  <td class="text-right">
                     <div *ngFor="let paymentInformation of paymentInformation.year">
-                      <p>{{paymentInformation.nominal | currency:" " }}</p>
+                      <ol>
+                        <li>
+                          {{paymentInformation.nominal | currency:" " }}
+                        </li>
+                      </ol>
                     </div>
                   </td>
                 </tr>
@@ -154,7 +165,7 @@
                   <td colspan="4"></td>
                 </tr>
                 <tr>
-                  <td colspan="4" class="text-left"><strong>Room Summary</strong></td>
+                  <td colspan="4" class="text-left title"><strong>Room Summary</strong></td>
                 </tr>
                 <tr>
                   <td class="text-left" label="noOFbooking">No of Booking</td>
@@ -190,7 +201,7 @@
                   <td colspan="4"></td>
                 </tr>
                 <tr>
-                  <td colspan="4" class="text-left"><strong>Statistics</strong></td>
+                  <td colspan="4" class="text-left title"><strong>Statistics</strong></td>
                 </tr>
                 <tr>
                   <td class="text-left" label="OccupancyRate">Occupancy Rate(%)</td>

@@ -1,35 +1,26 @@
 <nb-card>
   <nb-card-header>
     <div class="row">
-      <div class="col-auto mr-auto">Report arrival list</div>
+      <div class="col-auto mr-auto">Report Arrival List</div>
     </div>
   </nb-card-header>
   <nb-card-body>
-      <div class="row">
-        <div class="col-6">
-          <div class="input-group  mb-3 ">
-            <input
-            [nbDatepicker]="date"
-            class="form-control"
-            [(ngModel)]="sortDate.date"
-            id="date"
-            name="date"
-            required
-            #date="ngModel"
-            placeholder="From Date">
-            <nb-rangepicker
-              #date
-              format="MMM d, y">
-            </nb-rangepicker>
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="getReportArrivalList()">
-                <i class="fas fa-filter"></i>
-              </button>
-            </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="input-group  mb-3 ">
+          <input [nbDatepicker]="date" class="form-control" [(ngModel)]="sortDate.date" id="date" name="date" required
+            #date="ngModel" placeholder="From Date">
+          <nb-rangepicker #date format="MMM d, y">
+          </nb-rangepicker>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" (click)="getReportArrivalList()">
+              <i class="fas fa-filter"></i>
+            </button>
           </div>
         </div>
       </div>
-    </nb-card-body>
+    </div>
+  </nb-card-body>
 </nb-card>
 
 <!-- TODO: Content Report -->
@@ -52,10 +43,13 @@
         </div>
       </div>
       <br>
+      <div class="row">
+        <div class="col-12">
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
+                  <th class="text-center" style="width:3%"><strong>No.</strong></th>
                   <th class="text-center"><strong>Company</strong></th>
                   <th class="text-center"><strong>Guest</strong></th>
                   <th class="text-center"><strong>Arrival</strong></th>
@@ -70,20 +64,23 @@
               </thead>
               <tbody>
                 <tr *ngFor="let arrival of arrival">
-                  <td  class="text-center">{{arrival.businessSourceName}}</td>
-                  <td  class="text-center">{{arrival.guestName}}</td>
-                  <td  class="text-center">{{arrival.arrivalDate}}</td>
-                  <td  class="text-center">{{arrival.departureDate}}</td>
-                  <td  class="text-center">{{arrival.nights}}</td>
-                  <td  class="text-center">{{arrival.roomTypeName}}</td>
-                  <td  class="text-center">{{arrival.rate | currency:" "}}</td>
-                  <td  class="text-center">{{arrival.firstTextBookingNumber}}<br>{{arrival.secondTextBookingNumber}}</td>
-                  <td  class="text-center">{{arrival.entryAt}}</td>
-                  <td  class="text-center">{{arrival.status}}</td>
+                  <td class="text-center">{{arrival.no}}</td>
+                  <td class="text-center">{{arrival.businessSourceName}}</td>
+                  <td class="text-center">{{arrival.guestName}}</td>
+                  <td class="text-center">{{arrival.arrivalDate}}</td>
+                  <td class="text-center">{{arrival.departureDate}}</td>
+                  <td class="text-center">{{arrival.nights}}</td>
+                  <td class="text-center">{{arrival.roomTypeName}}</td>
+                  <td class="text-center">{{arrival.baseRate | currency:" "}}</td>
+                  <td class="text-center">{{arrival.firstTextBookingNumber}}<br>{{arrival.secondTextBookingNumber}}</td>
+                  <td class="text-center">{{arrival.entryAt}}</td>
+                  <td class="text-center">{{arrival.status}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
     </div>
     <hr>
     <div class="buttons">

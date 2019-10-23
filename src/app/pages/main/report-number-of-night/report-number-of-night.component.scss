@@ -1,24 +1,16 @@
-// @media (min-width: 768px) and (max-width: 991.98px) {
-//   .table-responsive {
-//     min-width: 1000px;
-//   }
-// }
 .float-right{
-  padding-right: 30px;
-}
-.table, th, td{
-  font-size: 8px;
+  padding-right: 40px;
 }
 
-.table td.text {
-  max-width: 177px;
+.table, th, td{
+  font-size: 11px;
+  padding-right: 40px;
 }
-.table td.text span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  max-width: 100%;
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .table-responsive {
+    min-width: 800px;
+  }
 }
 
 .btnn {

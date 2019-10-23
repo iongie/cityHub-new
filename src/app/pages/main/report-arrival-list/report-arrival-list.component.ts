@@ -133,10 +133,11 @@ export class ReportArrivalListComponent implements OnInit, OnDestroy {
         updatedBy: res.property.updated_by,
         countryName: res.property.country_name,
       };
-      this.arrival = res.arrival.map(x => {
+      this.arrival = res.arrival.map((x, index) => {
         const firstTextBookingNumber = x.booking_number.slice(0, 8);
         const secondTextBookingNumber = x.booking_number.slice(8, 1000);
         const datax = {
+          no: index + 1,
           arrivalDate: x.arrival_date,
           baseRate: x.base_rate,
           bookingNumber: x.booking_number,
@@ -168,6 +169,7 @@ export class ReportArrivalListComponent implements OnInit, OnDestroy {
     const opt: DrawOptions = {
       paperSize: 'A4',
       margin: margin,
+      landscape: true,
       repeatHeaders: true,
     }
     drawDOM(document.getElementById('demoReportArrival'), opt).then(data => {

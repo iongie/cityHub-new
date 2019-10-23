@@ -5,31 +5,22 @@
     </div>
   </nb-card-header>
   <nb-card-body>
-      <div class="row">
-        <div class="col-6">
-          <div class="input-group  mb-3 ">
-            <input
-            [nbDatepicker]="date"
-            class="form-control"
-            [(ngModel)]="sortDate.date"
-            id="date"
-            name="date"
-            required
-            #date="ngModel"
-            placeholder="From Date">
-            <nb-rangepicker
-              #date
-              format="MMM d, y">
-            </nb-rangepicker>
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="getReportUserShiftt()">
-                <i class="fas fa-filter"></i>
-              </button>
-            </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="input-group  mb-3 ">
+          <input [nbDatepicker]="date" class="form-control" [(ngModel)]="sortDate.date" id="date" name="date" required
+            #date="ngModel" placeholder="From Date">
+          <nb-rangepicker #date format="MMM d, y">
+          </nb-rangepicker>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" (click)="getReportUserShiftt()">
+              <i class="fas fa-filter"></i>
+            </button>
           </div>
         </div>
       </div>
-    </nb-card-body>
+    </div>
+  </nb-card-body>
 </nb-card>
 
 <!-- TODO: Content Report -->
@@ -52,38 +43,44 @@
         </div>
       </div>
       <br>
+      <div class="row">
+        <div class="col-12">
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
-                  <th class="text-center"><strong>No.</strong></th>
+                  <th class="text-center" style="width:3%"><strong>No.</strong></th>
                   <th class="text-center"><strong>Date</strong></th>
                   <th class="text-center"><strong>Receipt</strong></th>
                   <th class="text-center"><strong>Name</strong></th>
                   <th class="text-center"><strong>Billing No.</strong></th>
-                  <th class="text-center"><strong>Room Name</strong></th>
+                  <th class="text-center" style="width:5%"><strong>Room Name</strong></th>
                   <th class="text-center"><strong>Remark</strong></th>
                   <th class="text-center"><strong>Category</strong></th>
-                  <th class="text-center"><strong>Payment Type</strong></th>
-                  <th class="text-center"><strong>Amount</strong></th>
+                  <th class="text-center" style="width:8%"><strong>Payment Type</strong></th>
+                  <th class="text-center" style="padding-right:30px"><strong>Amount</strong></th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let userShiftReport of userShiftReport">
-                  <td  class="text-center">{{userShiftReport.no}}</td>
-                  <td  class="text-center">{{userShiftReport.date}}</td>
-                  <td  class="text-center">{{userShiftReport.firstTextReceipt}}<br>{{userShiftReport.secondTextReceipt}}</td>
-                  <td  class="text-center">{{userShiftReport.guestName}}</td>
-                  <td  class="text-center">{{userShiftReport.firstTextBookingNumber}}<br>{{userShiftReport.secondTextBookingNumber}}</td>
-                  <td  class="text-center">{{userShiftReport.roomName}}</td>
-                  <td  class="text-center">{{userShiftReport.remark}}</td>
-                  <td  class="text-center">{{userShiftReport.category}}</td>
-                  <td  class="text-center">{{userShiftReport.paymentTypeName}}</td>
-                  <td  class="text-center">{{userShiftReport.amount | currency:" "}}</td>
+                  <td class="text-center">{{userShiftReport.no}}</td>
+                  <td class="text-center">{{userShiftReport.date}}</td>
+                  <td class="text-center">{{userShiftReport.firstTextReceipt}}<br>{{userShiftReport.secondTextReceipt}}
+                  </td>
+                  <td class="text-center">{{userShiftReport.guestName}}</td>
+                  <td class="text-center">
+                    {{userShiftReport.firstTextBookingNumber}}<br>{{userShiftReport.secondTextBookingNumber}}</td>
+                  <td class="text-center">{{userShiftReport.roomName}}</td>
+                  <td class="text-center">{{userShiftReport.remark}}</td>
+                  <td class="text-center">{{userShiftReport.category}}</td>
+                  <td class="text-center">{{userShiftReport.paymentTypeName}}</td>
+                  <td class="text-center">{{userShiftReport.amount | currency:" "}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
     </div>
     <hr>
     <div class="buttons">

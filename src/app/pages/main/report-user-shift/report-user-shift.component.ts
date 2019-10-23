@@ -156,6 +156,7 @@ export class ReportUserShiftComponent implements OnInit, OnDestroy {
     const opt: DrawOptions = {
       paperSize: 'A4',
       margin: margin,
+      landscape: true,
       repeatHeaders: true,
     }
     drawDOM(document.getElementById('demoReportUserShift'), opt).then(data => {

@@ -1,35 +1,26 @@
 <nb-card>
   <nb-card-header>
     <div class="row">
-      <div class="col-auto mr-auto">Report number of night Date</div>
+      <div class="col-auto mr-auto">Report Number of Night Date</div>
     </div>
   </nb-card-header>
   <nb-card-body>
-      <div class="row">
-        <div class="col-6">
-          <div class="input-group  mb-3 ">
-            <input
-            [nbDatepicker]="date"
-            class="form-control"
-            [(ngModel)]="sortDate.date"
-            id="date"
-            name="date"
-            required
-            #date="ngModel"
-            placeholder="From Date">
-            <nb-rangepicker
-              #date
-              format="MMM d, y">
-            </nb-rangepicker>
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="getReportnumberOfNightList()">
-                <i class="fas fa-filter"></i>
-              </button>
-            </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="input-group  mb-3 ">
+          <input [nbDatepicker]="date" class="form-control" [(ngModel)]="sortDate.date" id="date" name="date" required
+            #date="ngModel" placeholder="From Date">
+          <nb-rangepicker #date format="MMM d, y">
+          </nb-rangepicker>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" (click)="getReportnumberOfNightList()">
+              <i class="fas fa-filter"></i>
+            </button>
           </div>
         </div>
       </div>
-    </nb-card-body>
+    </div>
+  </nb-card-body>
 </nb-card>
 
 <!-- TODO: Content Report -->
@@ -42,7 +33,7 @@
           {{property.countryName}}</p>
         <strong>{{property.website}}</strong>
         <hr>
-        <strong>Report Number of night List</strong>
+        <strong>Report Number of Night List</strong>
       </div>
       <br>
       <div class="row">
@@ -52,10 +43,13 @@
         </div>
       </div>
       <br>
+      <div class="row">
+        <div class="col-12">
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
+                  <th class="text-center" style="width:3%"><strong>No.</strong></th>
                   <th class="text-center"><strong>Company</strong></th>
                   <th class="text-center"><strong>Guest</strong></th>
                   <th class="text-center"><strong>Arrival</strong></th>
@@ -63,7 +57,7 @@
                   <th class="text-center"><strong>No of Night(s)</strong></th>
                   <th class="text-center"><strong>Room</strong></th>
                   <th class="text-center"><strong>Rate</strong></th>
-                  <th class="text-center"><strong>Billing No.</strong></th>
+                  <!-- <th class="text-center"><strong>Billing No.</strong></th> -->
                   <th class="text-center"><strong>Booking No.</strong></th>
                   <th class="text-center"><strong>Date</strong></th>
                   <th class="text-center"><strong>Status</strong></th>
@@ -71,21 +65,25 @@
               </thead>
               <tbody>
                 <tr *ngFor="let numberOfNight of numberOfNight">
-                  <td  class="text-center">{{numberOfNight.businnesSourceName}}</td>
-                  <td  class="text-center">{{numberOfNight.guestName}}</td>
-                  <td  class="text-center">{{numberOfNight.arrivalDate}}</td>
-                  <td  class="text-center">{{numberOfNight.departureDate}}</td>
-                  <td  class="text-center">{{numberOfNight.nights}}</td>
-                  <td  class="text-center">{{numberOfNight.roomTypeName}} / {{numberOfNight.roomName}}</td>
-                  <td  class="text-center">{{numberOfNight.rate | currency:" "}}</td>
-                  <td  class="text-center">{{numberOfNight.billingNumber}}</td>
-                  <td  class="text-center">{{numberOfNight.firstTextBookingNumber}}<br>{{numberOfNight.secondTextBookingNumber}}</td>
-                  <td  class="text-center">{{numberOfNight.entryAt}}</td>
-                  <td  class="text-center">{{numberOfNight.status}}</td>
+                  <td class="text-center">{{numberOfNight.no}}</td>
+                  <td class="text-center">{{numberOfNight.businnesSourceName}}</td>
+                  <td class="text-center">{{numberOfNight.guestName}}</td>
+                  <td class="text-center">{{numberOfNight.arrivalDate}}</td>
+                  <td class="text-center">{{numberOfNight.departureDate}}</td>
+                  <td class="text-center">{{numberOfNight.nights}}</td>
+                  <td class="text-center">{{numberOfNight.roomTypeName}} / {{numberOfNight.roomName}}</td>
+                  <td class="text-center">{{numberOfNight.rate | currency:" "}}</td>
+                  <!-- <td class="text-center">{{numberOfNight.billingNumber}}</td> -->
+                  <td class="text-center">
+                    {{numberOfNight.firstTextBookingNumber}}<br>{{numberOfNight.secondTextBookingNumber}}</td>
+                  <td class="text-center">{{numberOfNight.entryAt}}</td>
+                  <td class="text-center">{{numberOfNight.status}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
     </div>
     <hr>
     <div class="buttons">

@@ -124,7 +124,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/arrival-list-report',
       },
       {
-        title: 'Number of night',
+        title: 'Number of Night',
         link: '/pages/number-of-night-report',
       },
       {
@@ -185,7 +185,7 @@ export const MENU_ITEMS_NO_ADMIN: NbMenuItem[] = [
         link: '/pages/arrival-list-report',
       },
       {
-        title: 'Number of night',
+        title: 'Number of Night',
         link: '/pages/number-of-night-report',
       },
       {
