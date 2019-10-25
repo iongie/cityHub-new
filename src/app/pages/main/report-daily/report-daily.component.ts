@@ -4,6 +4,8 @@ import { ReportService } from '../../../services/report/report.service';
 import { DatePipe } from '@angular/common';
 import { drawDOM, pdf, DrawOptions, exportPDF } from '@progress/kendo-drawing';
 import { takeUntil } from 'rxjs/operators';
+import { PaymentTypeService } from '../../../services/payment-type/payment-type.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'ngx-report-daily',
@@ -15,6 +17,7 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
   printProperty = {
     printDate: '',
     reportName: '',
+    printName: '',
   };
 
   property = {
@@ -104,6 +107,9 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
     ],
   };
 
+  paymentType: any;
+  paymentInformationNew: any;
+
   roomSummary = {
     noOfBooking: {
       today : 0,
@@ -153,18 +159,36 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
   };
 
   hiddenContent =  true;
+  userCityHub: any;
   constructor(
     public reportServ: ReportService,
+    public paymentTypeServ: PaymentTypeService,
     public datepipe: DatePipe,
-  ) { }
+    public authServ: AuthService,
+  ) { } 
 
   ngOnInit() {
     this.getReportnumberOfNightList();
+    this.detailAccount();
   }
 
   ngOnDestroy() {
     this.subs.next();
     this.subs.complete();
+  }
+
+  detailAccount() {
+    const data = {
+      token: localStorage.getItem('p_l1oxt'),
+    };
+    this.authServ.detailAfterLogin(data)
+    .pipe(takeUntil(this.subs))
+    .subscribe(res => {
+      this.userCityHub = {
+        name : res[0].full_name,
+      };
+      console.log(this.userCityHub);
+    });
   }
 
   getReportnumberOfNightList() {
@@ -177,9 +201,29 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.subs))
     .subscribe(res => {
       console.log('getReportArrivalList', res);
+      const menu = {
+        name: 'all',
+      }
+      this.paymentTypeServ.get(menu)
+      .pipe(takeUntil(this.subs))
+      .subscribe( resPayTyp => {
+        const g = resPayTyp.map(x => {
+          const d = {
+            name: x.payment_type_name,
+            nominalToday: res.payment_information[x.payment_type_name].today.nominal,
+            nominalMonth: res.payment_information[x.payment_type_name].month.nominal,
+            nominalYear: res.payment_information[x.payment_type_name].year.nominal,
+          }
+          return d;
+        })
+
+        this.paymentType = g;
+      })
+      console.log('debet', res.payment_information['Debt'])
       this.printProperty = {
         printDate: res.print_properties.print_date,
         reportName: res.print_properties.report_name,
+        printName: this.userCityHub.name,
       };
 
       this.property = {
@@ -248,7 +292,7 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
         }
       };
 
-      this.paymentInformation.today = res.payment_information.today.map(x => {
+      this.paymentInformation.today = res.payment_information_old.today.map(x => {
         const datax = {
           paymentInformation: x.payment_information,
           nominal: x.nominal,
@@ -256,7 +300,7 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
         return datax;
       });
 
-      this.paymentInformation.month = res.payment_information.month.map(x => {
+      this.paymentInformation.month = res.payment_information_old.month.map(x => {
         const datax = {
           paymentInformation: x.payment_information,
           nominal: x.nominal,
@@ -264,7 +308,7 @@ export class ReportDailyComponent implements OnInit, OnDestroy {
         return datax;
       });
 
-      this.paymentInformation.year = res.payment_information.year.map(x => {
+      this.paymentInformation.year = res.payment_information_old.year.map(x => {
         const datax = {
           paymentInformation: x.payment_information,
           nominal: x.nominal,

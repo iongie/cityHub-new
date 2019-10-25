@@ -14,7 +14,7 @@
                   </th>
                 </tr>
                 <tr>
-                  <th colspan="4" style="border-bottom: none;"><strong>Printed By : </strong>Edo Novran Saputra</th>
+                  <th colspan="4" style="border-bottom: none;"><strong>Printed By : </strong>{{printProperty.printName}}</th>
                 </tr>
                 <tr>
                   <th colspan="4" style="border-top: none;"><strong>Printed Date : </strong>{{printProperty.printDate}}
@@ -95,70 +95,16 @@
                 <tr>
                   <td colspan="4" class="text-left title"><strong>Payment Information</strong></td>
                 </tr>
-                <tr>
-                  <td label="payment today">
-                    <div *ngFor="let paymentInformation of paymentInformation.today">
-                      <ul>
-                        <li>
-                          {{paymentInformation.paymentInformation}}
-                        </li>
-                      </ul>
-                    </div>
+                <tr *ngFor="let paymentType of paymentType" >
+                  <td class="text-left">{{paymentType.name}}</td>
+                  <td class="text-right" label="today" >
+                    {{paymentType.nominalToday}}
                   </td>
-                  <td class="text-right">
-                    <div *ngFor="let paymentInformation of paymentInformation.today">
-                      <ol>
-                        <li>
-                          {{paymentInformation.nominal | currency:" " }}
-                        </li>
-                      </ol>
-                    </div>
+                  <td class="text-right" label="month">
+                    {{paymentType.nominalMonth}}
                   </td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td label="payment month">
-                    <div *ngFor="let paymentInformation of paymentInformation.month">
-                      <ul>
-                        <li>
-                          {{paymentInformation.paymentInformation}}
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                  <td></td>
-                  <td class="text-right">
-                    <div *ngFor="let paymentInformation of paymentInformation.month">
-                      <ol>
-                        <li>
-                          {{paymentInformation.nominal | currency:" " }}
-                        </li>
-                      </ol>
-                    </div>
-                  </td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td label="payment year">
-                    <div *ngFor="let paymentInformation of paymentInformation.year">
-                      <ul>
-                        <li>
-                          {{paymentInformation.paymentInformation}}
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                  <td></td>
-                  <td></td>
-                  <td class="text-right">
-                    <div *ngFor="let paymentInformation of paymentInformation.year">
-                      <ol>
-                        <li>
-                          {{paymentInformation.nominal | currency:" " }}
-                        </li>
-                      </ol>
-                    </div>
+                  <td class="text-right" label="year">
+                    {{paymentType.nominalYear}}
                   </td>
                 </tr>
                 <tr>
