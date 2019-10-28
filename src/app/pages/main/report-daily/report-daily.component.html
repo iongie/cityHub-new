@@ -98,13 +98,13 @@
                 <tr *ngFor="let paymentType of paymentType" >
                   <td class="text-left">{{paymentType.name}}</td>
                   <td class="text-right" label="today" >
-                    {{paymentType.nominalToday}}
+                    {{paymentType.nominalToday | currency:" " }}
                   </td>
                   <td class="text-right" label="month">
-                    {{paymentType.nominalMonth}}
+                    {{paymentType.nominalMonth | currency:" " }}
                   </td>
                   <td class="text-right" label="year">
-                    {{paymentType.nominalYear}}
+                    {{paymentType.nominalYear | currency:" " }}
                   </td>
                 </tr>
                 <tr>
