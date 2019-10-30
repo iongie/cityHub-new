@@ -71,6 +71,8 @@ export class BookingAddComponent implements OnInit, OnDestroy {
     this.minMax();
     // this.min = new Date(Date.now());
     // this.max = new Date(Date.now());
+    this.imgURL = 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg';
+    
   }
 
   ngOnDestroy() {

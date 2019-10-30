@@ -51,6 +51,7 @@ export class AddComponent implements OnInit, OnDestroy {
     this.getCountry();
     this.detailAccount();
     this.detailUserRole();
+    this.imgURL = 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg';
   }
 
   ngOnDestroy() {

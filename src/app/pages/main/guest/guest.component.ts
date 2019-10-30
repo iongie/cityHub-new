@@ -49,10 +49,10 @@ export class GuestComponent implements OnInit {
         title: 'Phone',
         type: 'string',
       },
-      guestFileScan: {
-        title: 'File',
-        type: 'string',
-      },
+      // guestFileScan: {
+      //   title: 'File',
+      //   type: 'string',
+      // },
       detail: {
         title: 'Actions',
         type: 'custom',
