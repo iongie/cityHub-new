@@ -20,6 +20,12 @@ export class DetailComponent implements OnInit, OnDestroy {
   userCityHub: any;
   forRole: any;
   show: any;
+
+  // TODO: Setting for upload
+  fileData = new FormData();
+  reader = new FileReader();
+  selectedFile: File = null;
+  imgURL: any;
   constructor(
     public router: Router,
     private activeRoute: ActivatedRoute,
@@ -70,13 +76,19 @@ export class DetailComponent implements OnInit, OnDestroy {
             city : y.city,
             email : y.email,
             phoneNumber : y.phone_number,
-            // guestFileScan : y.guest_file_scan,
+            guestFileScan : y.guest_file_scan,
             createdBy: y.create_by,
             guestId: params.id,
           };
           return xyz;
         });
         this.guest = data;
+        if(this.guest[0].guestFileScan === ''){
+          this.imgURL = 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg';
+        } else {
+          this.imgURL = this.guest[0].guestFileScan;
+        }
+        
         console.log(this.guest);
       });
     });
@@ -91,11 +103,26 @@ export class DetailComponent implements OnInit, OnDestroy {
         address: this.guest[0].address,
         email: this.guest[0].email,
         phoneNumber: this.guest[0].phoneNumber,
-        // guestFileScan: this.guest[0].guestFileScan,
+        guestFileScan: this.guest[0].guestFileScan,
         createdBy: this.userCityHub.username,
         guestId: this.guest[0].guestId,
       };
-      this.guestServ.update(data).pipe(takeUntil(this.subs)).subscribe(() => {
+      this.fileData.append('guestId', this.guest[0].guestId);
+      this.fileData.append('guestName', this.guest[0].guestName);
+      this.fileData.append('countryId', this.guest[0].countryId);
+      this.fileData.append('address', this.guest[0].address);
+      this.fileData.append('city', this.guest[0].city);
+      this.fileData.append('email', this.guest[0].email);
+      this.fileData.append('phoneNumber', this.guest[0].phoneNumber);
+      if (this.selectedFile === null) {
+        this.fileData.append('image', this.guest[0].guestFileScan);
+      } else {
+        this.fileData.append('image', this.selectedFile, this.selectedFile.name);
+      }
+      
+      console.log(this.fileData);
+      console.log(data);
+      this.guestServ.update(this.fileData).pipe(takeUntil(this.subs)).subscribe(() => {
         const title = 'Guest';
         const content = 'Data has been update';
         this.notifServ.showSuccessTypeToast(title, content);
@@ -154,6 +181,16 @@ export class DetailComponent implements OnInit, OnDestroy {
         }
       });
     });
+  }
+
+  onFile(event) {
+    this.selectedFile = <File>event.target.files[0];
+    console.log(this.selectedFile);
+    this.reader.readAsDataURL(this.selectedFile);
+    this.reader.onload = (_event) => {
+      this.imgURL = this.reader.result;
+    };
+
   }
 
 }

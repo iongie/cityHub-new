@@ -7,131 +7,15 @@
 
   <nb-card-body>
     <form #ngForm="ngForm" (submit)="addMiscSales()" ngNativeValidate>
-      <nb-card>
-        <nb-card-header>
-          <div class="row">
-            <div class="col-auto mr-auto">Miscellaneous Sales Date</div>
-          </div>
-        </nb-card-header>
-        <nb-card-body>
-          <div class="row">
-
-            <div class="input-group col-12 mb-3" *ngFor="let selectExtraCharge of selectExtraCharge; let i = index">
-              <!-- <select
-              nbInput
-              fullWidth
-              [disabled]="show === false"
-              class="form-control"
-              [(ngModel)]="selectExtraCharge.id"
-              id="id{{i}}"
-              name="id{{i}}"
-              required
-              #id="ngModel">
-              <option value="0" disabled selected>Choose your option</option>
-              <option
-              *ngFor="let extraCharge of extraCharge"
-              value="{{extraCharge.extraChargeId}}">{{extraCharge.extraChargeName}}</option>
-              </select> -->
-              <input
-                type="text"
-                fullWidth
-                [disabled]="show === false"
-                class="form-control"
-                [(ngModel)]="selectExtraCharge.id"
-                name="id{{i}}"
-                id="id{{i}}"
-                [ngbTypeahead]="searchExtraCharge" 
-                (ngModelChange)="onChangeExtraCharge($event)"
-                [resultTemplate]="extraCharge"
-                [inputFormatter]="formatterExtraCharge"
-                placeholder="Choose your extra charge">
-
-                <input
-                type="number"
-                min="1"
-                fullWidth
-                [disabled]="show === false"
-                class="form-control"
-                [(ngModel)]="selectExtraCharge.qty"
-                name="qty{{i}}"
-                id="qty{{i}}"
-                placeholder="Input your quantity">
-              <div class="input-group-append" id="button-addon4">
-                <button class="btn btn-outline-secondary" type="button" (click)="addFormSelectExtraCharge()">Add</button>
-                <button class="btn btn-outline-secondary" type="button" (click)="removeFormSelectExtraCharge(i)">Remove</button>
-              </div>
-            </div>
-
-            <ng-template #extraCharge let-r="result" let-t="term">
-              <div class="media p-1">
-                <div class="media-body">
-                  <h5 class="mt-1">{{r.extraChargeName}}</h5>
-                </div>
-              </div>
-            </ng-template>
-
-            <!-- ! nebular theme date picker -->
-            <div class="form-group col-xl-8 col-sm-12">
-              <label for="inputEmail4">Miscellaneous Sales Date</label>
-              <input
-              [nbDatepicker]="miscSalesDate"
-              [(ngModel)]="addDataMiscSales.miscSalesDate"
-              class="form-control"
-              id="miscSalesDate"
-              name="miscSalesDate"
-              required
-              #miscSalesDate="ngModel"
-              placeholder="Miscellaneous Sales Date">
-              <nb-datepicker
-                #miscSalesDate  
-                [min]="min"
-                format="MMM d, y">
-              </nb-datepicker>
-            </div>
-
-            <div class="form-group col-xl-4 col-sm-12">
-              <label for="exampleFormControlSelect1">Payment Type</label>
-              <select
-                nbInput
-                fullWidth
-                [disabled]="show === false"
-                class="form-control"
-                [(ngModel)]="addDataMiscSales.paymentTypeId"
-                id="paymentTypeId"
-                name="paymentTypeId"
-                required
-                #paymentTypeId="ngModel">
-                <option value="0" disabled selected>Choose your option</option>
-                <option
-                *ngFor="let paymentType of paymentType"
-                value="{{paymentType.paymentTypeId}}">{{paymentType.paymentTypeName}}</option>
-              </select>
-            </div>
-
-            <div class="form-group col-12">
-              <label for="exampleFormControlInput1">Note</label>
-              <textarea
-              nbInput
-              fullWidth
-              [disabled]="show === false"
-              class="form-control"
-              [(ngModel)]="addDataMiscSales.miscSalesNote"
-              id="miscSalesNote"
-              name="miscSalesNote"
-              required
-              #miscSalesNote="ngModel"
-              placeholder="Note">
-              </textarea>
-            </div>
-
-            <!-- TODO: Start Guest -->
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
             <nb-card>
               <nb-card-header>
                 <div class="row">
                   <div class="col-auto mr-auto">Guest</div>
                 </div>
               </nb-card-header>
-
+  
               <nb-card-body>
                 <div class="row">    
                   <div class="input-group col-12 mb-3">
@@ -205,13 +89,31 @@
                   </div>
       
                   <!-- ! Manual Setting for Upload -->
-                  <div class="form-group col-12">
+                   <!-- ! Manual Setting for Upload -->
+                <div class="form-group col-12">
+                    <label for="exampleFormControlInput1">Upload File</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input 
+                          type="file" 
+                          class="custom-file-input" 
+                          name="image" 
+                          id="image" 
+                          (change)="onFile($event)">
+                        <label class="custom-file-label">Choose file</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-12" >
+                    <img [src]="imgURL" [ngClass]="{'img-fluid': true}" class="img-fluid img-thumbnail" style="margin-top:5px;">
+                  </div>
+                  <!-- <div class="form-group col-12">
                     <input type="file" name="image" id="image" (change)="onFile($event)">
                   </div>
       
                   <div class="form-group col-12">
                     <img [src]="imgURL" [ngClass]="{'img-fluid': true}" *ngIf="imgURL">
-                  </div>
+                  </div> -->
       
                   <div class="form-group col-12">
                     <label for="exampleFormControlInput1">City</label>
@@ -280,14 +182,138 @@
                 </div>
               </nb-card-body>
             </nb-card>
-            <!-- TODO: End guest -->
-          </div>
-          <div class="buttons">
-            <button type="submit" class="btn btn-primary btnn">Save</button>
-            <button type="button" class="btn btn-warning btnn" [routerLink]="['/pages/booking-management']" routerLinkActive="router-link-active" >Cancel</button>
-          </div>
-        </nb-card-body>
-      </nb-card>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+          <nb-card>
+            <nb-card-header>
+              <div class="row">
+                <div class="col-auto mr-auto">Miscellaneous Sales Date</div>
+              </div>
+            </nb-card-header>
+            <div class="input-group col-12 mb-3" *ngFor="let selectExtraCharge of selectExtraCharge; let i = index">
+              <!-- <select
+              nbInput
+              fullWidth
+              [disabled]="show === false"
+              class="form-control"
+              [(ngModel)]="selectExtraCharge.id"
+              id="id{{i}}"
+              name="id{{i}}"
+              required
+              #id="ngModel">
+              <option value="0" disabled selected>Choose your option</option>
+              <option
+              *ngFor="let extraCharge of extraCharge"
+              value="{{extraCharge.extraChargeId}}">{{extraCharge.extraChargeName}}</option>
+              </select> -->
+              <div class="input-group-prepend" id="button-addon4">
+                <span class="input-group-text" id="basic-addon1" (click)="addFormSelectExtraCharge()">
+                  <i class="fas fa-plus" aria-hidden="true"></i>
+                </span>
+                <span class="input-group-text" id="basic-addon1" (click)="removeFormSelectExtraCharge(i)">
+                  <i class="fa fa-minus" aria-hidden="true" ></i>
+                </span>
+                <!-- <button class="btn btn-outline-secondary btn-sm" type="button" (click)="addFormSelectExtraCharge()">Add</button>
+                <button class="btn btn-outline-secondary btn-sm" type="button" (click)="removeFormSelectExtraCharge(i)">Remove</button> -->
+              </div>
+              <input
+                type="text"
+                fullWidth
+                [disabled]="show === false"
+                class="form-control"
+                [(ngModel)]="selectExtraCharge.id"
+                name="id{{i}}"
+                id="id{{i}}"
+                [ngbTypeahead]="searchExtraCharge" 
+                (ngModelChange)="onChangeExtraCharge($event)"
+                [resultTemplate]="extraCharge"
+                [inputFormatter]="formatterExtraCharge"
+                placeholder="Choose your extra charge">
+
+              <input
+                type="number"
+                min="1"
+                fullWidth
+                [disabled]="show === false"
+                class="form-control"
+                [(ngModel)]="selectExtraCharge.qty"
+                name="qty{{i}}"
+                id="qty{{i}}"
+                placeholder="Input your quantity">
+            </div>
+
+            <ng-template #extraCharge let-r="result" let-t="term">
+              <div class="media p-1">
+                <div class="media-body">
+                  <h5 class="mt-1">{{r.extraChargeName}}</h5>
+                </div>
+              </div>
+            </ng-template>
+
+            <!-- ! nebular theme date picker -->
+            <div class="form-group col-12">
+              <label for="inputEmail4">Miscellaneous Sales Date</label>
+              <input
+              [nbDatepicker]="miscSalesDate"
+              [(ngModel)]="addDataMiscSales.miscSalesDate"
+              class="form-control"
+              id="miscSalesDate"
+              name="miscSalesDate"
+              required
+              #miscSalesDate="ngModel"
+              placeholder="Miscellaneous Sales Date">
+              <nb-datepicker
+                #miscSalesDate  
+                [min]="min"
+                format="MMM d, y">
+              </nb-datepicker>
+            </div>
+
+            <div class="form-group col-12">
+              <label for="exampleFormControlSelect1">Payment Type</label>
+              <select
+                nbInput
+                fullWidth
+                [disabled]="show === false"
+                class="form-control"
+                [(ngModel)]="addDataMiscSales.paymentTypeId"
+                id="paymentTypeId"
+                name="paymentTypeId"
+                required
+                #paymentTypeId="ngModel">
+                <option value="0" disabled selected>Choose your option</option>
+                <option
+                *ngFor="let paymentType of paymentType"
+                value="{{paymentType.paymentTypeId}}">{{paymentType.paymentTypeName}}</option>
+              </select>
+            </div>
+
+            <div class="form-group col-12">
+              <label for="exampleFormControlInput1">Note</label>
+              <textarea
+              nbInput
+              fullWidth
+              [disabled]="show === false"
+              class="form-control"
+              [(ngModel)]="addDataMiscSales.miscSalesNote"
+              id="miscSalesNote"
+              name="miscSalesNote"
+              required
+              #miscSalesNote="ngModel"
+              placeholder="Note">
+              </textarea>
+            </div>  
+            <nb-card-body>
+
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+      <div class="buttons">
+        <button type="submit" class="btn btn-primary btnn">Save</button>
+        <button type="button" class="btn btn-warning btnn" [routerLink]="['/pages/booking-management']" routerLinkActive="router-link-active" >Cancel</button>
+      </div>
     </form>
   </nb-card-body>
 </nb-card>

@@ -140,7 +140,6 @@ export class AddComponent implements OnInit, OnDestroy {
     this.fileData.append('phoneNumber', this.guest.phoneNumber);
     this.fileData.append('createdBy', this.userCityHub.name);
     this.fileData.append('image', this.selectedFile, this.selectedFile.name);
-
     this.guestServ.add(this.fileData).pipe(takeUntil(this.subs)).subscribe(res => {
       console.log('res-guard', res);
       const title = 'Guest';

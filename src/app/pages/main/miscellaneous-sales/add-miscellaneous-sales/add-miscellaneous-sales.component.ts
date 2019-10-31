@@ -109,6 +109,7 @@ export class AddMiscellaneousSalesComponent implements OnInit, OnDestroy {
     this.getGuest();
     this.getCountry();
     this.getPaymentType();
+    this.imgURL = 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg';
   }
 
   formSelectExtraCharge() {
