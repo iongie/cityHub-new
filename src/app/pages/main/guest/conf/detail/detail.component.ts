@@ -15,7 +15,16 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class DetailComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
-  guest: any;
+  guest = {
+    guestId: '',
+    guestName: '',
+    address: '',
+    city: '',
+    countryId: '',
+    email: '',
+    phoneNumber: '',
+    guestFileScan: '',
+  }
   country: any;
   userCityHub: any;
   forRole: any;
@@ -82,11 +91,20 @@ export class DetailComponent implements OnInit, OnDestroy {
           };
           return xyz;
         });
-        this.guest = data;
-        if(this.guest[0].guestFileScan === ''){
+        this.guest = {
+          guestId: params.id,
+          guestName: data[0].guestName,
+          address:  data[0].address,
+          city:  data[0].city,
+          countryId:  data[0].countryId,
+          email:  data[0].email,
+          phoneNumber:  data[0].phoneNumber,
+          guestFileScan:  data[0].guestFileScan,
+        };
+        if(this.guest.guestFileScan === ''){
           this.imgURL = 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg';
         } else {
-          this.imgURL = this.guest[0].guestFileScan;
+          this.imgURL = this.guest.guestFileScan;
         }
         
         console.log(this.guest);
@@ -94,46 +112,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateGuest() {
-    this.activeRoute.params.subscribe(params => {
-      const data = {
-        guestName: this.guest[0].guestName,
-        countryId: this.guest[0].countryId,
-        city: this.guest[0].city,
-        address: this.guest[0].address,
-        email: this.guest[0].email,
-        phoneNumber: this.guest[0].phoneNumber,
-        guestFileScan: this.guest[0].guestFileScan,
-        createdBy: this.userCityHub.username,
-        guestId: this.guest[0].guestId,
-      };
-      this.fileData.append('guestId', this.guest[0].guestId);
-      this.fileData.append('guestName', this.guest[0].guestName);
-      this.fileData.append('countryId', this.guest[0].countryId);
-      this.fileData.append('address', this.guest[0].address);
-      this.fileData.append('city', this.guest[0].city);
-      this.fileData.append('email', this.guest[0].email);
-      this.fileData.append('phoneNumber', this.guest[0].phoneNumber);
-      if (this.selectedFile === null) {
-        this.fileData.append('image', this.guest[0].guestFileScan);
-      } else {
-        this.fileData.append('image', this.selectedFile, this.selectedFile.name);
-      }
-      
-      console.log(this.fileData);
-      console.log(data);
-      this.guestServ.update(this.fileData).pipe(takeUntil(this.subs)).subscribe(() => {
-        const title = 'Guest';
-        const content = 'Data has been update';
-        this.notifServ.showSuccessTypeToast(title, content);
-        this.router.navigate(['pages/guest']);
-      }, err => {
-        const title = 'Guest';
-        const content = 'Error data';
-        this.notifServ.showInfoTypeToast(title, content);
-      });
-    });
-  }
+  
   detailAccount() {
     const data = {
       token: localStorage.getItem('p_l1oxt'),
@@ -191,6 +170,48 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.imgURL = this.reader.result;
     };
 
+  }
+
+  updateGuest() {
+    // this.activeRoute.params.subscribe(params => {
+    //   const data = {
+    //     guestName: this.guest[0].guestName,
+    //     countryId: this.guest[0].countryId,
+    //     city: this.guest[0].city,
+    //     address: this.guest[0].address,
+    //     email: this.guest[0].email,
+    //     phoneNumber: this.guest[0].phoneNumber,
+    //     guestFileScan: this.guest[0].guestFileScan,
+    //     createdBy: this.userCityHub.username,
+    //     guestId: this.guest[0].guestId,
+    //   };
+      
+    // });
+
+      this.fileData.append('guestId', this.guest.guestId);
+      this.fileData.append('guestName', this.guest.guestName);
+      this.fileData.append('countryId', this.guest.countryId);
+      this.fileData.append('address', this.guest.address);
+      this.fileData.append('city', this.guest.city);
+      this.fileData.append('email', this.guest.email);
+      this.fileData.append('phoneNumber', this.guest.phoneNumber);
+      // this.fileData.append('image', this.selectedFile, this.selectedFile.name);
+      if (this.selectedFile === null) {
+        this.fileData.append('image', this.guest.guestFileScan);
+      } else {
+        this.fileData.append('image', this.selectedFile, this.selectedFile.name);
+      }
+      
+      this.guestServ.update(this.fileData).pipe(takeUntil(this.subs)).subscribe(() => {
+        const title = 'Guest';
+        const content = 'Data has been update';
+        this.notifServ.showSuccessTypeToast(title, content);
+        this.router.navigate(['pages/guest']);
+      }, err => {
+        const title = 'Guest';
+        const content = 'Error data';
+        this.notifServ.showInfoTypeToast(title, content);
+      });
   }
 
 }

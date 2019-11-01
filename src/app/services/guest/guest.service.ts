@@ -62,7 +62,7 @@ export class GuestService implements OnDestroy {
   }
 
   update(data: any): Observable<any> {
-    return this.http.post(this.url + '/guest/edit', data, httpOptions).pipe(
+    return this.http.post(this.url + '/guest/edit', data).pipe(
       catchError(this.handleError),
       tap(() => {
         this._refresh.next();
