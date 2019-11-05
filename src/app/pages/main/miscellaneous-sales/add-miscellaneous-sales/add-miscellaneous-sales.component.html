@@ -17,31 +17,47 @@
               </nb-card-header>
   
               <nb-card-body>
-                <div class="row">    
-                  <div class="input-group col-12 mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1">
-                        <i class="fa fa-cog" aria-hidden="true"></i>
-                      </span>
+                <div class="row">
+                  <div class="form-group col-12">
+                    <label for="exampleFormControlInput1">
+                      Exisiting Data Guest
+                    </label>
+                    <span 
+                      class="round round-sm hollow" 
+                      nbTooltipPlacement="right" 
+                      nbTooltip="Mencari Data tamu yang sudah pernah di input.
+                    (Contoh: Rivaldi)  "
+                      nbTooltipStatus="control"
+                      status="control">
+                      <i class="fas fa-info"></i>
+                    </span>
+
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">
+                          <i class="fa fa-cog" aria-hidden="true"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        fullWidth
+                        [disabled]="show === false"
+                        class="form-control"
+                        [(ngModel)]="modelGuest"
+                        name="modelGuest"
+                        id="modelGuest"
+                        [ngbTypeahead]="searchGuest" 
+                        (ngModelChange)="onChangeGuest($event)"
+                        [resultTemplate]="guest"
+                        [inputFormatter]="formatterGuest"
+                        placeholder="Guest">
+        
+                        <!-- <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" [routerLink]="['/pages/add-guest']" routerLinkActive="router-link-active">Add Guest</button>
+                        </div> -->
                     </div>
-                    <input
-                      type="text"
-                      fullWidth
-                      [disabled]="show === false"
-                      class="form-control"
-                      [(ngModel)]="modelGuest"
-                      name="modelGuest"
-                      id="modelGuest"
-                      [ngbTypeahead]="searchGuest" 
-                      (ngModelChange)="onChangeGuest($event)"
-                      [resultTemplate]="guest"
-                      [inputFormatter]="formatterGuest"
-                      placeholder="Guest">
-      
-                      <!-- <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" [routerLink]="['/pages/add-guest']" routerLinkActive="router-link-active">Add Guest</button>
-                      </div> -->
-                  </div>
+                  </div>   
+                  
           
                   <ng-template #guest let-r="result" let-t="term">
                     <div class="media p-1">
@@ -58,6 +74,14 @@
                   <!-- ! automatic value from Exisiting Guest or Input Manual For Add New Guest -->
                   <div class="form-group col-12">
                     <label for="exampleFormControlInput1">Name</label>
+                    <span 
+                    class="round round-sm hollow" 
+                    nbTooltipPlacement="right" 
+                    nbTooltip="Untuk tamu baru input manual "
+                    nbTooltipStatus="control"
+                    status="control">
+                      <i class="fas fa-info"></i>
+                    </span>
                     <input
                     type="text"
                     nbInput
@@ -74,6 +98,14 @@
       
                   <div class="form-group col-12">
                     <label for="exampleFormControlInput1">Address</label>
+                    <span 
+                    class="round round-sm hollow" 
+                    nbTooltipPlacement="right" 
+                    nbTooltip="Untuk tamu baru input manual "
+                    nbTooltipStatus="control"
+                    status="control">
+                      <i class="fas fa-info"></i>
+                    </span>
                     <textarea
                     nbInput
                     fullWidth
@@ -92,6 +124,14 @@
                    <!-- ! Manual Setting for Upload -->
                 <div class="form-group col-12">
                     <label for="exampleFormControlInput1">Upload File</label>
+                    <span 
+                    class="round round-sm hollow" 
+                    nbTooltipPlacement="right" 
+                    nbTooltip="Untuk tamu baru input manual "
+                    nbTooltipStatus="control"
+                    status="control">
+                      <i class="fas fa-info"></i>
+                    </span>
                     <div class="input-group">
                       <div class="custom-file">
                         <input 
@@ -117,6 +157,14 @@
       
                   <div class="form-group col-12">
                     <label for="exampleFormControlInput1">City</label>
+                    <span 
+                    class="round round-sm hollow" 
+                    nbTooltipPlacement="right" 
+                    nbTooltip="Untuk tamu baru input manual "
+                    nbTooltipStatus="control"
+                    status="control">
+                      <i class="fas fa-info"></i>
+                    </span>
                     <input type="text" 
                     nbInput 
                     fullWidth 
@@ -132,6 +180,14 @@
           
                   <div class="form-group col-12">
                     <label for="exampleFormControlSelect1">Country</label>
+                    <span 
+                    class="round round-sm hollow" 
+                    nbTooltipPlacement="right" 
+                    nbTooltip="Untuk tamu baru input manual "
+                    nbTooltipStatus="control"
+                    status="control">
+                      <i class="fas fa-info"></i>
+                    </span>
                     <select
                     nbInput
                     fullWidth
@@ -150,6 +206,14 @@
       
                   <div class="form-group col-12">
                     <label for="exampleFormControlInput1">Email</label>
+                    <span 
+                    class="round round-sm hollow" 
+                    nbTooltipPlacement="right" 
+                    nbTooltip="Untuk tamu baru input manual "
+                    nbTooltipStatus="control"
+                    status="control">
+                      <i class="fas fa-info"></i>
+                    </span>
                     <input 
                     type="text" 
                     nbInput
@@ -166,6 +230,14 @@
           
                   <div class="form-group col-12">
                     <label for="exampleFormControlInput1">Phone Number</label>
+                    <span 
+                    class="round round-sm hollow" 
+                    nbTooltipPlacement="right" 
+                    nbTooltip="Untuk tamu baru input manual "
+                    nbTooltipStatus="control"
+                    status="control">
+                      <i class="fas fa-info"></i>
+                    </span>
                     <input 
                     type="text" 
                     nbInput 
@@ -188,59 +260,71 @@
           <nb-card>
             <nb-card-header>
               <div class="row">
-                <div class="col-auto mr-auto">Miscellaneous Sales Date</div>
+                <div class="col-auto mr-auto">Miscellaneous Sales</div>
               </div>
             </nb-card-header>
-            <div class="input-group col-12 mb-3" *ngFor="let selectExtraCharge of selectExtraCharge; let i = index">
-              <!-- <select
-              nbInput
-              fullWidth
-              [disabled]="show === false"
-              class="form-control"
-              [(ngModel)]="selectExtraCharge.id"
-              id="id{{i}}"
-              name="id{{i}}"
-              required
-              #id="ngModel">
-              <option value="0" disabled selected>Choose your option</option>
-              <option
-              *ngFor="let extraCharge of extraCharge"
-              value="{{extraCharge.extraChargeId}}">{{extraCharge.extraChargeName}}</option>
-              </select> -->
-              <div class="input-group-prepend" id="button-addon4">
-                <span class="input-group-text" id="basic-addon1" (click)="addFormSelectExtraCharge()">
-                  <i class="fas fa-plus" aria-hidden="true"></i>
-                </span>
-                <span class="input-group-text" id="basic-addon1" (click)="removeFormSelectExtraCharge(i)">
-                  <i class="fa fa-minus" aria-hidden="true" ></i>
-                </span>
-                <!-- <button class="btn btn-outline-secondary btn-sm" type="button" (click)="addFormSelectExtraCharge()">Add</button>
-                <button class="btn btn-outline-secondary btn-sm" type="button" (click)="removeFormSelectExtraCharge(i)">Remove</button> -->
-              </div>
-              <input
-                type="text"
-                fullWidth
-                [disabled]="show === false"
-                class="form-control"
-                [(ngModel)]="selectExtraCharge.id"
-                name="id{{i}}"
-                id="id{{i}}"
-                [ngbTypeahead]="searchExtraCharge" 
-                (ngModelChange)="onChangeExtraCharge($event)"
-                [resultTemplate]="extraCharge"
-                [inputFormatter]="formatterExtraCharge"
-                placeholder="Choose your extra charge">
-
-              <input
-                type="number"
-                min="1"
-                fullWidth
-                [disabled]="show === false"
-                class="form-control"
-                [(ngModel)]="selectExtraCharge.qty"
-                name="qty{{i}}"
-                id="qty{{i}}"
-                placeholder="Input your quantity">
+            <div class="form-group col-12">
+              <label for="exampleFormControlInput1">Extra charge</label>
+              <span 
+              class="round round-sm hollow" 
+              nbTooltipPlacement="right" 
+              nbTooltip="Mencari Data extra charge yang sudah pernah di input, tidak boleh manual.
+              (Contoh: Meeting Room). "
+                nbTooltipStatus="control"
+                status="control">
+                <i class="fas fa-info"></i>
+              </span>
+              <div class="input-group" *ngFor="let selectExtraCharge of selectExtraCharge; let i = index">
+                  <!-- <select
+                  nbInput
+                  fullWidth
+                  [disabled]="show === false"
+                  class="form-control"
+                  [(ngModel)]="selectExtraCharge.id"
+                  id="id{{i}}"
+                  name="id{{i}}"
+                  required
+                  #id="ngModel">
+                  <option value="0" disabled selected>Choose your option</option>
+                  <option
+                  *ngFor="let extraCharge of extraCharge"
+                  value="{{extraCharge.extraChargeId}}">{{extraCharge.extraChargeName}}</option>
+                  </select> -->
+                  <div class="input-group-prepend" id="button-addon4">
+                    <span class="input-group-text" id="basic-addon1" (click)="addFormSelectExtraCharge()">
+                      <i class="fas fa-plus" aria-hidden="true"></i>
+                    </span>
+                    <span class="input-group-text" id="basic-addon1" (click)="removeFormSelectExtraCharge(i)">
+                      <i class="fa fa-minus" aria-hidden="true" ></i>
+                    </span>
+                    <!-- <button class="btn btn-outline-secondary btn-sm" type="button" (click)="addFormSelectExtraCharge()">Add</button>
+                    <button class="btn btn-outline-secondary btn-sm" type="button" (click)="removeFormSelectExtraCharge(i)">Remove</button> -->
+                  </div>
+                  <input
+                    type="text"
+                    fullWidth
+                    [disabled]="show === false"
+                    class="form-control"
+                    [(ngModel)]="selectExtraCharge.id"
+                    name="id{{i}}"
+                    id="id{{i}}"
+                    [ngbTypeahead]="searchExtraCharge" 
+                    (ngModelChange)="onChangeExtraCharge($event)"
+                    [resultTemplate]="extraCharge"
+                    [inputFormatter]="formatterExtraCharge"
+                    placeholder="Choose your extra charge">
+    
+                  <input
+                    type="number"
+                    min="1"
+                    fullWidth
+                    [disabled]="show === false"
+                    class="form-control"
+                    [(ngModel)]="selectExtraCharge.qty"
+                    name="qty{{i}}"
+                    id="qty{{i}}"
+                    placeholder="Input your quantity">
+                </div>
             </div>
 
             <ng-template #extraCharge let-r="result" let-t="term">

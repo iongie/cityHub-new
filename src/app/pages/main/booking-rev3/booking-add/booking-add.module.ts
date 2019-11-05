@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ThemeModule } from '../../../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbMomentDateModule } from '@nebular/moment';
-import { NbCheckboxModule } from '@nebular/theme';
+import { NbCheckboxModule, NbTooltipModule } from '@nebular/theme';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { eo } from 'date-fns/locale';
 
@@ -35,6 +35,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ThemeModule,
     Ng2SmartTableModule,
+    NbTooltipModule,
     // NbMomentDateModule,
     NbCheckboxModule,
     // UnderConstractionModule,

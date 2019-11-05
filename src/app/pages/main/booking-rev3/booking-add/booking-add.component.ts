@@ -60,7 +60,6 @@ export class BookingAddComponent implements OnInit, OnDestroy {
     public countryServ: CountryService,
     protected dateService: NbDateService<Date>,
   ) {
-
   }
 
   ngOnInit() {
