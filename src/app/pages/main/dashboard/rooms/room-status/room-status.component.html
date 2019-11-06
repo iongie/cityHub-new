@@ -3,7 +3,7 @@
     Room Status
   </nb-card-header>
   <nb-card-body>
-    <nb-actions size="medium" fullWidth>
+    <!-- <nb-actions size="medium" fullWidth>
       <nb-action>
         <i class="fa fa-building" style="color:black" title="Total Bed"></i>
         <span>{{roomOperatioTotal}}</span>
@@ -24,6 +24,31 @@
         <i class="fa fa-bed" style="color:yellow" title="Room Cleaning"></i>
         <span>{{roomOperatioCleaning}}</span>
       </nb-action>
-    </nb-actions>
+    </nb-actions> -->
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-primary">
+        <h3>Room Status</h3>
+      </li>
+
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        AVAILABLE
+        <span class="badge badge-primary badge-pill">{{roomOperationAvailable}}</span>
+      </li>
+
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        BUSY
+        <span class="badge badge-primary badge-pill">{{roomOperatioBusy}}</span>
+      </li>
+
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        DIRTY
+        <span class="badge badge-primary badge-pill">{{roomOperatioDirty}}</span>
+      </li>
+
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        CLEANING
+        <span class="badge badge-primary badge-pill">{{roomOperatioCleaning}}</span>
+      </li>
+    </ul>
   </nb-card-body>
 </nb-card>

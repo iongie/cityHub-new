@@ -28,8 +28,13 @@ const routes: Routes = [{
       loadChildren: './main/dashboard/dashboard.module#DashboardModule',
     },
     {
-      path: 'change-password',
-      loadChildren: './main/change-password/change-password.module#ChangePasswordModule',
+      path: 'source',
+      loadChildren: './main/source/source.module#SourceModule',
+    },
+    {
+      path: 'tax',
+      loadChildren: './main/tax/tax.module#TaxModule',
+      canActivateChild: [UserRoleGuardGuard],
     },
     {
       path: 'extra-charge-category',

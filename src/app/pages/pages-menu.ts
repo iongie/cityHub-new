@@ -89,6 +89,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/season-type',
       },
       {
+        title: 'Source',
+        link: '/pages/source',
+      },
+      {
         title: 'Tax',
         link: '/pages/tax',
       },

@@ -25,15 +25,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     DashboardComponent,
-    RoomsComponent,
-    RoomListComponent,
-    ShortcutComponent,
-    RoomStatusComponent,
-    RoomSelectorComponent,
-    RoomSelector2Component,
-    RoomSelector3Component,
-    RoomMapsComponent,
-    PlayerComponent,
   ],
   imports: [
     CommonModule,

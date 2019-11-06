@@ -1,0 +1,16 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-auto mr-auto">Business Source Management</div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table
+    [settings]="settings"
+    [source]="source"
+    (createConfirm)="onCreate($event)"
+    (editConfirm)="onUpdate($event)"
+    (deleteConfirm)="onUpdate($event)"></ng2-smart-table>
+  </nb-card-body>
+</nb-card>
