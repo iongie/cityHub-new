@@ -139,6 +139,7 @@
                           class="custom-file-input" 
                           name="image" 
                           id="image" 
+                          [required]="requiredPhoto === true" 
                           (change)="onFile($event)">
                         <label class="custom-file-label">Choose file</label>
                       </div>
@@ -308,6 +309,7 @@
                     [(ngModel)]="selectExtraCharge.id"
                     name="id{{i}}"
                     id="id{{i}}"
+                    required
                     [ngbTypeahead]="searchExtraCharge" 
                     (ngModelChange)="onChangeExtraCharge($event)"
                     [resultTemplate]="extraCharge"
@@ -318,6 +320,7 @@
                     type="number"
                     min="1"
                     fullWidth
+                    required
                     [disabled]="show === false"
                     class="form-control"
                     [(ngModel)]="selectExtraCharge.qty"

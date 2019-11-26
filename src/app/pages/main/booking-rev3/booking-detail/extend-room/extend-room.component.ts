@@ -40,6 +40,8 @@ export class ExtendRoomComponent implements OnInit, OnDestroy {
 
   min = new Date();
   max = new Date();
+
+  requiredRoomTypeId: any;
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
@@ -62,6 +64,7 @@ export class ExtendRoomComponent implements OnInit, OnDestroy {
     this.minMax();
     // this.min = new Date(Date.now());
     // this.max = new Date(Date.now());
+    this.requiredRoomTypeId = true;
   }
 
   minMax() {
@@ -128,6 +131,8 @@ export class ExtendRoomComponent implements OnInit, OnDestroy {
       };
       return yui;
     });
+
+    this.requiredRoomTypeId = false;
   }
 
   extendRoom() {

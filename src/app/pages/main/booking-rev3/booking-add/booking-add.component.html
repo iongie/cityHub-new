@@ -137,7 +137,7 @@
                         class="custom-file-input" 
                         name="image" 
                         id="image"
-                        required
+                        [required]="requiredPhoto === true" 
                         (change)="onFile($event)">
                       <label class="custom-file-label">Choose file</label>
                     </div>
@@ -344,6 +344,7 @@
                       [(ngModel)]="roomInformation.check"
                       id="check{{i}}"
                       name="check{{i}}"
+                      [required]="requiredRoomTypeId === true" 
                       (ngModelChange)="checkRoomListBooking($event)">
                     </div>
                   </div>
@@ -352,6 +353,7 @@
                     type="text"
                     fullWidth
                     disabled
+                    
                     [(ngModel)]="roomInformation.roomTypeName"
                     class="form-control"
                     id="roomTypeName{{i}}"
@@ -361,6 +363,7 @@
                   <input
                     type="number"
                     fullWidth
+                    required
                     max={{roomInformation.maxAvaiable}}
                     min ="1"
                     [disabled]="show === false"
@@ -431,6 +434,7 @@
                   type="text"
                   nbInput
                   fullWidth
+                  required
                   [disabled]="show === false"
                   class="form-control"
                   [(ngModel)]="source.businnessSourceName"

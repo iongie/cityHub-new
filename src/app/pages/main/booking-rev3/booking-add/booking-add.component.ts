@@ -26,6 +26,8 @@ export class BookingAddComponent implements OnInit, OnDestroy {
   roomListBooking: any;
   userCityHub: any;
   show: any;
+  requiredPhoto: any;
+  requiredRoomTypeId: any;
   forRole: any;
   public subs= new Subject();
   businessSource: any;
@@ -70,8 +72,9 @@ export class BookingAddComponent implements OnInit, OnDestroy {
     this.minMax();
     // this.min = new Date(Date.now());
     // this.max = new Date(Date.now());
-    this.imgURL = 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg';
-    
+    this.imgURL = '../../../../../assets/images/placeholder.jpg';
+    this.requiredPhoto = true;
+    this.requiredRoomTypeId = true;
   }
 
   ngOnDestroy() {
@@ -207,6 +210,7 @@ export class BookingAddComponent implements OnInit, OnDestroy {
         guestFileScan: event.guestFileScan,
       };
       this.imgURL = event.guestFileScan;
+      this.requiredPhoto = false;
     }
   }
 
@@ -253,6 +257,7 @@ export class BookingAddComponent implements OnInit, OnDestroy {
       };
       return yui;
     });
+    this.requiredRoomTypeId = false;
   }
 
   onFile(event) {

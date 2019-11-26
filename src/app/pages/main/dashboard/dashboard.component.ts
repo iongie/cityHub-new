@@ -100,7 +100,8 @@ export class DashboardComponent implements OnInit {
         };
 
         return data;
-      })
+      });
+      console.log('dashboardHome', this.dashboardHome);
     });
   }
 
@@ -158,7 +159,7 @@ export class DashboardComponent implements OnInit {
 
             this.roomOperatioNotReady = roomOperatioNotReady.length;
             
-            console.log(this.roomOperationAvailable);
+            console.log('roomOperationAvailable', this.roomOperationAvailable);
           });
         });
       });

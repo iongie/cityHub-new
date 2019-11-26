@@ -81,6 +81,8 @@ export class AddMiscellaneousSalesComponent implements OnInit, OnDestroy {
     qty: 0,
   };
   selectExtraCharge = [];
+
+  requiredPhoto: any;
   constructor(
     public miscellaneousSalesServ: MiscellaneousSalesService,
     public businessSourceServ: BusinessSourceService,
@@ -109,7 +111,8 @@ export class AddMiscellaneousSalesComponent implements OnInit, OnDestroy {
     this.getGuest();
     this.getCountry();
     this.getPaymentType();
-    this.imgURL = 'https://mdbootstrap.com/img/Photos/Others/placeholder.jpg';
+    this.imgURL = '../../../../../assets/images/placeholder.jpg';
+    this.requiredPhoto = true;
   }
 
   formSelectExtraCharge() {
@@ -212,6 +215,7 @@ export class AddMiscellaneousSalesComponent implements OnInit, OnDestroy {
         guestFileScan: event.guestFileScan,
       };
       this.imgURL = event.guestFileScan;
+      this.requiredPhoto = false;
     }
   }
 

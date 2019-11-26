@@ -87,6 +87,7 @@
                   <input 
                   type="checkbox"
                   [(ngModel)]="roomInformation.check"
+                  [required]="requiredRoomTypeId === true" 
                   id="check{{i}}"
                   name="check{{i}}"
                   (ngModelChange)="checkRoomListBooking($event)">

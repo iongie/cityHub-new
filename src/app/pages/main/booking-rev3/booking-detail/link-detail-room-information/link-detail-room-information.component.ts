@@ -41,7 +41,7 @@ export class LinkDetailRoomInformationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.renderId  = this.value.id;
     this.renderNumber  = this.value.number;
-    console.log('[value]', this.value);
+    console.log('[value]', this.renderId);
     this.viewOption();
     this.action();
   }
@@ -64,6 +64,7 @@ export class LinkDetailRoomInformationComponent implements OnInit, OnDestroy {
       return xyz;
     });
     this.data = dataMap;
+    console.log('[this.data]', dataMap);
   }
 
   action() {
@@ -74,8 +75,8 @@ export class LinkDetailRoomInformationComponent implements OnInit, OnDestroy {
       map(({item}) => item),
     )
     .subscribe(item => {
-      if (item.title === 'Detail Room') {
-        console.log('[this.data.number]', this.data.number);
+      if (item.data.id === this.renderId && item.title === 'Detail Room') {
+        console.log('[this.data.id]', this.renderId);
         this.router.navigate(['pages/booking-detail/' + this.renderNumber + '/' + this.renderId]);
       }
 
