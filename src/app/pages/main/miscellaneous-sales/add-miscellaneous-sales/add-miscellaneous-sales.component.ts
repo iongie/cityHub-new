@@ -83,6 +83,7 @@ export class AddMiscellaneousSalesComponent implements OnInit, OnDestroy {
   selectExtraCharge = [];
 
   requiredPhoto: any;
+  requiredPaymentType: any;
   constructor(
     public miscellaneousSalesServ: MiscellaneousSalesService,
     public businessSourceServ: BusinessSourceService,
@@ -113,6 +114,7 @@ export class AddMiscellaneousSalesComponent implements OnInit, OnDestroy {
     this.getPaymentType();
     this.imgURL = '../../../../../assets/images/placeholder.jpg';
     this.requiredPhoto = true;
+    this.requiredPaymentType = false;
   }
 
   formSelectExtraCharge() {
@@ -347,7 +349,6 @@ export class AddMiscellaneousSalesComponent implements OnInit, OnDestroy {
       extraChargeId,
       qty,
     };
-    console.log('data-add-misc-sales', data);
     this.miscellaneousSalesServ.addMisc(data)
     .pipe(takeUntil(this.subs))
     .subscribe(resAddMiscSales => {

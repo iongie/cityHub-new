@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ElementRef, ViewChild } from '@angular/core';
 import { BookingService } from '../../../../services/booking-rev3/booking.service';
 import { BusinessSourceService } from '../../../../services/business-source/business-source.service';
 import { GuestService } from '../../../../services/guest/guest.service';
@@ -271,6 +271,9 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     chargeTotal: 0,
     paymentForDate: new Date(),
   }];
+
+  @ViewChild('deposit') deposit: ElementRef;
+  @ViewChild('payment') payment: ElementRef;
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
@@ -773,17 +776,24 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
         bookingRoomId: params.id,
         roomId: this.assignRoom.roomId,
       };
-      this.bookingServ.assignRoom(data)
-      .pipe(takeUntil(this.subs))
-      .subscribe(resAssignRoom => {
-        const title = 'Add Room';
-        const content = 'Add Room successfully';
-        this.notifServ.showSuccessTypeToast(title, content);
-      }, err => {
+
+      if(data.roomId === 0 ){
         const title = 'Error - Add Room';
-        const content = 'Add Room not saved';
-        this.notifServ.showDangerTypeToast(title, content);
-      });
+        const content = 'Please choose a room';
+        this.notifServ.showWarningTypeToast(title, content);
+      } else {
+        this.bookingServ.assignRoom(data)
+        .pipe(takeUntil(this.subs))
+        .subscribe(resAssignRoom => {
+          const title = 'Add Room';
+          const content = 'Add Room successfully';
+          this.notifServ.showSuccessTypeToast(title, content);
+        }, err => {
+          const title = 'Error - Add Room';
+          const content = 'Add Room not saved';
+          this.notifServ.showDangerTypeToast(title, content);
+        });
+      }  
     });
   }
 
@@ -799,18 +809,24 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
         paymentRemark: 'charge',
       };
 
-      this.bookingServ.payment(data)
-      .pipe(takeUntil(this.subs))
-      .subscribe(resPayment => {
-        const title = 'Add Payment';
-        const content = 'Add Payment successfully';
-        this.notifServ.showSuccessTypeToast(title, content);
-        this.charge.total;
-      }, err => {
+      if(data.paymentTypeId === 0 ){
         const title = 'Error - Add Payment';
-        const content = 'Add payment not saved';
-        this.notifServ.showDangerTypeToast(title, content);
-      });
+        const content = 'Please choose the type of payment';
+        this.notifServ.showWarningTypeToast(title, content);
+      } else {
+        this.bookingServ.payment(data)
+        .pipe(takeUntil(this.subs))
+        .subscribe(resPayment => {
+          const title = 'Add Payment';
+          const content = 'Add Payment successfully';
+          this.notifServ.showSuccessTypeToast(title, content);
+          this.charge.total;
+        }, err => {
+          const title = 'Error - Add Payment';
+          const content = 'Add payment not saved';
+          this.notifServ.showDangerTypeToast(title, content);
+        });
+      }
     });
   }
 
@@ -825,17 +841,28 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
         createdBy: this.userCityHub.name,
       };
 
-      this.bookingServ.extraCharge(data)
-      .pipe(takeUntil(this.subs))
-      .subscribe(resPayment => {
-        const title = 'Add Extra Charge Payment';
-        const content = 'Add Extra Charge Payment successfully';
-        this.notifServ.showSuccessTypeToast(title, content);
-      }, err => {
-        const title = 'Error - Add Extra Charge Payment';
-        const content = 'Add Extra Charge payment not saved';
-        this.notifServ.showDangerTypeToast(title, content);
-      });
+      if(data.paymentTypeId === 0 ){
+        const title = 'Error - Add Payment';
+        const content = 'Please choose the type of payment';
+        this.notifServ.showWarningTypeToast(title, content);
+      } else if(data.extraChargeId === 0 ){
+        const title = 'Error - Add Extra Charge';
+        const content = 'Please choose the type of extra charge';
+        this.notifServ.showWarningTypeToast(title, content);
+      } else {
+        this.bookingServ.extraCharge(data)
+        .pipe(takeUntil(this.subs))
+        .subscribe(resPayment => {
+          const title = 'Add Extra Charge Payment';
+          const content = 'Add Extra Charge Payment successfully';
+          this.notifServ.showSuccessTypeToast(title, content);
+        }, err => {
+          const title = 'Error - Add Extra Charge Payment';
+          const content = 'Add Extra Charge payment not saved';
+          this.notifServ.showDangerTypeToast(title, content);
+        });
+      }
+     
     });
   }
 
@@ -851,17 +878,23 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
         paymentRemark: 'add_deposit',
       };
 
-      this.bookingServ.payment(data)
-      .pipe(takeUntil(this.subs))
-      .subscribe(resPayment => {
-        const title = 'Add Payment';
-        const content = 'Add Payment successfully';
-        this.notifServ.showSuccessTypeToast(title, content);
-      }, err => {
+      if(data.paymentTypeId === 0 ){
         const title = 'Error - Add Payment';
-        const content = 'Add payment not saved';
-        this.notifServ.showDangerTypeToast(title, content);
-      });
+        const content = 'Please choose the type of payment';
+        this.notifServ.showWarningTypeToast(title, content);
+      } else {
+        this.bookingServ.payment(data)
+        .pipe(takeUntil(this.subs))
+        .subscribe(resPayment => {
+          const title = 'Add Deposit';
+          const content = 'Add Deposit successfully';
+          this.notifServ.showSuccessTypeToast(title, content);
+        }, err => {
+          const title = 'Error - Add Payment';
+          const content = 'Add payment not saved';
+          this.notifServ.showDangerTypeToast(title, content);
+        });
+      }
     });
   }
 
@@ -875,17 +908,29 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
       chargeNote: this.editCharge.chargeNote,
       chargeUpdatedBy: this.userCityHub.name,
     };
-    this.bookingServ.diskon(data)
-    .pipe(takeUntil(this.subs))
-    .subscribe(resPayment => {
-      const title = 'Add Discount';
-      const content = 'Add Discount successfully';
-      this.notifServ.showSuccessTypeToast(title, content);
-    }, err => {
+
+    if(data.discountId === 0 ){
       const title = 'Error - Add Discount';
-      const content = 'Add Discount not saved';
-      this.notifServ.showDangerTypeToast(title, content);
-    });
+      const content = 'Hope to choose a discount';
+      this.notifServ.showWarningTypeToast(title, content);
+    } else if(data.chargeId === 0 ){
+      const title = 'Error - Add Charge';
+      const content = 'Hope to choose a charge';
+      this.notifServ.showWarningTypeToast(title, content);
+    } else {
+      this.bookingServ.diskon(data)
+      .pipe(takeUntil(this.subs))
+      .subscribe(resPayment => {
+        const title = 'Add Discount';
+        const content = 'Add Discount successfully';
+        this.notifServ.showSuccessTypeToast(title, content);
+      }, err => {
+        const title = 'Error - Add Discount';
+        const content = 'Add Discount not saved';
+        this.notifServ.showDangerTypeToast(title, content);
+      });
+    }
+    
   }
 
   // TODO : Process Check In

@@ -369,10 +369,11 @@
                 name="paymentTypeId"
                 required
                 #paymentTypeId="ngModel">
-                <option value="0" disabled selected>Choose your option</option>
+                <!-- <option value="0" disabled selected>Choose your option</option> -->
                 <option
                 *ngFor="let paymentType of paymentType"
-                value="{{paymentType.paymentTypeId}}">{{paymentType.paymentTypeName}}</option>
+                value="{{paymentType.paymentTypeId}}"
+                selected>{{paymentType.paymentTypeName}}</option>
               </select>
             </div>
 
