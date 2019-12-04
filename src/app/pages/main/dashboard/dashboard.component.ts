@@ -96,6 +96,11 @@ export class DashboardComponent implements OnInit {
           roomDbStatus: x.room_db_status,
           guestId: x.guest_id,
           guestName: x.guest_name,
+          arrivalDate:  x.arrival_date,
+          duration:  x.duration,
+          departureDate:  x.departure_date,
+          charge:  x.charge,
+          payment:  x.payment,
           textColor: this.textColor,
         };
 

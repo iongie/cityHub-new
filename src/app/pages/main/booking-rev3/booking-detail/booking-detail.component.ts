@@ -40,11 +40,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         type: 'string',
       },
       arrivalDate: {
-        title: 'Guest name',
+        title: 'Arrival Date',
         type: 'string',
       },
       departureDate: {
-        title: 'Business Source name',
+        title: 'Departure Date',
         type: 'string',
       },
       bookingRoomStatusName: {

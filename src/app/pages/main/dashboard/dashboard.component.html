@@ -10,9 +10,35 @@
                   <nb-card-body>
                     <div class="row">
                       <div class="col-8">
-                        <h3>{{dashboardHome.roomTypeName}} - {{dashboardHome.roomName}}</h3>
-                        <p *ngIf="dashboardHome.guestName === null" style="font-size: 18px;">Guest: -</p> 
-                        <p *ngIf="dashboardHome.guestName !== null" style="font-size: 18px;">Guest: {{dashboardHome.guestName}}</p> 
+                        <div class="row">
+                          <div class="col-12">
+                            <h3>{{dashboardHome.roomTypeName}}</h3>
+                          </div>
+                          <div class="col-6">
+                              <h6>Guest Name</h6>
+                              <p *ngIf="dashboardHome.guestName === null" style="font-size: 18px;">-</p> 
+                              <p *ngIf="dashboardHome.guestName !== null" style="font-size: 18px;">{{dashboardHome.guestName}}</p>
+                            </div>
+                          <div class="col-6">
+                              <h6>Number of Room</h6>
+                              <p style="font-size: 18px;">{{dashboardHome.roomName}}</p>
+                            </div>
+                          <div class="col-4">
+                            <h6>Arrival Date</h6>
+                            <p *ngIf="dashboardHome.arrivalDate === null" style="font-size: 18px;">-</p> 
+                            <p *ngIf="dashboardHome.arrivalDate !== null" style="font-size: 18px;">{{dashboardHome.arrivalDate | date: 'longDate'}}</p>
+                          </div>
+                          <div class="col-4">
+                            <h6>Departure Date</h6>
+                            <p *ngIf="dashboardHome.departureDate === null" style="font-size: 18px;">-</p> 
+                            <p *ngIf="dashboardHome.departureDate !== null" style="font-size: 18px;">{{dashboardHome.departureDate | date: 'longDate'}}</p>
+                          </div>
+                          <div class="col-4">
+                            <h6>Payment</h6>
+                            <p *ngIf="dashboardHome.payment === null" style="font-size: 18px;">-</p> 
+                            <p *ngIf="dashboardHome.payment !== null" style="font-size: 18px;">Rp. {{dashboardHome.payment | number}}</p>
+                          </div>
+                        </div>
                       </div>
                       <div class="col-4">
                         <h1 [class]="dashboardHome.textColor">{{dashboardHome.roomStatusName}}</h1> 
@@ -21,6 +47,8 @@
                   </nb-card-body>
                 </nb-card>
               </div>
+            </nb-tab>
+            <nb-tab disabled>
             </nb-tab>
           </nb-tabset>
         </div>
