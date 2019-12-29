@@ -2,84 +2,146 @@
     <nb-card-body>
       <div class="row">
         <!-- TODO: Info Room by Floor -->
-        <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12">
-          <nb-tabset>
-            <nb-tab *ngFor="let floor of floor; let i = index" [tabTitle]=floor.floorName [active]="i === 0">
-              <div *ngFor="let dashboardHome of dashboardHome">
-                <nb-card  *ngIf="dashboardHome.floorId === floor.floorId">
-                  <nb-card-body>
-                    <div class="row">
-                      <div class="col-8">
-                        <div class="row">
-                          <div class="col-12">
-                            <h3>{{dashboardHome.roomTypeName}}</h3>
-                          </div>
-                          <div class="col-6">
-                              <h6>Guest Name</h6>
-                              <p *ngIf="dashboardHome.guestName === null" style="font-size: 18px;">-</p> 
-                              <p *ngIf="dashboardHome.guestName !== null" style="font-size: 18px;">{{dashboardHome.guestName}}</p>
-                            </div>
-                          <div class="col-6">
-                              <h6>Number of Room</h6>
-                              <p style="font-size: 18px;">{{dashboardHome.roomName}}</p>
-                            </div>
-                          <div class="col-4">
-                            <h6>Arrival Date</h6>
-                            <p *ngIf="dashboardHome.arrivalDate === null" style="font-size: 18px;">-</p> 
-                            <p *ngIf="dashboardHome.arrivalDate !== null" style="font-size: 18px;">{{dashboardHome.arrivalDate | date: 'longDate'}}</p>
-                          </div>
-                          <div class="col-4">
-                            <h6>Departure Date</h6>
-                            <p *ngIf="dashboardHome.departureDate === null" style="font-size: 18px;">-</p> 
-                            <p *ngIf="dashboardHome.departureDate !== null" style="font-size: 18px;">{{dashboardHome.departureDate | date: 'longDate'}}</p>
-                          </div>
-                          <div class="col-4">
-                            <h6>Payment</h6>
-                            <p *ngIf="dashboardHome.payment === null" style="font-size: 18px;">-</p> 
-                            <p *ngIf="dashboardHome.payment !== null" style="font-size: 18px;">Rp. {{dashboardHome.payment | number}}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-4">
-                        <h1 [class]="dashboardHome.textColor">{{dashboardHome.roomStatusName}}</h1> 
-                      </div>
+        <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12" style="margin: 0;">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+            </div>
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+            </div>
+          </div>
+          <div class="form-filter">
+            <div class="list-group">
+              <form class="form-horizontal" role="form">
+                <div class="form-group">
+                  <label for="filter">Filter by</label>
+                  <select class="form-control">
+                      <option value="0" selected>All Snippets</option>
+                      <option value="1">Featured</option>
+                      <option value="2">Most popular</option>
+                      <option value="3">Top rated</option>
+                      <option value="4">Most commented</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="contain">Author</label>
+                  <input class="form-control" type="text" />
+                </div>
+                <div class="form-group">
+                  <label for="contain">Contains the words</label>
+                  <input class="form-control" type="text" />
+                </div>
+                <button type="submit" class="btn btn-primary"><span class="fas fa-search" aria-hidden="true"></span></button>
+              </form>
+            </div>
+          </div>
+          
+
+          <div class="scroll">
+            <div class="list-group">
+              <div *ngFor="let dashboardHome of dashboardHome"  class="list-group-item list-group-item-action flex-column align-items-start" style="cursor: pointer;">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{{dashboardHome.roomTypeName}}</h5>
+                  <small class="text-muted" [class]="dashboardHome.textColor">{{dashboardHome.roomStatusName}}</small>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <h6>Guest Name</h6>
+                    <p *ngIf="dashboardHome.guestName === null" style="font-size: 18px;">-</p> 
+                    <p *ngIf="dashboardHome.guestName !== null" style="font-size: 18px;">{{dashboardHome.guestName}}</p>
+                  </div>
+                  <div class="col-6">
+                      <h6>Number of Room</h6>
+                      <p style="font-size: 18px;">{{dashboardHome.roomName}}</p>
                     </div>
-                  </nb-card-body>
-                </nb-card>
+                  <div class="col-4">
+                    <h6>Arrival Date</h6>
+                    <p *ngIf="dashboardHome.arrivalDate === null" style="font-size: 18px;">-</p> 
+                    <p *ngIf="dashboardHome.arrivalDate !== null" style="font-size: 18px;">{{dashboardHome.arrivalDate | date: 'longDate'}}</p>
+                  </div>
+                  <div class="col-4">
+                    <h6>Departure Date</h6>
+                    <p *ngIf="dashboardHome.departureDate === null" style="font-size: 18px;">-</p> 
+                    <p *ngIf="dashboardHome.departureDate !== null" style="font-size: 18px;">{{dashboardHome.departureDate | date: 'longDate'}}</p>
+                  </div>
+                  <div class="col-4">
+                    <h6>Payment</h6>
+                    <p *ngIf="dashboardHome.payment === null" style="font-size: 18px;">-</p> 
+                    <p *ngIf="dashboardHome.payment !== null" style="font-size: 18px;">Rp. {{dashboardHome.payment | number}}</p>
+                  </div>
+                </div>
               </div>
-            </nb-tab>
-            <nb-tab disabled>
-            </nb-tab>
-          </nb-tabset>
+            </div>
+          </div>
         </div>
   
         <!-- TODO: Room Status -->
-        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
-          <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-primary">
-              <h3>Room Status</h3>
-            </li>
-      
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              AVAILABLE
-              <span class="badge badge-primary badge-pill">{{roomOperationAvailable}}</span>
-            </li>
-      
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              BUSY
-              <span class="badge badge-primary badge-pill">{{roomOperatioBusy}}</span>
-            </li>
-      
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              DIRTY
-              <span class="badge badge-primary badge-pill">{{roomOperatioDirty}}</span>
-            </li>
-      
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              CLEANING
-              <span class="badge badge-primary badge-pill">{{roomOperatioCleaning}}</span>
-            </li>
-          </ul>
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12" style="margin: 0;">
+          <div class="col-12" style="margin-bottom: 5px;">
+            <div class="card text-center">
+              <div class="card-body">
+                <div>{{dateNow | date: 'MMMM'}}</div>
+                <div style="font-size: 100px;">{{dateNow | date: 'dd'}}</div>
+                <div>{{dateNow | date: 'yyyy'}}</div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-12" style="margin-bottom: 5px;">
+            <div class="list-group">
+              <div class="list-group-item d-flex justify-content-between align-items-center list-group-item-primary">
+                <h3>Room Status</h3>
+              </div>
+
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                AVAILABLE
+                <span class="badge badge-primary badge-pill">{{roomOperationAvailable}}</span>
+              </div>
+        
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                BUSY
+                <span class="badge badge-primary badge-pill">{{roomOperatioBusy}}</span>
+              </div>
+        
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                DIRTY
+                <span class="badge badge-primary badge-pill">{{roomOperatioDirty}}</span>
+              </div>
+        
+              <div class="list-group-item d-flex justify-content-between align-items-center">
+                CLEANING
+                <span class="badge badge-primary badge-pill">{{roomOperatioCleaning}}</span>
+              </div>
+            </div>
+          </div> -->
+          
+          <div class="col-12" style="margin-bottom: 5px;">
+            <div class="list-group">
+              <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">List checkout</h5>
+                </div>
+              </a>
+              <div *ngIf="(dashboardHome | filter: 'BUSY').length === 0"> 
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                  <p class="mb-1">No Data</p>
+                </a>
+              </div>
+              <div *ngFor="let dashboardHome of dashboardHome | filter: 'BUSY' ">
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{dashboardHome.roomName}}</h5>
+                    <small class="text-muted">3 days ago</small>
+                  </div>
+                  <p class="mb-1">Departure Date</p>
+                  <small *ngIf="dashboardHome.departureDate === null" class="text-muted">-</small>
+                  <small *ngIf="dashboardHome.departureDate !== null" class="text-muted">{{dashboardHome.departureDate | date: 'longDate'}}</small>
+                </a>
+              </div>
+            </div>
+          </div>
+          
         </div>
       </div>
     </nb-card-body>

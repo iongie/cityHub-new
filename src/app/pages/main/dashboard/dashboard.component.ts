@@ -28,6 +28,8 @@ export class DashboardComponent implements OnInit {
   floor: any;
   dashboardHome: any;
   textColor: any;
+  dateNow : any;
+  search: any;
   constructor(
     public roomTypeServ: RoomTypeService,
     public floorServ: FloorService,
@@ -44,6 +46,7 @@ export class DashboardComponent implements OnInit {
     this.getRoom();
     this.getFloor();
     this.getDashboardRoom();
+    this.dateNow = new Date();
   }
 
   ngOnDestroy() {

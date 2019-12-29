@@ -75,3 +75,34 @@
 //     }
 //   }
 // }
+
+.scroll {
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.scroll {
+    max-height: 78vh;
+    border-top: #d9dfe4 1px solid;
+    border-bottom: #d9dfe4 1px solid;
+    border-top-left-radius: 5px;
+}
+
+.form-filter{
+    padding: 10px;
+    margin-bottom: 5px;
+    border: #d9dfe4 1px solid;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: white;
+}
+
+::-webkit-scrollbar-track {
+    background: darkgray;
+}

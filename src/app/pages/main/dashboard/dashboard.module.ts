@@ -14,6 +14,7 @@ import { RoomSelector2Component } from './rooms/room-maps/room-selector2/room-se
 import { RoomSelector3Component } from './rooms/room-maps/room-selector3/room-selector3.component';
 import { PlayerComponent } from './player/player.component';
 import { NbRouteTabsetModule, NbTabsetModule } from '@nebular/theme';
+import { ApplicationPipesModule } from '../../../_pipe/application-pipe.module';
 
 
 const routes: Routes = [
@@ -41,6 +42,7 @@ const routes: Routes = [
     ThemeModule,
     Ng2SmartTableModule,
     NbRouteTabsetModule,
+    ApplicationPipesModule,
   ],
 })
 
