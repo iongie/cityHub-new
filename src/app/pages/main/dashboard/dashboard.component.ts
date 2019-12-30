@@ -10,6 +10,7 @@ import { UserRoleService } from '../../../services/user-role/user-role.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { takeUntil } from 'rxjs/operators';
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -26,10 +27,11 @@ export class DashboardComponent implements OnInit {
   roomOperatioNotReady: any;
   roomOperatioTotal: any;
   floor: any;
-  dashboardHome: any;
+  dashboardHome;
   textColor: any;
   dateNow : any;
-  search: any;
+  search;
+  filterDashboardHome;
   constructor(
     public roomTypeServ: RoomTypeService,
     public floorServ: FloorService,
@@ -40,6 +42,7 @@ export class DashboardComponent implements OnInit {
     public userRoleServ: UserRoleService,
     public authServ: AuthService,
     public dashboardServ: DashboardService,
+    public datepipe: DatePipe,
   ) { }
 
   ngOnInit() {
@@ -102,9 +105,16 @@ export class DashboardComponent implements OnInit {
           arrivalDate:  x.arrival_date,
           duration:  x.duration,
           departureDate:  x.departure_date,
+          bookingNumber: x.booking_number,
+          bookingRoomId: x.booking_room_id,
           charge:  x.charge,
           payment:  x.payment,
           textColor: this.textColor,
+          durationCheckOut: new Date()
+          .setDate(new Date(this.dateNow)
+          .getDate() + +0) - new Date()
+          .setDate(new Date(x.departure_date)
+          .getDate() + +0)
         };
 
         return data;
@@ -175,4 +185,5 @@ export class DashboardComponent implements OnInit {
 
     });
   }
+
 }

@@ -78,14 +78,20 @@
 
 .scroll {
     overflow-y: scroll;
+    overflow-x: hidden;
     width: 100%;
 }
 
 .scroll {
     max-height: 78vh;
-    border-top: #d9dfe4 1px solid;
-    border-bottom: #d9dfe4 1px solid;
-    border-top-left-radius: 5px;
+    border: #d9dfe4 1px solid;
+    border-radius: 5px;
+}
+
+.list-dashboard {
+    cursor: pointer; 
+    padding: 10px; 
+    border-bottom:  #d9dfe4 1px solid;
 }
 
 .form-filter{

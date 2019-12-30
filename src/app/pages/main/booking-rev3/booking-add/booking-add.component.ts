@@ -215,10 +215,13 @@ export class BookingAddComponent implements OnInit, OnDestroy {
   }
 
   getInfo(event) {
+    
+    
     this.dataAddBooking.roomInformation = true;
     const departureDate = new Date()
     .setDate(new Date(this.dataAddBooking.arrivalDate)
     .getDate() + +event.target.value);
+    console.log('departureDate', this.dataAddBooking.arrivalDate);
     this.dataAddBooking.departureDate = new Date(departureDate);
     const data = {
       arrivalDate: this.datepipe.transform( this.dataAddBooking.arrivalDate, 'yyyy-MM-dd'),
