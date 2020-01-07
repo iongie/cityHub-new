@@ -8,8 +8,8 @@
               <div class="input-group mb-3">
                 <input type="text" 
                  class="form-control" 
-                 placeholder="Recipient's username" 
-                 aria-label="Recipient's username" 
+                 placeholder="Filter Data" 
+                 aria-label="Filter Data" 
                  aria-describedby="basic-addon2"
                  [(ngModel)]="filterDashboardHome"
                  id="filterDashboardHome"
@@ -18,7 +18,7 @@
                   <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
                 </div>
               </div>
-              <div class="form-filter">
+              <!-- <div class="form-filter">
                 <div class="list-group">
                   <form class="form-horizontal" role="form">
                     <div class="form-group">
@@ -27,7 +27,7 @@
                       [(ngModel)]="filterDashboardHome"
                       id="filterDashboardHome"
                       name="filterDashboardHome">
-                          <option value="0" selected disabled>--Select your room status--</option>
+                          <option value="" selected disabled>--Select your room status--</option>
                           <option value="BUSY">BUSY</option>
                           <option value="CLEANING">CLEANING</option>
                           <option value="DIRTY">DIRTY</option>
@@ -35,17 +35,17 @@
                           <option value="NOT READY">NOT READY</option>
                       </select>
                     </div>
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                       <label for="contain">Author</label>
                       <input class="form-control" type="text" />
                     </div>
                     <div class="form-group">
                       <label for="contain">Contains the words</label>
                       <input class="form-control" type="text" />
-                    </div> -->
+                    </div>
                   </form>
-                </div>
-              </div>
+                </div> 
+              </div> -->
             </div>
           </div>
           
@@ -115,7 +115,7 @@
                 <div class="scroll">
                   <div *ngIf="(dashboardHome | filter: 'BUSY')?.length === 0"> 
                     <a href="#" class="list-dashboard">
-                      <p class="mb-1">No Data</p>
+                      <p class="mb-1" style="padding-left: 10px;">No Data</p>
                     </a>
                   </div>
                   <div  *ngFor="let dashboardHome of dashboardHome | filter: 'BUSY' ">
