@@ -204,6 +204,7 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
   paymentType: any;
   checkedCheckIn = false;
   checkedCheckOut = false;
+  lateCheckOut: any;
   actionCheckOut = {
     lateCheckOutRate: 0,
   };
@@ -764,9 +765,9 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
     console.log('checkedCheckIn', event.target.checked);
   }
 
-  toogleCheckOut(checkedCheckOut: boolean) {
-    this.checkedCheckOut = checkedCheckOut; // ! check out
-    console.log('checkedCheckOut', checkedCheckOut);
+  toogleCheckOut(event) {
+    this.checkedCheckOut = event.target.checked; // ! check out
+    console.log('checkedCheckOut', this.checkedCheckOut);
   }
 
   // TODO : Function Add Room
@@ -979,8 +980,8 @@ export class BookingRoomComponent implements OnInit, OnDestroy {
       const data = {
         bookingRoomId: params.id,
         checkoutBy: this.userCityHub.name,
-        lateCheckOut: this.checkedCheckOut,
-        lateCheckOutRate: this.actionCheckOut.lateCheckOutRate,
+        lateCheckout: this.checkedCheckOut.toString(),
+        lateCheckoutRate: this.actionCheckOut.lateCheckOutRate,
       };
       this.bookingServ.checkOut(data)
       .pipe(takeUntil(this.subs))

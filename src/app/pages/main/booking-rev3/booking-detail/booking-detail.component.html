@@ -8,6 +8,7 @@
 
         <!-- !extend room -->
         <nb-action
+          *ngIf="detailBookingByBookingId.bookingInformation.bookingStatusId !== 4 && detailBookingByBookingId.bookingInformation.bookingStatusId !== 5"
           icon="fas fa-external-link-alt"
           style="-webkit-text-fill-color: blue"          
           nbTooltip="Extend Room"
@@ -17,8 +18,9 @@
 
         <!-- !Cancel Booking -->
         <nb-action
+          *ngIf="detailBookingByBookingId.bookingInformation.bookingStatusId !== 4 && detailBookingByBookingId.bookingInformation.bookingStatusId !== 5"
           icon="fas fa-window-close"
-        style="-webkit-text-fill-color: red"
+          style="-webkit-text-fill-color: red"
           nbTooltip="Cancel Booking"
           nbTooltipPlacement="bottom"
           (click)="openActionCancelByBooking(dialogCancelByBooking)">

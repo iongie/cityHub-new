@@ -203,7 +203,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
               return dataMapRoomInformation;
             });
             this.roomInformation = new LocalDataSource(this.detailBookingByBookingId.roomInformation);
-            console.log('[detailBooking by Booking id]', this.roomInformation);
+            console.log('[detailBooking by Booking id]', resGetBookingInformation);
           });
         });
       });

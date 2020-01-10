@@ -26,9 +26,9 @@ export class LinkDetailComponent implements OnInit, OnDestroy {
         number: '',
       },
     },
-    { title: 'Cancel Booking',
-      icon: 'fa fa-times',
-    },
+    // { title: 'Cancel Booking',
+    //   icon: 'fa fa-times',
+    // },
   ];
   data: any;
   userCityHub: any;
