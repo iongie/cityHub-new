@@ -13,7 +13,7 @@ import { RoomSelectorComponent } from './rooms/room-maps/room-selector/room-sele
 import { RoomSelector2Component } from './rooms/room-maps/room-selector2/room-selector2.component';
 import { RoomSelector3Component } from './rooms/room-maps/room-selector3/room-selector3.component';
 import { PlayerComponent } from './player/player.component';
-import { NbRouteTabsetModule, NbTabsetModule } from '@nebular/theme';
+import { NbRouteTabsetModule, NbTabsetModule, NbContextMenuModule } from '@nebular/theme';
 import { ApplicationPipesModule } from '../../../_pipe/application-pipe.module';
 
 
@@ -43,6 +43,7 @@ const routes: Routes = [
     Ng2SmartTableModule,
     NbRouteTabsetModule,
     ApplicationPipesModule,
+    NbContextMenuModule
   ],
 })
 

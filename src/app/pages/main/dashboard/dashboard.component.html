@@ -57,7 +57,7 @@
                 <div *ngFor="let dashboardHome of dashboardHome | filter: filterDashboardHome" class="list-dashboard">
                   <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">{{dashboardHome.roomTypeName}}</h5>
-                    <small class="text-muted" [class]="dashboardHome.textColor">{{dashboardHome.roomStatusName}}</small>
+                    <small class="text-muted" (click)="change(dashboardHome.roomId)" [nbContextMenu]="changeRoomStatus" nbContextMenuTag="changeRoomStatus" [class]="dashboardHome.textColor">{{dashboardHome.roomStatusName}}</small>
                   </div>
                   <div class="row">
                     <div class="col-6">

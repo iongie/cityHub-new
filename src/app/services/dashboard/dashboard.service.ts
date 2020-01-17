@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Subject, throwError, Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
@@ -48,6 +48,15 @@ export class DashboardService implements OnDestroy {
   get(): Observable<any> {
     return this.http.get<any>(this.url + '/dashboard/room', httpOptions).pipe(
       catchError(this.handleError),
+    );
+  }
+
+  changeStatus(data: any): Observable<any> {
+    return this.http.post<any>(this.url + '/dashboard/room-status', data, httpOptions).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        this._refresh.next();
+      }),
     );
   }
 }

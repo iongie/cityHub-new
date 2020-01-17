@@ -8,9 +8,10 @@ import { NotificationService } from '../../../services/notification/notification
 import { Router } from '@angular/router';
 import { UserRoleService } from '../../../services/user-role/user-role.service';
 import { AuthService } from '../../../services/auth/auth.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter, map } from 'rxjs/operators';
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
 import { DatePipe } from '@angular/common';
+import { NbMenuService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -32,6 +33,21 @@ export class DashboardComponent implements OnInit {
   dateNow : any;
   search;
   filterDashboardHome;
+  changeRoomStatus= [
+      { 
+        title: '',
+        data: {
+          id: 0
+        }
+      }, 
+      { 
+        title: '',
+        data: {
+          id: 0
+        }
+      }
+  ];
+  roomId: any;
   constructor(
     public roomTypeServ: RoomTypeService,
     public floorServ: FloorService,
@@ -43,6 +59,8 @@ export class DashboardComponent implements OnInit {
     public authServ: AuthService,
     public dashboardServ: DashboardService,
     public datepipe: DatePipe,
+    public roomStatusServ: RoomStatusService,
+    private nbMenuService: NbMenuService,
   ) { }
 
   ngOnInit() {
@@ -50,12 +68,68 @@ export class DashboardComponent implements OnInit {
     this.getFloor();
     this.getDashboardRoom();
     this.dateNow = new Date();
+    this.getRoomStatus();
+    this.action();
+    this.refreshDashboard();
   }
 
   ngOnDestroy() {
     this.subs.next();
     this.subs.complete();
   }
+
+
+  refreshDashboard() {
+    this.dashboardServ.refresh.subscribe(() => {
+      this.getDashboardRoom();
+    });
+  }
+
+  getRoomStatus() {
+    this.roomStatusServ.get().pipe(takeUntil(this.subs)).subscribe(ressRoomStatus => {
+      const xxx = ressRoomStatus.filter(forRoomStatus => {
+        return forRoomStatus.room_status_id !== 2;
+      });
+      this.changeRoomStatus = xxx.map((forRoomStatus) => {
+        const dataForRoomStatus = {
+          title: forRoomStatus.room_status_name,
+          data: {
+            id: forRoomStatus.room_status_id,
+          }
+        };
+        return dataForRoomStatus;
+      });
+      this.changeRoomStatus.splice
+    });
+  }
+
+  action() {
+    this.nbMenuService.onItemClick().pipe(
+      takeUntil(this.subs),
+      filter(({ tag }) => tag === 'changeRoomStatus'),
+      map(({item}) => item),
+    ).subscribe(item => {
+      const dataChangeStatusRoom = {
+        id: this.roomId,
+        status: item.data.id
+      }
+      console.log(dataChangeStatusRoom);
+      this.dashboardServ.changeStatus(dataChangeStatusRoom).pipe(takeUntil(this.subs)).subscribe(() => {
+        const title = 'Change Status room';
+        const content = 'Data has been save';
+        this.notifServ.showSuccessTypeToast(title, content);
+      }, err => {
+        const title = 'Change Status room';
+        const content = 'Error';
+        this.notifServ.showInfoTypeToast(title, content);
+      });
+    });
+  }
+
+  change(ev:any){
+    this.roomId = ev;
+  }
+
 
   getFloor() {
     this.floorServ.get().pipe(takeUntil(this.subs)).subscribe(floor => {
@@ -74,6 +148,7 @@ export class DashboardComponent implements OnInit {
   getDashboardRoom() {
     this.dashboardServ.get().pipe(takeUntil(this.subs)).subscribe(res => {
       this.dashboardHome = res.map(x => {
+
         if(x.room_status_name === 'AVAILABLE') {
           this.textColor = 'text-primary';
         }
