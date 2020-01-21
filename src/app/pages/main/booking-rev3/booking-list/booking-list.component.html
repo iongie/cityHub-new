@@ -11,6 +11,19 @@
   </nb-card-header>
 
   <nb-card-body>
-    <ng2-smart-table [settings]="settings"  [source]="booking"></ng2-smart-table>
+    <div class="row">
+      <div class="col-md-4" style="margin-bottom: 5px;">
+        <select class="form-control form-control-lg" name="filter" id="filter" [(ngModel)]="filter" change="filterData()">
+          <option value="0">Select for booking status</option>
+          <option value="all">All</option>
+          <option value="booked">Booked</option>
+          <option value="cancel">Cancel</option>
+          <option value="done" selected>Done</option>
+        </select>
+      </div>
+      <div class="col-md-12">
+        <ng2-smart-table [settings]="settings"  [source]="booking"></ng2-smart-table>
+      </div>
+    </div>
   </nb-card-body>
 </nb-card>

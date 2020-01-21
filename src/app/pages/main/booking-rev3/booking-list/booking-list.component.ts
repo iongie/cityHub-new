@@ -14,6 +14,7 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { takeUntil } from 'rxjs/operators';
 import { LinkDetailComponent } from './link-detail/link-detail.component';
 import { BookingService } from '../../../../services/booking-rev3/booking.service';
+import { fil } from 'date-fns/locale';
 
 @Component({
   selector: 'ngx-booking-list',
@@ -43,6 +44,10 @@ export class BookingListComponent implements OnInit, OnDestroy {
         title: 'Business Source name',
         type: 'string',
       },
+      bookingCreatedAt: {
+        title: 'Create At',
+        type: 'string',
+      },
       bookingStatusName: {
         title: 'Status',
         type: 'string',
@@ -56,6 +61,7 @@ export class BookingListComponent implements OnInit, OnDestroy {
     },
   };
 
+  filter = '';
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
@@ -74,6 +80,7 @@ export class BookingListComponent implements OnInit, OnDestroy {
     this.getBooking();
     this.detailAccount();
     this.refresh();
+    this.filter = '0';
   }
 
   ngOnDestroy() {
@@ -158,12 +165,23 @@ export class BookingListComponent implements OnInit, OnDestroy {
               };
               return datax;
             });
-            this.booking = new LocalDataSource(data);
+            const abc = data.filter(x => {
+              return x.bookingStatusName !== "cancel";
+            });
+            abc.sort((a,b)=> a.bookingId -b.bookingId);
+            const xxx = abc.reverse();
+            console.log(xxx);
+            
+            this.booking = new LocalDataSource(xxx);
         }, err => {
 
         });
       });
     });
+  }
+
+  filterData() {
+    
   }
 
   refresh() {
