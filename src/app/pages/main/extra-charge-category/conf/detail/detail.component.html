@@ -10,7 +10,7 @@
     </div>
   </nb-card-header>
 
-  <nb-card-body *ngFor="let extraChargeCategory of extraChargeCategory">
+  <nb-card-body *ngFor="let extraChargeCategory of extraChargeCategory" autocomplete="off">
     <form #ngForm="ngForm" (submit)="updateExtraChargeCategory()" ngNativeValidate>
       <div class="form-group">
         <label for="exampleFormControlInput1">Name</label>

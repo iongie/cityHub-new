@@ -11,7 +11,7 @@
   </nb-card-header>
 
   <nb-card-body *ngFor="let seasonType of seasonType">
-    <form #ngForm="ngForm" (submit)="updateSeasonType()" ngNativeValidate>
+    <form #ngForm="ngForm" (submit)="updateSeasonType()" ngNativeValidate autocomplete="off">
       <div class="form-group">
         <label for="exampleFormControlInput1">Name</label>
         <input

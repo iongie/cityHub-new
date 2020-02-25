@@ -11,7 +11,7 @@
   </nb-card-header>
 
   <nb-card-body>
-    <form #ngForm="ngForm" (submit)="addExtraCharge()" ngNativeValidate>
+    <form #ngForm="ngForm" (submit)="addExtraCharge()" ngNativeValidate autocomplete="off">
       <div class="form-group">
         <label for="exampleFormControlSelect1">Category</label>
         <select

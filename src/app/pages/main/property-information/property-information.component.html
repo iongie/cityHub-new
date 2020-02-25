@@ -11,7 +11,7 @@
   </nb-card-header>
 
   <nb-card-body *ngFor="let propertyInfo of propertyInfo">
-    <form #ngForm="ngForm" (submit)="updatePropertyInformation()" ngNativeValidate>
+    <form #ngForm="ngForm" (submit)="updatePropertyInformation()" ngNativeValidate autocomplete="off">
       <div class="form-group">
         <label for="exampleFormControlInput1">Property name</label>
         <input

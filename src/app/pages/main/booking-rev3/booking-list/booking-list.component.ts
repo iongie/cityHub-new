@@ -9,7 +9,7 @@ import { RoomOperationService } from '../../../../services/room-operation/room-o
 import { CountryService } from '../../../../services/country/country.service';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { Subject, combineLatest, zip } from 'rxjs';
+import { Subject, combineLatest, zip, BehaviorSubject } from 'rxjs';
 import { LocalDataSource } from 'ng2-smart-table';
 import { takeUntil } from 'rxjs/operators';
 import { LinkDetailComponent } from './link-detail/link-detail.component';
@@ -62,6 +62,7 @@ export class BookingListComponent implements OnInit, OnDestroy {
   };
 
   filter = '';
+  dataBooking: Subject<any>;
   constructor(
     public bookingServ: BookingService,
     public businessSourceServ: BusinessSourceService,
@@ -80,7 +81,7 @@ export class BookingListComponent implements OnInit, OnDestroy {
     this.getBooking();
     this.detailAccount();
     this.refresh();
-    this.filter = '0';
+    this.filter = 'done';
   }
 
   ngOnDestroy() {
@@ -166,12 +167,12 @@ export class BookingListComponent implements OnInit, OnDestroy {
               return datax;
             });
             const abc = data.filter(x => {
-              return x.bookingStatusName !== "cancel";
+              return x.bookingStatusName == "done";
             });
             abc.sort((a,b)=> a.bookingId -b.bookingId);
             const xxx = abc.reverse();
             console.log(xxx);
-            
+            this.dataBooking = new BehaviorSubject(data);
             this.booking = new LocalDataSource(xxx);
         }, err => {
 
@@ -181,7 +182,22 @@ export class BookingListComponent implements OnInit, OnDestroy {
   }
 
   filterData() {
-    
+    this.dataBooking.subscribe(data => {
+      if (this.filter !== "all"){
+        const abc = data.filter(x => {
+          return x.bookingStatusName == this.filter;
+        });
+        abc.sort((a,b)=> a.bookingId -b.bookingId);
+        const xxx = abc.reverse();
+        console.log(xxx);
+        this.booking = new LocalDataSource(xxx);
+      }
+      data.sort((a,b)=> a.bookingId -b.bookingId);
+      const xxx = data.reverse();
+      console.log(xxx);
+      this.booking = new LocalDataSource(xxx);
+      
+    })
   }
 
   refresh() {

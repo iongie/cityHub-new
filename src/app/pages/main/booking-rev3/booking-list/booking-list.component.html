@@ -13,8 +13,8 @@
   <nb-card-body>
     <div class="row">
       <div class="col-md-4" style="margin-bottom: 5px;">
-        <select class="form-control form-control-lg" name="filter" id="filter" [(ngModel)]="filter" change="filterData()">
-          <option value="0">Select for booking status</option>
+        <select class="form-control form-control-lg" name="filter" id="filter" [(ngModel)]="filter" (change)="filterData()">
+          <!-- <option value="0">Select for booking status</option> -->
           <option value="all">All</option>
           <option value="booked">Booked</option>
           <option value="cancel">Cancel</option>

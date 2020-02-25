@@ -11,7 +11,7 @@
   </nb-card-header>
 
   <nb-card-body *ngFor="let roomType of roomType">
-    <form #ngForm="ngForm" (submit)="updateRoomType()" ngNativeValidate>
+    <form #ngForm="ngForm" (submit)="updateRoomType()" ngNativeValidate autocomplete="off">
       <div class="form-group">
         <label for="exampleFormControlInput1">Full Name</label>
         <input

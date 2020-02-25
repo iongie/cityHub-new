@@ -11,7 +11,7 @@
   </nb-card-header>
 
   <nb-card-body *ngFor="let user of user">
-    <form #ngForm="ngForm" (submit)="updateUser()" ngNativeValidate>
+    <form #ngForm="ngForm" (submit)="updateUser()" ngNativeValidate autocomplete="off">
       <div class="form-group">
         <label for="exampleFormControlInput1">Full Name</label>
         <input
